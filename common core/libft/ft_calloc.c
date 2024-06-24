@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaara <kaara@syudent.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: kaara <kaara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 03:37:42 by kaara             #+#    #+#             */
-/*   Updated: 2024/05/31 23:59:34 by kaara            ###   ########.fr       */
+/*   Updated: 2024/06/24 21:36:16 by kaara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_calloc(size_t count, size_t size)
 	test = malloc(count * size);
 	if (!test)
 		return (NULL);
-	ft_memset (test, 0, count * size);
+	ft_bzero (test, count * size);
 	return (test);
 }
 

@@ -3,45 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaara <kaara@syudent.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: kaara <kaara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 01:47:00 by kaara             #+#    #+#             */
-/*   Updated: 2024/05/31 23:35:05 by kaara            ###   ########.fr       */
+/*   Updated: 2024/06/24 21:27:29 by kaara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	is_delimiter(char s, char c)
-{
-	return (s == c);
-}
-
-int	count_elements(const char *s, char c)
-{
-	int	count;
-
-	count = 0;
-	while (*s)
-	{
-		while (*s && is_delimiter(*s, c))
-			s++;
-		if (*s && !is_delimiter(*s, c))
-		{
-			count++;
-			while (*s && !is_delimiter(*s, c))
-				s++;
-		}
-	}
-	return (count);
-}
+static int	count_elements(const char *s, char c);
+static char	*cpy_result(const char *s, char c);
+static void	free_result(char **result, int element_count);
 
 char	**ft_split(const char *s, char c)
 {
-	int			i;
 	int			element_count;
 	char		**result;
-	const char	*element_start;
 
 	element_count = count_elements(s, c);
 	result = (char **)malloc(sizeof(char *) * (element_count + 1));
@@ -50,23 +28,15 @@ char	**ft_split(const char *s, char c)
 	element_count = 0;
 	while (*s)
 	{
-		while (*s && is_delimiter(*s, c))
+		while (*s && (*s == c))
 			s++;
-		if (*s && !is_delimiter(*s, c))
+		if (*s && !(*s == c))
 		{
-			element_start = s;
-			while (*s && !is_delimiter(*s, c))
-				s++;
-			result[element_count] = (char *)malloc(s - element_start + 1);
+			result[element_count] = cpy_result(s, c);
 			if (!result[element_count])
-			{
-				i = 0;
-				while (i < element_count)
-					free (result[i++]);
-				free (result);
-				return (NULL);
-			}
-			ft_strlcpy(result[element_count], element_start, s - element_start + 1);
+				return (free_result(result, element_count), NULL);
+			while (*s && !(*s == c))
+				s++;
 			element_count++;
 		}
 	}
@@ -74,8 +44,52 @@ char	**ft_split(const char *s, char c)
 	return (result);
 }
 
+static int	count_elements(const char *s, char c)
+{
+	int	count;
+
+	count = 0;
+	while (*s)
+	{
+		while (*s && (*s == c))
+			s++;
+		if (*s && !(*s == c))
+		{
+			count++;
+			while (*s && !(*s == c))
+				s++;
+		}
+	}
+	return (count);
+}
+
+static char	*cpy_result(const char *s, char c)
+{
+	char		*cpy_element;
+	const char	*element_start;
+
+	element_start = s;
+	while (*s && !(*s == c))
+		s++;
+	cpy_element = (char *)malloc(s - element_start + 1);
+	if (!cpy_element)
+		return (NULL);
+	ft_strlcpy(cpy_element, element_start, s - element_start + 1);
+	return (cpy_element);
+}
+
+static void	free_result(char **result, int element_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < element_count)
+		free(result[i++]);
+	free(result);
+}
+
 // int main() {
-//     char **result = ft_split("hello world this is C", ' ');
+//     char **result = ft_split("!       ", ' ');
 //     if (result) {
 //         for (int i = 0; result[i] != NULL; i++) {
 //             printf("Result[%d]: %s\n", i, result[i]);

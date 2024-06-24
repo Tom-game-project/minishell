@@ -6,7 +6,7 @@
 /*   By: kaara <kaara@syudent.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:19:02 by kaara             #+#    #+#             */
-/*   Updated: 2024/05/24 02:30:37 by kaara            ###   ########.fr       */
+/*   Updated: 2024/06/22 17:29:03 by kaara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	*ft_memchr(const void *buf, int c, size_t n)
 {
-	unsigned char	*p;
-	unsigned char	ucc;
+	const unsigned char	*p;
+	unsigned char		ucc;
 
-	p = (unsigned char *)buf;
+	p = (const unsigned char *)buf;
 	ucc = (unsigned char)c;
 	while (n-- > 0)
 	{

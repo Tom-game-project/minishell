@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaara <kaara@syudent.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: kaara <kaara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 02:45:25 by kaara             #+#    #+#             */
-/*   Updated: 2024/06/03 19:32:11 by kaara            ###   ########.fr       */
+/*   Updated: 2024/06/24 21:14:52 by kaara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	ministr = (char *)malloc(len + 1);
 	if (!ministr)
 		return (NULL);
-	ft_memcpy (ministr, s + start, len);
-	ministr[len] = '\0';
+	ft_strlcpy (ministr, s + start, len + 1);
 	return (ministr);
 }
 

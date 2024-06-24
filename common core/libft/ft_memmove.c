@@ -6,7 +6,7 @@
 /*   By: kaara <kaara@syudent.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:53:08 by kaara             #+#    #+#             */
-/*   Updated: 2024/05/31 23:54:02 by kaara            ###   ########.fr       */
+/*   Updated: 2024/06/22 17:31:39 by kaara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char		*pd;
-	const char	*ps;
+	unsigned char		*pd;
+	const unsigned char	*ps;
 
-	pd = (char *)dest;
-	ps = (const char *)src;
+	pd = (unsigned char *)dest;
+	ps = (const unsigned char *)src;
 	if (dest == NULL && src == NULL)
 		return (0);
 	if (ps < pd && pd < ps + n)

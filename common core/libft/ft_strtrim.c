@@ -3,28 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaara <kaara@syudent.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: kaara <kaara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 06:10:45 by kaara             #+#    #+#             */
-/*   Updated: 2024/06/01 00:00:39 by kaara            ###   ########.fr       */
+/*   Updated: 2024/06/24 21:15:49 by kaara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	check_str(const char find, const char *set)
-{
-	int	i;
-
-	i = 0;
-	while (set[i])
-	{
-		if (set[i] == find)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+static int	check_str(const char find, const char *set);
 
 char	*ft_strtrim(const char *s1, const char *set)
 {
@@ -45,6 +33,20 @@ char	*ft_strtrim(const char *s1, const char *set)
 		return (NULL);
 	ft_strlcpy (result, &s1[i], result_size);
 	return (result);
+}
+
+static int	check_str(const char find, const char *set)
+{
+	int	i;
+
+	i = 0;
+	while (set[i])
+	{
+		if (set[i] == find)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 // int main (void)

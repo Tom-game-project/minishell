@@ -3,29 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaara <kaara@syudent.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: kaara <kaara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 03:40:01 by kaara             #+#    #+#             */
-/*   Updated: 2024/06/01 00:03:47 by kaara            ###   ########.fr       */
+/*   Updated: 2024/06/24 21:50:01 by kaara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	nbrlen(int n)
-{
-	int	len;
-
-	len = 0;
-	if (n <= 0)
-		len = 1;
-	while (n)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
-}
+static int	nbrlen(int n);
 
 char	*ft_itoa(int n)
 {
@@ -53,6 +40,21 @@ char	*ft_itoa(int n)
 		un /= 10;
 	}
 	return (result);
+}
+
+static int	nbrlen(int n)
+{
+	int	len;
+
+	len = 0;
+	if (n <= 0)
+		len = 1;
+	while (n)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
 }
 
 // int main(void)
