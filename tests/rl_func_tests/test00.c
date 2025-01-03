@@ -1,6 +1,4 @@
 ///
-///
-///
 /// 自分の環境で
 /// ```c
 /// #include <readline/readline.h>
