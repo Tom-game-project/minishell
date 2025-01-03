@@ -14,16 +14,15 @@ void signal_handler(int signum)
 }
 
 int main(void){
-
     /* シグナルハンドラの登録 */
     struct sigaction sa;
     sigemptyset(&sa.sa_mask);
     sa.sa_handler = signal_handler;
     sa.sa_flags = 0;
+    // ctrl-C
     sigaction(SIGINT, &sa, NULL);
 
     while(1){
     }
-
     return 0;
 }
