@@ -5,3 +5,8 @@
 *.out
 minishell
 
+
+
+# lsp関係
+.cache/
+compile_commands.json
