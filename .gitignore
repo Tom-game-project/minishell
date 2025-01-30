@@ -5,8 +5,9 @@
 *.out
 minishell
 
-# test関係
+# test,example関係
 test_
+example_
 
 # lsp関係
 .cache/

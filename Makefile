@@ -26,8 +26,16 @@ SRC = \
 MAIN = \
       src/minishell.c
 
+
+# test rule
 TEST_FILE := tests/dummy_test.c
 TEST_NAME = test_
+
+# example rule
+EXAMPLE_FILE := examples/dummy_example00.c
+EXAMPLE_NAME = example_
+
+#########
 
 OBJ = $(SRC:.c=.o)
 MAIN_OBJ = $(MAIN:.c=.o)
@@ -49,6 +57,9 @@ vtest: $(OBJ) $(TEST_OBJ)
 	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ)
 	$(VALGRIND) $(VALGRINDFLAGS) ./test_
 
+example:
+	$(CC) $(TEST_FLAGS) -o $(EXAMPLE_NAME) $(EXAMPLE_FILE)
+
 %.o: %.c 
 	$(CC) $(CFLAGS) -Iinclude -c $< -o $@
 
@@ -58,4 +69,4 @@ fclean: clean
 	$(RM) $(RMFLAGS) $(NAME)
 re: fclean all
 
-.PHONY: all test vtest clean fclean re
+.PHONY: all test vtest clean fclean re example

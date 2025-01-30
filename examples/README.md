@@ -5,11 +5,11 @@
 
 簡単なプログラム片、関数の使い方をテストしたい場合はこのディレクトリに書く
 
-## rl_func_tests
+## 使い方
 
-`readline`系の関数の小さなサンプル
 
-## sig_func_tests
+```bash
+make example EXAMPLE_FILE=<PATH/TO/EXAMPLE>
+```
 
-シグナル関係の小さなサンプル
-
+上のコマンドを実行すると,rootに`example_`という名前の実行ファイルが得られる
