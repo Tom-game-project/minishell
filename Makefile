@@ -6,9 +6,12 @@
 
 CC = cc
 RM = rm
+VALGRIND = valgrind
+VALGRINDFLAGS := --leak-check=full --show-leak-kinds=all --trace-children=yes -q
 RMFLAGS = -rf
 
 CFLAGS = -Wextra -Werror -Wall
+TEST_FLAGS = -g
 
 SRC = \
       src/built-in/cd.c\
@@ -39,7 +42,12 @@ $(NAME): $(OBJ) $(MAIN_OBJ)
 
 # ここにはあえてフラグをつけていない
 test: $(OBJ) $(TEST_OBJ)
-	$(CC) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ)
+	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ)
+	./test_
+
+vtest: $(OBJ) $(TEST_OBJ)
+	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ)
+	$(VALGRIND) $(VALGRINDFLAGS) ./test_
 
 %.o: %.c 
 	$(CC) $(CFLAGS) -Iinclude -c $< -o $@
@@ -50,4 +58,4 @@ fclean: clean
 	$(RM) $(RMFLAGS) $(NAME)
 re: fclean all
 
-.PHONY: all test clean fclean re
+.PHONY: all test vtest clean fclean re
