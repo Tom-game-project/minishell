@@ -1,13 +1,19 @@
 
 #include "built_in.h"
 
-
 int main(int argc, char *argv[], char *envp[])
 {
-	(void) argc;
-	(void) argv;
-	(void) envp;
+	int exit_status;
 
-	say_hello();
+	signal_handler(signal);
+	exit_status = main_loop(envp);
+	return (exit_status);
+}
+
+int signal_handler(void)
+{
+	ctl_c
+	ctl_d
+	ctl_sra
 	return (0);
 }
