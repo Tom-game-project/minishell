@@ -17,21 +17,3 @@ int signal_handler(void)
 	ctl_sra
 	return (0);
 }
-
-main_loop(char *envp[])
-{
-	int		exit_status;
-    char	*input;
-	t_ast	*ast;
-
-    while ((input = readline("Enter command: ")) != NULL)
-	{
-        if (*input)
-            add_history(input);
-		ast = parser();
-		temp(ast, envp);//execveを含む実行部
-		clear_ast(ast);
-        free(input);
-    }
-    return (exit_status);
-}
