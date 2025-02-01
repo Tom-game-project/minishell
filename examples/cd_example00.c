@@ -19,8 +19,10 @@ int main(int argc, char *argv[])
 	exit_status = 0;
 	memset(filepath, '\0', FILENAMEBUF);
 	if (argc == 2){
-		exit_status = chdir(argv[1]);
+		if (chdir(argv[1]) == -1)
+			exit_status = 1;
 		getcwd(filepath, FILENAMEBUF);
+		perror("example");
 		printf("pwd %s\n", filepath);
 	}
 	else

@@ -7,4 +7,7 @@ int say_hello();
 
 int return_one_func();
 
+// src/built-in/cd.c
+int built_in_cd(char *path);
+
 #endif
