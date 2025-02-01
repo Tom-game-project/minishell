@@ -10,7 +10,12 @@ enum e_operator
 	e_ope_or          // ||
 };
 
+typedef struct ast t_ast
+
 struct ast
 {
-	
+	ast *t_ast;
+	//必要なデータ
+	//
+	//
 };
