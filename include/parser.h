@@ -23,7 +23,7 @@ struct  s_ast
 	t_ast       *right_ast;
 	t_operator  ope;
 	char        *cmd;
-	char        *argv;
+	char        **argv;
 };
 
 t_ast  *parse_recursive(t_ast *ast, char *input);
