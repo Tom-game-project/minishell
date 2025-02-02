@@ -16,7 +16,7 @@ int char_list_insert_str(t_char_list **node, int index,char *str)
 	char_list_push_str(&str_list, str);
 	if (str_list == NULL)
 		return (1);
-	new_node_last = get_back(str_list);
+	new_node_last = char_list_get_back(str_list);
 	new_node_last->next = target_node;
 	if (0 < index)
 	{

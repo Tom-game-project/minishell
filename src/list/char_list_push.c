@@ -18,7 +18,7 @@ int char_list_push(t_char_list **node, char c)
 	new_node_p = init_char_list(c);
 	if (new_node_p == NULL)
 		return (1);
-	back_node_p = get_back(*node);
+	back_node_p = char_list_get_back(*node);
 	if (back_node_p == NULL)
 	{
 		*node = new_node_p;

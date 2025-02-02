@@ -2,13 +2,15 @@
 //#include "built_in.h"
 //
 //int main(int argc, char *argv[], char *envp[])
-//{
-//	int exit_status;
-//
-//	signal_handler(signal);
-//	exit_status = main_loop(envp);
-//	return (exit_status);
-//}
+int main(void)
+{
+	int exit_status;
+
+	//signal_handler(signal);
+	//exit_status = main_loop(envp);
+	exit_status = 0;
+	return (exit_status);
+}
 //
 //int signal_handler(void)
 //{
