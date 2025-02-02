@@ -23,4 +23,10 @@ int	char_list_get_elem(t_char_list *node, int index);
 int	char_list_len(t_char_list *node);
 
 int char_list_print(t_char_list *node);
+
+int	char_list_insert(t_char_list **node, int index, char c);
+
+int char_list_insert_str(t_char_list **node, int index,char *str);
+
+int char_list_clear(t_char_list **node);
 #endif
