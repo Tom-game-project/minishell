@@ -1,6 +1,7 @@
 #include "dict.h"
 #include <stdlib.h>
 
+/// 初期値設定なしのnode生成
 t_str_dict *init_str_dict()
 {
 	t_str_dict	*node;

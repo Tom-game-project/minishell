@@ -47,6 +47,7 @@ SRC = \
       src/dict/str_dict_push.c\
       src/dict/str_dict_print.c\
       src/dict/str_dict_get_back.c\
+      src/dict/str_dict_key.c\
 
 
 

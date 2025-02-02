@@ -7,7 +7,7 @@ int str_dict_print(t_str_dict *node)
 {
 	while (node != NULL)
 	{
-		printf("%s=%s\n", node->key,node->value);
+		printf("%s=%s\n", node->key, node->value);
 		node = node->next;
 	}
 	return (0);
