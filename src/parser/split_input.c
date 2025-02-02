@@ -11,32 +11,6 @@ t_char_list split_input(char *input)
 
 //閉じられていなかったときのエラーハンドリングを追加
 //かっこが閉じられていなかった場合の処理について検討の必要あり
-char *surch_operater(char **input)
-{
-	char    *head_element;
-
-	if (*input[0] == "'")
-		head_element = ft_substr(*input, 0, strchar(input[i], "'"));
-	else if (*input[0] == "'")
-		head_element = ft_substr(*input, 0, strchar(input[i], '"'));
-	else if (*input[0] == "(")
-		head_element = ft_strdup("(");
-	else if (*input[0] == ")")
-		head_element = ft_strdup(")");
-	else if (*input[0] == "&" && *input[1] == "&")
-		head_element = ft_strdup("&&");
-	else if (*input[0] == "|" && *input[1] == "|")
-		head_element = ft_strdup("||");
-	else if (*input[0] == "|")
-		head_element = ft_strdup("|");
-	else if (*input[0] == " ")
-		head_element = ft_strdup(" ");
-	else
-		head_element = NULL;
-	if (head_element != NULL)
-		update_input(input);
-	return (head_element);
-}
 
 void	update_input(char **input, char *head_element)
 {
