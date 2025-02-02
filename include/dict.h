@@ -22,6 +22,6 @@ t_str_dict *get_str_dict_by_key(\
 
 int str_dict_print(t_str_dict *node);
 
-int str_dict_add(t_str_dict **node, char *key, char *value);
+int str_dict_add(t_str_dict **node, char *key, char *value, void (*f)(void *));
 #endif
 
