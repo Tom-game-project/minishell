@@ -44,7 +44,7 @@ int char_list_push(t_char_list **node, char c)
 
 int char_list_push_str(t_char_list **node, char *str)
 {	
-	while (*str == '\0')
+	while (*str != '\0')
 	{
 		if (char_list_push(node, *str) == 1)// err
 			return (1);

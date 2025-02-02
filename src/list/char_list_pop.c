@@ -60,11 +60,13 @@ char char_list_pop(t_char_list **node, int index)
 	int		rvalue;
 	t_char_list	*head_p;
 
+	if (index < 0 && char_list_len(*node) <= index)
+		return ('\0');
 	head_p = pop_index_elem(node, index);
+	if (head_p == NULL)
+		return ('\0');
 	rvalue = head_p->data;
 	free(head_p);
-	return (rvalue);
-
 	return (rvalue);
 }
 
