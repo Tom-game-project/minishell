@@ -34,6 +34,7 @@ SRC = \
       src/list/char_list_get_back.c\
       src/list/char_list_clear.c\
       src/list/str_list_init.c\
+      src/list/str_list_get_ptr.c\
       src/list/str_list_get_back.c\
       src/list/str_list_push.c\
       src/list/str_list_pop.c\

@@ -7,7 +7,7 @@
  * @brief free:required
  * @param node_p_p
  */
-t_char_list	*pop_elem(t_char_list **node_p_p)
+static t_char_list	*pop_elem(t_char_list **node_p_p)
 {
 	t_char_list	*head_p;
 
@@ -27,7 +27,7 @@ t_char_list	*pop_elem(t_char_list **node_p_p)
 /// @param node_p_p
 /// @param index
 /// @return
-t_char_list	*pop_index_elem(t_char_list **node_p_p, int index)
+static t_char_list	*pop_index_elem(t_char_list **node_p_p, int index)
 {
 	t_char_list	*r_node;
 	t_char_list	*first_node;
