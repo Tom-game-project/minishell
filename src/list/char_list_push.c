@@ -39,7 +39,6 @@ int char_list_push(t_char_list **node, char c)
 	}
 	back_node_p->next = new_node_p;
 	return (0);
-
 }
 
 int char_list_push_str(t_char_list **node, char *str)

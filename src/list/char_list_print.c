@@ -10,8 +10,9 @@ int char_list_print(t_char_list *node)
 	i = 0;
 	while (i < l)
 	{
-		printf("[%c]\n", char_list_get_elem(node, i));
+		printf("[%c]", char_list_get_elem(node, i));
 		i += 1;
 	}
+	printf("\n");
 	return (0);
 }

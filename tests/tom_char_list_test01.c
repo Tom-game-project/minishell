@@ -3,11 +3,14 @@
 #include <stdlib.h>
 
 /// popが正常に動作するかのテスト
+/// ```bash
+/// make test TEST_FILE=tests/tom_char_list_test01.c
+/// ```
 int main()
 {
 	t_char_list *a;
 	char c;
-	
+
 	a = NULL;
 	char_list_push(&a, 'b');
 	char_list_push(&a, 'a');
@@ -21,3 +24,4 @@ int main()
 		printf("[%c]\n", c);
 	return (0);
 }
+
