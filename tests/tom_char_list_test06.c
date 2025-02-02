@@ -4,6 +4,10 @@
 #include <stdlib.h>
 
 /// insertが正常に動作するかのテスト
+/// ## チェック
+/// - leakをしない
+/// - 正しくデータが格納されている
+///
 /// ```bash
 /// make test TEST_FILE=tests/tom_char_list_test05.c
 /// ```

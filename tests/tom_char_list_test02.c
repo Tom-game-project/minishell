@@ -3,8 +3,13 @@
 #include <stdlib.h>
 
 /// popが正常に動作するかのテスト
+///
+/// ## チェック
+/// - leakをしない
+/// - 正しくデータが格納されている
+///
 /// ```bash
-/// make test TEST_FILE=tests/tom_char_list_test02.c
+/// make vtest TEST_FILE=tests/tom_char_list_test02.c
 /// ```
 int main()
 {

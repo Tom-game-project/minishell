@@ -3,9 +3,15 @@
 #include <stdio.h>
 
 /// insert関数が正常に動作するかのテスト
+/// 
+/// ## チェック
+/// - leakをしない
+/// - 正しくデータが格納されている
+///
 /// ```bash
-/// make test TEST_FILE=tests/tom_char_list_test03.c
+/// make vtest TEST_FILE=tests/tom_char_list_test03.c
 /// ```
+///
 int main()
 {
 	t_char_list *a;

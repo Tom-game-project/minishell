@@ -31,7 +31,9 @@ SRC = \
       src/list/char_list_get_ptr.c\
       src/list/char_list_insert.c\
       src/list/char_list_insert_str.c\
-      src/list/char_list_get_back.c
+      src/list/char_list_get_back.c\
+      src/list/char_list_clear.c\
+
 
 MAIN = \
       src/minishell.c
