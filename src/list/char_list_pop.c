@@ -1,20 +1,6 @@
 #include "list.h"
+#include "char_list.h"
 #include <stdlib.h>
-
-static t_char_list	*get_raw_ptr(t_char_list **node_p_p, int index)
-{
-	int	i;
-
-	i = 0;
-	while (i < index)
-	{
-		i += 1;
-		if (*node_p_p == NULL)
-			return (NULL);
-		*node_p_p = (*node_p_p)->next;
-	}
-	return (*node_p_p);
-}
 
 /**
  * pub pop_elem

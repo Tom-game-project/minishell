@@ -1,19 +1,6 @@
 #include "list.h"
 #include <stdlib.h>
-
-
-/**
- * private get_back
- * @brief free: not required
- */
-static t_char_list *get_back(t_char_list *node)
-{
-	if (node == NULL)
-		return (node);
-	while (node -> next != NULL)
-		node = node->next;
-	return (node);
-}
+#include "char_list.h"
 
 /** 
  * pub char_list_push
