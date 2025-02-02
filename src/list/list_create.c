@@ -1,13 +1,13 @@
 #include "list.h"
 
-t_list  *list_create(char *str)
+t_node  *node_create(char *str)
 {
-    t_list  *list;
+    t_node  *node;
 
-    list = (list *)malloc(sizeof(t_str_list));
-    if (list == NULL)
+    node = (node *)malloc(sizeof(t_str_node));
+    if (node == NULL)
         return (NULL);
-    list->str = ft_strdup(str);
-    list->next = NULL;
-    return (list);
+    node->str = ft_strdup(str);
+    node->next = NULL;
+    return (node);
 }

@@ -1,37 +1,51 @@
-#ifndef LIST_H
-# define LIST_H
+#ifndef node_H
+# define node_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdbool.h>
 
-typedef struct s_list t_list;
+typedef struct s_node t_node;
 
-struct  s_list
+struct  s_node
 {
 	char	*str;
-	s_list	*next;
+	t_node	*next;
 };
 
 //allocation
-t_list	*list_cerate(char *str);
+t_node	*node_cerate(char *str);
 
 //free
-void    list_free(t_list	*list);
+void	node_clear(t_node	 **node);
 
 //add
-void	*list_add(t_list *list, char *str);
+void	node_add(t_node  **node, char *str);
 
 //put
-void	*list_put(t_list *list, int	n, char *str);
+void	node_put(t_node  **node, int	index, char *str);
 
 //pop
-char	*list_pop(t_list *list, int	n)
+char	*node_pop(t_node  **node, int	index)
 
 //del
-t_list	*list_del(t_list *list, int	n);
+void	node_del(t_node  **node, int	index);
 
 //sarch
-int		list_sarch(t_list *list, char *str);
+int		node_index_sarch(t_node  **node, char *str);
+
+char	*node_string_sarch(t_node  **node, int	index);
 
 #endif
+
+// pop(t_node **, int index)
+// // index番目の要素を取り出す
+// push(t_node **, char *str)
+// //最後尾に追加
+// insert(t_node **, int index, char *str)
+// //index番目に追加
+// clear(t_node **)
+// //すべての要素を消す(t_nodeをfree)
+// del(t_node **)
+// //　すべての要素を消す(もし追加する要素がchar *がすべてmallocしたものであり、
+// //かつすべての要素を消す前にfreeをしたい場合)(t_nodeもfree)

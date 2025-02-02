@@ -1,12 +1,11 @@
 #include "list.h"
 
-void	*list_add(t_list *list, char *str)
+void	node_add(t_node **node, char *str)
 {
-    t_list *head;
+    t_node*head;
 
-    head = list;
-    while (list->next != NULL)
+    head = node;
+    while (node->next != NULL)
         *head = head->next;
-    head->next = list_create(str);
-    return (list);
+    head->next = node_create(str);
 }
