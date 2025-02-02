@@ -22,6 +22,13 @@ SRC = \
       src/built-in/export.c\
       src/built-in/pwd.c\
       src/built-in/unset.c\
+      src/list/char_list_push.c\
+      src/list/char_list_pop.c\
+      src/list/char_list_len.c\
+      src/list/char_list_print.c\
+      src/list/char_list_init.c\
+      src/list/char_list_get_elem.c
+
 
 MAIN = \
       src/minishell.c
