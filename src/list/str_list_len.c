@@ -8,8 +8,8 @@ int str_list_len(t_str_list *node)
 	i = 0;
 	while (node != NULL)
 	{
-		node = node->next;
 		i += 1;
+		node = node->next;
 	}
 	return (i);
 }

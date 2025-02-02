@@ -8,7 +8,7 @@ int	char_list_len(t_char_list *node)
 	i = 0;
 	while (node != NULL)
 	{
-		i++;
+		i += 1;
 		node = node->next;
 	}
 	return (i);

@@ -11,7 +11,7 @@ int char_list_insert_str(t_char_list **node, int index,char *str)
 	t_char_list	*start_node;
 	t_char_list	*str_list;
 
-	target_node = get_ptr(*node, index);
+	target_node = char_list_get_ptr(*node, index);
 	str_list = NULL;
 	char_list_push_str(&str_list, str);
 	if (str_list == NULL)
@@ -20,7 +20,7 @@ int char_list_insert_str(t_char_list **node, int index,char *str)
 	new_node_last->next = target_node;
 	if (0 < index)
 	{
-		start_node = get_ptr(*node, index - 1);
+		start_node = char_list_get_ptr(*node, index - 1);
 		start_node->next = str_list;
 	}
 	else

@@ -7,7 +7,7 @@
  * @brief free:required
  * @param node_p_p
  */
-static t_char_list	*pop_elem(t_char_list **node_p_p)
+static t_char_list	*char_list_pop_elem(t_char_list **node_p_p)
 {
 	t_char_list	*head_p;
 
@@ -27,17 +27,18 @@ static t_char_list	*pop_elem(t_char_list **node_p_p)
 /// @param node_p_p
 /// @param index
 /// @return
-static t_char_list	*pop_index_elem(t_char_list **node_p_p, int index)
+static t_char_list	*char_list_pop_index_elem(t_char_list **node_p_p, int index)
 {
 	t_char_list	*r_node;
-	t_char_list	*first_node;
+	t_char_list	*pre_node;
 
 	if (index == 0)
-		return (pop_elem(node_p_p));
-	first_node = *node_p_p;
-	r_node = get_raw_ptr(node_p_p, index);
+		return (char_list_pop_elem(node_p_p));
+	// index != 0
+	r_node = char_list_get_ptr(*node_p_p, index);
+	pre_node = char_list_get_ptr(*node_p_p, index - 1);
+	pre_node->next = r_node->next;
 	r_node->next = NULL;
-	*node_p_p = first_node;
 	return (r_node);
 }
 
@@ -48,7 +49,7 @@ char char_list_pop(t_char_list **node, int index)
 
 	if (index < 0 && char_list_len(*node) <= index)
 		return ('\0');
-	head_p = pop_index_elem(node, index);
+	head_p = char_list_pop_index_elem(node, index);
 	if (head_p == NULL)
 		return ('\0');
 	rvalue = head_p->data;

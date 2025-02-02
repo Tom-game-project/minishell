@@ -40,6 +40,7 @@ SRC = \
       src/list/str_list_pop.c\
       src/list/str_list_print.c\
       src/list/str_list_len.c\
+      src/list/str_list_clear.c\
       src/dict/str_dict_init.c\
       src/dict/str_dict_set.c\
       src/dict/str_dict_add.c\

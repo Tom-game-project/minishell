@@ -18,14 +18,14 @@ int	char_list_insert(t_char_list **node, int index, char c)
 	t_char_list	*new_node;
 	t_char_list	*start_node;
 
-	target_node = get_ptr(*node, index);
+	target_node = char_list_get_ptr(*node, index);
 	new_node = init_char_list(c);
 	if (new_node == NULL)
 		return (1);
 	new_node->next = target_node;
 	if (0 < index)
 	{
-		start_node = get_ptr(*node, index - 1);
+		start_node = char_list_get_ptr(*node, index - 1);
 		start_node->next = new_node;
 	}
 	else

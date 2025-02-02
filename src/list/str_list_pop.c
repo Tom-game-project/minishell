@@ -30,14 +30,14 @@ static t_str_list	*pop_elem(t_str_list **node_p_p)
 static t_str_list	*pop_index_elem(t_str_list **node_p_p, int index)
 {
 	t_str_list	*r_node;
-	t_str_list	*first_node;
+	t_str_list	*pre_node;
 
 	if (index == 0)
 		return (pop_elem(node_p_p));
-	first_node = *node_p_p;
 	r_node = str_list_get_ptr(*node_p_p, index);
+	pre_node = str_list_get_ptr(*node_p_p, index - 1);
+	pre_node->next = r_node->next;
 	r_node->next = NULL;
-	*node_p_p = first_node;
 	return (r_node);
 }
 

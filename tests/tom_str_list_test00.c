@@ -9,15 +9,23 @@
 int main()
 {
 	t_str_list *a;
-
+	//char *s;
 	a = NULL;
-	str_list_push(&a, "hello");
+	str_list_push(&a, "hello1");
 	str_list_push(&a, "world");
-	str_list_push(&a, "world!");
-	str_list_push(&a, "world");
+	str_list_push(&a, "apple");
+	str_list_push(&a, "orange");
 	str_list_print(a);
 	printf("len %d\n", str_list_len(a));
 	printf("poped %s\n",str_list_pop(&a, 0));
 	printf("poped %s\n",str_list_pop(&a, 1));
+	printf("hello world\n");
+	str_list_print(a);
+	printf("len %d\n", str_list_len(a));
+
+	//while ((s = str_list_pop(&a, 0)) != NULL)
+	//{
+	//	printf("rrr %s\n", s);
+	//}
 	return (0);
 }
