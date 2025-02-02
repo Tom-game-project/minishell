@@ -1,10 +1,9 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "list.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdbool.h>
 
 typedef enum    e_operator t_operator;
 
@@ -30,8 +29,8 @@ struct  s_ast
 	char        **argv;
 };
 
-t_ast  *parse_recursive(t_ast *ast, char *input);
-t_ast  *allocation_ast(void);
-void    check_operator(t_ast *ast, char *input);
+char	*search_operater(char **input);
+void	update_input(char **input, char *head_element);
+size_t	find_chr(char *input, char find);
 
 #endif

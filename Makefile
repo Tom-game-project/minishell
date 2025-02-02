@@ -14,24 +14,26 @@ CFLAGS = -Wextra -Werror -Wall
 TEST_FLAGS = -g
 
 SRC = \
-      src/built-in/cd.c\
-      src/built-in/dummy.c\
-      src/built-in/echo.c\
-      src/built-in/env.c\
-      src/built-in/exit.c\
-      src/built-in/export.c\
-      src/built-in/pwd.c\
-      src/built-in/unset.c\
-      src/list/char_list_push.c\
-      src/list/char_list_pop.c\
-      src/list/char_list_len.c\
-      src/list/char_list_print.c\
-      src/list/char_list_init.c\
-      src/list/char_list_get_elem.c
-
+	src/built-in/cd.c\
+	src/built-in/dummy.c\
+	src/built-in/echo.c\
+	src/built-in/env.c\
+	src/built-in/exit.c\
+	src/built-in/export.c\
+	src/built-in/pwd.c\
+	src/built-in/unset.c\
+	src/list/char_list_push.c\
+	src/list/char_list_pop.c\
+	src/list/char_list_len.c\
+	src/list/char_list_print.c\
+	src/list/char_list_init.c\
+	src/list/char_list_get_elem.c\
+	src/parser/search_operater.c\
+	src/parser/update_input.c\
+	src/parser/find_chr.c
 
 MAIN = \
-      src/minishell.c
+	src/minishell.c
 
 
 # test rule
@@ -41,6 +43,10 @@ TEST_NAME = test_
 # example rule
 EXAMPLE_FILE := examples/dummy_example00.c
 EXAMPLE_NAME = example_
+
+LIBFT_DIR = src/libft
+LIBFT_NAME = $(LIBFT_DIR)/libft.a
+LIBFT_HEADER = $(LIBFT_DIR)/libft.h
 
 #########
 
@@ -52,16 +58,22 @@ NAME = minishell
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(MAIN_OBJ)
-	$(CC) $(CFLAGS) -Iinclude -o $(NAME) $(OBJ) $(MAIN_OBJ)
+$(NAME): $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
+	$(CC) $(CFLAGS) -Iinclude -o $(NAME) $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
+
+$(LIBFT_NAME): $(LIBFT_HEADER)
+	make -C $(LIBFT_DIR)
+$(LIBFT_HEADER):
+	git submodule init
+	git submodule update
 
 # ここにはあえてフラグをつけていない
-test: $(OBJ) $(TEST_OBJ)
-	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ)
+test: $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	./test_
 
-vtest: $(OBJ) $(TEST_OBJ)
-	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ)
+vtest: $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(VALGRIND) $(VALGRINDFLAGS) ./test_
 
 example:

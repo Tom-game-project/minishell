@@ -1,14 +1,24 @@
-//
-//#include "built_in.h"
-//
+
+#include "built_in.h"
+#include "exec.h"
+#include "libft.h"
+#include "list.h"
+#include "parser.h"
+#include "pipe.h"
+#include "sig.h"
+
+
+#include <stdio.h>
 //int main(int argc, char *argv[], char *envp[])
-//{
-//	int exit_status;
-//
-//	signal_handler(signal);
-//	exit_status = main_loop(envp);
-//	return (exit_status);
-//}
+int main(void)
+{
+	int exit_status = 1;
+
+	// signal_handler(signal);
+	// exit_status = main_loop(envp);
+    printf("%d", exit_status);
+	return (exit_status);
+}
 //
 //int signal_handler(void)
 //{
