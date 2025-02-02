@@ -4,14 +4,23 @@
 
 int main(void)
 {
+    int     i;
     char *input;
     char *operater;
 
-    input = ft_strdup("(sleep 3 | echo echo hello");
-    operater = search_operater(&input);
-    printf("%s\n", operater);
-    printf("%s\n", input);
+    i = 0;
+    input = ft_strdup("ls -l | grep .c > results.txt | hello&&||");
+    while (input != NULL)
+    {
+        operater = search_operater(&input);
+        if (*operater != ' ')
+        {
+            printf("%d\n", i);
+            printf("operater:%s\n", operater);
+            printf("input:%s\n", input);
+        }
+        free(operater);
+        i++;
+    }
     free(input);
-    free(operater);
 }
-

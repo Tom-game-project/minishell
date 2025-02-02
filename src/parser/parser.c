@@ -1,71 +1,67 @@
-# include "parser.h"
+#include "parser.h"
 
-// t_ast   *parser(char *input)
-// {
-// 	t_char_list	*input;
-// 	t_ast		*ast;
+t_ast  *allocation_ast(void);
+void	parce_cmd_args(t_ast *ast, char *element, char    **input);
+void	parce_control_operators(t_ast *ast, char *element, char    **input);
+void	parce_redirection_operators(t_ast *ast, char *element, char    **input);
 
-// 	input = NULL;
-// 	ast = NULL;
-// 	input = split_input(input);
-// 	ast = parse_recursive(ast, tokens);
-// 	return (ast);
-// }
+t_ast   *parser(char *input)
+{
+	t_ast		*ast;
 
-// t_ast  *parse_recursive(t_ast *ast, t_char_list	*input)
-// {   
-// 	if (input->data ==NULL)
-// 	{
-// 		ast = NULL;
-// 		return (ast);
-// 	}
-// 	ast = allocation
-// 	parse_recursive(ast, tokens);
-// 	return (ast);
-// }
+    ast = allocation_ast();
+	ast = parse_recursive(ast, &input);
+	return (ast);
+}
 
-// t_ast  *allocation_ast(void)
-// {
-// 	t_ast *ast;
+t_ast  *allocation_ast(void)
+{
+	t_ast *ast;
 
-// 	ast = (t_ast *)malloc(sizeof(t_ast));
-// 	if (ast == NULL)
-// 		exit(1);
-// 	return (ast);
-// }
+	ast = (t_ast *)malloc(sizeof(t_ast));
+	if (ast == NULL)
+		exit(1);
+	return (ast);
+}
 
-	
-// void    check_operator(t_ast *ast, char *input)
-// {
-// 	""''
+t_ast   *parse_recursive(t_ast *ast, char    **input)
+{   
+	char	*element;
 
-// 	//and or
-// 	// if (ft_strnstr(input, "&&", ft_strlen(input))
-// 	//     || ft_strnstr(input, "||", ft_strlen(input)))
-// 	// {
-// 	//     if (ft_strnstr(input, "&&", ft_strlen(input))
-// 	//     < ft_strnstr(input, "||", ft_strlen(input)))
-// 	//         (input, "&&");
-// 	//     else
-// 	//         (input, "||");
-// 	// }
-// }
+	if (input == NULL)
+		return ;
+	element = search_operater(&input)
+	if (ft_strncmp(element, "&&", 2) == 0 || ft_strncmp(element, "||", 2) == 0
+		|| ft_strncmp(element, "(", 1) == 0)
+		parce_control_operators(ast, element, &input);
+	else if (ft_strncmp(element, "<<", 2) == 0 || ft_strncmp(element, ">>", 2) == 0
+		|| ft_strncmp(element, "<", 1) == 0 || ft_strncmp(element, ">", 1) == 0
+		|| ft_strncmp(element, "|", 1) == 0)
+		parce_redirection_operators(ast, element &input);
+	else
+		parce_cmd_args(ast, element &input);
+	ast->left = allocation_ast();
+	parse_recursive(ast->left, &input);
+	return ;
+}
 
-// void    split_and_or(t_ast *ast, char *input)
-// {
-// 	char    *left_line;
-// 	char    *right_line;
+void	parce_cmd_args(t_ast *ast, char *element, char    **input)
+{
+	//格納処理
+	ast->right = allocation_ast();
+	parse_recursive(ast->right, &input);
+	return ;
+}
 
-// 	if (ft_strnstr(input, "&&", ft_strlen(input))
-// 		|| ft_strnstr(input, "||", ft_strlen(input)))
-// 	{
-// 		if (ft_strnstr(input, "&&", ft_strlen(input))
-// 		< ft_strnstr(input, "||", ft_strlen(input)))
-// 		{
-// 			left_line = substr(input, (int)strcheck(input, '&'), );
-// 			right_line = substr
-// 		}
-// 		else
-// 			(input, "||");
-// 	}
-// }
+void	parce_control_operators(t_ast *ast, char *element, char    **input)
+{
+	//格納処理
+	ast->left = allocation_ast();
+	parse_recursive(ast->left, &input);
+	return ;
+}
+
+void	parce_redirection_operators(t_ast *ast, char *element, char    **input)
+{
+	//格納処理
+}
