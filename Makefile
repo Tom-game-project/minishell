@@ -30,7 +30,9 @@ SRC = \
 	src/list/char_list_get_elem.c\
 	src/parser/search_operater.c\
 	src/parser/update_input.c\
-	src/parser/find_chr.c
+	src/parser/find_chr.c\
+	src/parser/parser.c\
+	src/parser/allocation_ast.c
 
 MAIN = \
 	src/minishell.c

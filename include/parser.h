@@ -2,6 +2,7 @@
 # define PARSER_H
 
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef enum    e_ctl_operator t_ctl_operator;
 
@@ -10,8 +11,6 @@ enum	e_ctl_operator
 	e_ctlope_none,
 	e_ctlope_and,// &&
 	e_ctlope_or,// ||
-	e_ctlope_lpar,// (
-	e_ctlope_rpar,// )
 };
 
 typedef enum    e_rdt_operator t_rdt_operator;
@@ -38,11 +37,12 @@ struct  s_ast
 	char        	**argv;
 };
 
+t_ast   *separate_and_store_control_operators(t_ast  *ast, char **input);
 char	*search_operater(char **input);
 void	update_input(char **input, char *head_element);
 size_t	find_chr(char *input, char find);
 t_ast  *allocation_ast(void);
-t_ast   *parse_recursive(t_ast *ast, char *element, char    **input);
+t_ast   *parse_recursive(t_ast *ast, char    **input);
 
 //checker_is.c
 bool is_string(char *element);
@@ -53,5 +53,11 @@ bool is_parce_control_operators(char *element);
 void	parce_control_operators(t_ast *ast, char *element, char    **input);
 void	parce_redirection_operators(t_ast *ast, char *element, char    **input);
 void	parce_cmd_args(t_ast *ast, char *element, char    **input);
+
+//update_input.c
+void	update_input(char **input, char *head_element);
+
+//allocation_ast.c
+t_ast  *allocation_ast(void);
 
 #endif
