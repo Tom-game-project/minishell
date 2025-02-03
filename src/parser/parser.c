@@ -6,20 +6,16 @@ t_ast   *parser(char *input)
 	t_ast		*ast;
 
     ast = allocation_ast();
-	ast = parse_recursive(ast, search_operater(&input), &input);
-	return (ast);
-}
-
-t_ast   *parse_recursive(t_ast *ast, char    **input)
-{
-	if (input == NULL)
+	ast = separate_and_store_control_operators(ast, &input);
+	if (ast != NULL)
 		return (ast);
-	separate_and_store_control_operators(ast, input);
-	separate_and_store_store_redirection_operators(ast, input);
-	separate_and_store_cmd_args(ast, input);
-	ast->right_ast = allocation_ast();
-	parse_recursive(ast->right_ast, input);
-	return (ast);
+	ast = separate_and_store_store_redirection_operators(ast, &input);
+	if (ast != NULL)
+		return (ast);
+	ast = separate_and_store_cmd_args(ast, &input);
+	if (ast != NULL)
+		return (ast);
+	return (NULL);
 }
 
 	//

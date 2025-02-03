@@ -12,6 +12,8 @@ t_ast   *separate_and_store_control_operators(t_ast  *ast, char **input)
 	if (*input == NULL)
 		return (NULL);
 	head_element = search_ctl_operater(*input);
+	if (head_element == NULL)
+		return (NULL);
 	update_input(input, head_element);
 	store_head_element(ast, head_element);
 	free(head_element);

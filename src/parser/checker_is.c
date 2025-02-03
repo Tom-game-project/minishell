@@ -47,7 +47,7 @@ bool is_control_operators(char *element)
 	}
 	return (false);
 }
-bool is_parce_control_operators(char *element)
+bool is_redirect_operators(char *element)
 {
 	if (ft_strncmp(element, "<<", 2) == 0)
 		return (true);
