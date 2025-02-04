@@ -39,34 +39,49 @@ struct s_list_args
 /// クォーテーション外の処理
 static t_anchor anchor_out_proc(char c, t_list_args *group_args)
 {
-	if (!char_list_is_empty(*group_args->path_group))
+	if (c == '\'') // quotation open
 	{
-		if (is_valid_env_char(c))
+		if (!char_list_is_empty(*group_args->path_group)) // 空じゃないとき
 		{
-			char_list_push(group_args->path_group, c);
-		}
-		else
-		{
-			str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group)); // str_listにstr_groupを追加
-			char_list_clear(group_args->str_group);
-			str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));// str_listに追加
+			str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));
 			char_list_clear(group_args->path_group);
 		}
-		if (c == '\'')
-			return (e_anchor_q);
-		else if (c == '"')
-			return (e_anchor_dq);
-		else
-			return (e_anchor_out);
-	}
-	else if (c == '\'') // quotation open
 		return (e_anchor_q);
+	}
 	else if (c == '"')// double quotation open
+	{
+		if (!char_list_is_empty(*group_args->path_group)) // 空じゃないとき
+		{
+			str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));
+			char_list_clear(group_args->path_group);
+		}
 		return (e_anchor_dq);
+	}
 	else if (c == '$')
+	{
+		if (!char_list_is_empty(*group_args->str_group))
+		{
+			str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group));
+			char_list_clear(group_args->str_group);
+		}
 		char_list_push(group_args->path_group, c);
-	else
-		char_list_push(group_args->str_group, c);
+	}
+	else{
+		if (!char_list_is_empty(*group_args->path_group))
+		{
+			if (is_valid_env_char(c))
+				char_list_push(group_args->path_group, c);
+			else
+			{
+				str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));
+				char_list_clear(group_args->path_group);
+			}
+		}
+		else
+		{
+			char_list_push(group_args->str_group, c);
+		}	
+	}
 	return (e_anchor_out);
 }
 
@@ -76,7 +91,7 @@ static t_anchor anchor_q_proc(char c, t_list_args *group_args)
 	if (c == '\'') // quotation open
 	{
 		str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group)); // str_listにstr_groupを追加
-		char_list_clear(group_args->path_group);
+		char_list_clear(group_args->str_group);
 		return (e_anchor_out);
 	}
 	else
@@ -90,25 +105,6 @@ static t_anchor anchor_dq_proc(char c, t_list_args *group_args)
 {
 	if (!char_list_is_empty(*group_args->path_group))
 	{
-		if (is_valid_env_char(c))
-		{
-			char_list_push(group_args->path_group, c);
-		}
-		else
-		{
-			str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group)); // str_listにstr_groupを追加
-			char_list_clear(group_args->str_group);
-			char_list_push(group_args->str_group, c);
-			str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));// str_listに追加
-			char_list_clear(group_args->path_group);
-		}
-		if (c == '"'){
-			str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group)); // str_listにstr_groupを追加
-			char_list_clear(group_args->str_group);
-			return (e_anchor_out);
-		}
-		else
-			return (e_anchor_dq);
 	}
 	else if (c == '"')// double quotation open
 	{
@@ -187,6 +183,10 @@ t_str_list *expand_string(char *str, t_str_dict *env_dicts)
 		}
 	       	// else is unreachable
 		str++;
+	}
+	if (!char_list_is_empty(path_group))
+	{
+		str_list_push(&rlist, char_list_to_str(path_group));
 	}
 	return (rlist);
 }

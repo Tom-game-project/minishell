@@ -5,11 +5,15 @@
 #include "dict.h"
 
 
-
+///
+///
+/// ```
+/// make test TEST_FILE=tests/tom_parser_expand_string_test00.c
+/// ```
 int main()
 {
 	t_str_list *s;
-	char *str = "\"abc'$HELLO'cba\"hello'\"'\"$PATH\"hello'\"aaaa'world $PATH'";
+	char *str = "aaa$HELLO'$WORLD'$HELLOaaa";
 
 	//s = expand_string("\"  $PATH  \"\"   hello  \"" , NULL);
 	s = expand_string(
