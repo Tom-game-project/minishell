@@ -114,6 +114,7 @@ example:
 clean:
 	$(RM) $(RMFLAGS) $(OBJ)
 fclean: clean
+	make fclean -C $(LIBFT_DIR)
 	$(RM) $(RMFLAGS) $(NAME)
 re: fclean all
 
