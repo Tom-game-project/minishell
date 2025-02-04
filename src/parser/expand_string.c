@@ -36,65 +36,66 @@ struct s_list_args
 	t_char_list **str_group;
 };
 
+
+/// path_groupを展開してrlistに追加する
+static int push_expand_env(t_list_args *group_args)
+{
+	if (!char_list_is_empty(*group_args->path_group)) // 空じゃないとき
+	{
+		str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));
+		char_list_clear(group_args->path_group);
+	}
+	return (0);
+}
+
+/// str_groupをrlistに追加する
+static int push_str_group(t_list_args *group_args)
+{
+	if (!char_list_is_empty(*group_args->str_group))
+	{
+		str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group));
+		char_list_clear(group_args->str_group);
+	}
+	return (0);
+}
+
 /// クォーテーション外の処理
 static t_anchor anchor_out_proc(char c, t_list_args *group_args)
 {
 	if (c == '\'') // quotation open
 	{
-		if (!char_list_is_empty(*group_args->path_group)) // 空じゃないとき
-		{
-			str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));
-			char_list_clear(group_args->path_group);
-		}
+		push_expand_env(group_args);
+		push_str_group(group_args);
 		return (e_anchor_q);
 	}
 	else if (c == '"')// double quotation open
 	{
-		if (!char_list_is_empty(*group_args->path_group)) // 空じゃないとき
-		{
-			str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));
-			char_list_clear(group_args->path_group);
-		}
+		push_expand_env(group_args);
+		push_str_group(group_args);
 		return (e_anchor_dq);
 	}
 	else if (c == '$')
 	{
-		if (!char_list_is_empty(*group_args->str_group))
-		{
-			str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group));
-			char_list_clear(group_args->str_group);
-		}
+		push_str_group(group_args);
 		char_list_push(group_args->path_group, c);
 	}
-	else{
+	else
 		if (!char_list_is_empty(*group_args->path_group))
-		{
 			if (is_valid_env_char(c))
 				char_list_push(group_args->path_group, c);
 			else
-			{
-				str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));
-				char_list_clear(group_args->path_group);
-			}
-		}
+				push_str_group(group_args);
 		else
-		{
 			char_list_push(group_args->str_group, c);
-		}	
-	}
 	return (e_anchor_out);
 }
 
 /// シングルクォーテーション内の処理
 static t_anchor anchor_q_proc(char c, t_list_args *group_args)
 {
-	if (c == '\'') // quotation open
+	if (c == '\'') // quotation close
 	{
-		if (!char_list_is_empty(*group_args->str_group))
-		{
-			str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group));
-			char_list_clear(group_args->str_group);
-		}
+		push_str_group(group_args);
 		return (e_anchor_out);
 	}
 	else

@@ -16,6 +16,7 @@ int main()
 	t_str_dict *d;
 
 	char *str = "aaa$HELLO'$WORLD'$HELLOaaa";
+	//char *str = "aaa'$WORLD'$HELLOaaa";
 	d = NULL;
 	str_dict_add(
 		&d,
