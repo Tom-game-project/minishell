@@ -36,8 +36,6 @@ static char *search_rdt_operater(char *input)
 		head_element = ft_strdup(">");
 	else if (*input[0] == '<')
 		head_element = ft_strdup("<");
-	else if (*input[0] == ' ')
-		head_element = ft_strdup(" ");
 	else
 		head_element = rdt_extract_operands(*input);
 	return (head_element);
@@ -49,14 +47,17 @@ static char *rdt_extract_operands(char *input)
 	char	*head_element;
 
 	i = 0;
-	while (input[i] != '\0' && is_parce_redirect_operators(input + i))
+	while (input[i] != '\0' && is_redirect_operators(input + i))
 		i++;
+	if (i == 0)
+		return (NULL);
 	head_element = ft_substr(input, 0, i);
 	return (head_element);
 }
 
 static void store_head_element(t_ast  *ast, char *head_element)
 {
+	trim_spc(&head_element);
 	if (head_element[0] == '|')
 		ast->rdt = e_rdtope_pipe;
 	else if (ft_strncmp(head_element, ">>", 2) == 0)

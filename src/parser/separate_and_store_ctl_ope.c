@@ -47,14 +47,17 @@ static char *ctl_extract_operands(char *input)
 	char	*head_element;
 
 	i = 0;
-	while (input[i] != '\0' && is_parce_control_operators(input + i))
+	while (input[i] != '\0' && is_control_operators(input + i))
 		i++;
+	if (i == 0)
+		return (NULL);
 	head_element = ft_substr(input, 0, i);
 	return (head_element);
 }
 
 void	store_head_element(t_ast  *ast, char *head_element)
 {
+	trim_spc(&head_element);
 	if (ft_strncmp(head_element, "&&", 2) == 0)
 		ast->ctlope = e_ctlope_and;
 	else if (ft_strncmp(head_element, "||", 2) == 0)

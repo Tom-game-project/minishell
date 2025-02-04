@@ -7,6 +7,6 @@ t_ast  *allocation_ast(void)
 
 	ast = (t_ast *)malloc(sizeof(t_ast));
 	if (ast == NULL)
-		exit(1);
+		exit(EXIT_FAILURE);
 	return (ast);
 }
