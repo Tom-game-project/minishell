@@ -22,6 +22,7 @@ int main()
 	);
 	printf("test case [%s]\n", str);
 	str_list_print(s);
+	str_list_clear(&s, free);
 	//printf("hello world\n");
 	return (0);
 }

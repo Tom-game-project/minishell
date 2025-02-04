@@ -90,8 +90,11 @@ static t_anchor anchor_q_proc(char c, t_list_args *group_args)
 {
 	if (c == '\'') // quotation open
 	{
-		str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group)); // str_listにstr_groupを追加
-		char_list_clear(group_args->str_group);
+		if (!char_list_is_empty(*group_args->str_group))
+		{
+			str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group));
+			char_list_clear(group_args->str_group);
+		}
 		return (e_anchor_out);
 	}
 	else
@@ -187,6 +190,7 @@ t_str_list *expand_string(char *str, t_str_dict *env_dicts)
 	if (!char_list_is_empty(path_group))
 	{
 		str_list_push(&rlist, char_list_to_str(path_group));
+		char_list_clear(&path_group);
 	}
 	return (rlist);
 }
