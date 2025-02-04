@@ -52,10 +52,8 @@ SRC = \
       src/dict/str_dict_get_back.c\
       src/dict/str_dict_key.c\
 
-
-
 MAIN = \
-      src/minishell.c
+	src/minishell.c
 
 # test rule
 TEST_FILE := tests/dummy_test.c
@@ -64,6 +62,10 @@ TEST_NAME = test_
 # example rule
 EXAMPLE_FILE := examples/dummy_example00.c
 EXAMPLE_NAME = example_
+
+LIBFT_DIR = src/libft
+LIBFT_NAME = $(LIBFT_DIR)/libft.a
+LIBFT_HEADER = $(LIBFT_DIR)/libft.h
 
 #########
 
@@ -75,16 +77,22 @@ NAME = minishell
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(MAIN_OBJ)
-	$(CC) $(CFLAGS) -Iinclude -o $(NAME) $(OBJ) $(MAIN_OBJ)
+$(NAME): $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
+	$(CC) $(CFLAGS) -Iinclude -o $(NAME) $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
+
+$(LIBFT_NAME): $(LIBFT_HEADER)
+	make -C $(LIBFT_DIR)
+$(LIBFT_HEADER):
+	git submodule init
+	git submodule update
 
 # ここにはあえてフラグをつけていない
-test: $(OBJ) $(TEST_OBJ)
-	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ)
+test: $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	./test_
 
-vtest: $(OBJ) $(TEST_OBJ)
-	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ)
+vtest: $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(VALGRIND) $(VALGRINDFLAGS) ./test_
 
 example:

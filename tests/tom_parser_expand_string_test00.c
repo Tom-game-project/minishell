@@ -3,7 +3,7 @@
 #include "parser.h"
 #include "list.h"
 #include "dict.h"
-
+#include "libft.h"
 
 ///
 ///
@@ -17,7 +17,12 @@ int main()
 
 	char *str = "aaa$HELLO'$WORLD'$HELLOaaa";
 	d = NULL;
-	str_dict_add(&d, "HELLO", "HELLO_VALUE", free);
+	str_dict_add(
+		&d,
+		ft_strdup("HELLO"),
+		ft_strdup("HELLO_VALUE"), 
+		free
+	);
 	// str_dict_add();
 	//s = expand_string("\"  $PATH  \"\"   hello  \"" , NULL);
 	s = expand_string(

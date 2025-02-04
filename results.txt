@@ -1,0 +1,3 @@
+cc -Wextra -Werror -Wall -Iinclude -c tests/kaara_search_operater_test.c -o tests/kaara_search_operater_test.o
+cc -g -Iinclude -o test_ src/built-in/cd.o src/built-in/dummy.o src/built-in/echo.o src/built-in/env.o src/built-in/exit.o src/built-in/export.o src/built-in/pwd.o src/built-in/unset.o src/list/char_list_push.o src/list/char_list_pop.o src/list/char_list_len.o src/list/char_list_print.o src/list/char_list_init.o src/list/char_list_get_elem.o src/parser/search_operater.o src/parser/update_input.o src/parser/find_chr.o tests/kaara_search_operater_test.o src/libft/libft.a
+valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes -q ./test_

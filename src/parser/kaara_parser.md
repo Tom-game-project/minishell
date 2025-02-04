@@ -1,65 +1,39 @@
-```c
-typedef enum e_operator t_operator;
-enum e_operator
-{
-	e_ope
-	e_ope_redirect_i, // <
-	e_ope_redirect_o, // >
-	e_ope_heredoc_i,  // <<
-	e_ope_heredoc_o,  // >>
-	e_ope_and,        // &&
-	e_ope_or          // || 
-};
 
-typedef struct s_ast t_ast
+## parse要件
+課題で要求されていない、閉じられていない引用符や特殊文字（例: \（バックスラッシュ）、;（セミコロン）など）を解釈しないこと。
 
-struct s_ast
-{
-	t_ast *next_ast;
-	t_operator ope;
-	t_ast *down_ast;
-	char *cmd;
-	char *argv;
-};
+シングルクォート ' を適切に処理し、引用されたシーケンス内のメタ文字の解釈を防ぐこと。
+
+ダブルクォート " を適切に処理し、引用されたシーケンス内のメタ文字（ただし $（ドル記号）を除く）の解釈を防ぐこと。
+
+リダイレクションを実装すること:
 ```
-```c
-t_ast *ast
+< は入力をリダイレクトする。
+> は出力をリダイレクトする。
+<< は区切り文字を指定し、その区切り文字を含む行が現れるまで入力を読み取る（ただし、履歴を更新する必要はありません）。
+>> は出力を追記モードでリダイレクトする。
+パイプ（| 文字）を実装すること。パイプライン内の各コマンドの出力は、次のコマンドの入力にパイプを通じて接続されます。
+```
 
-// echo $(ls -la | cat > outfile) | grep infile
+環境変数（$ に続く文字列）を適切に処理し、それらの値に展開すること。
 
+$? を処理し、直前に実行されたフォアグラウンドパイプラインの終了ステータスに展開すること。
+優先順位を示すための括弧を用いた && と || を実装すること。
 
-// struct s_ast
-// {
-// 	t_ast *next_ast: 
-// 		struct s_ast
-// 		{
-// 			t_ast *next_ast;
-// 			t_operator ope; |
-// 			t_ast *down_ast;	
-// 			char *cmd; = grep
-// 			char *argv; = infile
-//         };
-// 	t_operator ope;
-// 	t_ast *down_ast;
-// 		struct s_ast
-// 		{
-// 			t_ast *next_ast;
-// 				struct s_ast
-// 				{
-// 					t_ast *next_ast;
-// 					t_operator ope;
-// 					t_ast *down_ast;
-// 					char *cmd; = cat
-// 					char *argv; = outfile
-// 				};
-// 			t_operator ope;
-// 			t_ast *down_ast;
-// 			char *cmd; ls
-// 			char *argv; -la
-//         };
-// 	char *cmd; //= echo
-// 	char *argv;
-// };
+## operatorの挙動
+
+### &&
+```
+左側のコマンドが成功（終了ステータス = 0）の場合のみ、右側のコマンドを実行する。
+
+左側のコマンドが失敗（終了ステータス ≠ 0）の場合、右側のコマンドは実行されない。
+```
+
+### ||
+```
+左側のコマンドが失敗（終了ステータス ≠ 0）した場合に、右側のコマンドを実行する。
+
+左側のコマンドが成功（終了ステータス = 0）した場合、右側のコマンドは実行されない
 ```
 
 ```c
@@ -72,7 +46,7 @@ struct s_ast
 		{
 			t_ast *next_ast;
 			t_operator ope; 
-			t_ast *down_ast;	
+			t_ast *down_ast;
 			char *cmd; grep
 			char *argv; infile
         };
@@ -84,7 +58,7 @@ struct s_ast
 				struct s_ast
 				{
 					t_ast *next_ast; ls -la 
-					t_operator ope; | 
+					t_operator ope; |
 					t_ast *down_ast;  cat > outfile
 					char *cmd; NULL
 					char *argv; NULL
@@ -98,19 +72,4 @@ struct s_ast
 	char *argv; // = NULL
 };
 
-
-fork_ope()
-{
-	int spawn_child()
-	{
-	fork
-	pipe
-	execve
-	//再起
-	waitpid
-	return (exit_status);
-	}
-	spawn_child()
-	t_operator ope;
-}
 ```
