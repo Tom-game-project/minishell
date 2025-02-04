@@ -1,5 +1,7 @@
 // make vtest TEST_FILE=tests/separate_and_store_cmd_args_test.c
 
+#include "parser.h"
+#include "libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,7 +11,7 @@ int main(void)
 {
     // 入力文字列を動的に確保
 
-    char *input = ft_strdup("");
+    char *input = ft_strdup("ls -la \"hello echo\" world ls -la");
     if (!input)
     {
         fprintf(stderr, "Input allocation error\n");
@@ -33,8 +35,22 @@ int main(void)
             printf("  cmd      : %s\n", current->cmd);
         else
             printf("  cmd      : (null)\n");
-
+        for (int i = 0; current->argv[i] != NULL; i++)
+            printf("argv[%d] : %s\n",i,  current->argv[i]);
         printf("  ctlope   : ");
+        switch (current->ctlope)
+        {
+            case e_ctlope_and:
+                printf("&&\n");
+                break;
+            case e_ctlope_or:
+                printf("||\n");
+                break;
+            default:
+                printf("NONE\n");
+                break;
+        }
+                printf("  ctlope   : ");
         switch (current->ctlope)
         {
             case e_ctlope_and:
