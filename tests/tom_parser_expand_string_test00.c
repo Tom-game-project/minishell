@@ -13,12 +13,16 @@
 int main()
 {
 	t_str_list *s;
-	char *str = "aaa$HELLO'$WORLD'$HELLOaaa";
+	t_str_dict *d;
 
+	char *str = "aaa$HELLO'$WORLD'$HELLOaaa";
+	d = NULL;
+	str_dict_add(&d, "HELLO", "HELLO_VALUE", free);
+	// str_dict_add();
 	//s = expand_string("\"  $PATH  \"\"   hello  \"" , NULL);
 	s = expand_string(
 		str,
-		NULL
+		d
 	);
 	printf("test case [%s]\n", str);
 	str_list_print(s);

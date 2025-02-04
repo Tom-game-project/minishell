@@ -158,32 +158,17 @@ t_str_list *expand_string(char *str, t_str_dict *env_dicts)
 	rlist = NULL;
 	while (*str != '\0')
 	{
-		printf("[%c][%d]\n", *str, anc);
+		//printf("[%c][%d]\n", *str, anc);
 		//char_list_print(path_group);
 		if (anc == e_anchor_out)
-		{
 			anc = anchor_out_proc(*str, &(t_list_args){
-				&rlist,
-				&path_group,
-				&str_group
-			});
-		}
+				&rlist, &path_group, &str_group});
 		else if (anc == e_anchor_q)
-		{
 			anc = anchor_q_proc(*str, &(t_list_args){
-				&rlist,
-				&path_group,
-				&str_group
-			});
-		}
+				&rlist, &path_group, &str_group});
 		else if (anc == e_anchor_dq)
-		{
 			anc = anchor_dq_proc(*str, &(t_list_args){
-				&rlist,
-				&path_group,
-				&str_group
-			});
-		}
+				&rlist, &path_group, &str_group});
 	       	// else is unreachable
 		str++;
 	}
