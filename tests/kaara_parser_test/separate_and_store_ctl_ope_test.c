@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+//make vtest TEST_FILE=tests/sep
+
 // int   main(void)
 // {
 // 	t_ast		*head;
@@ -33,7 +35,8 @@
 int main(void)
 {
     // 入力文字列を動的に確保
-    char *input = ft_strdup("ls -la && echo \"hello\" || test");
+
+    char *input = ft_strdup("echo \"hello world\"\"hhhh\" > outfile || false");
     if (!input)
     {
         fprintf(stderr, "Input allocation error\n");
