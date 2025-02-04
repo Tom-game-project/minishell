@@ -10,7 +10,7 @@ int str_list_print(t_str_list *node)
 	i = 0;
 	while (node != NULL)
 	{
-		printf("[%d] %s\n", i, node->str);
+		printf("[%d] [%s]\n", i, node->str);
 		node = node->next;
 		i += 1;
 	}

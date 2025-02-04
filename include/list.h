@@ -1,6 +1,7 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <stdbool.h>
 
 /// charを格納するリスト
 typedef struct s_char_list t_char_list;
@@ -38,6 +39,10 @@ int	char_list_insert(t_char_list **node, int index, char c);
 int char_list_insert_str(t_char_list **node, int index,char *str);
 
 int char_list_clear(t_char_list **node);
+
+char *char_list_to_str(t_char_list *node);
+
+bool char_list_is_empty(t_char_list *node);
 
 // str_list functions
 //
