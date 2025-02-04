@@ -57,7 +57,9 @@ static char *rdt_extract_operands(char *input)
 
 static void store_head_element(t_ast  *ast, char *head_element)
 {
-	trim_spc(&head_element);
+	tmp = ft_strtrim(head_element, " ");
+	free(head_element);
+	head_element = tmp;
 	if (head_element[0] == '|')
 		ast->rdt = e_rdtope_pipe;
 	else if (ft_strncmp(head_element, ">>", 2) == 0)

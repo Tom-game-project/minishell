@@ -57,7 +57,11 @@ static char *ctl_extract_operands(char *input)
 
 void	store_head_element(t_ast  *ast, char *head_element)
 {
-	trim_spc(&head_element);
+	char *tmp;
+
+	tmp = ft_strtrim(head_element, " ");
+	free(head_element);
+	head_element = tmp;
 	if (ft_strncmp(head_element, "&&", 2) == 0)
 		ast->ctlope = e_ctlope_and;
 	else if (ft_strncmp(head_element, "||", 2) == 0)

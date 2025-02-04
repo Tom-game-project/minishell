@@ -1,9 +1,8 @@
 #include "parser.h"
+#include "libft.h"
 
-void    trim_spc(char   **head_element)
-{
+ft_strtrim(head_element, " ");
 
-}
 
 // 想定される引数
 // " echo hello "
