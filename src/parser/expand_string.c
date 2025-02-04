@@ -1,4 +1,5 @@
 #include "dict.h"
+#include "libft.h"
 #include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,8 +28,8 @@ bool is_valid_env_char(char c)
 	);
 }
 
+/// プライベートな構造体
 typedef struct s_list_args t_list_args;
-
 struct s_list_args
 {
 	t_str_list **rlist;
@@ -36,13 +37,23 @@ struct s_list_args
 	t_char_list **str_group;
 };
 
-
 /// path_groupを展開してrlistに追加する
-static int push_expand_env(t_list_args *group_args)
+static int push_expand_env(t_list_args *group_args, t_str_dict *dict)
 {
+	t_str_dict *r;
+
 	if (!char_list_is_empty(*group_args->path_group)) // 空じゃないとき
 	{
-		str_list_push(group_args->rlist, char_list_to_str(*group_args->path_group));
+		char_list_pop(group_args->path_group, 0); // `$`を取り除く
+		// printf("Key %s\n", char_list_to_str(*group_args->path_group));
+		r = get_str_dict_by_key(dict, char_list_to_str(*group_args->path_group));
+		if (r == NULL)
+		{// printf("not found\n");
+		}
+		else
+		{// printf("Value %s\n", r->value);
+			str_list_push(group_args->rlist, ft_strdup(r->value));
+		}
 		char_list_clear(group_args->path_group);
 	}
 	return (0);
@@ -60,17 +71,17 @@ static int push_str_group(t_list_args *group_args)
 }
 
 /// クォーテーション外の処理
-static t_anchor anchor_out_proc(char c, t_list_args *group_args)
+static t_anchor anchor_out_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
 	if (c == '\'') // quotation open
 	{
-		push_expand_env(group_args);
+		push_expand_env(group_args, env_dicts);
 		push_str_group(group_args);
 		return (e_anchor_q);
 	}
 	else if (c == '"')// double quotation open
 	{
-		push_expand_env(group_args);
+		push_expand_env(group_args, env_dicts);
 		push_str_group(group_args);
 		return (e_anchor_dq);
 	}
@@ -84,7 +95,11 @@ static t_anchor anchor_out_proc(char c, t_list_args *group_args)
 			if (is_valid_env_char(c))
 				char_list_push(group_args->path_group, c);
 			else
+			{
+				push_expand_env(group_args, env_dicts);
 				push_str_group(group_args);
+				char_list_push(group_args->str_group, c);
+			}
 		else
 			char_list_push(group_args->str_group, c);
 	return (e_anchor_out);
@@ -105,22 +120,31 @@ static t_anchor anchor_q_proc(char c, t_list_args *group_args)
 }
 
 /// ダブルクォーテーション中の処理
-static t_anchor anchor_dq_proc(char c, t_list_args *group_args)
+static t_anchor anchor_dq_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
-	if (!char_list_is_empty(*group_args->path_group))
+	if (c == '"')// double quotation open
 	{
-	}
-	else if (c == '"')// double quotation open
-	{
-		str_list_push(group_args->rlist, char_list_to_str(*group_args->str_group)); // str_listにstr_groupを追加
-		char_list_clear(group_args->str_group);
+		push_expand_env(group_args, env_dicts);
+		push_str_group(group_args);
 		return (e_anchor_out);
 	}
 	else if (c == '$')
+	{
+		push_str_group(group_args);
 		char_list_push(group_args->path_group, c);
+	}
 	else
-		char_list_push(group_args->str_group, c);
-	// `'`を普通の文字と同じように解釈する
+		if (!char_list_is_empty(*group_args->path_group))
+			if (is_valid_env_char(c))
+				char_list_push(group_args->path_group, c);
+			else
+			{
+				push_expand_env(group_args, env_dicts);
+				push_str_group(group_args);
+				char_list_push(group_args->str_group, c);
+			}
+		else
+			char_list_push(group_args->str_group, c);
 	return (e_anchor_dq);
 }
 
@@ -152,7 +176,6 @@ t_str_list *expand_string(char *str, t_str_dict *env_dicts)
 	t_char_list *str_group;
 	t_str_list *rlist;
 
-	(void) env_dicts;
 	anc = e_anchor_out;
 	str_group = NULL;
 	path_group = NULL;
@@ -163,21 +186,20 @@ t_str_list *expand_string(char *str, t_str_dict *env_dicts)
 		//char_list_print(path_group);
 		if (anc == e_anchor_out)
 			anc = anchor_out_proc(*str, &(t_list_args){
-				&rlist, &path_group, &str_group});
+				&rlist, &path_group, &str_group}, env_dicts);
 		else if (anc == e_anchor_q)
 			anc = anchor_q_proc(*str, &(t_list_args){
 				&rlist, &path_group, &str_group});
 		else if (anc == e_anchor_dq)
 			anc = anchor_dq_proc(*str, &(t_list_args){
-				&rlist, &path_group, &str_group});
+				&rlist, &path_group, &str_group}, env_dicts);
 	       	// else is unreachable
 		str++;
 	}
-	if (!char_list_is_empty(path_group))
-	{
-		str_list_push(&rlist, char_list_to_str(path_group));
-		char_list_clear(&path_group);
-	}
+	push_expand_env(&(t_list_args){
+		&rlist, &path_group, &str_group}, env_dicts);
+	push_str_group(&(t_list_args){
+		&rlist, &path_group, &str_group});
 	return (rlist);
 }
 

@@ -15,8 +15,9 @@ int main()
 	t_str_list *s;
 	t_str_dict *d;
 
-	char *str = "aaa$HELLO'$WORLD'$HELLOaaa";
+	//char *str = "aaa$HELLO'$WORLD'$HELLOaaa|aaa";
 	//char *str = "aaa'$WORLD'$HELLOaaa";
+	char *str = "---\"\"\"'$HELLO'\"\"\"---";
 	d = NULL;
 	str_dict_add(
 		&d,
