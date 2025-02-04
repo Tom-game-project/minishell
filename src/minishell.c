@@ -1,10 +1,3 @@
-
-#include "built_in.h"
-#include "exec.h"
-#include "libft.h"
-#include "list.h"
-#include "parser.h"
-#include "pipe.h"
 #include "sig.h"
 
 
@@ -17,13 +10,8 @@ int main(void)
 	//signal_handler(signal);
 	//exit_status = main_loop(envp);
 	exit_status = 0;
+	// signal_handler(signal);
+	// exit_status = main_loop(envp);
+	printf("%d", exit_status);
 	return (exit_status);
 }
-//
-//int signal_handler(void)
-//{
-//	ctl_c
-//	ctl_d
-//	ctl_sra
-//	return (0);
-//}
