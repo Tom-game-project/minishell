@@ -10,7 +10,7 @@ int main (void)
 
     ast = allocation_ast();
     input = ft_strdup("ls -la && true || false");
-    ast = separate_and_store_control_operators(ast, &input);
+    ast = parser(input);
     printf("%s", ast->cmd);
     printf("%s", ast->right_ast->cmd);
     printf("%s", ast->right_ast->right_ast->cmd);

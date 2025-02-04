@@ -28,7 +28,6 @@ SRC = \
 	src/list/char_list_print.c\
 	src/list/char_list_init.c\
 	src/list/char_list_get_elem.c\
-	# src/parser/trim_spc
 
 MAIN = \
 	src/minishell.c

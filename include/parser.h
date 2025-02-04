@@ -37,27 +37,32 @@ struct  s_ast
 	char        	**argv;
 };
 
-t_ast   *separate_and_store_control_operators(t_ast  *ast, char **input);
-char	*search_operater(char **input);
-void	update_input(char **input, char *head_element);
-size_t	find_chr(char *input, char find);
+//parser.c
+t_ast   *parser(char *input);
+
+//allocation_ast.c
 t_ast  *allocation_ast(void);
-t_ast   *parse_recursive(t_ast *ast, char    **input);
 
 //checker_is.c
 bool is_string(char *element);
 bool is_control_operators(char *element);
-bool is_parce_control_operators(char *element);
+bool is_redirect_operators(char *element);
 
-//store_element.c
-void	parce_control_operators(t_ast *ast, char *element, char    **input);
-void	parce_redirection_operators(t_ast *ast, char *element, char    **input);
-void	parce_cmd_args(t_ast *ast, char *element, char    **input);
+//find_char.c
+size_t	find_chr(char *input, char find);
+
+//separate_and_store_cmd_args.c
+t_ast   *separate_and_store_cmd_args(t_ast *ast, char **input);
+
+//separate_and_store_ctl_ope.c
+t_ast   *separate_and_store_control_operators(t_ast  *ast, char **input);
+
+//separate_and_store_rdt_ope.c
+t_ast   *separate_and_store_redirect_operators(t_ast  *ast, char **input);
 
 //update_input.c
 void	update_input(char **input, char *head_element);
 
-//allocation_ast.c
-t_ast  *allocation_ast(void);
+
 
 #endif
