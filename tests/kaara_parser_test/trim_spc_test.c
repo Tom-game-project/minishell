@@ -11,3 +11,5 @@ int main(void)
     free(head_element);
     return (0);
 }
+
+//ft_strtrimは最初と最後から切り出す

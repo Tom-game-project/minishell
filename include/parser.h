@@ -29,7 +29,6 @@ typedef struct s_ast t_ast;
 
 struct  s_ast
 {
-	t_ast 	     	*left_ast;
 	t_ast   	    *right_ast;
 	t_ctl_operator  ctlope;
 	t_rdt_operator	rdtope;
@@ -48,21 +47,19 @@ bool is_string(char *element);
 bool is_control_operators(char *element);
 bool is_redirect_operators(char *element);
 
-//find_char.c
+//find_chr.c
 size_t	find_chr(char *input, char find);
 
 //separate_and_store_cmd_args.c
-t_ast   *separate_and_store_cmd_args(t_ast *ast, char **input);
+t_ast   separate_and_store_cmd_args(t_ast *ast, char *input);
 
 //separate_and_store_ctl_ope.c
-t_ast   *separate_and_store_control_operators(t_ast  *ast, char **input);
+void   separate_and_store_control_operators(t_ast  *ast, char *input);
 
 //separate_and_store_rdt_ope.c
-t_ast   *separate_and_store_redirect_operators(t_ast  *ast, char **input);
+void   separate_and_store_redirect_operators(t_ast  *ast, char *input);
 
 //update_input.c
 void	update_input(char **input, char *head_element);
-
-
 
 #endif

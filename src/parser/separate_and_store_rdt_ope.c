@@ -26,18 +26,18 @@ static char *search_rdt_operater(char *input)
 {
 	char *head_element;
 
-	if (*input[0] == '|')
+	if (input[0] == '|')
 		head_element = ft_strdup("|");
-	else if (ft_strncmp(*input, ">>", 2) == 0)
+	else if (ft_strncmp(input, ">>", 2) == 0)
 		head_element = ft_strdup(">>");
-	else if (ft_strncmp(*input, "<<", 2) == 0)
+	else if (ft_strncmp(input, "<<", 2) == 0)
 		head_element = ft_strdup("<<");
-	else if (*input[0] == '>')
+	else if (input[0] == '>')
 		head_element = ft_strdup(">");
-	else if (*input[0] == '<')
+	else if (input[0] == '<')
 		head_element = ft_strdup("<");
 	else
-		head_element = rdt_extract_operands(*input);
+		head_element = rdt_extract_operands(input);
 	return (head_element);
 }
 
@@ -57,19 +57,21 @@ static char *rdt_extract_operands(char *input)
 
 static void store_head_element(t_ast  *ast, char *head_element)
 {
+	char *tmp;
+
 	tmp = ft_strtrim(head_element, " ");
 	free(head_element);
 	head_element = tmp;
 	if (head_element[0] == '|')
-		ast->rdt = e_rdtope_pipe;
+		ast->rdtope = e_rdtope_pipe;
 	else if (ft_strncmp(head_element, ">>", 2) == 0)
-		ast->rdt = e_rdtope_heredoc_o;
+		ast->rdtope = e_rdtope_heredoc_o;
 	else if (ft_strncmp(head_element, "<<", 2) == 0)
-		ast->rdt = e_rdtope_heredoc_i;
+		ast->rdtope = e_rdtope_heredoc_i;
 	else if (head_element[0] == '>')
-		ast->rdt = e_rdtope_redirect_o;
+		ast->rdtope = e_rdtope_redirect_o;
 	else if (head_element[0] == '<')
-		ast->rdt = e_rdtope_redirect_i;
+		ast->rdtope = e_rdtope_redirect_i;
 	else
 		ast->cmd = ft_strdup(head_element);
 }

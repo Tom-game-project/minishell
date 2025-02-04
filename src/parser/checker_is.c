@@ -11,33 +11,36 @@ bool is_string(char *element)//searchで’””みたいなケース正常に�
 	i = 0;
 	if (element[i] == '\'')
 	{
+		i++;
 		while (element[i] != '\0')
 		{
 			if (element[i] == '\'')
 				return (true);
+			i++;
 		}
 		perror("-bash: syntax error near unexpected token `()'");//error文変更の可能性あり
-		exit (EXIT_FAILURE);
 	}
 	else if (element[i] == '"')
 	{
+		i++;
 		while (element[i] != '\0')
 		{
 			if (element[i] == '"')
 				return (true);
+			i++;
 		}
 		perror("-bash: syntax error near unexpected token `()'");
-		exit (EXIT_FAILURE);
 	}
 	else if (element[i] == '(')
 	{
+		i++;
 		while (element[i] != '\0')
 		{
 			if (element[i] == ')')
 				return (true);
+			i++;
 		}
 		perror("-bash: syntax error near unexpected token `()'");
-		exit (EXIT_FAILURE);
 	}
 	return (false);
 }
