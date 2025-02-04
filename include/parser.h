@@ -51,7 +51,7 @@ bool is_redirect_operators(char *element);
 size_t	find_chr(char *input, char find);
 
 //separate_and_store_cmd_args.c
-t_ast   separate_and_store_cmd_args(t_ast *ast, char *input);
+t_ast   *separate_and_store_cmd_args(t_ast *ast, char **input);
 
 //separate_and_store_ctl_ope.c
 void	separate_and_store_control_operators(t_ast  *ast, char *input);

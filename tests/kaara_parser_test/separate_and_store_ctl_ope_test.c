@@ -5,28 +5,6 @@
 
 //make vtest TEST_FILE=tests/sep
 
-// int   main(void)
-// {
-// 	t_ast		*head;
-//     char        *input;
-
-//     head = allocation_ast();
-//     input = ft_strdup("ls -la && echo \"hello\" || test");
-// 	separate_and_store_control_operators(head, input);
-// 	if (head == NULL)
-// 		return (0);
-//     free(input);
-
-//     while (head != NULL)
-//     {
-//         if (head->cmd != NULL)
-//             printf("%s\n", head->cmd);
-        //if
-//         if (head->right_ast != NULL)
-//             head = head->right_ast;
-//     }
-// }
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
