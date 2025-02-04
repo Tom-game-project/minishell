@@ -58,4 +58,6 @@ int str_list_len(t_str_list *node);
 char *str_list_pop(t_str_list **node, int index);
 
 int str_list_clear(t_str_list **node, void (*f)(void *));
+
+char *str_list_to_str(t_str_list *node);
 #endif

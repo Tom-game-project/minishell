@@ -43,6 +43,7 @@ SRC = \
       src/list/str_list_print.c\
       src/list/str_list_len.c\
       src/list/str_list_clear.c\
+      src/list/str_list_to_str.c\
       src/parser/expand_string.c\
       src/dict/str_dict_init.c\
       src/dict/str_dict_set.c\

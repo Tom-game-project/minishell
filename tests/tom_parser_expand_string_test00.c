@@ -17,7 +17,8 @@ int main()
 
 	//char *str = "aaa$HELLO'$WORLD'$HELLOaaa|aaa";
 	//char *str = "aaa'$WORLD'$HELLOaaa";
-	char *str = "---\"\"\"'$HELLO'\"\"\"---";
+	//char *str = "---\"\"\"'$HELLO'\"\"\"---";
+	char *str = "$HELLO";
 	d = NULL;
 	str_dict_add(
 		&d,
