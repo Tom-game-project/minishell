@@ -26,6 +26,8 @@ static char *search_delimiter(char *input)
 		head_element = ft_substr(input, 0, find_chr(input + 1, '"') + 2);
 	else if (input[0] == '\'')
 		head_element = ft_substr(input, 0, find_chr(input + 2, '\'') + 2);
+	else if (ft_strncmp(input,"$(", 2) == 0)
+		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
 	else if (input[0] == '(')
 		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
 	else
@@ -34,10 +36,6 @@ static char *search_delimiter(char *input)
 		return (NULL);
 	return (head_element);
 }
-	//なぜかスペース優先で分割される
-	//strncmpが0をかえせていない。
-	// else if (ft_strncmp(input,"$(", 2) == 0)
-	// 	head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 3);
 
 static char *spc_extract_operands(char *input)
 {
@@ -52,7 +50,7 @@ static char *spc_extract_operands(char *input)
     while (input[len] != '\0' && !ft_isspace(input[len]))
         len++;
     len = len - start;
-    return ft_substr(input, start, len);;
+    head_element = ft_substr(input, start, len);
 	return (head_element);
 }
 

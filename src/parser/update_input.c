@@ -32,7 +32,7 @@ void	update_input(char **input, char *head_element)
 		leading_spaces++;
 	start = ft_strlen(head_element) + leading_spaces;
 	input_len = ft_strlen(*input);
-	tmp = ft_substr(*input, start, input_len - start);
+	tmp = ft_substr(*input, start + 1, input_len - start);
 	free(*input);
 	*input = tmp;
 }

@@ -10,11 +10,11 @@ int main(void)
     input = ft_strdup("&& ls -la");
     head_element = ft_strdup("&&");
     update_input(&input, head_element);
-    printf("1 : %s\n", input);
+    printf("1:%s\n", input);
     free(head_element);
     head_element = ft_strdup("ls -la");
     update_input(&input, head_element);
-    printf("2 : %s\n", input);
+    printf("2:%s\n", input);
     free(head_element);
     head_element = ft_strdup("");
     free(input);
