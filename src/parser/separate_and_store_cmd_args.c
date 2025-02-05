@@ -20,18 +20,24 @@ static char *search_delimiter(char *input)
 {
 	char *head_element;
 
+	printf("--------%s\n", input);
+
 	if (input[0] == '"')
 		head_element = ft_substr(input, 0, find_chr(input + 1, '"') + 2);
 	else if (input[0] == '\'')
-		head_element = ft_substr(input, 0, find_chr(input + 1, '\'') + 2);
+		head_element = ft_substr(input, 0, find_chr(input + 2, '\'') + 2);
 	else if (input[0] == '(')
 		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
 	else
 		head_element = spc_extract_operands(input);
-	if (*head_element == '\0')
+	if (head_element[0] == '\0')
 		return (NULL);
 	return (head_element);
 }
+	//なぜかスペース優先で分割される
+	//strncmpが0をかえせていない。
+	// else if (ft_strncmp(input,"$(", 2) == 0)
+	// 	head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 3);
 
 static char *spc_extract_operands(char *input)
 {
@@ -52,13 +58,12 @@ static char *spc_extract_operands(char *input)
 
 static void	store_head_element(t_ast	*ast, char *input)
 {
-	char *tmp;
 	char *head_element;
 
-	if (input == NULL)
+	printf("1\n");
+	head_element = search_delimiter(input);
+	if (head_element == NULL)
 		return ;
-	tmp = search_delimiter(input);
-	head_element = ft_strtrim(tmp, " "); //改行とタブは考慮されない
 	update_input(&input, head_element);
 	str_list_push(&ast->arg, head_element);
 	store_head_element(ast, input);

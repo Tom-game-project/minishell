@@ -52,7 +52,7 @@ bool is_redirect_operators(char *element);
 bool ft_isspace(char c);
 
 //find_chr.c
-size_t	find_chr(char *input, char find);
+int	find_chr(char *input, char find);
 
 //separate_and_store_cmd_args.c
 void   separate_and_store_cmd_args(t_ast *ast, char *input);
@@ -65,4 +65,5 @@ void   separate_and_store_redirect_operators(t_ast  *ast, char *input);
 
 //update_input.c
 void	update_input(char **input, char *head_element);
+
 #endif

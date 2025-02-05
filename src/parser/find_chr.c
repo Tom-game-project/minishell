@@ -1,9 +1,9 @@
 
 # include "parser.h"
 
-size_t	find_chr(char *input, char find)
+int	find_chr(char *input, char find)
 {
-	size_t i;
+	int i;
 
 	i = 0;
 	while (input[i] != '\0')
