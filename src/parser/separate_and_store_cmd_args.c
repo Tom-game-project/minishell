@@ -58,7 +58,7 @@ static void	store_head_element(t_ast	*ast, char *input)
 {
 	char *head_element;
 
-	head_element = search_delimiter(input);
+	head_element = search_delimiter(trim_isspc(input));
 	if (head_element == NULL)
 		return ;
 	update_input(&input, head_element);

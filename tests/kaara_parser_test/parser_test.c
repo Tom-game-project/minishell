@@ -6,18 +6,74 @@
 
 //make vtest TEST_FILE=tests/kaara_parser_test.c
 
-int main (void)
-{
-    t_ast   *ast;
-    char    *input;
+void print(char *input);
 
-    ast = NULL;
-    input = ft_strdup("ls -la && true || false");
-    ast = parser(input);
-    // if (ast->cmd != NULL)
-        printf("%s\n", ast->cmd);
-    // if (ast->cmd != NULL)   
-        printf("%s\n", ast->right_ast->cmd);
-    free(ast->cmd);
-    return (0);
+int main(void)
+{
+    char *input = ft_strdup("hello \" \"hello\" \" >> outfile > outfile");
+    print(input);
+    return 0;
+}
+
+
+void print(char *input)
+{
+    if (input == NULL)
+        return ;
+    t_ast *ast;
+    ast = allocation_ast();
+    parser(ast, input);
+    t_ast *current = ast;
+    int idx = 0;
+    printf("=== ASTの内容 ===\n");
+    while (current != NULL)
+    {
+        printf("AST node %d:\n", idx);
+        if (current->cmd != NULL)
+            printf("cmd      : %s\n", current->cmd);
+        else
+            printf("cmd      : (null)\n");
+        printf(" ---- arg ---- \n");
+        if (current->arg != NULL)
+		    str_list_print(current->arg);
+        else
+            printf("arg : (null)\n");
+        printf("ctlope : ");
+        switch (current->ctlope)
+        {
+            case e_ctlope_and:
+                printf("&&\n");
+                break;
+            case e_ctlope_or:
+                printf("||\n");
+                break;
+            default:
+                printf("NONE\n");
+                break;
+        }
+        printf("rdtope : ");
+        switch (current->rdtope)
+        {
+            case e_rdtope_redirect_i:
+                printf("<\n");
+                break; 
+            case e_rdtope_redirect_o:
+                printf(">\n");
+                break;
+            case e_rdtope_heredoc_i:
+                printf("<<\n");
+                break;
+            case e_rdtope_heredoc_o:
+                printf(">>\n");
+                break ;
+            case e_rdtope_pipe:
+                printf("|\n");
+                break;            
+            default:
+                printf("NONE\n");
+                break;
+        }
+        current = current->right_ast;
+        idx++;
+    }
 }

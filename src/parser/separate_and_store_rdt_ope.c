@@ -11,7 +11,7 @@ void   separate_and_store_redirect_operators(t_ast  *ast, char **input)
 
 	if (input == NULL)
 		return ;
-	head_element = search_rdt_operater(*input);
+	head_element = search_rdt_operater(trim_isspc(*input));
 	if (head_element == NULL)
 		return ;
 	update_input(input, head_element);
@@ -30,18 +30,18 @@ static char *search_rdt_operater(char *input)
 		head_element = ft_substr(input, 0, find_chr(input + 1, '"') + 2);
 	else if (input[0] == '\'')
 		head_element = ft_substr(input, 0, find_chr(input + 1, '\'') + 2);
+	else if (ft_strncmp(input,"$(", 2) == 0)
+		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
 	else if (input[0] == '(')
 		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
-	else if (input[0] == '|')
-		head_element = ft_strdup("|");
 	else if (ft_strncmp(input, ">>", 2) == 0)
-		head_element = ft_strdup(">>");
+		head_element = ft_substr(input, 0, 2);
 	else if (ft_strncmp(input, "<<", 2) == 0)
-		head_element = ft_strdup("<<");
+		head_element = ft_substr(input, 0, 2);
 	else if (input[0] == '>')
-		head_element = ft_strdup(">");
+		head_element = ft_substr(input, 0, 1);
 	else if (input[0] == '<')
-		head_element = ft_strdup("<");
+		head_element = ft_substr(input, 0, 1);
 	else
 		head_element = rdt_extract_operands(input);
 	if (*head_element == '\0')
@@ -55,7 +55,7 @@ static char *rdt_extract_operands(char *input)
 	char	*head_element;
 
 	i = 0;
-	while (input[i] != '\0' && is_redirect_operators(input + i) == 0)
+	while (input[i] != '\0' && is_redirect_operators(input + i) == false)
 		i++;
 	head_element = ft_substr(input, 0, i);
 	return (head_element);

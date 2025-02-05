@@ -11,7 +11,7 @@
 
 int main(void)
 {
- 	char *input = ft_strdup("kaaara $(ls -la) \"kaara\" 0613 tom boy");
+ 	char *input = ft_strdup("kaaara $(ls -la) \"k$(echo hello)aara\" 0613 tom boy");
 	if (!input)
 	{
 		fprintf(stderr, "Input allocation error\n");

@@ -40,7 +40,7 @@ struct  s_ast
 };
 
 //parser.c
-t_ast   *parser(char *input);
+void	parser(t_ast *ast, char *input);
 
 //allocation_ast.c
 t_ast  *allocation_ast(void);
@@ -65,5 +65,9 @@ void   separate_and_store_redirect_operators(t_ast  *ast, char **input);
 
 //update_input.c
 void	update_input(char **input, char *head_element);
+
+//trim_isspc.c
+char *trim_isspc(char *str);
+
 
 #endif

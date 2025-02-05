@@ -1,7 +1,6 @@
 #include "parser.h"
 #include "libft.h"
 
-#include <stdio.h>
 static char *ctl_extract_operands(char *input);
 static char *search_ctl_operater(char *input);
 static void	store_head_element(t_ast  *ast, char *head_element);
@@ -12,7 +11,7 @@ void	separate_and_store_control_operators(t_ast  *ast, char **input)
 
 	if (input == NULL)
 		return ;
-	head_element = search_ctl_operater(*input);
+	head_element = search_ctl_operater(trim_isspc(*input));
 	if (head_element == NULL)
 		return ;
 	update_input(input, head_element);
@@ -31,6 +30,8 @@ static char *search_ctl_operater(char *input)
 		head_element = ft_substr(input, 0, find_chr(input + 1, '"') + 2);
 	else if (input[0] == '\'')
 		head_element = ft_substr(input, 0, find_chr(input + 1, '\'') + 2);
+	else if (ft_strncmp(input,"$(", 2) == 0)
+		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
 	else if (input[0] == '(')
 		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
 	else if (ft_strncmp(input, "&&", 2) == 0)
@@ -39,7 +40,7 @@ static char *search_ctl_operater(char *input)
 		head_element = ft_substr(input, 0, 2);
 	else
 		head_element = ctl_extract_operands(input);
-	if (head_element[0] == '\0')
+	if (*head_element == '\0')
 		return (NULL);
 	return (head_element);
 }
@@ -58,9 +59,6 @@ static char *ctl_extract_operands(char *input)
 
 static void	store_head_element(t_ast  *ast, char *head_element)
 {
-	// char *tmp;
-
-	// tmp = ft_strtrim(head_element, " ");
 	if (ft_strncmp(head_element, "&&", 2) == 0)
 		ast->ctlope = e_ctlope_and;
 	else if (ft_strncmp(head_element, "||", 2) == 0)

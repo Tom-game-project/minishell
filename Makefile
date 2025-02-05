@@ -53,6 +53,7 @@ SRC = \
       src/parser/separate_and_store_ctl_ope.c\
       src/parser/separate_and_store_rdt_ope.c\
       src/parser/update_input.c\
+      src/parser/trim_isspc.c\
       src/dict/str_dict_init.c\
       src/dict/str_dict_set.c\
       src/dict/str_dict_add.c\

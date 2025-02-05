@@ -7,7 +7,7 @@ int main(void)
 {
     // 入力文字列を動的に確保
 
-    char *input = ft_strdup("echo \" >>hello world\"\"hhhh\" | outfile");
+    char *input = ft_strdup("hello \" \"hello\" \" >> outfile > outfile");
     if (!input)
     {
         fprintf(stderr, "Input allocation error\n");
@@ -32,8 +32,25 @@ int main(void)
             printf("  cmd      : %s\n", current->cmd);
         else
             printf("  cmd      : (null)\n");
-
-        printf("  ctlope   : ");
+        printf(" ---- arg ---- \n");
+        if (current->arg != NULL)
+		    str_list_print(current->arg);
+        else
+            printf("arg : (null)\n");
+        printf("ctlope : ");
+        switch (current->ctlope)
+        {
+            case e_ctlope_and:
+                printf("&&\n");
+                break;
+            case e_ctlope_or:
+                printf("||\n");
+                break;
+            default:
+                printf("NONE\n");
+                break;
+        }
+        printf("rdtope : ");
         switch (current->rdtope)
         {
             case e_rdtope_redirect_i:
@@ -58,9 +75,5 @@ int main(void)
         current = current->right_ast;
         idx++;
     }
-
-    // 必要なら、ASTの各ノードや input の解放処理を行う
-    // （ここでは省略）
-
     return 0;
 }
