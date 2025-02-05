@@ -13,7 +13,7 @@ RMFLAGS = -rf
 CFLAGS = -Wextra -Werror -Wall
 TEST_FLAGS = -g
 
-SRC = \
+BUILD_IN_SRC = \
       src/built-in/cd.c\
       src/built-in/dummy.c\
       src/built-in/echo.c\
@@ -22,6 +22,8 @@ SRC = \
       src/built-in/export.c\
       src/built-in/pwd.c\
       src/built-in/unset.c\
+
+LIST_SRC = \
       src/list/char_list_push.c\
       src/list/char_list_pop.c\
       src/list/char_list_len.c\
@@ -44,6 +46,8 @@ SRC = \
       src/list/str_list_len.c\
       src/list/str_list_clear.c\
       src/list/str_list_to_str.c\
+
+PARSER_SRC = \
       src/parser/expand_string.c\
       src/parser/parser.c\
       src/parser/allocation_ast.c\
@@ -53,6 +57,8 @@ SRC = \
       src/parser/separate_and_store_ctl_ope.c\
       src/parser/separate_and_store_rdt_ope.c\
       src/parser/update_input.c\
+
+DICT_SRC = \
       src/dict/str_dict_init.c\
       src/dict/str_dict_set.c\
       src/dict/str_dict_add.c\
@@ -61,6 +67,11 @@ SRC = \
       src/dict/str_dict_get_back.c\
       src/dict/str_dict_key.c\
 
+SRC = \
+	$(BUILD_IN_SRC)\
+	$(LIST_SRC)\
+	$(PARSER_SRC)\
+	$(DICT_SRC)
 
 MAIN = \
 	src/minishell.c

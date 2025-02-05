@@ -1,3 +1,8 @@
+/// # expand_string.c
+///
+/// 環境変数の展開をする
+///
+
 #include "dict.h"
 #include "libft.h"
 #include "list.h"
