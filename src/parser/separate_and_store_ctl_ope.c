@@ -5,14 +5,14 @@ static char *ctl_extract_operands(char *input);
 static char *search_ctl_operater(char *input);
 static void	store_head_element(t_ast  *ast, char *head_element);
 
-void	separate_and_store_control_operators(t_ast  *ast, char *input)
+void	separate_and_store_control_operators(t_ast  *ast, char **input)
 {
 	char *head_element;
 
 	if (input == NULL)
 		return ;
-	head_element = search_ctl_operater(input);
-	update_input(&input, head_element);
+	head_element = search_ctl_operater(*input);
+	update_input(input, head_element);
 	store_head_element(ast, head_element);
 	free(head_element);
 	ast->right_ast = allocation_ast();

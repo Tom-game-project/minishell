@@ -18,7 +18,7 @@ int main(void)
     t_ast *ast = allocation_ast();
 
     // 入力文字列を解析してASTに格納する
-    separate_and_store_redirect_operators(ast, input);
+    separate_and_store_redirect_operators(ast, &input);
 
 
     // ここからASTの内容を表示して確認する

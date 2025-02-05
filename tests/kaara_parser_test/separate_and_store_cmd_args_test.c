@@ -21,7 +21,7 @@ int main(void)
 //-----------------------------------------------------------------
 
 	t_ast *ast = allocation_ast();
-	separate_and_store_cmd_args(ast, input);
+	separate_and_store_cmd_args(ast, &input);
 	printf("=== ASTの内容 ===\n");
 	t_ast *current = ast;
 	int idx = 0;

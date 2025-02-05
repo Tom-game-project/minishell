@@ -11,15 +11,13 @@ int main (void)
     t_ast   *ast;
     char    *input;
 
-    ast = allocation_ast();
+    ast = NULL;
     input = ft_strdup("ls -la && true || false");
     ast = parser(input);
-    exit(0);
-    printf("%s\n", ast->cmd);
-    // printf("%s\n", ast->right_ast->cmd);
-    // printf("%s\n", ast->right_ast->right_ast->cmd);
+    // if (ast->cmd != NULL)
+        printf("%s\n", ast->cmd);
+    // if (ast->cmd != NULL)   
+        printf("%s\n", ast->right_ast->cmd);
     free(ast->cmd);
-    // free(ast->right_ast->cmd);
-    // free(ast->right_ast->right_ast->cmd);
     return (0);
 }
