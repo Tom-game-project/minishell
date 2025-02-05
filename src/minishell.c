@@ -15,3 +15,12 @@ int main(void)
 	printf("%d", exit_status);
 	return (exit_status);
 }
+
+//
+// int main(int argc, char *argv[], char *envp[])
+// {
+// 	int exit_status;
+
+// 	exit_status = minishell(argc, argv, envp);
+// 	return (exit_status);
+// }

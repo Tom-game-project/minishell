@@ -36,7 +36,7 @@ struct  s_ast
 	t_ctl_operator  ctlope;
 	t_rdt_operator	rdtope;
 	char        	*cmd;
-	char        	**argv;
+	t_str_list		*arg;
 };
 
 //parser.c
@@ -49,6 +49,7 @@ t_ast  *allocation_ast(void);
 bool is_string(char *element);
 bool is_control_operators(char *element);
 bool is_redirect_operators(char *element);
+bool ft_isspace(char c);
 
 //find_chr.c
 size_t	find_chr(char *input, char find);

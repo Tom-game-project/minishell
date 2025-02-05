@@ -51,21 +51,47 @@ int main(void)
 
 // //------------------------------------------------
 
-    i = is_string("'hello world'");
-    if (i == false)
-        printf("is_string : 'hello world' : false\n");
-    else if (i == true)
-        printf("is_string : 'hello world' : true\n");
-    i = is_string("'hello world");
-    if (i == false)
+	i = is_string("'hello world'");
+	if (i == false)
+		printf("is_string : 'hello world' : false\n");
+	else if (i == true)
+		printf("is_string : 'hello world' : true\n");
+	i = is_string("'hello world");
+	if (i == false)
 		printf("is_string : 'hello world : false\n");
-    else if (i == true)
+	else if (i == true)
 		printf("is_string : 'hello world : true\n");
-    i = is_string("(hello world)");
-    if (i == false)
-        printf("is_string : (hello world) : false\n");
-    else if (i == true)
-        printf("is_string : (hello world) : true\n");
+	i = is_string("(hello world)");
+	if (i == false)
+		printf("is_string : (hello world) : false\n");
+	else if (i == true)
+		printf("is_string : (hello world) : true\n");
 
-    return (0);
+//----------------------------------------
+
+	i = ft_isspace(' ');
+	if (i == false)
+		printf("isspace : false\n");
+	else if (i == true)
+		printf("isspace : true\n");
+
+	i = ft_isspace('\t');
+	if (i == false)
+		printf("isspace : false\n");
+	else if (i == true)
+		printf("isspace : true\n");
+
+	i = ft_isspace('\n');
+	if (i == false)
+		printf("isspace : false\n");
+	else if (i == true)
+		printf("isspace : true\n");
+
+	i = ft_isspace('a');
+	if (i == false)
+		printf("isspace : false\n");
+	else if (i == true)
+		printf("isspace : true\n");
+
+	return (0);
 }

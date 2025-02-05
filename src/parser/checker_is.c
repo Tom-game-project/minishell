@@ -67,3 +67,8 @@ bool is_redirect_operators(char *element)
 		return (true);
 	return (false);
 }
+
+bool ft_isspace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n');
+}

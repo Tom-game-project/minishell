@@ -24,7 +24,13 @@ static char *search_rdt_operater(char *input)
 {
 	char *head_element;
 
-	if (input[0] == '|')
+	if (input[0] == '"')
+		head_element = ft_substr(input, 0, find_chr(input + 1, '"') + 2);
+	else if (input[0] == '\'')
+		head_element = ft_substr(input, 0, find_chr(input + 1, '\'') + 2);
+	else if (input[0] == '(')
+		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
+	else if (input[0] == '|')
 		head_element = ft_strdup("|");
 	else if (ft_strncmp(input, ">>", 2) == 0)
 		head_element = ft_strdup(">>");

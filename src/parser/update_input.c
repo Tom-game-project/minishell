@@ -13,8 +13,7 @@ void	update_input(char **input, char *head_element)
 		*input = NULL;
 		return ;
 	}
-	tmp = ft_substr(*input, ft_strlen(head_element),
-		ft_strlen(*input + ft_strlen(head_element)));
+	tmp = ft_substr(*input, ft_strlen(head_element), ft_strlen(*input) - ft_strlen(head_element));
 	free(*input);
 	*input = tmp;
 }

@@ -1,9 +1,6 @@
 #include "parser.h"
 #include "libft.h"
 
-//
-#include <stdio.h>
-//
 static char *ctl_extract_operands(char *input);
 static char *search_ctl_operater(char *input);
 static void	store_head_element(t_ast  *ast, char *head_element);
@@ -28,11 +25,11 @@ static char *search_ctl_operater(char *input)
 	char *head_element;
 
 	if (input[0] == '"')
-		head_element = ft_substr(input, 0, find_chr(input + 1, '"') + 3);
+		head_element = ft_substr(input, 0, find_chr(input + 1, '"') + 2);
 	else if (input[0] == '\'')
-		head_element = ft_substr(input, 0, find_chr(input + 1, '\'') + 3);
+		head_element = ft_substr(input, 0, find_chr(input + 1, '\'') + 2);
 	else if (input[0] == '(')
-		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 3);
+		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
 	else if (ft_strncmp(input, "&&", 2) == 0)
 		head_element = ft_substr(input, 0, 2);
 	else if (ft_strncmp(input, "||", 2) == 0)
