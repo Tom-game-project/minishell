@@ -18,12 +18,25 @@ int main()
 	//char *str = "aaa$HELLO'$WORLD'$HELLOaaa|aaa";
 	//char *str = "aaa'$WORLD'$HELLOaaa";
 	//char *str = "---\"\"\"'$HELLO'\"\"\"---";
-	char *str = "$HELLO";
+	//char *str = "???$HELLO$$?$?HELLO$?$WO";
+	char *str = "???$%";
 	d = NULL;
 	str_dict_add(
 		&d,
 		ft_strdup("HELLO"),
 		ft_strdup("HELLO_VALUE"), 
+		free
+	);
+	str_dict_add(
+		&d,
+		ft_strdup("$"),
+		ft_strdup("PID"), 
+		free
+	);
+	str_dict_add(
+		&d,
+		ft_strdup("?"),
+		ft_strdup("EXIT STATUS"), 
 		free
 	);
 	// str_dict_add();

@@ -6,4 +6,6 @@
 t_str_list *str_list_get_back(t_str_list *node);
 
 t_str_list *str_list_get_ptr(t_str_list *head, int index);
+
+int str_list_len_sum(t_str_list *node);
 #endif

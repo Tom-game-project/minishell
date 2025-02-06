@@ -60,4 +60,8 @@ char *str_list_pop(t_str_list **node, int index);
 int str_list_clear(t_str_list **node, void (*f)(void *));
 
 char *str_list_to_str(t_str_list *node);
+
+char **str_list_to_array(t_str_list *node);
+
+char *str_list_join(t_str_list *node, char *sep);
 #endif
