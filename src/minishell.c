@@ -1,17 +1,15 @@
-#include "sig.h"
+#include "minishell.h"
 
+//
+// int main(int argc, char *argv[], char *envp[])
+// {
+// 	int exit_status;
 
-#include <stdio.h>
-//int main(int argc, char *argv[], char *envp[])
-int main(void)
-{
-	int exit_status;
+// 	exit_status = minishell(argc, argv, envp);
+// 	return (exit_status);
+// }
 
-	//signal_handler(signal);
-	//exit_status = main_loop(envp);
-	exit_status = 0;
-	// signal_handler(signal);
-	// exit_status = main_loop(envp);
-	printf("%d", exit_status);
-	return (exit_status);
-}
+// int minishell(int argc, char *argv[], char *envp[])
+// {
+
+// }

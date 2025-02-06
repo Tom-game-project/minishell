@@ -5,14 +5,16 @@ static char *search_rdt_operater(char *input);
 static char *rdt_extract_operands(char *input);
 static void store_head_element(t_ast  *ast, char *head_element);
 
-void   separate_and_store_redirect_operators(t_ast  *ast, char *input)
+void   separate_and_store_redirect_operators(t_ast  *ast, char **input)
 {
 	char *head_element;
 
 	if (input == NULL)
 		return ;
-	head_element = search_rdt_operater(input);
-	update_input(&input, head_element);
+	head_element = search_rdt_operater(trim_isspc(*input));
+	if (head_element == NULL)
+		return ;
+	update_input(input, head_element);
 	store_head_element(ast, head_element);
 	free(head_element);
 	ast->right_ast = allocation_ast();
@@ -24,18 +26,26 @@ static char *search_rdt_operater(char *input)
 {
 	char *head_element;
 
-	if (input[0] == '|')
-		head_element = ft_strdup("|");
+	if (input[0] == '"')
+		head_element = ft_substr(input, 0, find_chr(input + 1, '"') + 2);
+	else if (input[0] == '\'')
+		head_element = ft_substr(input, 0, find_chr(input + 1, '\'') + 2);
+	else if (ft_strncmp(input,"$(", 2) == 0)
+		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
+	else if (input[0] == '(')
+		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
 	else if (ft_strncmp(input, ">>", 2) == 0)
-		head_element = ft_strdup(">>");
+		head_element = ft_substr(input, 0, 2);
 	else if (ft_strncmp(input, "<<", 2) == 0)
-		head_element = ft_strdup("<<");
+		head_element = ft_substr(input, 0, 2);
 	else if (input[0] == '>')
-		head_element = ft_strdup(">");
+		head_element = ft_substr(input, 0, 1);
 	else if (input[0] == '<')
-		head_element = ft_strdup("<");
+		head_element = ft_substr(input, 0, 1);
 	else
 		head_element = rdt_extract_operands(input);
+	if (*head_element == '\0')
+		return (NULL);
 	return (head_element);
 }
 
@@ -45,7 +55,7 @@ static char *rdt_extract_operands(char *input)
 	char	*head_element;
 
 	i = 0;
-	while (input[i] != '\0' && is_redirect_operators(input + i) == 0)
+	while (input[i] != '\0' && is_redirect_operators(input + i) == false)
 		i++;
 	head_element = ft_substr(input, 0, i);
 	return (head_element);
@@ -53,9 +63,6 @@ static char *rdt_extract_operands(char *input)
 
 static void store_head_element(t_ast  *ast, char *head_element)
 {
-	char *tmp;
-
-	tmp = ft_strtrim(head_element, " ");
 	if (head_element[0] == '|')
 		ast->rdtope = e_rdtope_pipe;
 	else if (ft_strncmp(head_element, ">>", 2) == 0)
@@ -67,5 +74,5 @@ static void store_head_element(t_ast  *ast, char *head_element)
 	else if (head_element[0] == '<')
 		ast->rdtope = e_rdtope_redirect_i;
 	else
-		ast->cmd = ft_strdup(tmp);
+		ast->cmd = ft_strdup(head_element);
 }

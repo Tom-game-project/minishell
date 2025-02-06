@@ -12,6 +12,6 @@ t_ast  *allocation_ast(void)
 	ast->ctlope = e_ctlope_none;
 	ast->rdtope = e_rdtope_none;
 	ast->cmd = NULL;
-	ast->argv = NULL;
+	ast->arg = NULL;
 	return (ast);
 }

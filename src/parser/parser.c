@@ -1,19 +1,17 @@
 #include "libft.h"
 #include "parser.h"
+#include <stdlib.h>
 
-t_ast   *parser(char *input)
+void	parser(t_ast **ast, char *input)
 {
-	t_ast		*ast;
+	char *str;
 
-    ast = allocation_ast();
-	separate_and_store_control_operators(ast, input);
-	if (ast != NULL)
-		return (ast);
-	// ast = separate_and_store_redirect_operators(ast, &input);
-	// if (ast != NULL)
-	// 	return (ast);
-	// ast = separate_and_store_cmd_args(ast, &input);
-	// if (ast != NULL)
-	// 	return (ast);
-	return (NULL);
+	str = ft_strdup(input);
+	*ast = allocation_ast();
+	if (checker_str_ctl(input))
+		separate_and_store_control_operators(*ast, &str);
+	else if (checker_str_rdt(input))
+		separate_and_store_redirect_operators(*ast, &str);
+	else
+		separate_and_store_cmd_args(*ast, &str);
 }
