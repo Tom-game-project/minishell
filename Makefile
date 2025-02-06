@@ -78,6 +78,9 @@ DICT_SRC = \
       src/dict/str_dict_print.c\
       src/dict/str_dict_get_back.c\
       src/dict/str_dict_key.c\
+      src/dict/str_dict_clear.c\
+      src/dict/str_dict_len.c\
+      src/dict/str_dict_to_env.c\
 
 
 SRC = \

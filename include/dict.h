@@ -23,5 +23,13 @@ t_str_dict *get_str_dict_by_key(\
 int str_dict_print(t_str_dict *node);
 
 int str_dict_add(t_str_dict **node, char *key, char *value, void (*f)(void *));
-#endif
 
+int str_dict_clear(t_str_dict **node, \
+		void (*key_free)(void *),\
+		void (*value_free)(void *)
+		);
+
+int str_dict_len(t_str_dict *node);
+
+char **str_dict_to_envp(t_str_dict *node);
+#endif
