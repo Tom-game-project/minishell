@@ -1,21 +1,29 @@
 
 # include "parser.h"
- 
-bool	checker_cmd(t_ast *ast)
+#include <stdbool.h>
+
+bool    find_env_syntax(t_str_list *head);
+bool    expand_env(t_str_list *head);
+bool    find_str_syntax(t_str_list *head);
+bool    triming_string(t_str_list *head);
+
+bool	check_update_arg(t_ast *ast)
 {
-    t_ast	*head;
-
-    if (ast->cmd != NULL)
-        return (false);
-    while (ast)
-    {
-	    if (checker_str_ctl(ast))
-    		return (false);
-
-    }
-    if (ast)
-    	
-
-
+	if (ast->arg == NULL)
+		return (false);
+	else if (find_env_syntax(ast->arg) == false)//環境変数のcheckと展開
+	{
+		expand_env(ast->arg);//envを展開またはsubshellへ
+		return (false);
+	}
+	else if (find_str_syntax(ast->arg) == false)
+	{
+		triming_string(ast->arg);//""、''、()
+		return (false);
+	}
+	//(),$()を外でsubshellに渡す関数作ってもいいかも
 	return (true);
 }
+
+//exitstatusどうする問題は引き継がれないので問題なし。
+// expand_string(str, d);

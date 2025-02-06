@@ -1,4 +1,4 @@
-#ifndef PARSER_H
+# ifndef PARSER_H
 #define PARSER_H
 #include "list.h"
 #include "dict.h"
@@ -73,4 +73,4 @@ char *trim_isspc(char *str);
 bool    checker_str_ctl(char *str);
 bool    checker_str_rdt(char *str);
 
-#endif
+# endif

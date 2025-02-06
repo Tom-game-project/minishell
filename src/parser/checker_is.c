@@ -3,7 +3,22 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+bool	is_enclosed_by_parentheses(char *element);
+bool	is_enclosed_by_single_quotes(char *element);
+bool	is_enclosed_by_double_quotes(char *element);
+
 bool is_string(char *element)//searchで’””みたいなケース正常に処理できるか不安
+{
+	if (is_enclosed_by_parentheses(element))
+		return (true);
+	if (is_enclosed_by_single_quotes(element))
+		return (true);
+	if (is_enclosed_by_double_quotes(element))
+		return (true);
+	return (false);
+}
+
+bool is_enclosed_by_parentheses(char *element)
 {
 	int i;
 
@@ -19,7 +34,15 @@ bool is_string(char *element)//searchで’””みたいなケース正常に�
 		}
 		perror("-bash: syntax error near unexpected token `()'");//error文変更の可能性あり
 	}
-	else if (element[i] == '"')
+	return (false);
+}
+
+bool is_enclosed_by_single_quotes(char *element)
+{
+	int i;
+
+	i = 0;
+	if (element[i] == '"')
 	{
 		i++;
 		while (element[i] != '\0')
@@ -30,7 +53,15 @@ bool is_string(char *element)//searchで’””みたいなケース正常に�
 		}
 		perror("-bash: syntax error near unexpected token `()'");
 	}
-	else if (element[i] == '(')
+	return (false);
+}
+
+bool is_enclosed_by_double_quotes(char *element)
+{
+	int i;
+
+	i = 0;	
+	if (element[i] == '(')
 	{
 		i++;
 		while (element[i] != '\0')
