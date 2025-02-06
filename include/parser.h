@@ -40,7 +40,7 @@ struct  s_ast
 };
 
 //parser.c
-void	parser(t_ast *ast, char *input);
+void	parser(t_ast **ast, char *input);
 
 //allocation_ast.c
 t_ast  *allocation_ast(void);
@@ -69,5 +69,8 @@ void	update_input(char **input, char *head_element);
 //trim_isspc.c
 char *trim_isspc(char *str);
 
+//checker_str/c
+bool    checker_str_ctl(char *str);
+bool    checker_str_rdt(char *str);
 
 #endif

@@ -9,13 +9,13 @@ void	separate_and_store_control_operators(t_ast  *ast, char **input)
 {
 	char *head_element;
 
-	if (input == NULL)
+	if (**input == '\0')
 		return ;
 	head_element = search_ctl_operater(trim_isspc(*input));
-	if (head_element == NULL)
-		return ;
 	update_input(input, head_element);
 	store_head_element(ast, head_element);
+	if (head_element == NULL)
+		return ;
 	free(head_element);
 	ast->right_ast = allocation_ast();
 	separate_and_store_control_operators(ast->right_ast, input);

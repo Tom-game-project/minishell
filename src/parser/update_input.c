@@ -23,9 +23,8 @@ void	update_input(char **input, char *head_element)
 	size_t	tmp_len;
 	char	*tmp;
 
-	tmp = ft_strtrim(*input, " ");
+	tmp = *input;//ft_strtrim(*input, " ");
 	tmp_len = ft_strlen(tmp);
-	free(*input);
-	*input = ft_substr(ft_strtrim(*input, " "), ft_strlen(head_element), tmp_len - ft_strlen(head_element));
+	*input = ft_substr(ft_strtrim(tmp, " "), ft_strlen(head_element), tmp_len - ft_strlen(head_element));
 	free(tmp);
 }

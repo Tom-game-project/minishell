@@ -6,29 +6,30 @@
 
 //make vtest TEST_FILE=tests/kaara_parser_test.c
 
-void print(char *input);
+void print(t_ast *ast);
+
 
 int main(void)
 {
-    char *input = ft_strdup("hello \" \"hello\" \" >> outfile > outfile");
-    print(input);
+    char *input = ft_strdup("hello hello");
+    t_ast *ast;
+
+    ast = NULL;
+    parser(&ast, input);
+    print(ast);
+    free(input);
     return 0;
 }
 
 
-void print(char *input)
+void print(t_ast *ast)
 {
-    if (input == NULL)
-        return ;
-    t_ast *ast;
-    ast = allocation_ast();
-    parser(ast, input);
     t_ast *current = ast;
     int idx = 0;
     printf("=== ASTの内容 ===\n");
     while (current != NULL)
     {
-        printf("AST node %d:\n", idx);
+        printf("=======AST node %d=======\n", idx);
         if (current->cmd != NULL)
             printf("cmd      : %s\n", current->cmd);
         else

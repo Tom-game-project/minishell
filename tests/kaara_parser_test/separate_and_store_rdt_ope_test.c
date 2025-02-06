@@ -7,7 +7,7 @@ int main(void)
 {
     // 入力文字列を動的に確保
 
-    char *input = ft_strdup("hello \" \"hello\" \" >> outfile > outfile");
+    char *input = ft_strdup("hello hello");
     if (!input)
     {
         fprintf(stderr, "Input allocation error\n");
@@ -33,10 +33,7 @@ int main(void)
         else
             printf("  cmd      : (null)\n");
         printf(" ---- arg ---- \n");
-        if (current->arg != NULL)
-		    str_list_print(current->arg);
-        else
-            printf("arg : (null)\n");
+		str_list_print(current->arg);
         printf("ctlope : ");
         switch (current->ctlope)
         {

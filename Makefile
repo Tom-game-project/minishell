@@ -48,6 +48,7 @@ SRC = \
       src/parser/parser.c\
       src/parser/allocation_ast.c\
       src/parser/checker_is.c\
+      src/parser/checker_str.c\
       src/parser/find_chr.c\
       src/parser/separate_and_store_cmd_args.c\
       src/parser/separate_and_store_ctl_ope.c\
