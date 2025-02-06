@@ -32,4 +32,7 @@ int str_dict_clear(t_str_dict **node, \
 int str_dict_len(t_str_dict *node);
 
 char **str_dict_to_envp(t_str_dict *node);
+
+
+int envp_to_str_dict(t_str_dict **node, char *envp[]);
 #endif

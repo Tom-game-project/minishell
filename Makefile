@@ -73,6 +73,7 @@ PARSER_SRC = \
 
 
 DICT_SRC = \
+      src/dict/envp_to_str_dict.c\
       src/dict/str_dict_init.c\
       src/dict/str_dict_set.c\
       src/dict/str_dict_add.c\

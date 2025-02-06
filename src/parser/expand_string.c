@@ -11,7 +11,6 @@
 #include "expand_string/expand_string.h"
 
 
-
 /// 文字列の展開
 /// 
 /// example

@@ -19,7 +19,7 @@ int main()
 	//char *str = "aaa'$WORLD'$HELLOaaa";
 	//char *str = "---\"\"\"'$HELLO'\"\"\"---";
 	//char *str = "???$HELLO$$?$?HELLO$?$WO";
-	char *str = "???$@$\"hello\"";
+	char *str = "$$$";
 	d = NULL;
 	str_dict_add(
 		&d,
