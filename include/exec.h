@@ -5,6 +5,9 @@
 # include <unistd.h>
 # include <stdbool.h>
 
+//checker.c
+bool    check_logical_operator(t_ast *ast, int exit_status);
+
 bool	check_update_arg(t_ast *ast);
 
 # endif
