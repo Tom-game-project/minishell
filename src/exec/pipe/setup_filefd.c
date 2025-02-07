@@ -15,8 +15,8 @@
 
 void	setup_filefd(t_ast *ast, t_pipex *pipex)
 {
-	if (ast->rdtope == e_rdtope_redirect_i)
+	if (ast->ope == e_ope_redirect_i)
 		from_infile(pipex);
-	else if (ast->rdtope == e_rdtope_redirect_o)
+	else if (ast->ope == e_ope_redirect_o)
 		to_outfile(pipex);
 }

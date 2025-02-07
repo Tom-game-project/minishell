@@ -3,23 +3,24 @@
 
 static char *search_rdt_operater(char *input);
 static char *rdt_extract_operands(char *input);
-static void store_head_element(t_ast  *ast, char *head_element);
+static void	store_head_element(t_ast  *ast, t_str_list **next_input, char *head_element);
 
-void   separate_and_store_redirect_operators(t_ast  *ast, char **input)
+t_str_list	*separate_and_store_redirect_operators(t_ast  *ast, char **input)
 {
+	t_str_list	*next_input;
 	char *head_element;
 
 	if (input == NULL)
-		return ;
+		return (NULL);
+	next_input = NULL;
 	head_element = search_rdt_operater(trim_isspc(*input));
 	if (head_element == NULL)
-		return ;
+		return (next_input);
 	update_input(input, head_element);
-	store_head_element(ast, head_element);
+	store_head_element(ast, &next_input, head_element);
 	free(head_element);
-	ast->right_ast = allocation_ast();
-	separate_and_store_redirect_operators(ast->right_ast, input);
-	return ;
+	next_input->next = separate_and_store_redirect_operators(ast, input);
+	return (next_input);
 }
 
 static char *search_rdt_operater(char *input)
@@ -61,18 +62,19 @@ static char *rdt_extract_operands(char *input)
 	return (head_element);
 }
 
-static void store_head_element(t_ast  *ast, char *head_element)
+static void	store_head_element(t_ast  *ast, t_str_list **next_input, char *head_element)
 {
 	if (head_element[0] == '|')
-		ast->rdtope = e_rdtope_pipe;
+		ast->ope = e_ope_pipe;
 	else if (ft_strncmp(head_element, ">>", 2) == 0)
-		ast->rdtope = e_rdtope_heredoc_o;
+		ast->ope = e_ope_heredoc_o;
 	else if (ft_strncmp(head_element, "<<", 2) == 0)
-		ast->rdtope = e_rdtope_heredoc_i;
+		ast->ope = e_ope_heredoc_i;
 	else if (head_element[0] == '>')
-		ast->rdtope = e_rdtope_redirect_o;
+		ast->ope = e_ope_redirect_o;
 	else if (head_element[0] == '<')
-		ast->rdtope = e_rdtope_redirect_i;
+		ast->ope = e_ope_redirect_i;
 	else
-		ast->cmd = ft_strdup(head_element);
+		str_list_push(next_input, ft_strdup(head_element));
+
 }

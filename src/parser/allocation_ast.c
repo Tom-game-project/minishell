@@ -9,7 +9,7 @@ t_ast  *allocation_ast(void)
 	if (ast == NULL)
 		exit(EXIT_FAILURE);
 	ast->right_ast = NULL;
-	ast->ope = ope_none;
+	ast->ope = e_ope_none;
 	ast->cmd = NULL;
 	ast->arg = NULL;
 	return (ast);
