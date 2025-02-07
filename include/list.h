@@ -64,4 +64,6 @@ char *str_list_to_str(t_str_list *node);
 char **str_list_to_array(t_str_list *node);
 
 char *str_list_join(t_str_list *node, char *sep);
+
+t_str_list *str_list_get_ptr(t_str_list *head, int index);
 #endif
