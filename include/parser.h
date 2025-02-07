@@ -1,4 +1,4 @@
-#ifndef PARSER_H
+# ifndef PARSER_H
 #define PARSER_H
 #include "list.h"
 #include "dict.h"
@@ -7,20 +7,46 @@
 
 t_str_list *expand_string(char *str, t_str_dict *env_dicts);
 
-typedef enum    e_ctl_operator t_ctl_operator;
+// typedef enum    e_ctl_operator t_ctl_operator;
 
-enum	e_ctl_operator
+// enum	e_ctl_operator
+// {
+// 	e_ctlope_none,
+// 	e_ctlope_and,// &&
+// 	e_ctlope_or,// ||
+// };
+
+// typedef enum    e_rdt_operator t_rdt_operator;
+
+// enum    e_rdt_operator
+// {
+// 	e_rdtope_none,
+// 	e_rdtope_redirect_i,// <
+// 	e_rdtope_redirect_o,// >
+// 	e_rdtope_heredoc_i,// <<
+// 	e_rdtope_heredoc_o,// >>
+// 	e_rdtope_pipe// |
+// };
+
+// typedef struct s_ast t_ast;
+
+// struct  s_ast
+// {
+// 	t_ast   	    *right_ast;
+// 	t_ctl_operator  ctlope;
+// 	t_rdt_operator	rdtope;
+// 	char        	*cmd;
+// 	t_str_list		*arg;
+// };
+
+typedef enum    e_operator t_operator;
+
+enum    e_operator
 {
+	e_rdtope_none,
 	e_ctlope_none,
 	e_ctlope_and,// &&
 	e_ctlope_or,// ||
-};
-
-typedef enum    e_rdt_operator t_rdt_operator;
-
-enum    e_rdt_operator
-{
-	e_rdtope_none,
 	e_rdtope_redirect_i,// <
 	e_rdtope_redirect_o,// >
 	e_rdtope_heredoc_i,// <<
@@ -32,9 +58,9 @@ typedef struct s_ast t_ast;
 
 struct  s_ast
 {
+	t_ast   	    *left_ast;
 	t_ast   	    *right_ast;
-	t_ctl_operator  ctlope;
-	t_rdt_operator	rdtope;
+	t_operator 		ope;
 	char        	*cmd;
 	t_str_list		*arg;
 };
@@ -73,4 +99,4 @@ char *trim_isspc(char *str);
 bool    checker_str_ctl(char *str);
 bool    checker_str_rdt(char *str);
 
-#endif
+# endif
