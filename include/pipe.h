@@ -1,6 +1,7 @@
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPE_H
+# define PIPE_H
 
+#include "parser.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -16,11 +17,14 @@ typedef struct s_pipex
 	char	*outfile_name;
 	int		infile_fd;
 	int		outfile_fd;
+	t_ast	*head;
 	char	**path;
 	char	*full_path;
 	int		pipe_fd[2];
 	char	**execve_argv;
 }	t_pipex;
+
+int	pipex(t_ast	*ast, char *const *envp);
 
 //allocation_pipex.c
 t_pipex	*allocation_pipex(void);
@@ -35,7 +39,7 @@ void	store_args_in_struct(t_pipex *pipex, int argc, char **argv);
 char	**get_path_from_envp(char *const *envp, t_pipex *pipex);
 
 //spawn_child_and_process.c
-int		spawn_child_and_process(t_pipex	*pipex, char *const *envp, int cmdc_i);
+int	spawn_child_and_process(t_ast *ast, t_pipex	*pipex, char *envp[]);
 
 //false_fork.c
 void	false_fork(t_pipex	*pipex);
@@ -53,10 +57,10 @@ char	**store_execve_argv(t_pipex *pipex, char **cmd);
 void	from_infile(t_pipex *pipex);
 
 //setup_filefd.c
-void 	setup_filefd(t_pipex *pipex, int cmdc_i);
+void	setup_filefd(t_ast *ast, t_pipex *pipex);
 
 //exec_setup_pipefd.c
-void	setup_pipefd(t_pipex *pipex, int cmdc_i);
+void	setup_pipefd(t_ast *ast, t_pipex *pipex);
 
 //exec_to_outfile.c
 void	to_outfile(t_pipex *pipex);

@@ -1,6 +1,8 @@
 #include "parser.h"
 #include "libft.h"
 
+#include <stdio.h>
+
 static char *search_rdt_operater(char *input);
 static char *rdt_extract_operands(char *input);
 static void	store_head_element(t_ast  *ast, t_str_list **next_input, char *head_element);
@@ -10,9 +12,9 @@ t_str_list	*separate_and_store_redirect_operators(t_ast  *ast, char **input)
 	t_str_list	*next_input;
 	char *head_element;
 
-	if (input == NULL)
-		return (NULL);
 	next_input = NULL;
+	if (**input == '\0')
+		return (next_input);
 	head_element = search_rdt_operater(trim_isspc(*input));
 	if (head_element == NULL)
 		return (next_input);
@@ -76,5 +78,4 @@ static void	store_head_element(t_ast  *ast, t_str_list **next_input, char *head_
 		ast->ope = e_ope_redirect_i;
 	else
 		str_list_push(next_input, ft_strdup(head_element));
-
 }

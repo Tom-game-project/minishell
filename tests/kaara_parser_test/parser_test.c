@@ -11,7 +11,7 @@ void print(t_ast *ast);
 
 int main(void)
 {
-    char *input = ft_strdup("hello hello");
+    char *input = ft_strdup("echo || (ls -la && cat outfile) | ls -la > outfile");
     t_ast *ast;
 
     ast = NULL;
@@ -39,35 +39,35 @@ void print(t_ast *ast)
 		    str_list_print(current->arg);
         else
             printf("arg : (null)\n");
-        printf("ctlope : ");
-        switch (current->ctlope)
+        printf("op : ");
+        switch (current->ope)
         {
-            case e_ctlope_and:
+            case e_ope_and:
                 printf("&&\n");
                 break;
-            case e_ctlope_or:
+            case e_ope_or:
                 printf("||\n");
                 break;
             default:
                 printf("NONE\n");
                 break;
         }
-        printf("rdtope : ");
-        switch (current->rdtope)
+        printf("ope : ");
+        switch (current->ope)
         {
-            case e_rdtope_redirect_i:
+            case e_ope_redirect_i:
                 printf("<\n");
                 break; 
-            case e_rdtope_redirect_o:
+            case e_ope_redirect_o:
                 printf(">\n");
                 break;
-            case e_rdtope_heredoc_i:
+            case e_ope_heredoc_i:
                 printf("<<\n");
                 break;
-            case e_rdtope_heredoc_o:
+            case e_ope_heredoc_o:
                 printf(">>\n");
                 break ;
-            case e_rdtope_pipe:
+            case e_ope_pipe:
                 printf("|\n");
                 break;            
             default:

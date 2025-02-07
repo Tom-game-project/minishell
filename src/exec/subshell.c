@@ -4,16 +4,16 @@
 #include "pipe.h"
 #include <stdbool.h>
 
-int subshell(char *input, char *envp[])
-{
-	t_ast	*ast;
-	int     exit_status;
+// int subshell(char *input, char *envp[])
+// {
+// 	t_ast	*ast;
+// 	int     exit_status;
 
-	ast = NULL;
-	parser(&ast, input);
-	exit_status = exec(ast, envp);
-	return (exit_status);
-}
+// 	ast = NULL;
+// 	parser(&ast, input);
+// 	exit_status = exec(ast, envp);
+// 	return (exit_status);
+// }
 
 // int	tinyshell(t_ast *ast, char *envp[])//astの中身を処理する再起。
 // {

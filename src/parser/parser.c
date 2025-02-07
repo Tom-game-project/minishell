@@ -16,7 +16,10 @@ void	parser(t_ast **ast, char *input)
 	else if (checker_str_rdt(input))
 		next_input = separate_and_store_redirect_operators(*ast, &str);
 	else
+	{
 		separate_and_store_cmd_args(*ast, &str);
+		return ;
+	}
 	head = next_input;
 	parser(&((*ast)->left_ast), head->str);
 	head = next_input->next;

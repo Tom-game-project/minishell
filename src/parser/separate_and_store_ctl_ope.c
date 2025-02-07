@@ -2,6 +2,8 @@
 #include "libft.h"
 #include "list.h"
 
+#include <stdio.h>
+
 static char *ctl_extract_operands(char *input);
 static char *search_ctl_operater(char *input);
 static void	store_head_element(t_ast  *ast, t_str_list **next_input, char *head_element);
@@ -11,14 +13,26 @@ t_str_list	*separate_and_store_control_operators(t_ast  *ast, char **input)
 	t_str_list	*next_input;
 	char		*head_element;
 
-	if (input == NULL)
-		return (NULL);
 	next_input = NULL;
+	if (**input == '\0')
+		return (next_input);
 	head_element = search_ctl_operater(trim_isspc(*input));
 	update_input(input, head_element);
+	printf("-------------");
 	store_head_element(ast, &next_input, head_element);
 	if (head_element == NULL)
 		return (next_input);
+
+
+	printf("head:%s\n", head_element);
+	printf("str:%s\n", next_input->str);
+	if (ast->ope == e_ope_or)
+		printf("str:||\n");
+	else if(ast->ope == e_ope_and)
+	 	printf("str:&&\n");
+	else
+	 	printf("str:none\n");
+	
 	free(head_element);
 	next_input->next = separate_and_store_control_operators(ast, input);
 	return (next_input);

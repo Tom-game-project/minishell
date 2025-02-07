@@ -40,12 +40,12 @@ int main(void)
             printf("  cmd      : (null)\n");
 
         printf("  ctlope   : ");
-        switch (current->ctlope)
+        switch (current->ope)
         {
-            case e_ctlope_and:
+            case e_ope_and:
                 printf("&&\n");
                 break;
-            case e_ctlope_or:
+            case e_ope_or:
                 printf("||\n");
                 break;
             default:
