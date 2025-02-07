@@ -18,10 +18,9 @@ bool	check_update_arg(t_ast *ast)
 	}
 	else if (find_str_syntax(ast->arg) == false)
 	{
-		triming_string(ast->arg);//""、''、()
+		triming_string(ast->arg);//""、''、()を切り出す
 		return (false);
 	}
-	//(),$()を外でsubshellに渡す関数作ってもいいかも
 	return (true);
 }
 
