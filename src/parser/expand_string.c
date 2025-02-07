@@ -2,14 +2,12 @@
 ///
 /// 環境変数の展開をする
 ///
-
 #include "dict.h"
 #include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "expand_string/expand_string.h"
-
 
 /// 文字列の展開
 /// 

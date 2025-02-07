@@ -2,14 +2,15 @@
 
 #include "dict.h"
 #include "libft.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 
 /// 渡された t_str_dictのnodeを
 /// "key=value\n"で表現したときの文字列の長さをかえす
-static int str_dict_key_value_len(t_str_dict *node)
+size_t str_dict_key_value_len(t_str_dict *node)
 {
-	int rlen;
+	size_t rlen;
 
 	rlen = 0;
 	rlen += ft_strlen(node->key);

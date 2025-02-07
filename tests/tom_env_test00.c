@@ -1,15 +1,17 @@
 #include "dict.h"
+#include "built_in.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-/// `envp_to_str_dict`関数のテスト
+
+/// built_in_env関数のテスト
 ///
-/// 実際に`main`の引数から、`envp`を受け取ってディクショナリを作る
 /// ```bash
-/// make vtest TEST_FILE=tests/tom_str_dict_test06.c
+/// make test TEST_FILE=tests/tom_env_test00.c
 /// ```
 int main(int argc, char *argv[], char *envp[])
 {
+	
 	(void) argc;
 	(void) argv;
 
@@ -18,10 +20,9 @@ int main(int argc, char *argv[], char *envp[])
 	
 	a = NULL;
 	envp_to_str_dict(&a, envp);
-
 	node = get_str_dict_by_key(a, "PATH");
-	printf("PATH %s\n" , node->value);
+	built_in_env(str_dict_to_envp(node));
 	str_dict_clear(&a, free, free);
+	
 	return (0);
-
 }

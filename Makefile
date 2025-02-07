@@ -84,6 +84,8 @@ DICT_SRC = \
       src/dict/str_dict_clear.c\
       src/dict/str_dict_len.c\
       src/dict/str_dict_to_env.c\
+      src/dict/str_dict_remove.c\
+      src/dict/str_dict_ft_streq.c\
 
 
 SRC = \

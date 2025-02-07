@@ -1,6 +1,7 @@
 #ifndef DICT_H
 #define DICT_H
 
+#include <unistd.h>
 
 typedef struct s_str_dict t_str_dict;
 struct s_str_dict
@@ -35,4 +36,10 @@ char **str_dict_to_envp(t_str_dict *node);
 
 
 int envp_to_str_dict(t_str_dict **node, char *envp[]);
+
+char *str_dict_node_to_str(t_str_dict *node);
+size_t str_dict_key_value_len(t_str_dict *node);
+
+
+int str_dict_remove(t_str_dict **node, char *key, void (*key_free)(void *), void (*value_free)(void *));
 #endif
