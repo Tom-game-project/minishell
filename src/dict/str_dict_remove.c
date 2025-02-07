@@ -19,8 +19,8 @@ int str_dict_remove(t_str_dict **node, char *key, void (*key_free)(void *), void
 			value_free(cur_node->value);
 			if (pnode == NULL)
 			{
+				*node = cur_node->next;
 				free(cur_node);
-				*node = NULL;
 			}
 			else
 			{
