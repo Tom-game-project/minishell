@@ -10,19 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
 #include "pipe.h"
 
-void	setup_pipefd(t_pipex *pipex, int cmdc_i)
+void	setup_pipefd(t_ast *ast, t_pipex *pipex)
 {
-	if (cmdc_i != 0)
+	if (ast->rdtope != e_rdtope_pipe);
+		return ;
+	if (dup2(pipex->pipe_fd[0], STDIN_FILENO) == -1)
 	{
-		if (dup2(pipex->pipe_fd[0], STDIN_FILENO) == -1)
-		{
-			perror("dup2 return -1.");
-			free_exit(pipex, EXIT_FAILURE);
-		}
-		close(pipex->pipe_fd[0]);
-	}	
+		perror("dup2 return -1.");
+		free_exit(pipex, EXIT_FAILURE);
+	}
+	close(pipex->pipe_fd[0]);
 	if (pipe(pipex->pipe_fd) == -1)
 	{
 		perror("pipe return -1.");

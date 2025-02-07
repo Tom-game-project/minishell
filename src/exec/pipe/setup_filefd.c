@@ -10,12 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
 #include "pipe.h"
 
-void	setup_filefd(t_pipex *pipex, int cmdc_i)
+void	setup_filefd(t_ast *ast, t_pipex *pipex)
 {
-	if (cmdc_i == 0)
+	if (ast->rdtope == e_rdtope_redirect_i)
 		from_infile(pipex);
-	else if (cmdc_i == pipex->cmdc - 1)
+	else if (ast->rdtope == e_rdtope_redirect_o)
 		to_outfile(pipex);
 }

@@ -14,7 +14,7 @@
 
 #include <stdio.h>
 
-void chiled_process(t_pipex *pipex, char *const *envp, int cmdc_i)
+void chiled_process(t_ast *ast, t_pipex	*pipex, char *envp[])
 {
 	setup_filefd(pipex, cmdc_i);
 	pipex->execve_argv

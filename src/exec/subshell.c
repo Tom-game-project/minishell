@@ -13,6 +13,7 @@ int subshell(char *input, char *envp[])//ast全体の処理。
 
 	if (input == NULL)
 		return (-1);
+	ast = NULL;
 	parser(&ast, input);
 	exit_status = tinyshell(ast, envp);
 	return (exit_status);

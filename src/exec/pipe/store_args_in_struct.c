@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
 #include "pipe.h"
 
-void	store_args_in_struct(t_pipex *pipex, int argc, char **argv)
+void	store_args_in_struct(t_pipex *pipex, t_ast *ast)
 {
 	pipex->infile_name = allocation_and_cpy(pipex, argv[1]);
 	pipex->outfile_name = allocation_and_cpy(pipex, argv[argc - 1]);

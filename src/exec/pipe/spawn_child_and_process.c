@@ -10,23 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
 #include "pipe.h"
 
-int	spawn_child_and_process(t_pipex	*pipex, char *const *envp, int cmdc_i)
+int	spawn_child_and_process(t_ast *ast, t_pipex	*pipex, char *envp[])
 {
 	pid_t	pid;
 	int		exit_status;
 	int		pre_exit_status;
 
-	if (cmdc_i >= pipex->cmdc)
+	if (ast == NULL)
 		return (0);
-	setup_pipefd(pipex, cmdc_i);
-	pid = fork();
-	if (pid < 0)
-		false_fork(pipex);
-	else if (pid == 0)
-		chiled_process(pipex, envp, cmdc_i);
-	exit_status = spawn_child_and_process(pipex, envp, cmdc_i + 1);
+	else if (ast->rdtope != e_rdtope_none)
+		spawn_child_and_process(ast->right_ast, pipex, envp);
+	else
+	{
+		setup_pipefd(ast, pipex);
+		pid = fork();
+		if (pid < 0)
+			false_fork(pipex);
+		else if (pid == 0)
+			spawn_child_and_process(ast, pipex, envp);
+		exit_status = spawn_child_and_process(ast->right_ast, pipex, envp);
+	}
 	if (cmdc_i == pipex->cmdc - 1)
 	{
 		waitpid(pid, &pre_exit_status, 0);

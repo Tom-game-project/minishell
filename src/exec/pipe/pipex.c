@@ -12,7 +12,7 @@
 
 #include "pipe.h"
 
-int	main(int argc, char **argv, char *const *envp)
+int	pipex(t_ast	*ast, char *const *envp)
 {
 	t_pipex	*pipex;
 	int		exit_status;
@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char *const *envp)
 	if (argc == 1)
 		return (0);
 	pipex = allocation_pipex();
-	store_args_in_struct(pipex, argc, argv);
+	store_args_in_struct(pipex, ast);
 	pipex->path = get_path_from_envp(envp, pipex);
 	exit_status = spawn_child_and_process(pipex, envp, 0);
 	free_exit(pipex, 0);
