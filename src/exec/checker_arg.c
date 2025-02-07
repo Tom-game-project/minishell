@@ -24,4 +24,5 @@ bool	check_update_arg(t_ast *ast)
 	return (true);
 }
 
+//exitstatusどうする問題は引き継がれないので問題なし。
 // expand_string(str, d);
