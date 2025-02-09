@@ -56,7 +56,7 @@ void	from_infile(t_pipex *pipex);
 void 	setup_filefd(t_pipex *pipex, int cmdc_i);
 
 //exec_setup_pipefd.c
-void	setup_pipefd(t_pipex *pipex, int cmdc_i);
+void	setup_pipefd(t_ast *ast, t_pipex *pipex);
 
 //exec_to_outfile.c
 void	to_outfile(t_pipex *pipex);

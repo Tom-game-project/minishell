@@ -66,4 +66,12 @@ char **str_list_to_array(t_str_list *node);
 char *str_list_join(t_str_list *node, char *sep);
 
 t_str_list *str_list_get_ptr(t_str_list *head, int index);
+
+t_str_list *str_list_split(char *str, char c);
+
+int str_list_map(t_str_list **node, char *(*f)(char *));
+
+char *str_list_search(t_str_list *node, bool (*f)(char *));
+
+int str_list_map_arg1(t_str_list **node, char *(*f)(char *,char *), char *str);
 #endif

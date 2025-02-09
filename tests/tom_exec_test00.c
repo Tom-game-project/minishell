@@ -33,7 +33,7 @@ int test00()
 		&(t_ast) {
 			NULL,
 			NULL,
-			e_rdtope_none,
+			e_ope_none,
 			NULL,
 			l0 // echo hello
 		},
@@ -42,23 +42,68 @@ int test00()
 			{
 				NULL,
 				NULL,
-				e_rdtope_none,
+				e_ope_none,
 				NULL,
 				l1 // cat
 			},
 			&(t_ast) {
 				NULL,
 				NULL,
-				e_rdtope_none,
+				e_ope_none,
 				NULL,
 				l2 // ls -la
 			},
-			e_rdtope_pipe,
+			e_ope_pipe,
 			NULL,
 			NULL
 
 		},
-		e_rdtope_pipe ,
+		e_ope_pipe ,
+		NULL,
+		NULL
+	};
+
+	return (0);
+}
+
+int test01()
+{
+	t_ast *ast;
+
+	t_str_list *l0;
+	t_str_list *l1;
+
+	l0 = NULL;
+	str_list_push(&l0, "echo");
+	str_list_push(&l0, "hello");
+
+	l1 = NULL;
+	str_list_push(&l1, "cat");
+
+
+	//str_list_push(&l2, "echo");
+	//str_list_push(&l2, "$(ls -la)");
+
+	// test case: echo hello | cat
+	//
+
+	ast = &(t_ast) {
+		&(t_ast) {
+			NULL,
+			NULL,
+			e_ope_none,
+			NULL,
+			l0 // echo hello
+		},
+		&(t_ast) 
+		{
+			NULL,
+			NULL,
+			e_ope_none,
+			NULL,
+			l1 // cat
+		},
+		e_ope_pipe ,
 		NULL,
 		NULL
 	};

@@ -13,19 +13,40 @@
 //	return (exit_status);
 //}
 
-int exec(t_ast *ast, t_str_dict *envp_dict)
+//int pipe_exec()
+//{
+//	int		pipe_fd[2];
+//
+//	if (pipe(pipe_fd) == -1)
+//		return (perror("pipe"), 1);
+//	return (0);
+//}
+
+int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 {
 	int exit_status;
+	int pipe_fd[2];
+	int pid;
 
 	exit_status = 0;
-	if (ast->ope == e_ope_none)
+	if (ast->ope == e_ope_pipe)
 	{
-		//
-
+		// パイプ
+		// もう実行できる状態
+		pid = fork();
+		if (pid == 0)
+		{
+			// 子
+		}
+		else
+		{
+			// 親
+			
+		}
 	}
-	else if (ast->ope == e_ope_pipe)
+	else if (ast->ope == e_ope_none)
 	{
-		//
+
 	}
 	else
 	{
