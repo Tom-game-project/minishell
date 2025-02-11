@@ -11,9 +11,9 @@
 
 /// メモ
 ///
-/// 実際に実行を行う関数の引数にはpidを渡してもいいかもしれない
+/// - 実際に実行を行う関数の引数にはpidを渡してもいいかもしれない
+///     そうすることで、自分が子プロセスか否かを判定できる
 ///
-/// そうすることで、自分が子プロセスか否かを判定できる
 
 #define BUF_SIZE 2
 // (パイプを)読む
@@ -50,7 +50,7 @@ int execve_wrap(t_ast *ast, t_str_dict *envp_dict)
 	// TODO WARN
 	// fullpathはNULLになって返る可能性がある
 	envp = str_dict_to_envp(envp_dict); // 環境変数をexecveに渡せる形に固定する
-	dprintf(STDERR_FILENO, "cmd %s running\n", fullpath);
+	dprintf(STDERR_FILENO, "cmd %s running on pid(%d, -> ppid(%d))\n", fullpath, getpid(), getppid());
 	execve(fullpath, argv, envp);
 	return (1);// ここに到達した場合は不正
 }
@@ -60,7 +60,7 @@ int pipe_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 {
 	int pid;
 	int pipe_fd[2];
-	int pre_exit_status;
+	int exit_status;
 
 	if (pipe(pipe_fd) == -1)
 		// パイプの生成に失敗
@@ -82,9 +82,9 @@ int pipe_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 	close(pipe_fd[PIPE_WRITE]);
 	if (input_fd != STDIN_FILENO)
 		close(input_fd);
-	exec2(ast->right_ast, envp_dict, pipe_fd[PIPE_READ], pid);
-	waitpid(pid, &pre_exit_status, WUNTRACED);
-	return (WEXITSTATUS(pre_exit_status));
+	exit_status = exec2(ast->right_ast, envp_dict, pipe_fd[PIPE_READ], pid);
+	waitpid(pid, NULL, WUNTRACED);
+	return (exit_status);
 }
 
 /// 実行可能な状態であり、かつ、
@@ -127,14 +127,12 @@ int none_proc(t_ast *ast, t_str_dict *envp_dict,int input_fd)
 /// 引数に、呼び出し元のpidを取ることで、自分が子プロセス内で実行されるかどうかをチェックする
 int exec2(t_ast *ast, t_str_dict *envp_dict, int input_fd, int ppid)
 {
-
-	//dprintf(STDERR_FILENO, "cmd %s\n", ast->cmd);
 	str_list_dprint(STDERR_FILENO, ast->arg);
-	dprintf(STDERR_FILENO, "ppid %d, pid %d\n", getppid(), getpid());
+	dprintf(STDERR_FILENO, "^ppid %d, pid %d\n", getppid(), getpid());
 	if (ast->ope == e_ope_pipe)
 	{
-		pipe_proc(ast, envp_dict, input_fd);
-		return (1);
+		return (pipe_proc(ast, envp_dict, input_fd));
+		// return (1);
 	}
 	else if (ast->ope == e_ope_none) // 普通のコマンド
 	{
@@ -154,7 +152,6 @@ int exec2(t_ast *ast, t_str_dict *envp_dict, int input_fd, int ppid)
 		dprintf(STDERR_FILENO, "unexpected ope!\n");
 		return (1); // exit status を返すように変更
 	}
-
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -165,7 +162,7 @@ int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 
 	//dprintf(STDERR_FILENO, "cmd %s\n", ast->cmd);
 	str_list_dprint(STDERR_FILENO, ast->arg);
-	dprintf(STDERR_FILENO, "ppid %d, pid %d\n", getppid(), getpid());
+	dprintf(STDERR_FILENO, "@ppid %d, pid %d\n", getppid(), getpid());
 	//
 	if (ast->ope == e_ope_pipe)
 	{
@@ -177,7 +174,6 @@ int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 	{
 		int pid;
 		int status;
-
 		if (pipe(pipe_fd) == -1)
 			return (-1);
 		pid = fork();

@@ -3,20 +3,21 @@
 #include "exec.h"
 #include <stdio.h>
 
-/// exec2 のテスト
+
+/// exec2のtest
 ///
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test00.c
+/// make test TEST_FILE=tests/tom_exec_test02.c
 /// ```
 ///
 /// ```bash
-/// ls -la | grep src
+/// echo hello | echo world
 /// ```
 int test00(int argc, char *argv[], char *envp[])
 {
 	(void) argc;
 	(void) argv;
-	
+
 	int exit_status;
 
 	t_ast *ast;
@@ -26,13 +27,12 @@ int test00(int argc, char *argv[], char *envp[])
 	t_str_list *l1;
 
 	l0 = NULL;
-	str_list_push(&l0, "ls");
-	str_list_push(&l0, "-la");
+	str_list_push(&l0, "echo");
+	str_list_push(&l0, "hello");
 
 	l1 = NULL;
 	str_list_push(&l1, "grep");
-	str_list_push(&l1, "src");
-	//str_list_push(&l1, "world");
+	str_list_push(&l1, "hel");
 
 	//str_list_push(&l2, "echo");
 	//str_list_push(&l2, "$(ls -la)");
@@ -40,24 +40,11 @@ int test00(int argc, char *argv[], char *envp[])
 	// test case: echo hello | cat
 
 	ast = &(t_ast) {
-		&(t_ast) {
-			NULL,
-			NULL,
-			e_ope_none,
-			NULL,
-			l0 // ls -la
-		},
-		&(t_ast) 
-		{
-			NULL,
-			NULL,
-			e_ope_none,
-			NULL,
-			l1 // grep src
-		},
-		e_ope_pipe ,
 		NULL,
-		NULL
+		NULL,
+		e_ope_none,
+		NULL,
+		l0 // echo hello
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
@@ -66,10 +53,6 @@ int test00(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
-
-/// ```bash
-/// make test TEST_FILE=tests/tom_exec_test00.c
-/// ```
 int main(int argc, char *argv[], char *envp[])
 {
 	test00(argc, argv ,envp);
