@@ -4,6 +4,7 @@
 #include "list.h"
 #include "dict.h"
 #include "libft.h"
+#include "expand_string.h"
 
 ///
 ///
@@ -21,6 +22,7 @@ int main()
 	//char *str = "???$HELLO$$?$?HELLO$?$WO";
 	//char *str = "$$$";
 	d = NULL;
+	// 環境変数を模したもの
 	str_dict_add(
 		&d,
 		ft_strdup("HELLO"),

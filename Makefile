@@ -56,14 +56,17 @@ LIST_SRC = \
       src/list/str_list_get_elem.c\
 
 
+EXPAND_STRING_SRC = \
+      src/expand_string/utils/in_double_quotation.c\
+      src/expand_string/utils/in_single_quotation.c\
+      src/expand_string/utils/is_valid_env_char.c\
+      src/expand_string/utils/out_of_quotation.c\
+      src/expand_string/utils/push_expand_env.c\
+      src/expand_string/utils/push_str_group.c\
+      src/expand_string/expand_string.c\
+
+
 PARSER_SRC = \
-      src/parser/expand_string/in_double_quotation.c\
-      src/parser/expand_string/in_single_quotation.c\
-      src/parser/expand_string/is_valid_env_char.c\
-      src/parser/expand_string/out_of_quotation.c\
-      src/parser/expand_string/push_expand_env.c\
-      src/parser/expand_string/push_str_group.c\
-      src/parser/expand_string.c\
       src/parser/parser.c\
       src/parser/allocation_ast.c\
       src/parser/checker_is.c\
@@ -107,6 +110,7 @@ FOR_TEST_SRC=\
 SRC = \
 	$(BUILD_IN_SRC)\
 	$(LIST_SRC)\
+	$(EXPAND_STRING_SRC)\
 	$(DICT_SRC)\
 	$(PATH_SRC)\
 	$(EXEC_SRC)\
