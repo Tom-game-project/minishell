@@ -25,6 +25,6 @@ void	update_input(char **input, char *head_element)
 
 	tmp = *input;//ft_strtrim(*input, " ");
 	tmp_len = ft_strlen(tmp);
-	*input = ft_substr(ft_strtrim(tmp, " "), ft_strlen(head_element), tmp_len - ft_strlen(head_element));
+	*input = ft_substr(trim_isspc(tmp), ft_strlen(head_element), tmp_len - ft_strlen(head_element));
 	free(tmp);
 }

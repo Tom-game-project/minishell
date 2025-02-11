@@ -58,6 +58,7 @@ t_str_list	*store_right_next_input(char	*input)
 
 	if (*input == '\0')
 		return (NULL);
+	next_input = NULL;
 	str_list_push(&next_input, ft_strdup(input));
 	return (next_input);
 }
