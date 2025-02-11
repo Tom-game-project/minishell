@@ -14,7 +14,7 @@ int main(void)
 {
     // 入力文字列を動的に確保
 
-    char *input = ft_strdup("\"echo hhhh\" > outfile || false");
+    char *input = ft_strdup("\"echo hhhh ||\" > outfile ||");
     if (!input)
     {
         fprintf(stderr, "Input allocation error\n");
@@ -26,7 +26,7 @@ int main(void)
 
     // 入力文字列を解析してASTに格納する
     t_str_list  *next_input;
-    next_input = separate_and_store_control_operators(&ast, &input);
+    next_input = separate_and_store_control_operators(ast, &input);
     // ここからASTの内容を表示して確認する
     printf("=== ASTの内容 ===\n");
     t_ast *current = ast;
