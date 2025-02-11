@@ -5,12 +5,14 @@
 
 /// exec2 のテスト
 ///
+/// `&&`と同じように挙動するかどうかを確かめる
+///
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test04.c
+/// make test TEST_FILE=tests/tom_exec_test05.c
 /// ```
 ///
 /// ```bash
-/// ls -la | grep src
+/// true && echo world success!
 /// ```
 int test00(int argc, char *argv[], char *envp[])
 {
@@ -24,25 +26,14 @@ int test00(int argc, char *argv[], char *envp[])
 
 	t_str_list *l0;
 	t_str_list *l1;
-	t_str_list *l2;
 
 	l0 = NULL;
-	str_list_push(&l0, "cat");
-	str_list_push(&l0, "aaaaaaaa");
+	str_list_push(&l0, "true");
 
 	l1 = NULL;
-	str_list_push(&l1, "ls");
-	str_list_push(&l1, "-la");
-
-	l2 = NULL;
-	str_list_push(&l2, "grep");
-	str_list_push(&l2, "src");
-	//str_list_push(&l1, "world");
-
-	//str_list_push(&l2, "echo");
-	//str_list_push(&l2, "$(ls -la)");
-
-	// test case: echo hello | cat
+	str_list_push(&l1, "echo");
+	str_list_push(&l1, "world");
+	str_list_push(&l1, "success!");
 
 	ast = &(t_ast) {
 		&(t_ast) {
@@ -50,30 +41,17 @@ int test00(int argc, char *argv[], char *envp[])
 			NULL,
 			e_ope_none,
 			NULL,
-			l0 // ls -la
+			l0 // `true`
 		},
 		&(t_ast) 
 		{
-			&(t_ast) {
-				NULL,
-				NULL,
-				e_ope_none,
-				NULL,
-				l1 // ls -la
-			},
-			&(t_ast) 
-			{
-				NULL,
-				NULL,
-				e_ope_none,
-				NULL,
-				l2 // grep src
-			},
-			e_ope_pipe,
 			NULL,
-			NULL // grep src
+			NULL,
+			e_ope_none,
+			NULL,
+			l1 // `echo world success!
 		},
-		e_ope_pipe ,
+		e_ope_and, // `&&`
 		NULL,
 		NULL
 	};
@@ -81,12 +59,12 @@ int test00(int argc, char *argv[], char *envp[])
 	envp_to_str_dict(&d, envp);
 	exit_status = exec2(ast, d, STDIN_FILENO, -1);
 	printf("exit status (%d)\n", exit_status);
-	return (0);
+	return (exit_status);
 }
 
 
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test00.c
+/// make test TEST_FILE=tests/tom_exec_test05.c
 /// ```
 int main(int argc, char *argv[], char *envp[])
 {

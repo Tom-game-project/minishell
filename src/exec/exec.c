@@ -87,6 +87,62 @@ int pipe_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 	return (exit_status);
 }
 
+
+int and_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
+{
+	int pid;
+	int status;
+
+	pid = fork();
+	if (pid == 0)
+	{ // 子
+		if (input_fd != STDIN_FILENO)
+		{
+			dup2(input_fd, STDIN_FILENO);
+			close(input_fd);
+		}
+		exec2(ast->left_ast, envp_dict, input_fd, pid); // 
+		exit(0);
+	} // 親
+	if (input_fd != STDIN_FILENO)
+		close(input_fd);
+	waitpid(pid, &status, WUNTRACED);
+	if (WEXITSTATUS(status) != 0) //正常に終了しなかった場合
+	{
+		return (WEXITSTATUS(status)); // TODO ここで何を返すべきか確かめる
+	}
+	else // 正常に終了した場合次のコマンドを実行
+		return (exec2(ast->right_ast, envp_dict, STDIN_FILENO, pid));
+}
+
+
+int or_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
+{
+	int pid;
+	int status;
+
+	pid = fork();
+	if (pid == 0)
+	{ // 子
+		if (input_fd != STDIN_FILENO)
+		{
+			dup2(input_fd, STDIN_FILENO);
+			close(input_fd);
+		}
+		exec2(ast->left_ast, envp_dict, input_fd, pid); // 
+		exit(0);
+	} // 親
+	if (input_fd != STDIN_FILENO)
+		close(input_fd);
+	waitpid(pid, &status, WUNTRACED);
+	if (WEXITSTATUS(status) == 0) //正常に終了した場合
+	{
+		return (WEXITSTATUS(status)); // TODO ここで何を返すべきか確かめる
+	}
+	else // 正常に終了しなかった場合は次のコマンドを実行
+		return (exec2(ast->right_ast, envp_dict, STDIN_FILENO, pid));
+}
+
 /// 実行可能な状態であり、かつ、
 /// 自分自身が子プロセス中に入っていない場合(親プロセスから)実行される関数
 int none_proc(t_ast *ast, t_str_dict *envp_dict,int input_fd)
@@ -127,25 +183,33 @@ int none_proc(t_ast *ast, t_str_dict *envp_dict,int input_fd)
 /// 引数に、呼び出し元のpidを取ることで、自分が子プロセス内で実行されるかどうかをチェックする
 int exec2(t_ast *ast, t_str_dict *envp_dict, int input_fd, int ppid)
 {
+	int exit_status;
+
+	exit_status = 0;
 	str_list_dprint(STDERR_FILENO, ast->arg);
 	dprintf(STDERR_FILENO, "^ppid %d, pid %d\n", getppid(), getpid());
 	if (ast->ope == e_ope_pipe)
 	{
 		return (pipe_proc(ast, envp_dict, input_fd));
-		// return (1);
+	}
+	if (ast->ope == e_ope_and)
+	{
+		return (and_proc(ast, envp_dict, input_fd));
+	}
+	if (ast->ope == e_ope_or)
+	{
+		return (or_proc(ast, envp_dict, input_fd));
 	}
 	else if (ast->ope == e_ope_none) // 普通のコマンド
 	{
 		// もしppidが子プロセス中なら
 		// この場で実行
 		if (ppid == 0)
-		{
-			execve_wrap(ast, envp_dict);
-		}
+			exit_status = execve_wrap(ast, envp_dict);
 		// もし、子プロセスでなければ
 		else
-			none_proc(ast, envp_dict, input_fd);
-		return (0); // TODO exit status を返却するように変更
+			exit_status = none_proc(ast, envp_dict, input_fd);
+		return (exit_status); // TODO exit status を返却するように変更
 	}
 	else
 	{
