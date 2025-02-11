@@ -4,7 +4,6 @@
 #include "path.h"
 #include "exec.h"
 
-
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -55,22 +54,6 @@ int execve_wrap(t_ast *ast, t_str_dict *envp_dict)
 	execve(fullpath, argv, envp);
 	return (1);// ここに到達した場合は不正
 }
-
-/*
-int exec_in_pipe_proc_child(t_ast *ast, t_str_dict *envp_dict, int input_fd)
-{
-	if (ast->ope == e_ope_none)
-	{
-		// 
-		
-	}
-	else
-	{
-		//
-	}
-	return (0);
-}
-*/
 
 /// exit_statusを返却する
 int pipe_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
