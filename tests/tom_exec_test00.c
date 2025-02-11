@@ -82,8 +82,8 @@ int test01(int argc, char *argv[], char *envp[])
 	str_list_push(&l0, "hello");
 
 	l1 = NULL;
-	str_list_push(&l1, "echo");
-	str_list_push(&l1, "world");
+	str_list_push(&l1, "grep");
+	str_list_push(&l1, "hello");
 	//str_list_push(&l1, "world");
 
 	//str_list_push(&l2, "echo");

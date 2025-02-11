@@ -85,6 +85,14 @@ int pipe_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 	pid = fork();
 	if (pid == 0)
 	{ // 子
+		if (input_fd != STDIN_FILENO)
+		{
+			dup2(input_fd, STDIN_FILENO);
+			close(input_fd);
+		}
+		close(pipe_fd[PIPE_READ]);
+		dup2(pipe_fd[PIPE_WRITE], STDOUT_FILENO);
+		close(pipe_fd[PIPE_WRITE]);
 		exec2(ast->left_ast, envp_dict, input_fd, pid); // 
 		exit(0);
 	} // 親
