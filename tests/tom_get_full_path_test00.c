@@ -21,14 +21,16 @@ int main(int argc, char *argv[], char *envp[])
 	env_path_node = get_str_dict_by_key(d, "PATH");
 	if (env_path_node == NULL)
 	{
+		// 環境変数が設定されていないようなあ場合
+		// unsetされているような場合
 		printf("環境変数が設定されていません\n");
 		return (1);
 	}
 	else
 	{
 		// printf("full path %s \n", env_path_node->value);
-		//str = get_full_path("python3", env_path_node->value);
-		str = get_full_path("python3", "");
+		//str = get_full_path("python3", env_path_node->value); // 環境変数が適切に設定されている場合
+		str = get_full_path("python3", ""); // 環境変数に何もパスが見つからない場合
 		printf("full path -> \"%s\" \n", str);
 		free(str);
 	}

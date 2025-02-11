@@ -53,6 +53,7 @@ LIST_SRC = \
       src/list/str_list_split.c\
       src/list/str_list_map.c\
       src/list/str_list_search.c\
+      src/list/str_list_get_elem.c\
 
 
 PARSER_SRC = \
@@ -90,15 +91,26 @@ DICT_SRC = \
       src/dict/str_dict_remove.c\
       src/dict/str_dict_ft_streq.c\
 
+
 PATH_SRC =\
       src/path/get_full_path.c
+
+
+EXEC_SRC=\
+      src/exec/exec.c\
+      src/exec/fd_write.c
+
+FOR_TEST_SRC=\
+      src/list/str_list_dprint.c
 
 
 SRC = \
 	$(BUILD_IN_SRC)\
 	$(LIST_SRC)\
 	$(DICT_SRC)\
-	$(PATH_SRC)
+	$(PATH_SRC)\
+	$(EXEC_SRC)\
+	$(FOR_TEST_SRC)
 	# $(PARSER_SRC)\
 
 

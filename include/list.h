@@ -74,4 +74,16 @@ int str_list_map(t_str_list **node, char *(*f)(char *));
 char *str_list_search(t_str_list *node, bool (*f)(char *));
 
 int str_list_map_arg1(t_str_list **node, char *(*f)(char *,char *), char *str);
+
+char *str_list_get_elem(t_str_list *node, int index);
+
+
+
+
+// TODO for test
+// 以下の関数は、成果物に含めない
+//
+
+int str_list_dprint(int pid, t_str_list *node);
+
 #endif
