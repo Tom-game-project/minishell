@@ -26,6 +26,9 @@ int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd);
 int exec2(t_ast *ast, t_str_dict *envp_dict, int input_fd, int ppid);
 
 /// 扱いやすい引数を渡すことで実行できるexecve
+/// この関数では以下の処理を行う
+/// - 環境変数の展開
+/// - $()展開 (この関数が更に子プロセスを生じさせる可能性がある)
 int execve_wrap(t_ast *ast, t_str_dict *envp_dict)
 {
 	char *fullpath;
@@ -175,7 +178,6 @@ int none_proc(t_ast *ast, t_str_dict *envp_dict,int input_fd)
 		close(pipe_fd[PIPE_READ]);
 		return (WEXITSTATUS(status));
 	}
-
 }
 
 /// 試作品２つ目
@@ -189,19 +191,14 @@ int exec2(t_ast *ast, t_str_dict *envp_dict, int input_fd, int ppid)
 	str_list_dprint(STDERR_FILENO, ast->arg);
 	dprintf(STDERR_FILENO, "^ppid %d, pid %d\n", getppid(), getpid());
 	if (ast->ope == e_ope_pipe)
-	{
 		return (pipe_proc(ast, envp_dict, input_fd));
-	}
 	if (ast->ope == e_ope_and)
-	{
 		return (and_proc(ast, envp_dict, input_fd));
-	}
 	if (ast->ope == e_ope_or)
-	{
 		return (or_proc(ast, envp_dict, input_fd));
-	}
 	else if (ast->ope == e_ope_none) // 普通のコマンド
 	{
+		// TODO: built-in関数を判別するためのプログラムをここに追加
 		// もしppidが子プロセス中なら
 		// この場で実行
 		if (ppid == 0)
