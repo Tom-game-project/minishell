@@ -4,7 +4,7 @@
 #include "parser.h"
 #include <stdlib.h>
 
-//make vtest TEST_FILE=tests/kaara_parser_test.c
+//make vtest TEST_FILE=tests/kaara_parser_test/parser_test.c
 
 void print(t_ast *ast);
 
