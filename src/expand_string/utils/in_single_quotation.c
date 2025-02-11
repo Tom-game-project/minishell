@@ -1,5 +1,5 @@
 #include "list.h"
-#include "expand_string.h"
+#include "private.h"
 
 /// シングルクォーテーション内の処理
 t_anchor anchor_q_proc(char c, t_list_args *group_args)

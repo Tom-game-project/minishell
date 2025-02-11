@@ -1,7 +1,7 @@
 
 #include "list.h"
 #include "dict.h"
-#include "expand_string.h"
+#include "private.h"
 
 t_anchor anchor_dq_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
