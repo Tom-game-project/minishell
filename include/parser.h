@@ -51,7 +51,7 @@ int	find_chr(char *input, char find);
 void   separate_and_store_cmd_args(t_ast *ast, char **input);
 
 //separate_and_store_ctl_ope.c
-t_str_list	*separate_and_store_control_operators(t_ast  **ast, char **input);
+t_str_list	*separate_and_store_control_operators(t_ast  *ast, char **input);
 
 //separate_and_store_rdt_ope.c
 t_str_list	*separate_and_store_redirect_operators(t_ast  *ast, char **input);
@@ -65,5 +65,7 @@ char *trim_isspc(char *str);
 //checker_str.c
 bool    checker_str_ctl(char *str);
 bool    checker_str_rdt(char *str);
+bool    str_ctl_len(char *str);
+bool    str_rdt_len(char *str);
 
 # endif
