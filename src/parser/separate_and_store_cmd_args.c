@@ -12,9 +12,17 @@ static void	store_head_element(t_ast	*ast, char *input);
 
 void   separate_and_store_cmd_args(t_ast *ast, char **input)
 {
+	char *tmp;
+
 	if (*input == NULL)
 		return ;
-	store_head_element(ast, *input);
+	if (**input == '(')
+	{
+		tmp = ft_substr(*input, 1, ft_strlen(*input) - 1);
+		parser(&ast, tmp);
+	}
+	else
+		store_head_element(ast, *input);
 	return ;
 }
 

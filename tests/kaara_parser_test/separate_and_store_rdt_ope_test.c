@@ -3,11 +3,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// make vtest TEST_FILE=tests/kaara_parser_test/
+
 int main(void)
 {
     // 入力文字列を動的に確保
 
-    char *input = ft_strdup("hello hello");
+    char *input = ft_strdup("hello >> \"hello > hello\"");
     if (!input)
     {
         fprintf(stderr, "Input allocation error\n");
@@ -18,8 +20,8 @@ int main(void)
     t_ast *ast = allocation_ast();
 
     // 入力文字列を解析してASTに格納する
-    separate_and_store_redirect_operators(ast, &input);
-
+    t_str_list  *next_input;
+    next_input = separate_and_store_redirect_operators(ast, &input);
 
     // ここからASTの内容を表示して確認する
     printf("=== ASTの内容 ===\n");
@@ -35,12 +37,12 @@ int main(void)
         printf(" ---- arg ---- \n");
 		str_list_print(current->arg);
         printf("ctlope : ");
-        switch (current->ctlope)
+        switch (current->ope)
         {
-            case e_ctlope_and:
+            case e_ope_and:
                 printf("&&\n");
                 break;
-            case e_ctlope_or:
+            case e_ope_or:
                 printf("||\n");
                 break;
             default:
@@ -48,21 +50,21 @@ int main(void)
                 break;
         }
         printf("rdtope : ");
-        switch (current->rdtope)
+        switch (current->ope)
         {
-            case e_rdtope_redirect_i:
+            case e_ope_redirect_i:
                 printf("<\n");
                 break; 
-            case e_rdtope_redirect_o:
+            case e_ope_redirect_o:
                 printf(">\n");
                 break;
-            case e_rdtope_heredoc_i:
+            case e_ope_heredoc_i:
                 printf("<<\n");
                 break;
-            case e_rdtope_heredoc_o:
+            case e_ope_heredoc_o:
                 printf(">>\n");
                 break ;
-            case e_rdtope_pipe:
+            case e_ope_pipe:
                 printf("|\n");
                 break;            
             default:
@@ -71,6 +73,8 @@ int main(void)
         }
         current = current->right_ast;
         idx++;
+        printf("--------next_input-------\n");
+		str_list_print(next_input);
     }
     return 0;
 }

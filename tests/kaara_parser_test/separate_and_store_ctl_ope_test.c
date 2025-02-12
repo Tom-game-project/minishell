@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-//make vtest TEST_FILE=tests/sep
+// make vtest TEST_FILE=tests/kaara_parser_test/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,7 +14,7 @@ int main(void)
 {
     // 入力文字列を動的に確保
 
-    char *input = ft_strdup("\"echo hhhh ||\" > outfile ||");
+    char *input = ft_strdup("hello hello");
     if (!input)
     {
         fprintf(stderr, "Input allocation error\n");

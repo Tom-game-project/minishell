@@ -4,10 +4,9 @@
 
 #include <stdio.h>
 
-t_str_list	*store_left_next_input(char **input);
-void	store_ctlope_ast(t_ast	**ast, char **input);
-t_str_list	*store_right_next_input(char	*input);
-
+static t_str_list	*store_left_next_input(char **input);
+static void	store_ctlope_ast(t_ast	**ast, char **input);
+static t_str_list	*store_right_next_input(char	*input);
 static char *search_ctl_operater(char *input);
 
 t_str_list	*separate_and_store_control_operators(t_ast  *ast, char **input)

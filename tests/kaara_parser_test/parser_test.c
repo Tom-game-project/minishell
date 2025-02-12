@@ -25,56 +25,49 @@ int main(void)
 void print(t_ast *ast)
 {
     t_ast *current = ast;
-    int idx = 0;
+
     printf("=== ASTの内容 ===\n");
-    while (current != NULL)
+    if (current->cmd != NULL)
+        printf("cmd      : %s\n", current->cmd);
+    else
+        printf("cmd      : (null)\n");
+    printf(" ---- arg ---- \n");
+    if (current->arg != NULL)
+        str_list_print(current->arg);
+    else
+        printf("arg : (null)\n");
+    printf("op : ");
+    switch (current->ope)
     {
-        printf("=======AST node %d=======\n", idx);
-        if (current->cmd != NULL)
-            printf("cmd      : %s\n", current->cmd);
-        else
-            printf("cmd      : (null)\n");
-        printf(" ---- arg ---- \n");
-        if (current->arg != NULL)
-		    str_list_print(current->arg);
-        else
-            printf("arg : (null)\n");
-        printf("op : ");
-        switch (current->ope)
-        {
-            case e_ope_and:
-                printf("&&\n");
-                break;
-            case e_ope_or:
-                printf("||\n");
-                break;
-            default:
-                printf("NONE\n");
-                break;
-        }
-        printf("ope : ");
-        switch (current->ope)
-        {
+        case e_ope_and:
+            printf("&&\n");
+            break;
+        case e_ope_or:
+            printf("||\n");
+            break;
             case e_ope_redirect_i:
-                printf("<\n");
-                break; 
-            case e_ope_redirect_o:
-                printf(">\n");
-                break;
-            case e_ope_heredoc_i:
-                printf("<<\n");
-                break;
-            case e_ope_heredoc_o:
-                printf(">>\n");
-                break ;
-            case e_ope_pipe:
-                printf("|\n");
-                break;            
-            default:
-                printf("NONE\n");
-                break;
-        }
-        current = current->right_ast;
-        idx++;
+            printf("<\n");
+            break; 
+        case e_ope_redirect_o:
+            printf(">\n");
+            break;
+        case e_ope_heredoc_i:
+            printf("<<\n");
+            break;
+        case e_ope_heredoc_o:
+            printf(">>\n");
+            break ;
+        case e_ope_pipe:
+            printf("|\n");
+            break;  
+        default:
+            printf("NONE\n");
+            break;
     }
+    if (current->left_ast == NULL && current->right_ast == NULL)
+        return ;
+    print(current->left_ast);
+    if (current->right_ast != NULL)
+        print(current->right_ast);
+    return ;
 }
