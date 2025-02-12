@@ -18,7 +18,8 @@ enum    e_operator
 	e_ope_redirect_o,// >
 	e_ope_heredoc_i,// <<
 	e_ope_heredoc_o,// >>
-	e_ope_pipe// |
+	e_ope_pipe,// |
+	e_ope_paren// )
 };
 
 typedef struct s_ast t_ast;
@@ -28,7 +29,6 @@ struct  s_ast
 	t_ast   	    *left_ast;
 	t_ast   	    *right_ast;
 	t_operator 		ope;
-	char        	*cmd;
 	t_str_list		*arg;
 };
 

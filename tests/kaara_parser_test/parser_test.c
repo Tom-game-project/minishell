@@ -27,13 +27,12 @@ void print(t_ast *ast)
     t_ast *current = ast;
 
     printf("=== ASTの内容 ===\n");
-    if (current->cmd != NULL)
-        printf("cmd      : %s\n", current->cmd);
-    else
-        printf("cmd      : (null)\n");
     printf(" ---- arg ---- \n");
     if (current->arg != NULL)
+    {
         str_list_print(current->arg);
+        return ;
+    }
     else
         printf("arg : (null)\n");
     printf("op : ");
@@ -59,15 +58,15 @@ void print(t_ast *ast)
             break ;
         case e_ope_pipe:
             printf("|\n");
-            break;  
+            break;
+        case e_ope_paren:
+            printf(")\n");
+            break;
         default:
             printf("NONE\n");
             break;
     }
-    if (current->left_ast == NULL && current->right_ast == NULL)
-        return ;
     print(current->left_ast);
-    if (current->right_ast != NULL)
-        print(current->right_ast);
+    print(current->right_ast);
     return ;
 }

@@ -18,8 +18,9 @@ void   separate_and_store_cmd_args(t_ast *ast, char **input)
 		return ;
 	if (**input == '(')
 	{
-		tmp = ft_substr(*input, 1, ft_strlen(*input) - 1);
-		parser(&ast, tmp);
+		tmp = ft_substr(*input, 1, ft_strlen(*input) - 2);
+		ast->ope = e_ope_paren;
+		parser(&ast->left_ast, tmp);
 	}
 	else
 		store_head_element(ast, *input);

@@ -3,6 +3,8 @@
 #include "parser.h"
 #include <stdlib.h>
 
+#include <stdio.h>
+
 void	parser(t_ast **ast, char *input)
 {
 	char		*str;
@@ -10,6 +12,9 @@ void	parser(t_ast **ast, char *input)
 	t_str_list	*head;
 
 	str = ft_strdup(input);
+	//
+	printf("%s\n", str);
+	//
 	*ast = allocation_ast();
 	if (checker_str_ctl(input))
 		next_input = separate_and_store_control_operators(*ast, &str);
@@ -18,11 +23,13 @@ void	parser(t_ast **ast, char *input)
 	else
 	{
 		separate_and_store_cmd_args(*ast, &str);
+		str_list_print((*ast)->arg);
 		return ;
 	}
 	head = next_input;
 	parser(&((*ast)->left_ast), head->str);
 	head = next_input->next;
 	parser(&((*ast)->right_ast), head->str);
+	free(str);
 	str_list_clear(&next_input, free);
 }
