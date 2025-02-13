@@ -12,7 +12,7 @@
 /// ```
 ///
 /// ```bash
-/// true || echo world success!
+/// cat < infile
 /// ```
 int test00(int argc, char *argv[], char *envp[])
 {
@@ -38,14 +38,14 @@ int test00(int argc, char *argv[], char *envp[])
 			NULL,
 			NULL,
 			e_ope_none,
-			l0 // `true`
+			l0 // cat
 		},
 		&(t_ast) 
 		{
 			NULL,
 			NULL,
 			e_ope_none,
-			l1 // `echo world success!
+			l1 // infile
 		},
 		e_ope_redirect_i, // `<`
 		NULL,
