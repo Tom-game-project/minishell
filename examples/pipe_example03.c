@@ -14,15 +14,16 @@
 
 int	read_infile(int *input_fd, char *filename)
 {
-	if (filename)
+	if (filename != NULL)
 	{
 		if (*input_fd != STDIN_FILENO) // 間違って予約済みのfdを閉じないようにする
 			close(*input_fd);
 		*input_fd = open(filename, O_RDONLY);
 		if (*input_fd == -1)
 			(perror(filename), exit(1));
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 static int fd_write(int fd)
@@ -53,6 +54,7 @@ int main(int argc, char *argv[], char *envp[])
 	if (pipe(pipe_fd) == -1)
 	{
 		perror("example:");
+		return (1);
 	}
 	pid = fork();
 	if (pid == 0)

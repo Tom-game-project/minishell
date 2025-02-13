@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 /// get_full_path関数をテストします
+/// make test TEST_FILE=tests/tom_get_full_path_test00.c
 /// ```bash
 /// make test TEST_FILE=tests/tom_get_full_path_test00.c
 /// ```

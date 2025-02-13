@@ -50,7 +50,8 @@ int exec2(t_ast *ast, t_str_dict *envp_dict, int input_fd, int ppid)
 		return (or_proc(ast, envp_dict, input_fd));
 	else if (ast->ope == e_ope_redirect_i) // <
 	{
-		// ファイルを入力として受け取る
+		// TODO:ファイルを入力として受け取る
+		return (0);
 	}
 	else if (ast->ope == e_ope_none) // 普通のコマンド
 	{
