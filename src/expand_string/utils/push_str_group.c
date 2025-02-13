@@ -1,6 +1,6 @@
 #include "list.h"
 #include <stdbool.h>
-#include "expand_string.h"
+#include "private.h"
 
 /// str_groupをrlistに追加する
 int push_str_group(t_list_args *group_args)

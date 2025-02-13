@@ -1,11 +1,13 @@
-#ifndef EXPAND_STRING_H
-#define EXPAND_STRING_H
+#ifndef PRIVATE_H
+#define PRIVATE_H
 
 #include "list.h"
 #include "dict.h"
 #include <stdbool.h>
+
 /// このファイルで定義される関数は、
-/// `$(project root)/src/parser/expand_string.char`から呼び出されることを想定していて,他の関数から呼び出されない
+///
+/// `include`で外部に公開されることを想定しない関数群
 ///
 
 typedef enum e_anchor t_anchor;

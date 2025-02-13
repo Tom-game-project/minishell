@@ -15,7 +15,7 @@
 
 void	setup_pipefd(t_ast *ast, t_pipex *pipex)
 {
-	if (ast->rdtope != e_rdtope_pipe);
+	if (ast->ope != e_ope_pipe)
 		return ;
 	if (dup2(pipex->pipe_fd[0], STDIN_FILENO) == -1)
 	{

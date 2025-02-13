@@ -13,6 +13,7 @@ RMFLAGS = -rf
 CFLAGS = -Wextra -Werror -Wall
 TEST_FLAGS = -g
 
+
 BUILD_IN_SRC = \
       src/built-in/cd.c\
       src/built-in/dummy.c\
@@ -50,16 +51,23 @@ LIST_SRC = \
       src/list/str_list_to_array.c\
       src/list/str_list_len_sum.c\
       src/list/str_list_join.c\
+      src/list/str_list_split.c\
+      src/list/str_list_map.c\
+      src/list/str_list_search.c\
+      src/list/str_list_get_elem.c\
+
+
+EXPAND_STRING_SRC = \
+      src/expand_string/utils/in_double_quotation.c\
+      src/expand_string/utils/in_single_quotation.c\
+      src/expand_string/utils/is_valid_env_char.c\
+      src/expand_string/utils/out_of_quotation.c\
+      src/expand_string/utils/push_expand_env.c\
+      src/expand_string/utils/push_str_group.c\
+      src/expand_string/expand_string.c\
 
 
 PARSER_SRC = \
-      src/parser/expand_string/in_double_quotation.c\
-      src/parser/expand_string/in_single_quotation.c\
-      src/parser/expand_string/is_valid_env_char.c\
-      src/parser/expand_string/out_of_quotation.c\
-      src/parser/expand_string/push_expand_env.c\
-      src/parser/expand_string/push_str_group.c\
-      src/parser/expand_string.c\
       src/parser/parser.c\
       src/parser/allocation_ast.c\
       src/parser/checker_is.c\
@@ -88,11 +96,33 @@ DICT_SRC = \
       src/dict/str_dict_ft_streq.c\
 
 
+PATH_SRC =\
+      src/path/get_full_path.c
+
+
+EXEC_SRC=\
+      src/exec/exec.c\
+      src/exec/fd_write.c\
+      src/exec/utils/exec_none_proc.c\
+      src/exec/utils/exec_and_proc.c\
+      src/exec/utils/exec_or_proc.c\
+      src/exec/utils/exec_pipe_proc.c\
+      src/exec/utils/exec_execve_wrap.c\
+
+
+FOR_TEST_SRC=\
+      src/list/str_list_dprint.c
+
+
 SRC = \
 	$(BUILD_IN_SRC)\
 	$(LIST_SRC)\
-	$(PARSER_SRC)\
-	$(DICT_SRC)
+	$(EXPAND_STRING_SRC)\
+	$(DICT_SRC)\
+	$(PATH_SRC)\
+	$(EXEC_SRC)\
+	$(FOR_TEST_SRC)
+	# $(PARSER_SRC)\
 
 
 MAIN = \

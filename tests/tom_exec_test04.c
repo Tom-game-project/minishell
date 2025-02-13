@@ -6,7 +6,7 @@
 /// exec2 のテスト
 ///
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test00.c
+/// make test TEST_FILE=tests/tom_exec_test04.c
 /// ```
 ///
 /// ```bash
@@ -24,14 +24,19 @@ int test00(int argc, char *argv[], char *envp[])
 
 	t_str_list *l0;
 	t_str_list *l1;
+	t_str_list *l2;
 
 	l0 = NULL;
-	str_list_push(&l0, "ls");
-	str_list_push(&l0, "-la");
+	str_list_push(&l0, "cat");
+	str_list_push(&l0, "aaaaaaaa");
 
 	l1 = NULL;
-	str_list_push(&l1, "grep");
-	str_list_push(&l1, "src");
+	str_list_push(&l1, "ls");
+	str_list_push(&l1, "-la");
+
+	l2 = NULL;
+	str_list_push(&l2, "grep");
+	str_list_push(&l2, "src");
 	//str_list_push(&l1, "world");
 
 	//str_list_push(&l2, "echo");
@@ -49,11 +54,24 @@ int test00(int argc, char *argv[], char *envp[])
 		},
 		&(t_ast) 
 		{
+			&(t_ast) {
+				NULL,
+				NULL,
+				e_ope_none,
+				NULL,
+				l1 // ls -la
+			},
+			&(t_ast) 
+			{
+				NULL,
+				NULL,
+				e_ope_none,
+				NULL,
+				l2 // grep src
+			},
+			e_ope_pipe,
 			NULL,
-			NULL,
-			e_ope_none,
-			NULL,
-			l1 // grep src
+			NULL // grep src
 		},
 		e_ope_pipe ,
 		NULL,

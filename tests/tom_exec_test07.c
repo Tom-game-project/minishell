@@ -5,12 +5,14 @@
 
 /// exec2 のテスト
 ///
+/// `||`と同じように挙動するかどうかを確かめる
+///
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test00.c
+/// make test TEST_FILE=tests/tom_exec_test07.c
 /// ```
 ///
 /// ```bash
-/// ls -la | grep src
+/// true || echo world success!
 /// ```
 int test00(int argc, char *argv[], char *envp[])
 {
@@ -26,18 +28,10 @@ int test00(int argc, char *argv[], char *envp[])
 	t_str_list *l1;
 
 	l0 = NULL;
-	str_list_push(&l0, "ls");
-	str_list_push(&l0, "-la");
+	str_list_push(&l0, "cat");
 
 	l1 = NULL;
-	str_list_push(&l1, "grep");
-	str_list_push(&l1, "src");
-	//str_list_push(&l1, "world");
-
-	//str_list_push(&l2, "echo");
-	//str_list_push(&l2, "$(ls -la)");
-
-	// test case: echo hello | cat
+	str_list_push(&l1, "infile");
 
 	ast = &(t_ast) {
 		&(t_ast) {
@@ -45,7 +39,7 @@ int test00(int argc, char *argv[], char *envp[])
 			NULL,
 			e_ope_none,
 			NULL,
-			l0 // ls -la
+			l0 // `true`
 		},
 		&(t_ast) 
 		{
@@ -53,9 +47,9 @@ int test00(int argc, char *argv[], char *envp[])
 			NULL,
 			e_ope_none,
 			NULL,
-			l1 // grep src
+			l1 // `echo world success!
 		},
-		e_ope_pipe ,
+		e_ope_redirect_i, // `<`
 		NULL,
 		NULL
 	};
@@ -63,12 +57,12 @@ int test00(int argc, char *argv[], char *envp[])
 	envp_to_str_dict(&d, envp);
 	exit_status = exec2(ast, d, STDIN_FILENO, -1);
 	printf("exit status (%d)\n", exit_status);
-	return (0);
+	return (exit_status);
 }
 
 
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test00.c
+/// make test TEST_FILE=tests/tom_exec_test07.c
 /// ```
 int main(int argc, char *argv[], char *envp[])
 {

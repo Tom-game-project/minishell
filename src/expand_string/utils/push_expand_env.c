@@ -1,7 +1,7 @@
 #include "list.h"
 #include "dict.h"
 #include "libft.h"
-#include "expand_string.h"
+#include "private.h"
 #include <stdio.h>
 #include <stdbool.h>
 

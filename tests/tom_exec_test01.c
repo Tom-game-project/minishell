@@ -1,23 +1,22 @@
+#include "dict.h"
 #include "list.h"
 #include "parser.h"
 #include "exec.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-/// exec2 のテスト
+/// exec2関数のテスト
 ///
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test00.c
+/// sleep 100 | ls -la
 /// ```
 ///
-/// ```bash
-/// ls -la | grep src
-/// ```
-int test00(int argc, char *argv[], char *envp[])
+/// `ls -la`が実行されてから`sleep 100`が終わる
+///
+int test01(int argc, char *argv[], char *envp[])
 {
 	(void) argc;
 	(void) argv;
-	
-	int exit_status;
 
 	t_ast *ast;
 	t_str_dict *d;
@@ -26,26 +25,24 @@ int test00(int argc, char *argv[], char *envp[])
 	t_str_list *l1;
 
 	l0 = NULL;
-	str_list_push(&l0, "ls");
-	str_list_push(&l0, "-la");
+	str_list_push(&l0, "sleep");
+	str_list_push(&l0, "100");
 
 	l1 = NULL;
-	str_list_push(&l1, "grep");
-	str_list_push(&l1, "src");
+	str_list_push(&l1, "ls");
+	str_list_push(&l1, "-la");
 	//str_list_push(&l1, "world");
 
 	//str_list_push(&l2, "echo");
 	//str_list_push(&l2, "$(ls -la)");
-
 	// test case: echo hello | cat
-
 	ast = &(t_ast) {
 		&(t_ast) {
 			NULL,
 			NULL,
 			e_ope_none,
 			NULL,
-			l0 // ls -la
+			l0 // echo hello
 		},
 		&(t_ast) 
 		{
@@ -53,7 +50,7 @@ int test00(int argc, char *argv[], char *envp[])
 			NULL,
 			e_ope_none,
 			NULL,
-			l1 // grep src
+			l1 // cat
 		},
 		e_ope_pipe ,
 		NULL,
@@ -61,17 +58,15 @@ int test00(int argc, char *argv[], char *envp[])
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exit_status = exec2(ast, d, STDIN_FILENO, -1);
-	printf("exit status (%d)\n", exit_status);
+	exec2(ast, d, STDIN_FILENO, -1);
 	return (0);
 }
 
-
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test00.c
+/// make test TEST_FILE=tests/tom_exec_test01.c
 /// ```
 int main(int argc, char *argv[], char *envp[])
 {
-	test00(argc, argv ,envp);
+	test01(argc, argv ,envp);
 	return (0);
 }
