@@ -38,7 +38,6 @@ int test00(int argc, char *argv[], char *envp[])
 			NULL,
 			NULL,
 			e_ope_none,
-			NULL,
 			l0 // `true`
 		},
 		&(t_ast) 
@@ -46,7 +45,6 @@ int test00(int argc, char *argv[], char *envp[])
 			NULL,
 			NULL,
 			e_ope_none,
-			NULL,
 			l1 // `echo world success!
 		},
 		e_ope_redirect_i, // `<`

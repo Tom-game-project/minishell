@@ -41,7 +41,6 @@ int test01(int argc, char *argv[], char *envp[])
 			NULL,
 			NULL,
 			e_ope_none,
-			NULL,
 			l0 // echo hello
 		},
 		&(t_ast) 
@@ -49,7 +48,6 @@ int test01(int argc, char *argv[], char *envp[])
 			NULL,
 			NULL,
 			e_ope_none,
-			NULL,
 			l1 // cat
 		},
 		e_ope_pipe ,

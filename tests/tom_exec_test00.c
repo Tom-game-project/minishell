@@ -44,7 +44,6 @@ int test00(int argc, char *argv[], char *envp[])
 			NULL,
 			NULL,
 			e_ope_none,
-			NULL,
 			l0 // ls -la
 		},
 		&(t_ast) 
@@ -52,12 +51,10 @@ int test00(int argc, char *argv[], char *envp[])
 			NULL,
 			NULL,
 			e_ope_none,
-			NULL,
 			l1 // grep src
 		},
 		e_ope_pipe ,
 		NULL,
-		NULL
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
