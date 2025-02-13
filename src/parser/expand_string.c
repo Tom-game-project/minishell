@@ -30,6 +30,7 @@
 /// return ("$展開済みPATH")
 /// ```
 /// return new_string
+
 t_str_list *expand_string(char *str, t_str_dict *env_dicts)
 {
 	t_anchor anc;

@@ -6,35 +6,35 @@
 
 //make vtest TEST_FILE=tests/kaara_parser_test/parser_test.c
 
-void print(t_ast *ast);
+void print(t_ast *ast, int i);
 
 
 int main(void)
 {
-    char *input = ft_strdup("echo || (ls -la && cat outfile) | ls -la > outfile");
+    char *input = ft_strdup("< infile cat");
     t_ast *ast;
 
     ast = NULL;
     parser(&ast, input);
-    print(ast);
+    print(ast, 1);
     free(input);
     return 0;
 }
 
 
-void print(t_ast *ast)
+void print(t_ast *ast, int i)
 {
     t_ast *current = ast;
 
-    printf("=== ASTの内容 ===\n");
+    printf("=== %d : ASTの内容 ===\n", i);
     printf(" ---- arg ---- \n");
-    if (current->arg != NULL)
+    if (current->arg == NULL)
+        printf("arg : (null)\n");
+    else
     {
         str_list_print(current->arg);
         return ;
     }
-    else
-        printf("arg : (null)\n");
     printf("op : ");
     switch (current->ope)
     {
@@ -66,7 +66,8 @@ void print(t_ast *ast)
             printf("NONE\n");
             break;
     }
-    print(current->left_ast);
-    print(current->right_ast);
+    i++;
+    print(current->left_ast, i);
+    print(current->right_ast, i);
     return ;
 }

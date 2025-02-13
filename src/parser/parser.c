@@ -23,7 +23,9 @@ void	parser(t_ast **ast, char *input)
 	else
 	{
 		separate_and_store_cmd_args(*ast, &str);
+		//
 		str_list_print((*ast)->arg);
+		//
 		return ;
 	}
 	head = next_input;
