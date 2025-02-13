@@ -6,6 +6,14 @@
 # include <unistd.h>
 # include <stdbool.h>
 
+#define BUF_SIZE 2
+
+// (パイプを)読む
+#define PIPE_READ 0
+// (パイプに)書き込む
+#define PIPE_WRITE 1
+
+
 // src/exec/exec.c
 
 int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd);

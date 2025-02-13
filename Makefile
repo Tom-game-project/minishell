@@ -13,6 +13,7 @@ RMFLAGS = -rf
 CFLAGS = -Wextra -Werror -Wall
 TEST_FLAGS = -g
 
+
 BUILD_IN_SRC = \
       src/built-in/cd.c\
       src/built-in/dummy.c\
@@ -101,7 +102,13 @@ PATH_SRC =\
 
 EXEC_SRC=\
       src/exec/exec.c\
-      src/exec/fd_write.c
+      src/exec/fd_write.c\
+      src/exec/utils/exec_none_proc.c\
+      src/exec/utils/exec_and_proc.c\
+      src/exec/utils/exec_or_proc.c\
+      src/exec/utils/exec_pipe_proc.c\
+      src/exec/utils/exec_execve_wrap.c\
+
 
 FOR_TEST_SRC=\
       src/list/str_list_dprint.c
