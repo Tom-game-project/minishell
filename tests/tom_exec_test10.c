@@ -4,15 +4,19 @@
 #include <stdio.h>
 
 /// exec2 のテスト
+// test07のastの代替案
+
+
+/// exec2 のテスト
 ///
 /// `<`の処理のテスト
 ///
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test08.c
+/// make test TEST_FILE=tests/tom_exec_test10.c
 /// ```
 ///
 /// ```bash
-/// < infile cat
+/// cat < infile
 /// ```
 int test00(int argc, char *argv[], char *envp[])
 {
@@ -34,21 +38,15 @@ int test00(int argc, char *argv[], char *envp[])
 	str_list_push(&l1, "infile");
 
 	ast = &(t_ast) {
-		NULL,
-		&(t_ast) 
-		{
+		&(t_ast) {
 			NULL,
-			&(t_ast) {
-				NULL,
-				NULL,
-				e_ope_none,
-				l0 // cat
-			},
+			NULL,
 			e_ope_none,
-			l1 // infile
+			l0 // cat
 		},
-		e_ope_redirect_i, // `<`
 		NULL,
+		e_ope_redirect_i, // `<`
+		l1,
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
@@ -59,7 +57,7 @@ int test00(int argc, char *argv[], char *envp[])
 
 
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test07.c
+/// make test TEST_FILE=tests/tom_exec_test10.c
 /// ```
 int main(int argc, char *argv[], char *envp[])
 {

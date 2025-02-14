@@ -14,13 +14,18 @@
 ///
 /// 右astを優先して処理していく,
 ///
+/// 仕様の決定が曖昧なところはあるが、、
 ///
-///
-int exec_redirect_i_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
+int exec_redirect_i_proc(t_ast *ast, t_str_dict *envp_dict, int *input_fd)
 {
 	if (input_fd != STDIN_FILENO)
 		close(input_fd); // 
 	// ファイルの指定がある場合はここで開く
 	input_fd = open();
+	if (*input_fd == -1)
+	{
+		// file open error
+		return (1);
+	}
 	return (0);
 }
