@@ -5,7 +5,7 @@
 
 /// exec2 のテスト
 ///
-/// `||`と同じように挙動するかどうかを確かめる
+/// `<`の処理のテスト
 ///
 /// ```bash
 /// make test TEST_FILE=tests/tom_exec_test07.c
@@ -49,7 +49,6 @@ int test00(int argc, char *argv[], char *envp[])
 		},
 		e_ope_redirect_i, // `<`
 		NULL,
-		NULL
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);

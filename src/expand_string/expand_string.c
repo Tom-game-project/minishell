@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "utils/expand_string.h"
+#include "utils/private.h"
 
 /// 文字列の展開
 /// 
