@@ -8,7 +8,7 @@
 
 /// 実行可能な状態であり、かつ、
 /// 自分自身が子プロセス中に入っていない場合(親プロセスから)実行される関数
-int none_proc(t_ast *ast, t_str_dict *envp_dict,int input_fd)
+int none_proc(t_exec_args *args)
 {
 	int pid;
 	int status;
@@ -19,15 +19,15 @@ int none_proc(t_ast *ast, t_str_dict *envp_dict,int input_fd)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (input_fd != STDIN_FILENO)
+		if (args->input_fd != STDIN_FILENO)
 		{
-			dup2(input_fd, STDIN_FILENO);
-			close(input_fd);
+			dup2(args->input_fd, STDIN_FILENO);
+			close(args->input_fd);
 		}
 		close(pipe_fd[PIPE_READ]);
 		dup2(pipe_fd[PIPE_WRITE], STDOUT_FILENO);
 		close(pipe_fd[PIPE_WRITE]);
-		execve_wrap(ast, envp_dict);
+		execve_wrap(args);
 		return(1);
 	}
 	else

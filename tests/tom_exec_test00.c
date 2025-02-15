@@ -25,19 +25,31 @@ int test00(int argc, char *argv[], char *envp[])
 	t_str_list *l0;
 	t_str_list *l1;
 
+	//l0 = NULL;
+	//str_list_push(&l0, "ls");
+	//str_list_push(&l0, "-la");
+
+	//l1 = NULL;
+	//str_list_push(&l1, "cat");
+	//str_list_push(&l1, "src");
+
+	//l0 = NULL;
+	//str_list_push(&l0, "cat");
+	//str_list_push(&l0, "infile");
+
+	//l1 = NULL;
+	//str_list_push(&l1, "cat");
+
 	l0 = NULL;
-	str_list_push(&l0, "ls");
-	str_list_push(&l0, "-la");
+	str_list_push(&l0, "echo");
+	str_list_push(&l0, "infile");
 
 	l1 = NULL;
-	str_list_push(&l1, "grep");
-	str_list_push(&l1, "src");
-	//str_list_push(&l1, "world");
+	str_list_push(&l1, "ls");
+	str_list_push(&l1, "-la");
 
-	//str_list_push(&l2, "echo");
-	//str_list_push(&l2, "$(ls -la)");
 
-	// test case: echo hello | cat
+	//str_list_push(&l1, );
 
 	ast = &(t_ast) {
 		&(t_ast) {
@@ -53,12 +65,12 @@ int test00(int argc, char *argv[], char *envp[])
 			e_ope_none,
 			l1 // grep src
 		},
-		e_ope_pipe ,
+		e_ope_pipe,
 		NULL,
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exit_status = exec2(ast, d, STDIN_FILENO, -1);
+	exit_status = exec(ast, d, STDIN_FILENO);
 	printf("exit status (%d)\n", exit_status);
 	return (0);
 }

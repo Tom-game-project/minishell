@@ -1,4 +1,3 @@
-#include "dict.h"
 #include "parser.h"
 #include "exec.h"
 
@@ -8,7 +7,7 @@
 #include <stdlib.h>
 
 /// exit_statusを返却する
-int pipe_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
+int pipe_proc(t_exec_args *args)
 {
 	int pid;
 	int pipe_fd[2];
@@ -20,21 +19,40 @@ int pipe_proc(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 	pid = fork();
 	if (pid == 0)
 	{ // 子
-		if (input_fd != STDIN_FILENO)
+		if (args->input_fd != STDIN_FILENO)
 		{
-			dup2(input_fd, STDIN_FILENO);
-			close(input_fd);
+			dup2(args->input_fd, STDIN_FILENO);
+			close(args->input_fd);
 		}
 		close(pipe_fd[PIPE_READ]);
 		dup2(pipe_fd[PIPE_WRITE], STDOUT_FILENO);
 		close(pipe_fd[PIPE_WRITE]);
-		exec2(ast->left_ast, envp_dict, input_fd, pid); // 
+		exec2(
+			&(t_exec_args)
+			{
+				args->ast->left_ast,
+				args->envp_dict, 
+				args->args,
+				args->input_fd, 
+				pid
+			}
+		);
+				
 		exit(0);
 	} // 親
 	close(pipe_fd[PIPE_WRITE]);
-	if (input_fd != STDIN_FILENO)
-		close(input_fd);
-	exit_status = exec2(ast->right_ast, envp_dict, pipe_fd[PIPE_READ], pid);
+	if (args->input_fd != STDIN_FILENO)
+		close(args->input_fd);
+	exit_status = exec2(
+		&(t_exec_args)
+		{
+			args->ast->right_ast,
+			args->envp_dict, 
+			args->args,
+			pipe_fd[PIPE_READ], 
+			pid
+		}
+	);
 	waitpid(pid, NULL, WUNTRACED);
 	return (exit_status);
 }

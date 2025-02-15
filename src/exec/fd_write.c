@@ -8,9 +8,9 @@ int fd_write(int fd)
 {
 	char buf[BUF_SIZE];
 
-	ft_memset(buf, '\0', BUF_SIZE);
 	while(1)
 	{
+		ft_memset(buf, '\0', BUF_SIZE);
 		if (read(fd, buf, BUF_SIZE) == 0)
 			break ;
 		write(STDOUT_FILENO, buf, BUF_SIZE);

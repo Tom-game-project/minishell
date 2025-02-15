@@ -4,14 +4,15 @@
 #include "exec.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /// exec2関数のテスト
 ///
 /// ```bash
-/// sleep 100 | ls -la
+/// sleep 5 | ls -la
 /// ```
 ///
-/// `ls -la`が実行されてから`sleep 100`が終わる
+/// `ls -la`が実行されてから`sleep 5`が終わる
 ///
 int test01(int argc, char *argv[], char *envp[])
 {
@@ -24,39 +25,37 @@ int test01(int argc, char *argv[], char *envp[])
 	t_str_list *l0;
 	t_str_list *l1;
 
+	int exit_status;
+
 	l0 = NULL;
 	str_list_push(&l0, "sleep");
-	str_list_push(&l0, "100");
+	str_list_push(&l0, "5");
 
 	l1 = NULL;
 	str_list_push(&l1, "ls");
 	str_list_push(&l1, "-la");
-	//str_list_push(&l1, "world");
 
-	//str_list_push(&l2, "echo");
-	//str_list_push(&l2, "$(ls -la)");
-	// test case: echo hello | cat
 	ast = &(t_ast) {
 		&(t_ast) {
 			NULL,
 			NULL,
 			e_ope_none,
-			l0 // echo hello
+			l0 // sleep 5
 		},
 		&(t_ast) 
 		{
 			NULL,
 			NULL,
 			e_ope_none,
-			l1 // cat
+			l1 // ls -la
 		},
 		e_ope_pipe ,
 		NULL,
-		NULL
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exec2(ast, d, STDIN_FILENO, -1);
+	exit_status = exec(ast, d, STDIN_FILENO);
+	dprintf(STDOUT_FILENO, "exit status %d\n", exit_status);
 	return (0);
 }
 
