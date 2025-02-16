@@ -19,7 +19,7 @@ static int print_str_list_for_test(t_str_list *lst)
 }
 
 
-int indent_print(char *str,  int depth)
+static int indent_print(char *str,  int depth)
 {
 	int i;
 
@@ -33,18 +33,7 @@ int indent_print(char *str,  int depth)
 	return (0);
 }
 
-
-//e_ope_none,
-//e_ope_and,// &&
-//e_ope_or,// ||
-//e_ope_redirect_i,// <
-//e_ope_redirect_o,// >
-//e_ope_heredoc_i,// <<
-//e_ope_heredoc_o,// >>
-//e_ope_pipe,// |
-//e_ope_paren// )
-
-int print_ope(t_operator ope)
+static int print_ope(t_operator ope)
 {
 	switch (ope) {
 		case e_ope_none:

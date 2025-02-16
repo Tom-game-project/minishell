@@ -113,8 +113,7 @@ EXEC_SRC=\
 # TODO: testのときのみ含まれるようなruleを追加する
 FOR_TEST_SRC=\
       src/list/str_list_dprint.c\
-
-#      tests/tom_parser_tools/print_ast.c\
+      tests/tom_parser_tools/print_ast.c\
 
 
 SRC = \
