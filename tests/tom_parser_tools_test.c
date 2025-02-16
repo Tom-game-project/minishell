@@ -3,6 +3,10 @@
 #include "tom_parser_tools/tools.h"
 #include <stdio.h>
 
+/// astを表示する機能のテスト
+/// ```bash
+/// make test TEST_FILE=tests/tom_parser_tools_test.c
+/// ```
 int main()
 {
 	t_ast *ast;

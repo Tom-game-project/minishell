@@ -48,7 +48,6 @@ int test00(int argc, char *argv[], char *envp[])
 	str_list_push(&l1, "ls");
 	str_list_push(&l1, "-la");
 
-
 	//str_list_push(&l1, );
 
 	ast = &(t_ast) {
@@ -84,3 +83,4 @@ int main(int argc, char *argv[], char *envp[])
 	test00(argc, argv ,envp);
 	return (0);
 }
+

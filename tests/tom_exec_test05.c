@@ -51,7 +51,6 @@ int test00(int argc, char *argv[], char *envp[])
 		},
 		e_ope_and, // `&&`
 		NULL,
-		NULL
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);

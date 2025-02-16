@@ -6,36 +6,44 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int and_proc(t_exec_args *args)
+
+/// TODO:
+/// リファクタリングをするときは、
+/// 子プロセスと親プロセスで分ける
+
+/// 子プロセス
+int child_proc_and(t_exec_args *args, int pid)
 {
-	int pid;
+	// 子
+	if (args->input_fd != STDIN_FILENO)
+	{
+		dup2(args->input_fd, STDIN_FILENO);
+		close(args->input_fd);
+	}
+	exec2(
+		&(t_exec_args)
+		{
+			args->ast->left_ast,
+			args->envp_dict,
+			args->args,
+			args->input_fd,
+			pid
+		});
+	exit(0);
+	return (1);
+}
+
+/// 親プロセス
+int parent_proc_and(t_exec_args *args, int pid)
+{
 	int status;
 
-	pid = fork();
-	if (pid == 0)
-	{ // 子
-		if (args->input_fd != STDIN_FILENO)
-		{
-			dup2(args->input_fd, STDIN_FILENO);
-			close(args->input_fd);
-		}
-		exec2(
-			&(t_exec_args)
-			{
-				args->ast->left_ast,
-				args->envp_dict,
-				args->args,
-				args->input_fd,
-				pid
-			}); // 
-		exit(0);
-	} // 親
 	if (args->input_fd != STDIN_FILENO)
 		close(args->input_fd);
 	waitpid(pid, &status, WUNTRACED);
 	if (WEXITSTATUS(status) != 0) //正常に終了しなかった場合
 	{
-		return (WEXITSTATUS(status)); // TODO ここで何を返すべきか確かめる
+		return (WEXITSTATUS(status));
 	}
 	else // 正常に終了した場合次のコマンドを実行
 		return (exec2(
@@ -47,5 +55,18 @@ int and_proc(t_exec_args *args)
 					STDIN_FILENO,
 					pid
 				}));
+}
+
+
+int and_proc(t_exec_args *args)
+{
+	int pid;
+
+	pid = fork();
+	if (pid == 0) // 子
+		return (child_proc_and(args, pid));
+	else
+		// 親
+		return (parent_proc_and(args, pid));
 }
 

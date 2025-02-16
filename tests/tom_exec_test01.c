@@ -14,6 +14,9 @@
 ///
 /// `ls -la`が実行されてから`sleep 5`が終わる
 ///
+/// ```bash
+/// make test TEST_FILE=tests/tom_exec_test01.c
+/// ```
 int test01(int argc, char *argv[], char *envp[])
 {
 	(void) argc;

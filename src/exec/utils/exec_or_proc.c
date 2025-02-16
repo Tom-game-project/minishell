@@ -6,29 +6,32 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int or_proc(t_exec_args *args)
+/// 子プロセス
+int child_proc_or(t_exec_args *args, int pid)
 {
-	int pid;
+	// 子
+	if (args->input_fd != STDIN_FILENO)
+	{
+		dup2(args->input_fd, STDIN_FILENO);
+		close(args->input_fd);
+	}
+	exec2(
+	&(t_exec_args){
+		args->ast->left_ast,
+		args->envp_dict, 
+		args->args,
+		args->input_fd, 
+		pid
+	});
+	exit(0);
+	return (1);
+}
+
+/// 親プロセス
+int parent_proc_or(t_exec_args *args, int pid)
+{
 	int status;
 
-	pid = fork();
-	if (pid == 0)
-	{ // 子
-		if (args->input_fd != STDIN_FILENO)
-		{
-			dup2(args->input_fd, STDIN_FILENO);
-			close(args->input_fd);
-		}
-		exec2(
-		&(t_exec_args){
-			args->ast->left_ast,
-			args->envp_dict, 
-			args->args,
-			args->input_fd, 
-			pid
-		});
-		exit(0);
-	} // 親
 	if (args->input_fd != STDIN_FILENO)
 		close(args->input_fd);
 	waitpid(pid, &status, WUNTRACED);
@@ -46,4 +49,16 @@ int or_proc(t_exec_args *args)
 			pid
 		})
 	);
+	return (1);
+}
+
+int or_proc(t_exec_args *args)
+{
+	int pid;
+
+	pid = fork();
+	if (pid == 0)
+		return (child_proc_or(args, pid));
+	else // 親
+		return (parent_proc_or(args, pid));
 }
