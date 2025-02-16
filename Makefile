@@ -145,7 +145,7 @@ LIBFT_HEADER = $(LIBFT_DIR)/libft.h
 #########
 
 OBJ = $(SRC:.c=.o)
-MAIN_OBJ = $(MAIN:.c=.o)
+# MAIN_OBJ = $(MAIN:.c=.o)
 TEST_OBJ = $(TEST_FILE:.c=.o)
 
 NAME = minishell
@@ -153,7 +153,11 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
-	$(CC) $(CFLAGS) -Iinclude -o $(NAME) $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
+	$(CC) $(CFLAGS) \
+		-DCOMMIT_HASH="$(shell git show --format='%h' --no-patch)" \
+		-Iinclude \
+		-o $(NAME) \
+		$(OBJ) $(MAIN) $(LIBFT_NAME) 
 
 $(LIBFT_NAME): $(LIBFT_HEADER)
 	make -C $(LIBFT_DIR)

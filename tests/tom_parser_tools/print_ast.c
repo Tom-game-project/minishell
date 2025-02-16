@@ -73,7 +73,7 @@ int print_ast(t_ast *ast, int depth)
 	indent_print(".arg=", depth + 1);
 	print_str_list_for_test(ast->arg);
 	printf("\n");
-	indent_print(".right_ast = ", depth + 1);
+	indent_print(".left_ast = ", depth + 1);
 	printf("\n");
 	// left_ast
 	if (ast->left_ast != NULL)
@@ -81,7 +81,7 @@ int print_ast(t_ast *ast, int depth)
 	else
 		indent_print("NULL", depth + 2);
 	printf("\n");
-	indent_print(".left_ast = ", depth + 1);
+	indent_print(".right_ast = ", depth + 1);
 	printf("\n");
 	// right_ast
 	if (ast->right_ast != NULL)
