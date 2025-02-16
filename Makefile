@@ -109,9 +109,12 @@ EXEC_SRC=\
       src/exec/utils/exec_pipe_proc.c\
       src/exec/utils/exec_execve_wrap.c\
 
-
+# 成果物には含めない
+# TODO: testのときのみ含まれるようなruleを追加する
 FOR_TEST_SRC=\
-      src/list/str_list_dprint.c
+      src/list/str_list_dprint.c\
+
+#      tests/tom_parser_tools/print_ast.c\
 
 
 SRC = \
@@ -121,8 +124,8 @@ SRC = \
 	$(DICT_SRC)\
 	$(PATH_SRC)\
 	$(EXEC_SRC)\
-	$(FOR_TEST_SRC)
-	# $(PARSER_SRC)\
+	$(FOR_TEST_SRC)\
+	$(PARSER_SRC)\
 
 
 MAIN = \

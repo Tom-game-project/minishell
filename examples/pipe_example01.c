@@ -27,14 +27,12 @@ static int fd_write(int fd)
 		write(STDOUT_FILENO, buf, BUF_SIZE);
 	}
 	return (0);
-
 }
 
 int main(int argc, char *argv[], char *envp[])
 {
 	int pid;
 	char *echo_hello_ptr[] = {"ls", "-la", NULL};
-	// char *ls_la_pt[] = {"ls", "-la", NULL};
 	int pre_status;
 	int pipe_fd[2];
 

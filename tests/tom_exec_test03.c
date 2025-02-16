@@ -75,7 +75,7 @@ int test00(int argc, char *argv[], char *envp[])
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exec2(ast, d, STDIN_FILENO, -1);
+	exec(ast, d, STDIN_FILENO);
 
 	str_dict_clear(&d, free, free);
 	str_list_clear(&l0, free);

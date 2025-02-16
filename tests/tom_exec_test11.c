@@ -2,6 +2,7 @@
 #include "list.h"
 #include "parser.h"
 #include "exec.h"
+#include "tom_parser_tools/tools.h"
 #include <stdio.h>
 
 /// exec2 のテスト
@@ -60,7 +61,8 @@ int test00(int argc, char *argv[], char *envp[])
 
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exit_status = exec2(ast, d, STDIN_FILENO, -1);
+	exit_status = exec(ast, d, STDIN_FILENO);
+	print_ast(ast, 0);
 	printf("exit status (%d)\n", exit_status);
 	return (exit_status);
 }
