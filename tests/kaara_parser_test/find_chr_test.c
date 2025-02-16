@@ -5,8 +5,9 @@
 int main(void)
 {
     char    *input;
-    input = ft_strdup("echo && hello");
-    printf("%s : & : %ld\n", input, find_chr(input + 1, '&'));
+    input = ft_strdup("$(echo && (hello world))");
+    
+    printf("%s : & : %d\n", input, find_syntax(input));
     free(input);
     return (0);
 }

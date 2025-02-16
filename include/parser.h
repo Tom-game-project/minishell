@@ -45,6 +45,7 @@ bool is_redirect_operators(char *element);
 bool ft_isspace(char c);
 
 //find_chr.c
+int find_syntax(char *input);
 int	find_chr(char *input, char find);
 
 //separate_and_store_cmd_args.c
