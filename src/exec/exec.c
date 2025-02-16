@@ -3,7 +3,6 @@
 #include "parser.h"
 #include "utils/utils.h"
 #include "exec.h"
-
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -33,7 +32,6 @@ int exec2(t_exec_args *args);
 //};
 
 /// exec2 関数に引数を渡すためだけに使います
-
 /// 試作品２つ目
 ///
 /// 引数に、呼び出し元のpidを取ることで、自分が子プロセス内で実行されるかどうかをチェックする

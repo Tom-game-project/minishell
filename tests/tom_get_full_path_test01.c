@@ -5,9 +5,9 @@
 
 /// get_full_path関数をテストします
 ///
-/// この例では適切にpython3の環境変数が設定されていてどこかしらにある場合は正常に動作する
+/// 存在しないコマンドを渡した場合
 /// ```bash
-/// make test TEST_FILE=tests/tom_get_full_path_test00.c
+/// make vtest TEST_FILE=tests/tom_get_full_path_test01.c
 /// ```
 int main(int argc, char *argv[], char *envp[])
 {
@@ -30,9 +30,7 @@ int main(int argc, char *argv[], char *envp[])
 	}
 	else
 	{
-		// printf("full path %s \n", env_path_node->value);
-		//str = get_full_path("python3", env_path_node->value); // 環境変数が適切に設定されている場合
-		str = get_full_path("python3", env_path_node->value); // 環境変数に何もパスが見つからない場合
+		str = get_full_path("sssssssssssss", env_path_node->value); // 環境変数に何もパスが見つからない場合
 		printf("full path -> \"%s\" \n", str);
 		free(str);
 	}
