@@ -6,8 +6,9 @@
 
 char *trim_isspc(char *str)
 {
-    int start;
-    int end;
+    int     start;
+    int     end;
+    char    *result;
 
     if (str == NULL)
         return (NULL);
@@ -17,5 +18,6 @@ char *trim_isspc(char *str)
     end = ft_strlen(str);
     while (end > 0 && ft_isspace(str[end - 1]))
         end--;
-    return (ft_substr(str, start, end - start));
+    result = ft_substr(str, start, end - start);
+    return (result);
 }

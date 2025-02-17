@@ -12,11 +12,13 @@ void print(t_ast *ast, int i);
 
 int main(void)
 {
-    char *input = ft_strdup("echo >> infile cat && hello world || echo hello");
+    char *input = ft_strdup("> infile cat && hello world || echo hello");
     t_ast *ast;
     ast = NULL;
     parser(&ast, input);
     print_ast(ast, 0);
+    clear_ast(ast);
+    free(ast);
     free(input);
     return 0;
 }
