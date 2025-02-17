@@ -19,7 +19,8 @@ t_str_list	*separate_and_store_redirect_operators(t_ast  *ast, char **input)
 		|| ast->ope == e_ope_redirect_o
 		|| ast->ope == e_ope_heredoc_i
 		|| ast->ope == e_ope_heredoc_o)
-		store_rdtarg(ast, input);
+		store_rdtarg(
+			ast, input);
 	next_input->next = store_right_next_input(*input);
 	return (next_input);
 }
@@ -28,6 +29,7 @@ t_str_list	*store_left_next_input(char **input)
 {
 	t_str_list	*next_input;
 	char		*head_element;
+	char		*after_trim;
 
 	next_input = NULL;
 	if (is_redirect_operators(*input))
@@ -37,7 +39,9 @@ t_str_list	*store_left_next_input(char **input)
 	}
 	if (**input == '\0')
 		return (next_input);
-	head_element = search_rdt_operater(trim_isspc(*input));
+	after_trim = trim_isspc(*input);
+	head_element = search_rdt_operater(after_trim);
+	free(after_trim);
 	update_input(input, head_element);
 	str_list_push(&next_input, trim_isspc(head_element));
 	free(head_element);
@@ -71,17 +75,17 @@ void	store_rdtope_ast(t_ast	**ast, char **input)
 
 t_str_list	*store_right_next_input(char	*input)
 {
-	char *tmp;
+	char *after_trim;
 	t_str_list	*next_input;
 
-	tmp = trim_isspc(input);
-	if (*tmp == '\0')
+	after_trim = trim_isspc(input);
+	if (*after_trim == '\0')
 	{
-		free(tmp);
-		tmp = NULL;
+		free(after_trim);
+		after_trim = NULL;
 	}
 	next_input = NULL;
-	str_list_push(&next_input, tmp);
+	str_list_push(&next_input, after_trim);
 	return (next_input);
 }
 
@@ -106,9 +110,12 @@ static char *search_rdt_operater(char *input)
 
 void	store_rdtarg(t_ast *ast, char **input)
 {
-	char *head_element;
+	char	*head_element;
+	char	*after_trim;
 
-	head_element = search_delimiter(trim_isspc(*input));
+	after_trim = trim_isspc(*input);
+	head_element = search_delimiter(after_trim);
+	free(after_trim);
 	if (head_element == NULL)
 		return ;
 	str_list_push(&ast->arg, head_element);

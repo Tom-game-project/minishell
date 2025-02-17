@@ -68,11 +68,16 @@ static void	store_head_element(t_ast	*ast, char *input)
 	char *after_trim;
 
 	after_trim = trim_isspc(input);
+	if (*after_trim == '\0')
+	{
+		free(after_trim);
+		free(input);
+		return ;
+	}
 	head_element = search_delimiter(after_trim);
 	free(after_trim);
-	if (head_element == NULL)
-		return ;
 	update_input(&input, head_element);
-	str_list_push(&ast->arg, head_element);
+	str_list_push(&ast->arg, ft_strdup(head_element));
+	free(head_element);
 	store_head_element(ast, input);
 }

@@ -12,7 +12,7 @@ void print(t_ast *ast, int i);
 
 int main(void)
 {
-    char *input = ft_strdup("echo hello < infile");
+    char *input = ft_strdup("((echo hello < infile) || ls -la) && grep .c");
     t_ast *ast;
     ast = NULL;
     parser(&ast, input);
