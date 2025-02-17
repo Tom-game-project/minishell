@@ -65,8 +65,11 @@ static char *spc_extract_operands(char *input)
 static void	store_head_element(t_ast	*ast, char *input)
 {
 	char *head_element;
+	char *after_trim;
 
-	head_element = search_delimiter(trim_isspc(input));
+	after_trim = trim_isspc(input);
+	head_element = search_delimiter(after_trim);
+	free(after_trim);
 	if (head_element == NULL)
 		return ;
 	update_input(&input, head_element);

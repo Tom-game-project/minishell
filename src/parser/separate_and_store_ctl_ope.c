@@ -73,29 +73,3 @@ static char *search_ctl_operater(char *input)
 		head_element = ft_substr(input, 0, str_ctl_len(input));
 	return (head_element);
 }
-
-// static char *ctl_extract_operands(char *input)
-// {
-// 	size_t	i;
-// 	char	*head_element;
-	
-// 	i = 0;
-// 	while (input[i] != '\0' && is_control_operators(input + i) == false)
-// 		i++;
-// 	head_element = ft_substr(input, 0, i);
-// 	return (head_element);
-// }
-
-
-
-// printf("head:%s\n", head_element);
-// printf("str:%s\n", next_input->str);
-// if (ast->ope == e_ope_or)
-// printf("str:||\n");
-// else if(ast->ope == e_ope_and)
-// printf("str:&&\n");
-// else
-// printf("str:none\n");
-
-
-// printf("-------------");

@@ -23,8 +23,9 @@ void	update_input(char **input, char *head_element)
 	size_t	tmp_len;
 	char	*tmp;
 
-	tmp = *input;//ft_strtrim(*input, " ");
+	tmp = trim_isspc(*input);
 	tmp_len = ft_strlen(tmp);
-	*input = ft_substr(trim_isspc(tmp), ft_strlen(head_element), tmp_len - ft_strlen(head_element));
+	free(*input);
+	*input = ft_substr(tmp, ft_strlen(head_element), tmp_len - ft_strlen(head_element));
 	free(tmp);
 }
