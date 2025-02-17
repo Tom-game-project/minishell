@@ -77,8 +77,7 @@ int str_list_map_arg1(t_str_list **node, char *(*f)(char *,char *), char *str);
 
 char *str_list_get_elem(t_str_list *node, int index);
 
-
-
+int str_list_concat(t_str_list **a, t_str_list *b);
 
 // TODO for test
 // 以下の関数は、成果物に含めない

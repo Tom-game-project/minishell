@@ -24,7 +24,16 @@ struct s_exec_args
 {
 	t_ast *ast; // 抽象構文木
        	t_str_dict *envp_dict; // 環境変数リスト
-	t_str_list *args; // コマンドと引数を格納するリスト
+	t_str_list *args; // # buffer コマンド リスト
+			  // コマンドを格納するリスト
+			  // bashの不思議な仕様を模倣するためにつけた
+			  //
+			  // ```bash
+			  // cat < infile < infile2 -e
+			  // ```
+			  // ```bash
+			  // cat < infile -e < infile
+			  // ```
        	int input_fd; // input_fd
        	int ppid; // 親のプロセスid
 };

@@ -19,7 +19,7 @@ enum    e_operator
 	e_ope_heredoc_i,// <<
 	e_ope_heredoc_o,// >>
 	e_ope_pipe,// |
-	e_ope_paren// )
+	e_ope_paren,// )
 };
 
 typedef struct s_ast t_ast;

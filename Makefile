@@ -55,6 +55,7 @@ LIST_SRC = \
       src/list/str_list_map.c\
       src/list/str_list_search.c\
       src/list/str_list_get_elem.c\
+      src/list/str_list_concat.c\
 
 
 EXPAND_STRING_SRC = \

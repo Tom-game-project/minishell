@@ -61,6 +61,7 @@ int exec2(t_exec_args *args)
 	else if (args->ast->ope == e_ope_none) // 普通のコマンド
 	{
 		// TODO: built-in関数を判別するためのプログラムをここに追加
+		//
 		// もしppidが子プロセス中なら
 		// この場で実行
 		if (args->ppid == 0)
@@ -77,8 +78,15 @@ int exec2(t_exec_args *args)
 	}
 }
 
-//////////////////////////////////////////////////////////////////////
-
+/// この処理に入る時点で、junkなケースが弾かれていることを期待する
+/// 不正な文法を許容したastに対する処理はうまく行かない
+///
+/// 例えば、
+/// ```bash
+/// (cat) < infile -e
+/// ```
+/// これは文法のエラーになる
+/// 
 int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 {
 	int exit_status;
