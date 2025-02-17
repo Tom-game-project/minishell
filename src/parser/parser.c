@@ -9,6 +9,8 @@ void	parser(t_ast **ast, char *input)
 	t_str_list	*next_input;
 	t_str_list	*head;
 
+	if (input == NULL)
+		return ;
 	str = ft_strdup(input);
 	*ast = allocation_ast();
 	if (checker_str_ctl(input))

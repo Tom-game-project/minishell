@@ -46,10 +46,10 @@ bool ft_isspace(char c);
 
 //find_chr.c
 int find_syntax(char *input);
-int	find_chr(char *input, char find);
 
 //separate_and_store_cmd_args.c
 void   separate_and_store_cmd_args(t_ast *ast, char **input);
+char *search_delimiter(char *input);
 
 //separate_and_store_ctl_ope.c
 t_str_list	*separate_and_store_control_operators(t_ast  *ast, char **input);

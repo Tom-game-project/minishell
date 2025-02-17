@@ -12,9 +12,8 @@ void print(t_ast *ast, int i);
 
 int main(void)
 {
-    char *input = ft_strdup("(echo < infile cat) && hello world");
+    char *input = ft_strdup("echo >> infile cat && hello world || echo hello");
     t_ast *ast;
-
     ast = NULL;
     parser(&ast, input);
     print_ast(ast, 0);

@@ -4,6 +4,8 @@
 # include <limits.h>
 # include <stdio.h>
 
+static int	find_chr(char *input, char find);
+
 int find_syntax(char *input)//syntaxエラーの時はマイナス値を返すように設計
 {
 	int idx;
@@ -19,7 +21,7 @@ int find_syntax(char *input)//syntaxエラーの時はマイナス値を返す�
 	return (idx);
 }
 
-int	find_chr(char *input, char find)
+static int	find_chr(char *input, char find)
 {
 	int i;
 	int count;
