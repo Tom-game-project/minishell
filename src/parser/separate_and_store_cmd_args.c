@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 
-static char *search_delimiter(char *input);
 static char *spc_extract_operands(char *input);
 static void	store_head_element(t_ast	*ast, char *input);
 
@@ -17,7 +16,7 @@ void   separate_and_store_cmd_args(t_ast *ast, char **input)
 	if (*input == NULL)
 		return ;
 	if (**input == '(')
-	{
+	{		
 		tmp = ft_substr(*input, 1, ft_strlen(*input) - 2);
 		ast->ope = e_ope_paren;
 		parser(&ast->left_ast, tmp);
@@ -27,18 +26,18 @@ void   separate_and_store_cmd_args(t_ast *ast, char **input)
 	return ;
 }
 
-static char *search_delimiter(char *input)
+char *search_delimiter(char *input)
 {
 	char *head_element;
 
 	if (input[0] == '"')
-		head_element = ft_substr(input, 0, find_chr(input + 1, '"') + 2);
+		head_element = ft_substr(input, 0, find_syntax(input));
 	else if (input[0] == '\'')
-		head_element = ft_substr(input, 0, find_chr(input + 2, '\'') + 2);
+		head_element = ft_substr(input, 0, find_syntax(input));
 	else if (ft_strncmp(input,"$(", 2) == 0)
-		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
+		head_element = ft_substr(input, 0, find_syntax(input));
 	else if (input[0] == '(')
-		head_element = ft_substr(input, 0, find_chr(input + 1, ')') + 2);
+		head_element = ft_substr(input, 0, find_syntax(input));
 	else
 		head_element = spc_extract_operands(input);
 	if (head_element[0] == '\0')
