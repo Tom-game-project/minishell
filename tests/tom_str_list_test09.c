@@ -27,5 +27,6 @@ int main()
 	str_list_concat(&a, b);
 	str_list_print(a);
 	str_list_clear(&a, free);
+	/// bはfreeしてはいけない
 	return (0);
 }
