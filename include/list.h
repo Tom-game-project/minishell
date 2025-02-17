@@ -79,6 +79,8 @@ char *str_list_get_elem(t_str_list *node, int index);
 
 int str_list_concat(t_str_list **a, t_str_list *b);
 
+t_str_list *str_list_clone(t_str_list *a, char *(*f)(char *));
+
 // TODO for test
 // 以下の関数は、成果物に含めない
 //
