@@ -43,7 +43,7 @@ int test01()
 	str_list_push(&node, "tom");
 	str_list_push(&node, "miyuu");
 	str_list_push(&node, "yuta");
-	
+
 	str = str_list_join(node, "(^_^)");
 	str_list_print(node);
 	printf("joined str \"%s\"\n", str);
