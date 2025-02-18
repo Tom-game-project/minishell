@@ -3,14 +3,17 @@
 
 int str_list_clear(t_str_list **node, void (*f)(void *))
 {
-	char *str;
+	t_str_list *p;
+	t_str_list *tmp;
 
-	str = str_list_pop(node, 0);
-	f(str);
-	while (str != NULL)
+	p = *node;
+	while (p != NULL)
 	{
-		str = str_list_pop(node, 0);
-		f(str);
+		tmp = p;
+		p = p->next;
+		f(tmp->str);
+		free(tmp);
 	}
 	return (0);
 }
+
