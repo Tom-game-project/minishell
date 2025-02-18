@@ -33,7 +33,7 @@ struct  s_ast
 };
 
 //parser.c
-void	parser(t_ast **ast, char *input);
+int	parser(t_ast **ast, char *input);
 
 //allocation_ast.c
 t_ast  *allocation_ast(void);
@@ -70,5 +70,7 @@ int    str_ctl_len(char *str);
 int    str_rdt_len(char *str);
 
 void clear_ast(t_ast **ast);
+
+int syntax_checker(char *input);
 
 # endif

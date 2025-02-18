@@ -81,7 +81,7 @@ PARSER_SRC = \
       src/parser/update_input.c\
       src/parser/trim_isspc.c\
       src/parser/clear_ast.c\
-
+      src/parser/syntax_checker.c\
 
 DICT_SRC = \
       src/dict/envp_to_str_dict.c\

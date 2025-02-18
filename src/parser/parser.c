@@ -3,16 +3,24 @@
 #include "parser.h"
 #include <stdlib.h>
 
-void	parser(t_ast **ast, char *input)
+int	parser(t_ast **ast, char *input)
 {
+	int			err;
 	char		*str;
 	t_str_list	*next_input;
 	t_str_list	*head;
 
+	err = 0;
 	if (input == NULL)
-		return ;
+		return (err);
+	if (syntax_checker(input) < 0)
+	{
+		err = -1;
+		return (err);
+	}
 	str = ft_strdup(input);
 	*ast = allocation_ast();
+	//別関数へ
 	if (checker_str_ctl(input))
 		next_input = separate_and_store_control_operators(*ast, &str);
 	else if (checker_str_rdt(input))
@@ -21,12 +29,14 @@ void	parser(t_ast **ast, char *input)
 	{
 		separate_and_store_cmd_args(*ast, &str);
 		free(str);
-		return ;
+		return (err);
 	}
+	//
 	head = next_input;
-	parser(&((*ast)->left_ast), head->str);
+	err = parser(&((*ast)->left_ast), head->str);
 	head = next_input->next;
-	parser(&((*ast)->right_ast), head->str);
+	err = parser(&((*ast)->right_ast), head->str);
 	free(str);
 	str_list_clear(&next_input, free);
+	return (err);
 }

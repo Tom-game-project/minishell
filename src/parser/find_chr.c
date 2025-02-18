@@ -16,8 +16,6 @@ int find_syntax(char *input)//syntaxエラーの時はマイナス値を返す�
 		idx = find_chr(input + 1, ')') + 2;
 	else
 	 	return (0);
-	if (idx < 0)
-		perror("-bash: syntax error near unexpected token `()'");
 	return (idx);
 }
 
