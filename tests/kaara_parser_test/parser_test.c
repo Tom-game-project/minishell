@@ -12,13 +12,13 @@ void print(t_ast *ast, int i);
 
 int main(void)
 {
-    char *input = ft_strdup("($(echo hello < infile) >> EOF ls -la) && grep .c");
+    char *input = ft_strdup("< infile ls -la && grep .c");
     t_ast *ast;
     ast = NULL;
     parser(&ast, input);
     printf("\ninput : %s\n\n", input);
     print_ast(ast, 0);
-    clear_ast(ast);
+    clear_ast(&ast);
     free(ast);
     free(input);
     return 0;
