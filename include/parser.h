@@ -32,8 +32,15 @@ struct  s_ast
 	t_str_list		*arg;
 };
 
+typedef enum e_parse_result t_parse_result ;
+
+enum e_parse_result {
+	e_result_ok,
+	e_result_paren_not_closed_err,
+};
+
 //parser.c
-int	parser(t_ast **ast, char *input);
+t_parse_result	parser(t_ast **ast, char *input);
 
 //allocation_ast.c
 t_ast  *allocation_ast(void);

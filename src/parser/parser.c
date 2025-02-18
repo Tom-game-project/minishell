@@ -3,21 +3,21 @@
 #include "parser.h"
 #include <stdlib.h>
 
-int	parser(t_ast **ast, char *input)
+t_parse_result	parser(t_ast **ast, char *input)
 {
-	int			err;
-	char		*str;
-	t_str_list	*next_input;
-	t_str_list	*head;
+	t_parse_result	result;
+	char			*str;
+	t_str_list		*next_input;
+	t_str_list		*head;
 
-	err = 0;
+	result = e_result_ok;
 	if (input == NULL)
-		return (err);
-	if (syntax_checker(input) < 0)
-	{
-		err = -1;
-		return (err);
-	}
+		return (result);
+	// if (syntax_checker(input) < 0)
+	// {
+	// 	result = e_result_paren_not_closed_err;
+	// 	return (result);
+	// }
 	str = ft_strdup(input);
 	*ast = allocation_ast();
 	//別関数へ
@@ -29,14 +29,14 @@ int	parser(t_ast **ast, char *input)
 	{
 		separate_and_store_cmd_args(*ast, &str);
 		free(str);
-		return (err);
+		return (result);
 	}
 	//
 	head = next_input;
-	err = parser(&((*ast)->left_ast), head->str);
+	result = parser(&((*ast)->left_ast), head->str);
 	head = next_input->next;
-	err = parser(&((*ast)->right_ast), head->str);
+	result = parser(&((*ast)->right_ast), head->str);
 	free(str);
 	str_list_clear(&next_input, free);
-	return (err);
+	return (result);
 }

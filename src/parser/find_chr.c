@@ -2,7 +2,8 @@
 # include "parser.h"
 # include "libft.h"
 # include <limits.h>
-# include <stdio.h>
+
+#include <stdio.h>
 
 static int	find_chr(char *input, char find);
 
@@ -11,9 +12,13 @@ int find_syntax(char *input)//syntaxエラーの時はマイナス値を返す�
 	int idx;
 
 	if (ft_strncmp(input, "$(", 2) == 0)
-		idx = find_chr(input + 2, ')') + 3;
+		idx = find_chr(input, ')');
 	else if (*input == '(')
-		idx = find_chr(input + 1, ')') + 2;
+		idx = find_chr(input, ')');
+	else if (*input == '"')
+		idx = find_chr(input, '"');
+	else if (*input == '\'')
+		idx = find_chr(input, '\'');
 	else
 	 	return (0);
 	return (idx);
@@ -26,27 +31,34 @@ static int	find_chr(char *input, char find)
 
 	i = 0;
 	count = 0;
-	if (find == '"' && find == '\'')
+	if (find == '"')
 	{
 		while (input[i] != '\0')
 		{
-			if (input[i] == '"' || input[i] == '\'')
+			if (input[i] == '"')
 				count++;
 			i++;
 		}
-		if (count % 2 == 0)
-			return (INT_MIN);
+	}
+	if (find == '\'')
+	{
+		while (input[i] != '\0')
+		{
+			if (input[i] == '\'')
+				count++;
+			i++;
+		}
 	}
 	i = 0;
 	while (input[i] != '\0')
 	{
-		if (find != '"' && find != '\'')
+		if (find != '"' && find != '\'')//これきれいにしたい
 			i += find_syntax(input + i);
-		if (input[i] == find)
+		if (*(input + i) == find)
 		{
-			if (count == 0)
-				return (i);
 			count--;
+			if (count == 0)
+				return (i + 1);
 		}
 		i++;
 	}
