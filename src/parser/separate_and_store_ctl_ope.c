@@ -22,30 +22,36 @@ t_str_list	*separate_and_store_control_operators(t_ast  *ast, char **input)
 t_str_list	*store_left_next_input(char **input)
 {
 	t_str_list	*next_input;
+	char		*after_trim;
 	char		*head_element;
 
 	next_input = NULL;
 	if (**input == '\0')
 		return (next_input);
-	head_element = search_ctl_operater(trim_isspc(*input));
+	after_trim = trim_isspc(*input);
+	head_element = search_ctl_operater(after_trim);
 	update_input(input, head_element);
 	str_list_push(&next_input, trim_isspc(head_element));
+	free(after_trim);
 	free(head_element);
 	return (next_input);
 }
 
 void	store_ctlope_ast(t_ast	**ast, char **input)
 {
+	char		*after_trim;
 	char		*head_element;
 
 	if (**input == '\0')
 		return ;
-	head_element = search_ctl_operater(trim_isspc(*input));
+	after_trim = trim_isspc(*input);
+	head_element = search_ctl_operater(after_trim);
 	update_input(input, head_element);
 	if (ft_strncmp(head_element, "&&", 2) == 0)
 		(*ast)->ope = e_ope_and;
 	else if (ft_strncmp(head_element, "||", 2) == 0)
 		(*ast)->ope = e_ope_or;
+	free(after_trim);
 	free(head_element);
 	return ;
 }

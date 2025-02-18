@@ -20,6 +20,7 @@ void	parser(t_ast **ast, char *input)
 	else
 	{
 		separate_and_store_cmd_args(*ast, &str);
+		free(str);
 		return ;
 	}
 	head = next_input;

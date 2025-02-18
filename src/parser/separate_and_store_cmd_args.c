@@ -7,22 +7,23 @@
 #include <stdio.h>
 
 static char *spc_extract_operands(char *input);
-static void	store_head_element(t_ast	*ast, char *input);
+static void	store_head_element(t_ast	*ast, char **input);
 
-void   separate_and_store_cmd_args(t_ast *ast, char **input)
+void   separate_and_store_cmd_args(t_ast *ast, char	**input)
 {
-	char *tmp;
+	char *paren_input;
 
-	if (*input == NULL)
+	if (input == NULL)
 		return ;
 	if (**input == '(')
 	{		
-		tmp = ft_substr(*input, 1, ft_strlen(*input) - 2);
+		paren_input = ft_substr(*input, 1, ft_strlen(*input) - 2);
 		ast->ope = e_ope_paren;
-		parser(&ast->left_ast, tmp);
+		parser(&ast->left_ast, paren_input);
+		free(paren_input);
 	}
 	else
-		store_head_element(ast, *input);
+		store_head_element(ast, input);
 	return ;
 }
 
@@ -62,22 +63,21 @@ static char *spc_extract_operands(char *input)
 	return (head_element);
 }
 
-static void	store_head_element(t_ast	*ast, char *input)
+static void	store_head_element(t_ast	*ast, char **input)
 {
 	char *head_element;
 	char *after_trim;
 
-	after_trim = trim_isspc(input);
+	after_trim = trim_isspc(*input);
 	if (*after_trim == '\0')
 	{
 		free(after_trim);
-		free(input);
 		return ;
 	}
 	head_element = search_delimiter(after_trim);
-	free(after_trim);
-	update_input(&input, head_element);
+	update_input(input, head_element);
 	str_list_push(&ast->arg, ft_strdup(head_element));
+	free(after_trim);
 	free(head_element);
 	store_head_element(ast, input);
 }

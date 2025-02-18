@@ -49,7 +49,7 @@ int find_syntax(char *input);
 
 //separate_and_store_cmd_args.c
 void   separate_and_store_cmd_args(t_ast *ast, char **input);
-char *search_delimiter(char *input);
+char	*search_delimiter(char *input);
 
 //separate_and_store_ctl_ope.c
 t_str_list	*separate_and_store_control_operators(t_ast  *ast, char **input);
