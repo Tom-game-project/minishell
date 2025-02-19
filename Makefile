@@ -7,10 +7,12 @@
 CC = cc
 RM = rm
 VALGRIND = valgrind
-VALGRINDFLAGS := --leak-check=full --show-leak-kinds=all --trace-children=yes -q
+VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q --show-leak-kinds=all
+
+
 RMFLAGS = -rf
 
-CFLAGS = -Wextra -Werror -Wall
+CFLAGS = -Wextra -Werror -Wall -g
 TEST_FLAGS = -g
 
 
@@ -57,6 +59,7 @@ LIST_SRC = \
       src/list/str_list_get_elem.c\
       src/list/str_list_concat.c\
       src/list/str_list_clone.c\
+      src/list/str_list_cut.c\
 
 
 EXPAND_STRING_SRC = \
@@ -100,7 +103,8 @@ DICT_SRC = \
 
 
 PATH_SRC =\
-      src/path/get_full_path.c
+      src/path/get_full_path.c\
+      src/path/get_dir_list.c
 
 
 EXEC_SRC=\
@@ -111,6 +115,9 @@ EXEC_SRC=\
       src/exec/utils/exec_or_proc.c\
       src/exec/utils/exec_pipe_proc.c\
       src/exec/utils/exec_execve_wrap.c\
+      src/exec/utils/exec_redirect_i_proc.c\
+      src/exec/utils/exec_redirect_o_proc.c\
+
 
 # 成果物には含めない
 # TODO: testのときのみ含まれるようなruleを追加する
@@ -170,11 +177,11 @@ $(LIBFT_HEADER):
 	git submodule update
 
 # ここにはあえてフラグをつけていない
-test: $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+test: cleantest $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	./test_
 
-vtest: $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+vtest: cleantest $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(VALGRIND) $(VALGRINDFLAGS) ./test_
 
@@ -184,11 +191,15 @@ example:
 %.o: %.c 
 	$(CC) $(CFLAGS) -Iinclude -c $< -o $@
 
+cleantest: 
+	$(RM) $(RMFLAGS) $(TEST_OBJ)
+
 clean:
 	$(RM) $(RMFLAGS) $(OBJ)
+
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
 	$(RM) $(RMFLAGS) $(NAME)
 re: fclean all
 
-.PHONY: all test vtest clean fclean re example
+.PHONY: all test vtest clean fclean re example cleantest

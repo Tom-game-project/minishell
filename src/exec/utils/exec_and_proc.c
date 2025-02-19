@@ -6,13 +6,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
-/// TODO:
-/// リファクタリングをするときは、
-/// 子プロセスと親プロセスで分ける
-
 /// 子プロセス
-int child_proc_and(t_exec_args *args, int pid)
+static int child_proc_and(t_exec_args *args, int pid)
 {
 	// 子
 	if (args->input_fd != STDIN_FILENO)
@@ -27,6 +22,7 @@ int child_proc_and(t_exec_args *args, int pid)
 			args->envp_dict,
 			args->args,
 			args->input_fd,
+			args->output_fd,
 			pid
 		});
 	exit(0);
@@ -34,7 +30,7 @@ int child_proc_and(t_exec_args *args, int pid)
 }
 
 /// 親プロセス
-int parent_proc_and(t_exec_args *args, int pid)
+static int parent_proc_and(t_exec_args *args, int pid)
 {
 	int status;
 
@@ -53,6 +49,7 @@ int parent_proc_and(t_exec_args *args, int pid)
 					args->envp_dict,
 					args->args,
 					STDIN_FILENO,
+					STDOUT_FILENO,
 					pid
 				}));
 }

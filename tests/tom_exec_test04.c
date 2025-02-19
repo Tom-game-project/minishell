@@ -1,16 +1,25 @@
+#include "dict.h"
 #include "list.h"
 #include "parser.h"
 #include "exec.h"
 #include <stdio.h>
+#include <stdlib.h>
+
+
+void nop(void *a)
+{
+	(void) a;
+}
+
 
 /// exec2 のテスト
-///
+///<stdio.h>
 /// ```bash
 /// make test TEST_FILE=tests/tom_exec_test04.c
 /// ```
 ///
 /// ```bash
-/// ls -la | grep src
+/// ls -la | cat | grep src
 /// ```
 int test00(int argc, char *argv[], char *envp[])
 {
@@ -27,12 +36,12 @@ int test00(int argc, char *argv[], char *envp[])
 	t_str_list *l2;
 
 	l0 = NULL;
-	str_list_push(&l0, "cat");
-	str_list_push(&l0, "aaaaaaaa");
+	str_list_push(&l0, "ls");
+	str_list_push(&l0, "-la");
 
 	l1 = NULL;
-	str_list_push(&l1, "ls");
-	str_list_push(&l1, "-la");
+	str_list_push(&l1, "cat");
+	// str_list_push(&l1, "-la");
 
 	l2 = NULL;
 	str_list_push(&l2, "grep");
@@ -57,7 +66,7 @@ int test00(int argc, char *argv[], char *envp[])
 				NULL,
 				NULL,
 				e_ope_none,
-				l1 // ls -la
+				l1 // cat
 			},
 			&(t_ast) 
 			{
@@ -68,19 +77,22 @@ int test00(int argc, char *argv[], char *envp[])
 			},
 			e_ope_pipe,
 			NULL,
-			NULL // grep src
 		},
 		e_ope_pipe ,
 		NULL,
-		NULL
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
 	exit_status = exec(ast, d, STDIN_FILENO);
 	printf("exit status (%d)\n", exit_status);
+
+	/// リソースの解放
+	str_list_clear(&l0, nop);
+	str_list_clear(&l1, nop);
+	str_list_clear(&l2, nop);
+	str_dict_clear(&d, free, free);
 	return (0);
 }
-
 
 /// ```bash
 /// make test TEST_FILE=tests/tom_exec_test00.c

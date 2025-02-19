@@ -2,7 +2,6 @@
 #define UTILS_H
 
 #include "exec.h"
-#include "parser.h"
 
 int execve_wrap(t_exec_args *args);
 
@@ -14,4 +13,7 @@ int or_proc(t_exec_args *args);
 
 int pipe_proc(t_exec_args *args);
 
+int exec_redirect_i_proc(t_exec_args *args);
+
+int exec_redirect_o_proc(t_exec_args *args);
 #endif

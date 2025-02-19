@@ -35,6 +35,7 @@ struct s_exec_args
 			  // cat < infile -e < infile
 			  // ```
        	int input_fd; // input_fd
+       	int output_fd; // output_fd
        	int ppid; // 親のプロセスid
 };
 

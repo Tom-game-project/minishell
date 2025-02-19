@@ -3,9 +3,6 @@
 #include "exec.h"
 #include <stdio.h>
 
-/// exec2 のテスト
-// test07のastの代替案
-
 
 /// exec2 のテスト
 ///
@@ -81,10 +78,12 @@ int test01(int argc, char *argv[], char *envp[])
 	t_str_list *l1;
 
 	l0 = NULL;
-	str_list_push(&l0, "cat");
+	//str_list_push(&l0, "cat");
+	str_list_push(&l0, "ls");
+	str_list_push(&l0, "-la");
 
 	l1 = NULL;
-	str_list_push(&l1, "infile");
+	str_list_push(&l1, "infileeeeeeeeeeeee");
 
 	ast = &(t_ast) {
 		NULL,

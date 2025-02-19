@@ -30,6 +30,8 @@ char char_list_pop(t_char_list **node, int index);
 
 int	char_list_get_elem(t_char_list *node, int index);
 
+t_str_list *str_list_get_back(t_str_list *node);
+
 int	char_list_len(t_char_list *node);
 
 int char_list_print(t_char_list *node);
@@ -73,6 +75,9 @@ int str_list_map(t_str_list **node, char *(*f)(char *));
 
 char *str_list_search(t_str_list *node, bool (*f)(char *));
 
+
+int str_list_search_index(t_str_list *node, bool (*f)(char *));
+
 int str_list_map_arg1(t_str_list **node, char *(*f)(char *,char *), char *str);
 
 char *str_list_get_elem(t_str_list *node, int index);
@@ -80,6 +85,9 @@ char *str_list_get_elem(t_str_list *node, int index);
 int str_list_concat(t_str_list **a, t_str_list *b);
 
 t_str_list *str_list_clone(t_str_list *a, char *(*f)(char *));
+
+
+t_str_list *str_list_cut(t_str_list **node, int index);
 
 // TODO for test
 // 以下の関数は、成果物に含めない
