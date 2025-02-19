@@ -25,7 +25,7 @@ bool    checker_str_ctl(char *str)
 
 bool    checker_str_rdt(char *str)
 {
-    while (*str != '\0') 
+    while (*str != '\0')
     {
         if (*str == '"')
             str += find_syntax(str) - 1;

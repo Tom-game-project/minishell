@@ -3,8 +3,6 @@
 # include "libft.h"
 # include <limits.h>
 
-#include <stdio.h>
-
 static int	find_chr(char *input, char find);
 
 int find_syntax(char *input)//syntaxエラーの時はマイナス値を返すように設計
@@ -12,13 +10,13 @@ int find_syntax(char *input)//syntaxエラーの時はマイナス値を返す�
 	int idx;
 
 	if (ft_strncmp(input, "$(", 2) == 0)
-		idx = find_chr(input, ')');
+		idx = find_chr(input + 2, ')') + 2;
 	else if (*input == '(')
-		idx = find_chr(input, ')');
+		idx = find_chr(input + 1, ')') + 1;
 	else if (*input == '"')
-		idx = find_chr(input, '"');
+		idx = find_chr(input + 1, '"') + 1;
 	else if (*input == '\'')
-		idx = find_chr(input, '\'');
+		idx = find_chr(input + 1, '\'') + 1;
 	else
 	 	return (0);
 	return (idx);
@@ -56,7 +54,8 @@ static int	find_chr(char *input, char find)
 			i += find_syntax(input + i);
 		if (*(input + i) == find)
 		{
-			count--;
+			if (find != '"' || find != '\'')
+				count--;
 			if (count == 0)
 				return (i + 1);
 		}
