@@ -22,6 +22,7 @@ static int child_proc_and(t_exec_args *args, int pid)
 			args->envp_dict,
 			args->args,
 			args->input_fd,
+			args->output_fd,
 			pid
 		});
 	exit(0);
@@ -48,6 +49,7 @@ static int parent_proc_and(t_exec_args *args, int pid)
 					args->envp_dict,
 					args->args,
 					STDIN_FILENO,
+					STDOUT_FILENO,
 					pid
 				}));
 }

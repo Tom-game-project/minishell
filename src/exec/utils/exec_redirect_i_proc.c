@@ -101,7 +101,9 @@ int exec_redirect_i_proc(t_exec_args *args)
 	{
 		// file open error
 		// exit_status 1
-		return (1);
+		
+		//return (1);
+		perror("minishell"); // TODO
 	}
 	//dup2(args->input_fd, STDIN_FILENO);
 	// close(args->input_fd);
@@ -151,6 +153,7 @@ int exec_redirect_i_proc(t_exec_args *args)
 		    args->envp_dict,
 		    args_list,
 		    input_fd, 
+		    STDOUT_FILENO, 
 		    -1 // 子プロセスを生み出すため
 		});
 	else if (args->ast->left_ast != NULL)
@@ -161,6 +164,7 @@ int exec_redirect_i_proc(t_exec_args *args)
 		    args->envp_dict,
 		    NULL,
 		    input_fd,
+		    STDOUT_FILENO,
 		    -1 // 子プロセスを生み出すため
 		});
 	} // TODO:考える

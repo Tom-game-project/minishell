@@ -49,6 +49,7 @@ int execve_wrap(t_exec_args *args)
 	cmd_list = assemble_cmd_list(args);
 	cmd = ft_strdup(str_list_get_elem(cmd_list, 0)); // 0番目の要素を取り出す
 	argv = str_list_to_array(cmd_list);
+	/// test 用のprint
 	str_list_dprint(STDERR_FILENO, cmd_list);
 	str_list_clear(&cmd_list, free); // cmd_listの解放
 	env_path_node = get_str_dict_by_key(args->envp_dict, "PATH");

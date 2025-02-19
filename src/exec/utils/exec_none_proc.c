@@ -23,6 +23,11 @@ int child_proc_none(int pipe_fd[2], t_exec_args *args)
 	close(pipe_fd[PIPE_READ]);
 	dup2(pipe_fd[PIPE_WRITE], STDOUT_FILENO);
 	close(pipe_fd[PIPE_WRITE]);
+	if (args->output_fd != STDOUT_FILENO)
+	{
+		dup2(args->output_fd, STDOUT_FILENO);
+		close(args->output_fd);
+	}
 	execve_wrap(args);
 	return(1);
 }

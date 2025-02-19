@@ -55,6 +55,8 @@ int exec2(t_exec_args *args)
 		return (or_proc(args));
 	else if (args->ast->ope == e_ope_redirect_i) // <
 		return (exec_redirect_i_proc(args));
+	else if (args->ast->ope == e_ope_redirect_o) // >
+		return (exec_redirect_o_proc(args));
 	else if (args->ast->ope == e_ope_paren)
 	{
 		// TODO: 子プロセスを生成する
@@ -101,6 +103,7 @@ int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 			envp_dict,
 			args,
 			input_fd,
+			STDOUT_FILENO,
 			-1
 		}
 	);

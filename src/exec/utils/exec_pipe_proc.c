@@ -24,6 +24,7 @@ static int child_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 			args->envp_dict, 
 			args->args,
 			args->input_fd, 
+			args->output_fd, 
 			pid
 		}
 	);
@@ -46,6 +47,7 @@ static int parent_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 			args->envp_dict, 
 			args->args,
 			pipe_fd[PIPE_READ], 
+			STDOUT_FILENO,
 			pid
 		}
 	);

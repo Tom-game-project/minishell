@@ -21,6 +21,7 @@ int child_proc_or(t_exec_args *args, int pid)
 		args->envp_dict, 
 		args->args,
 		args->input_fd, 
+		args->output_fd, 
 		pid
 	});
 	exit(0);
@@ -46,6 +47,7 @@ int parent_proc_or(t_exec_args *args, int pid)
 			args->envp_dict, 
 			args->args,
 			STDIN_FILENO, 
+			STDOUT_FILENO, 
 			pid
 		})
 	);

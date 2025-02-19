@@ -115,7 +115,8 @@ EXEC_SRC=\
       src/exec/utils/exec_or_proc.c\
       src/exec/utils/exec_pipe_proc.c\
       src/exec/utils/exec_execve_wrap.c\
-      src/exec/utils/exec_redirect_i_proc.c
+      src/exec/utils/exec_redirect_i_proc.c\
+      src/exec/utils/exec_redirect_o_proc.c\
 
 
 # 成果物には含めない
