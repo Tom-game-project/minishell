@@ -30,9 +30,9 @@ static int fd_write(int fd)
 {
 	char buf[BUF_SIZE];
 
-	memset(buf, '\0', BUF_SIZE);
 	while(1)
 	{
+		memset(buf, '\0', BUF_SIZE);
 		if (read(fd, buf, BUF_SIZE) == 0)
 			break ;
 		write(STDOUT_FILENO, buf, BUF_SIZE);

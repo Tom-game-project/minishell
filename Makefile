@@ -59,6 +59,7 @@ LIST_SRC = \
       src/list/str_list_get_elem.c\
       src/list/str_list_concat.c\
       src/list/str_list_clone.c\
+      src/list/str_list_cut.c\
 
 
 EXPAND_STRING_SRC = \

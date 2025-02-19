@@ -16,3 +16,19 @@ char *str_list_search(t_str_list *node, bool (*f)(char *))
 	}
 	return (NULL);
 }
+
+
+int str_list_search_index(t_str_list *node, bool (*f)(char *))
+{
+	int i;
+
+	i = 0;
+	while (node != NULL)
+	{
+		if (f(node->str))
+			return (i);
+		node = node->next;
+		i += 1;
+	}
+	return (-1);
+}
