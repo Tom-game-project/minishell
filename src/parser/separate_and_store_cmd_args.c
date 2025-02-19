@@ -42,7 +42,10 @@ char *search_delimiter(char *input)
 	else
 		head_element = spc_extract_operands(input);
 	if (head_element[0] == '\0')
+	{
+		free(head_element);
 		return (NULL);
+	}
 	return (head_element);
 }
 

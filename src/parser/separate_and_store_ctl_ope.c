@@ -30,6 +30,11 @@ t_str_list	*store_left_next_input(char **input)
 		return (next_input);
 	after_trim = trim_isspc(*input);
 	head_element = search_ctl_operater(after_trim);
+	if (checker_str_ctl(head_element))
+	{
+		free(head_element);
+		head_element = NULL;
+	}
 	update_input(input, head_element);
 	str_list_push(&next_input, trim_isspc(head_element));
 	free(after_trim);
@@ -58,12 +63,17 @@ void	store_ctlope_ast(t_ast	**ast, char **input)
 
 t_str_list	*store_right_next_input(char	*input)
 {
+	char		*after_trim;
 	t_str_list	*next_input;
 
-	if (*input == '\0')
-		return (NULL);
+	after_trim = trim_isspc(input);
+	if (*after_trim == '\0')
+	{
+		free(after_trim);
+		after_trim = NULL;
+	}
 	next_input = NULL;
-	str_list_push(&next_input, trim_isspc(input));
+	str_list_push(&next_input, after_trim);
 	return (next_input);
 }
 

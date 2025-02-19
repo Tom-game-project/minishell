@@ -78,6 +78,6 @@ int    	str_rdt_len(char *str);
 
 void clear_ast(t_ast **ast);
 
-int syntax_checker(char *input);
+t_parse_result syntax_checker(char *input);
 
 # endif

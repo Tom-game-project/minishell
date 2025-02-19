@@ -12,13 +12,17 @@ void print(t_ast *ast, int i);
 
 int main(void)
 {
-    char *input = ft_strdup("echo && ((ehllo >> infile) >> outfile) || $(hello | echo)");
+    char *input = ft_strdup("&&");
     t_ast *ast;
     ast = NULL;
-    parser(&ast, input);
-    printf("\ninput : %s\n\n", input);
-    print_ast(ast, 0);
-    clear_ast(&ast);
+    if (e_result_paren_not_closed_err == parser(&ast, input))
+        printf("minishell : not close syntax\n");
+    else
+    {
+        printf("\ninput : %s\n\n", input);
+        print_ast(ast, 0);
+        clear_ast(&ast);
+    }
     free(input);
     return 0;
 }

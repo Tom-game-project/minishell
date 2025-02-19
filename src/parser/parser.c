@@ -13,11 +13,9 @@ t_parse_result	parser(t_ast **ast, char *input)
 	result = e_result_ok;
 	if (input == NULL)
 		return (result);
-	// if (syntax_checker(input) < 0)
-	// {
-	// 	result = e_result_paren_not_closed_err;
-	// 	return (result);
-	// }
+	result = syntax_checker(input);
+	if (result == e_result_paren_not_closed_err)
+		return (result);
 	str = ft_strdup(input);
 	*ast = allocation_ast();
 	//別関数へ
@@ -34,7 +32,8 @@ t_parse_result	parser(t_ast **ast, char *input)
 	//
 	head = next_input;
 	result = parser(&((*ast)->left_ast), head->str);
-	head = next_input->next;
+	if (next_input->next != NULL)//sonoutibetukannsuudecheck
+		head = next_input->next;
 	result = parser(&((*ast)->right_ast), head->str);
 	free(str);
 	str_list_clear(&next_input, free);

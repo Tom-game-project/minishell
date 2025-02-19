@@ -19,8 +19,7 @@ t_str_list	*separate_and_store_redirect_operators(t_ast  *ast, char **input)
 		|| ast->ope == e_ope_redirect_o
 		|| ast->ope == e_ope_heredoc_i
 		|| ast->ope == e_ope_heredoc_o)
-		store_rdtarg(
-			ast, input);
+		store_rdtarg(ast, input);
 	next_input->next = store_right_next_input(*input);
 	return (next_input);
 }
@@ -115,9 +114,7 @@ static void	store_rdtarg(t_ast *ast, char **input)
 
 	after_trim = trim_isspc(*input);
 	head_element = search_delimiter(after_trim);
-	if (head_element == NULL)
-		return ;
 	str_list_push(&ast->arg, head_element);
-	free(after_trim);
 	update_input(input, head_element);
+	free(after_trim);
 }

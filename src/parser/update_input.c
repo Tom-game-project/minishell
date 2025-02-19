@@ -23,6 +23,8 @@ void	update_input(char **input, char *head_element)
 	size_t	tmp_len;
 	char	*tmp;
 
+	if (head_element == NULL)
+		return ;
 	tmp = trim_isspc(*input);
 	tmp_len = ft_strlen(tmp);
 	free(*input);

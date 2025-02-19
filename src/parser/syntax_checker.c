@@ -1,19 +1,25 @@
-#include "parser.h"
+# include "parser.h"
 
-int syntax_checker(char *input)
+t_parse_result syntax_checker(char *input)
 {
-    int tmp;
-    int start;
+    int            tmp;
+    int            idx;
+    t_parse_result result;
 
-    start = 0;
-    while (*input + start == '\0')
+    idx = 0;
+    result = e_result_ok;
+    while (*(input + idx) != '\0')
     {
-        tmp = find_syntax(input + start);
+        tmp = find_syntax(input + idx);
         if (tmp < 0)
-            return (-1);
-        else if (tmp == 0)
-            start++;
-        start += tmp; 
+        {
+            result = e_result_paren_not_closed_err;
+            return (result);
+        }
+        else if (tmp > 0)
+            idx += tmp;
+        else
+            idx++;
     }
-    return (0);
+    return (result);
 }
