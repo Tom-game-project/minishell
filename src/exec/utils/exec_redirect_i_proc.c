@@ -1,8 +1,8 @@
-#include "dict.h"
 #include "list.h"
 #include "parser.h"
 #include "exec.h"
 #include "libft.h"
+#include "utils.h"
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -82,11 +82,12 @@ int exec_redirect_i_proc(t_exec_args *args)
 {
 	char *str;
 	t_str_list *args_list;
+	int input_fd;
 
 	args_list = NULL;
 	if (args->input_fd != STDIN_FILENO)
 		close(args->input_fd); // すでになにかしらのファイルを
-				      // 開いている場合はそれを閉じる
+				           // 開いている場合はそれを閉じる
 	// ファイルの指定がある場合はここで開く
 	str = str_list_get_elem(args->ast->arg, 0);
 	if (str == NULL) // NULL
@@ -95,15 +96,16 @@ int exec_redirect_i_proc(t_exec_args *args)
 		// ここで見つからないのはありえない
 		// Error
 	}
-	args->input_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (args->input_fd == -1) // TODO:何かしらの理由でファイルが開けない
+	input_fd = open(str, O_RDONLY, 0644);
+	if (input_fd == -1) // TODO:何かしらの理由でファイルが開けない
 	{
 		// file open error
 		// exit_status 1
 		return (1);
 	}
-	dup2(args->input_fd, STDIN_FILENO);
-	close(args->input_fd);
+	//dup2(args->input_fd, STDIN_FILENO);
+	// close(args->input_fd);
+
 	///                        // example
 	/// left_ast: T right_as:T // `cat < infile -e` -- .1
 	/// left_ast: T right_as:F // `cat < infile`    -- .2
@@ -133,23 +135,35 @@ int exec_redirect_i_proc(t_exec_args *args)
 	//				ast->right_ast->arg,
 	//			       	ft_strdup));
 	/// 実行
-	if (args->ast->left_ast != NULL && args->ast->left_ast->ope == e_ope_paren)
-		exec2(&(t_exec_args)
-		{
-		    args->ast->left_ast,
-		    args->envp_dict,
-		    args_list,
-		    STDIN_FILENO, 
-		    -1 // 親プロセスを生み出すため
-		});
-	else
+	//if (args->ast->left_ast != NULL)
+	//	exec2(&(t_exec_args)
+	//	{
+	//	    args->ast->left_ast,
+	//	    args->envp_dict,
+	//	    args_list,
+	//	    STDIN_FILENO, 
+	//	    -1 // 子プロセスを生み出すため
+	//	});
+	if (args->ast->right_ast != NULL)
 		exec2(&(t_exec_args)
 		{
 		    args->ast->right_ast,
 		    args->envp_dict,
 		    args_list,
-		    STDIN_FILENO, 
-		    -1 // 親プロセスを生み出すため
+		    input_fd, 
+		    -1 // 子プロセスを生み出すため
 		});
+	else if (args->ast->left_ast != NULL)
+	{
+		exec2(&(t_exec_args)
+		{
+		    args->ast->left_ast,
+		    args->envp_dict,
+		    NULL,
+		    input_fd,
+		    -1 // 子プロセスを生み出すため
+		});
+	} // TODO:考える
+	close(input_fd);
 	return (0);
 }

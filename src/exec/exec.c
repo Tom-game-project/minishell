@@ -54,10 +54,7 @@ int exec2(t_exec_args *args)
 	else if (args->ast->ope == e_ope_or) // ||
 		return (or_proc(args));
 	else if (args->ast->ope == e_ope_redirect_i) // <
-	{
-		// TODO:ファイルを入力として受け取る
-		return (0);
-	}
+		return (exec_redirect_i_proc(args));
 	else if (args->ast->ope == e_ope_paren)
 	{
 		// TODO: 子プロセスを生成する

@@ -4,6 +4,7 @@
 #include "exec.h"
 #include "utils.h"
 
+#include <stdio.h>
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -12,7 +13,7 @@
 /// リファクタリングをするときは、
 /// 子プロセスと親プロセスで分ける
 
-int child_proc_none(int pipe_fd[2],t_exec_args *args)
+int child_proc_none(int pipe_fd[2], t_exec_args *args)
 {
 	if (args->input_fd != STDIN_FILENO)
 	{

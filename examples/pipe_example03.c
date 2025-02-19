@@ -56,10 +56,10 @@ int main(int argc, char *argv[], char *envp[])
 		perror("example:");
 		return (1);
 	}
+		read_infile(&input_fd, "infile");
 	pid = fork();
 	if (pid == 0)
 	{
-		read_infile(&input_fd, "infile");
 		dup2(input_fd, STDIN_FILENO);
 		close(input_fd);
 		close(pipe_fd[PIPE_READ]);

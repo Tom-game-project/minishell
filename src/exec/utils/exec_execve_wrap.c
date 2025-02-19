@@ -21,9 +21,13 @@ t_str_list *assemble_cmd_list(t_exec_args *args)
 		&rl,
 		str_list_clone(args->args, ft_strdup) // 溜まったコマンド
 	 );
-	str_list_concat(
-		&rl,
-		str_list_clone(args->ast->arg, ft_strdup) // 一番最新のコマンド
+	//dprintf(STDERR_FILENO, "----\n");
+	//str_list_dprint(STDERR_FILENO, rl);
+	//dprintf(STDERR_FILENO, "----\n");
+	if (args->ast != NULL)
+		str_list_concat(
+			&rl,
+			str_list_clone(args->ast->arg, ft_strdup) // 一番最新のコマンド
 	);
 	return (rl);
 }
@@ -45,6 +49,7 @@ int execve_wrap(t_exec_args *args)
 	cmd_list = assemble_cmd_list(args);
 	cmd = ft_strdup(str_list_get_elem(cmd_list, 0)); // 0番目の要素を取り出す
 	argv = str_list_to_array(cmd_list);
+	str_list_dprint(STDERR_FILENO, cmd_list);
 	str_list_clear(&cmd_list, free); // cmd_listの解放
 	env_path_node = get_str_dict_by_key(args->envp_dict, "PATH");
 	if (env_path_node == NULL) // 環境変数に`PATH`が見つからない

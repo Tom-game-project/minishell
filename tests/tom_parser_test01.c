@@ -11,11 +11,12 @@ int main(void)
 {
     //char *input = ft_strdup("cat < infile | cat  < infile");
     //char *input = ft_strdup(" sleep 5 | << EOF cat");
-    char *input = ft_strdup("false && << EOF >");
+    //char *input = ft_strdup("false && << EOF >");
     //char *input = ft_strdup("<< EOF | sleep 5");
     // char *input = ft_strdup("echo hello > /dev/stderr | echo world > /dev/stderr");
     //char *input = ft_strdup("grep hello << EOF1 << EOF2");
-    
+    char *input = ft_strdup("< infile grep a1 | wc -w > outfile");
+
     t_ast *ast;
 
     ast = NULL;
