@@ -103,7 +103,8 @@ DICT_SRC = \
 
 
 PATH_SRC =\
-      src/path/get_full_path.c
+      src/path/get_full_path.c\
+      src/path/get_dir_list.c
 
 
 EXEC_SRC=\
