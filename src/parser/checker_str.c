@@ -4,48 +4,48 @@
 
 bool    checker_str_ctl(char *str)
 {
-    while (*str != '\0') 
+    int tmp;
+    int idx;
+
+    idx = 0;
+    while (*(str + idx) != '\0')
     {
-        if (*str == '"')
-            str += find_syntax(str) - 1;
-        else if (*str == '\'')
-            str += find_syntax(str) - 1;
-        else if (ft_strncmp(str, "$(", 2) == 0)
-            str += find_syntax(str) - 1;
-        else if (*str == '(')
-            str += find_syntax(str) - 1;
-        else if (ft_strncmp(str, "&&", 2) == 0)
+        if (ft_strncmp(str + idx, "&&", 2) == 0)
             return (true);
-        else if (ft_strncmp(str, "||", 2) == 0)
+        else if (ft_strncmp(str + idx, "||", 2) == 0)
             return (true);
-        str++;
+        tmp = find_syntax(str + idx);
+        if (tmp > 0)
+            idx += tmp;
+        else
+            idx++;
     }
     return (false);
 }
 
 bool    checker_str_rdt(char *str)
 {
-    while (*str != '\0')
+    int tmp;
+    int idx;
+
+    idx = 0;
+    while (*(str + idx) != '\0')
     {
-        if (*str == '"')
-            str += find_syntax(str) - 1;
-        else if (*str == '\'')
-            str += find_syntax(str) - 1;
-        else if (ft_strncmp(str, "$(", 2) == 0)
-            str += find_syntax(str) - 1;
-        else if (*str == '(')
-            str += find_syntax(str) - 1;
-        else if (ft_strncmp(str, ">>", 2) == 0)
+        if (ft_strncmp(str + idx, ">>", 2) == 0)
             return (true);
-        else if (ft_strncmp(str, "<<", 2) == 0)
+        else if (ft_strncmp(str + idx, "<<", 2) == 0)
             return (true);
-        else if (*str == '<')
+        else if (*(str + idx) == '<')
             return (true);
-        else if (*str == '>')
+        else if (*(str + idx) == '>')
             return (true);
-        else if (*str == '|')
+        else if (*(str + idx) == '|')
             return (true);
-        str++;
+        tmp = find_syntax(str + idx);
+        if (tmp > 0)
+            idx += tmp;
+        else
+            idx++;
     }
     return (false);
 }
@@ -58,13 +58,13 @@ int    str_ctl_len(char *str)
     while (*(str + len) != '\0') 
     {
         if (*(str + len) == '"')
-            len += find_syntax(str + len) - 1;
+            len += find_syntax(str + len);
         else if (*(str + len) == '\'')
-            len += find_syntax(str + len) - 1;
+            len += find_syntax(str + len);
         else if (ft_strncmp((str + len), "$(", 2) == 0)
-            len += find_syntax(str + len) - 1;
+            len += find_syntax(str + len);
         else if (*(str + len) == '(')
-            len += find_syntax(str + len) - 1;
+            len += find_syntax(str + len);
         else if (ft_strncmp((str + len), "&&", 2) == 0)
             return (len);
         else if (ft_strncmp((str + len), "||", 2) == 0)
@@ -82,13 +82,13 @@ int    str_rdt_len(char *str)
     while (*(str + len) != '\0') 
     {
         if (*(str + len) == '"')
-            len += find_syntax(str + len) - 1;
+            len += find_syntax(str + len);
         else if (*(str + len) == '\'')
-            len += find_syntax(str + len) - 1;
+            len += find_syntax(str + len);
         else if (ft_strncmp((str + len), "$(", 2) == 0)
-            len += find_syntax(str + len) - 1;
+            len += find_syntax(str + len);
         else if (*(str + len) == '(')
-            len += find_syntax(str + len) - 1;
+            len += find_syntax(str + len);
         else if (ft_strncmp((str + len), ">>", 2) == 0)
             return (len);
         else if (ft_strncmp((str + len), "<<", 2) == 0)

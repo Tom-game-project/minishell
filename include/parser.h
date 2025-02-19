@@ -73,8 +73,8 @@ char *trim_isspc(char *str);
 //checker_str.c
 bool    checker_str_ctl(char *str);
 bool    checker_str_rdt(char *str);
-int    str_ctl_len(char *str);
-int    str_rdt_len(char *str);
+int   	str_ctl_len(char *str);
+int    	str_rdt_len(char *str);
 
 void clear_ast(t_ast **ast);
 
