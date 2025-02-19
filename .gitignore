@@ -8,8 +8,8 @@ minishell
 # test,example関係
 test_
 example_
-infile
-outfile
+*infile*
+*outfile*
 
 # lsp関係
 .cache/

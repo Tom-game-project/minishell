@@ -7,7 +7,9 @@
 CC = cc
 RM = rm
 VALGRIND = valgrind
-VALGRINDFLAGS := --leak-check=full --show-leak-kinds=all --trace-children=yes -q
+VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q --show-leak-kinds=all
+
+
 RMFLAGS = -rf
 
 CFLAGS = -Wextra -Werror -Wall

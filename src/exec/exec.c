@@ -58,6 +58,11 @@ int exec2(t_exec_args *args)
 		// TODO:ファイルを入力として受け取る
 		return (0);
 	}
+	else if (args->ast->ope == e_ope_paren)
+	{
+		// TODO: 子プロセスを生成する
+		return (0);
+	}
 	else if (args->ast->ope == e_ope_none) // 普通のコマンド
 	{
 		// TODO: built-in関数を判別するためのプログラムをここに追加

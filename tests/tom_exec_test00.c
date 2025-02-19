@@ -40,13 +40,23 @@ int test00(int argc, char *argv[], char *envp[])
 	//l1 = NULL;
 	//str_list_push(&l1, "cat");
 
+	//l0 = NULL;
+	//str_list_push(&l0, "echo");
+	//str_list_push(&l0, "infile");
+        //
+	//l1 = NULL;
+	//str_list_push(&l1, "ls");
+	//str_list_push(&l1, "-la");
+
 	l0 = NULL;
-	str_list_push(&l0, "echo");
-	str_list_push(&l0, "infile");
+	str_list_push(&l0, "grep");
+	str_list_push(&l0, ".c");
 
 	l1 = NULL;
 	str_list_push(&l1, "ls");
 	str_list_push(&l1, "-la");
+
+
 
 	//str_list_push(&l1, );
 

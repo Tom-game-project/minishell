@@ -53,7 +53,9 @@ int none_proc(t_exec_args *args)
 	{
 		child_proc_none(pipe_fd, args);
 	}
-	str_list_clear(&(args->args), free);
+	str_list_clear(&(args->args), free); // 実行のためにコマンドを使い終えたので消す
+						      //
+						      // フォークした子プロセスでは、有効
 	return (parent_proc_none(pipe_fd, pid));
 }
 
