@@ -11,15 +11,18 @@ static void	store_head_element(t_ast	*ast, char **input);
 
 void   separate_and_store_cmd_args(t_ast *ast, char	**input)
 {
-	char *paren_input;
+	char	*after_trim;
+	char	*paren_input;
 
 	if (input == NULL)
 		return ;
 	if (**input == '(')
-	{		
-		paren_input = ft_substr(*input, 1, ft_strlen(*input) - 2);
+	{
+		after_trim = trim_isspc(*input);
+		paren_input = ft_substr(after_trim, 1, ft_strlen(after_trim) - 2);
 		ast->ope = e_ope_paren;
 		parser(&ast->left_ast, paren_input);
+		free(after_trim);
 		free(paren_input);
 	}
 	else
