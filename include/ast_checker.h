@@ -9,13 +9,16 @@
 
 typedef enum e_syntax_result t_syntax_result;
 
-/// エラー構造体
-///
-/// e_syntax_ok: 問題がない場合
 enum e_syntax_result
 {
 	e_syntax_ok,
+	e_ctl_near_unexpected_token_and,
+	e_ctl_near_unexpected_token_or,
+	e_rdt_near_unexpected_token_pipe,
+	e_rdt_near_unexpected_token_rdt_in,
+	e_rdt_near_unexpected_token_rdt_out,
+	e_rdt_near_unexpected_token_heardoc_in,
+	e_rdt_near_unexpected_token_heardoc_out,
 };
-
 
 #endif

@@ -34,7 +34,8 @@ struct  s_ast
 
 typedef enum e_parse_result t_parse_result ;
 
-enum e_parse_result {
+enum e_parse_result
+{
 	e_result_ok,
 	e_result_paren_not_closed_err,
 };

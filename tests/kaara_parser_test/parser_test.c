@@ -12,7 +12,7 @@ void print(t_ast *ast, int i);
 
 int main(void)
 {
-    char *input = ft_strdup("&&");
+    char *input = ft_strdup("ls -la | cat && (ls -la && grep)");
     t_ast *ast;
     ast = NULL;
     if (e_result_paren_not_closed_err == parser(&ast, input))
