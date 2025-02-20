@@ -52,7 +52,7 @@ char *search_delimiter(char *input)
 	return (head_element);
 }
 
-static char *spc_extract_operands(char *input)
+static char *spc_extract_operands(char *input)//spcの前に文字列文字が来たらそれで区切りたい
 {
 	size_t	len;
 	size_t	start;

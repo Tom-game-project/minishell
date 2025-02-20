@@ -57,19 +57,20 @@ int    str_ctl_len(char *str)
     len = 0;
     while (*(str + len) != '\0') 
     {
+        if (ft_strncmp((str + len), "&&", 2) == 0)
+            return (len);
+        else if (ft_strncmp((str + len), "||", 2) == 0)
+            return (len);
         if (*(str + len) == '"')
-            len += find_syntax(str + len);
+            len += (find_syntax(str + len));
         else if (*(str + len) == '\'')
             len += find_syntax(str + len);
         else if (ft_strncmp((str + len), "$(", 2) == 0)
             len += find_syntax(str + len);
         else if (*(str + len) == '(')
-            len += find_syntax(str + len);
-        else if (ft_strncmp((str + len), "&&", 2) == 0)
-            return (len);
-        else if (ft_strncmp((str + len), "||", 2) == 0)
-            return (len);
-        len++;
+            len += (find_syntax(str + len));
+        else
+            len++;
     }
     return (0);
 }
@@ -81,15 +82,7 @@ int    str_rdt_len(char *str)
     len = 0;
     while (*(str + len) != '\0') 
     {
-        if (*(str + len) == '"')
-            len += find_syntax(str + len);
-        else if (*(str + len) == '\'')
-            len += find_syntax(str + len);
-        else if (ft_strncmp((str + len), "$(", 2) == 0)
-            len += find_syntax(str + len);
-        else if (*(str + len) == '(')
-            len += find_syntax(str + len);
-        else if (ft_strncmp((str + len), ">>", 2) == 0)
+        if (ft_strncmp((str + len), ">>", 2) == 0)
             return (len);
         else if (ft_strncmp((str + len), "<<", 2) == 0)
             return (len);
@@ -99,7 +92,16 @@ int    str_rdt_len(char *str)
             return (len);
         else if (*(str + len) == '|')
             return (len);
-        len++;
+        if (*(str + len) == '"')
+            len += find_syntax(str + len);
+        else if (*(str + len) == '\'')
+            len += find_syntax(str + len);
+        else if (ft_strncmp((str + len), "$(", 2) == 0)
+            len += find_syntax(str + len);
+        else if (*(str + len) == '(')
+            len += find_syntax(str + len);
+        else
+            len++;
     }
     return (0);
 }

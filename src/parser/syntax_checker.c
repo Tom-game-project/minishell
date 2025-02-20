@@ -10,6 +10,11 @@ t_parse_result syntax_checker(char *input)
     result = e_result_ok;
     while (*(input + idx) != '\0')
     {
+        if (*(input + idx) == ')')
+        {
+            result = e_result_paren_not_closed_err;
+            return (result);
+        }
         tmp = find_syntax(input + idx);
         if (tmp < 0)
         {

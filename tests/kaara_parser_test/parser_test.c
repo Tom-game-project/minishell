@@ -7,14 +7,12 @@
 
 //make vtest TEST_FILE=tests/kaara_parser_test/parser_test.c
 
-void print(t_ast *ast, int i);
-
-
 int main(void)
 {
-    char *input = ft_strdup("a|(ls -la) ");
+    char *input = ft_strdup("(hello world)|(echo (hello world)World)");
     t_ast *ast;
     ast = NULL;
+
     if (e_result_paren_not_closed_err == parser(&ast, input))
         printf("minishell : not close syntax\n");
     else

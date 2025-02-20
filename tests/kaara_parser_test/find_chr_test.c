@@ -5,7 +5,7 @@
 int main(void)
 {
     char    *input;
-    input = ft_strdup("(echo hello < infile || ls -la && grep .c");
+    input = ft_strdup("(echo hello < infile)|| ls -la && grep .c");
     
     printf("%s : & : %d\n", input, find_syntax(input));
     free(input);

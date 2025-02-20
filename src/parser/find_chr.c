@@ -51,7 +51,7 @@ static int	find_chr(char *input, char find)
 	while (input[i] != '\0')
 	{
 		if (find != '"' && find != '\'')//これきれいにしたい
-			i += find_syntax(input + i);
+			i += (find_syntax(input + i));
 		if (*(input + i) == find)
 		{
 			if (find == '"' || find == '\'')
