@@ -57,6 +57,8 @@ int exec2(t_exec_args *args)
 		return (exec_redirect_i_proc(args));
 	else if (args->ast->ope == e_ope_redirect_o) // >
 		return (exec_redirect_o_proc(args));
+	else if (args->ast->ope == e_ope_heredoc_o) // >>
+		return (exec_heredoc_o_proc(args));
 	else if (args->ast->ope == e_ope_paren)
 	{
 		// TODO: 子プロセスを生成する
