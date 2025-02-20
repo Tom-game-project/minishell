@@ -6,6 +6,9 @@
 
 CC = cc
 RM = rm
+
+
+CC_VERSION = $(CC) --version
 VALGRIND = valgrind
 VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q --show-leak-kinds=all
 
@@ -166,6 +169,8 @@ all: $(NAME)
 $(NAME): $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
 	$(CC) $(CFLAGS) \
 		-DCOMMIT_HASH="$(shell git show --format='%h' --no-patch)" \
+		-DBUILD_TIMESTAMP='$(shell date "+%Y/%m/%d-%H:%M:%S")'\
+		-DCC_VERSION="$(shell $(CC) --version | head -n1)"\
 		-Iinclude \
 		-o $(NAME) \
 		$(OBJ) $(MAIN) $(LIBFT_NAME) 
