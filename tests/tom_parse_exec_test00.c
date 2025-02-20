@@ -36,8 +36,8 @@ int main(int argc, char *argv[], char *envp[])
 
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	ast = parser_wrap("< infile cat | grep Tom");
-	exec(ast, d, STDIN_FILENO);
+	ast = parser_wrap("< infile cat | grep 5");
+	exec(ast, d);
         clear_ast(&ast);
 	return (0);
 }

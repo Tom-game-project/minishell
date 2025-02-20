@@ -52,7 +52,7 @@ int test00(int argc, char *argv[], char *envp[])
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exit_status = exec(ast, d, STDIN_FILENO);
+	exit_status = exec(ast, d);
 	printf("exit status (%d)\n", exit_status);
 	return (exit_status);
 }
@@ -107,7 +107,7 @@ int test01(int argc, char *argv[], char *envp[])
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exit_status = exec(ast, d, STDIN_FILENO);
+	exit_status = exec(ast, d);
 	printf("exit status (%d)\n", exit_status);
 	return (exit_status);
 }

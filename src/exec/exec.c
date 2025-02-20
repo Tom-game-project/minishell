@@ -14,7 +14,7 @@
 ///     そうすることで、自分が子プロセスか否かを判定できる
 ///
 
-int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd);
+int exec(t_ast *ast, t_str_dict *envp_dict);
 
 int exec2(t_exec_args *args);
 
@@ -93,7 +93,7 @@ int exec2(t_exec_args *args)
 /// ```
 /// これは文法のエラーになる
 /// 
-int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd)
+int exec(t_ast *ast, t_str_dict *envp_dict)
 {
 	int exit_status;
 	t_str_list *args;
@@ -104,7 +104,7 @@ int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 			ast, 
 			envp_dict,
 			args,
-			input_fd,
+			STDIN_FILENO,
 			STDOUT_FILENO,
 			-1
 		}

@@ -2,8 +2,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
-///
 
+///
 int paren_proc(t_exec_args *args)
 {
 	int pid;
