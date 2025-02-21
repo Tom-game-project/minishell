@@ -28,6 +28,7 @@ int char_list_push(t_char_list **node, char c)
 	return (0);
 }
 
+/// char *をstringとして追加する関数
 int char_list_push_str(t_char_list **node, char *str)
 {	
 	while (*str != '\0')

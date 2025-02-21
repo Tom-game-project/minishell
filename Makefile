@@ -63,6 +63,7 @@ LIST_SRC = \
       src/list/str_list_concat.c\
       src/list/str_list_clone.c\
       src/list/str_list_cut.c\
+      src/list/str_list_in.c\
 
 
 EXPAND_STRING_SRC = \
@@ -107,7 +108,8 @@ DICT_SRC = \
 
 PATH_SRC =\
       src/path/get_full_path.c\
-      src/path/get_dir_list.c
+      src/path/get_dir_list.c\
+      src/path/gen_nondup_name.c\
 
 
 EXEC_SRC=\
@@ -121,6 +123,10 @@ EXEC_SRC=\
       src/exec/utils/exec_redirect_i_proc.c\
       src/exec/utils/exec_redirect_o_proc.c\
       src/exec/utils/exec_heredoc_o_proc.c\
+
+
+STRTOOLS_SRC = \
+     src/strtools/ft_streq.c\
 
 
 # 成果物には含めない

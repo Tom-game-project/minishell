@@ -19,6 +19,14 @@ struct s_str_list
 	t_str_list *next;
 };
 
+// intを格納するリスト
+typedef struct s_int_list t_int_list;
+struct s_int_list
+{
+	int i;
+	t_int_list *next;
+};
+
 // char_list functions
 t_char_list *init_char_list(char c);
 
@@ -47,7 +55,6 @@ char *char_list_to_str(t_char_list *node);
 bool char_list_is_empty(t_char_list *node);
 
 // str_list functions
-//
 
 t_str_list *init_str_list(char *str);
 
@@ -75,8 +82,9 @@ int str_list_map(t_str_list **node, char *(*f)(char *));
 
 char *str_list_search(t_str_list *node, bool (*f)(char *));
 
-
 int str_list_search_index(t_str_list *node, bool (*f)(char *));
+
+t_str_list *str_list_search_node(t_str_list *node, bool (*f)(char *, char *), char *str);
 
 int str_list_map_arg1(t_str_list **node, char *(*f)(char *,char *), char *str);
 
@@ -86,8 +94,13 @@ int str_list_concat(t_str_list **a, t_str_list *b);
 
 t_str_list *str_list_clone(t_str_list *a, char *(*f)(char *));
 
-
 t_str_list *str_list_cut(t_str_list **node, int index);
+
+bool str_list_in(char *str, t_str_list *lst);
+
+// int_list functions
+
+t_int_list *init_int_list(int i);
 
 // TODO for test
 // 以下の関数は、成果物に含めない

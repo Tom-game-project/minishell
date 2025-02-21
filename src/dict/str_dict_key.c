@@ -1,8 +1,7 @@
 #include "dict.h"
+#include "strtools.h"
 #include <stdlib.h>
 #include <stdbool.h>
-#include "str_dict.h"
-
 // for test
 //
 #include <stdio.h>

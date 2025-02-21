@@ -5,5 +5,6 @@
 
 t_str_dict *str_dict_get_back(t_str_dict *node);
 
-bool ft_streq(char *a, char *b);
+// bool ft_streq(char *a, char *b);
+
 #endif
