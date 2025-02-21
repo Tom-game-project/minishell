@@ -62,7 +62,7 @@ static char *spc_extract_operands(char *input)//spcの前に文字列文字が�
     while (input[start] != '\0' && ft_isspace(input[start]))
         start++;
     len = start;
-    while (input[len] != '\0' && !ft_isspace(input[len]))
+    while (input[len] != '\0' && !ft_isspace(input[len]) && !is_string(input + len))
         len++;
     len = len - start;
     head_element = ft_substr(input, start, len);

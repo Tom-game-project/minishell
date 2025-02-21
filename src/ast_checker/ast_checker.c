@@ -24,6 +24,12 @@ static t_syntax_result	syntax_check(t_ast	*ast)
 	t_syntax_result	check_result;
 
 	check_result = check_ctl_adjacent(ast);
+	if (check_result != e_syntax_ok)
+		return (check_result);
 	check_result = check_rdt_adjacent(ast);
-	return (check_result);
+	if (check_result != e_syntax_ok)
+		return (check_result);
+
+	
+	return (e_syntax_ok);
 }

@@ -32,7 +32,6 @@ bool is_enclosed_by_parentheses(char *element)
 				return (true);
 			i++;
 		}
-		perror("-bash: syntax error near unexpected token `()'");//error文変更の可能性あり
 	}
 	return (false);
 }
@@ -51,7 +50,6 @@ bool is_enclosed_by_single_quotes(char *element)
 				return (true);
 			i++;
 		}
-		perror("-bash: syntax error near unexpected token `()'");
 	}
 	return (false);
 }
@@ -70,7 +68,6 @@ bool is_enclosed_by_double_quotes(char *element)
 				return (true);
 			i++;
 		}
-		perror("-bash: syntax error near unexpected token `()'");
 	}
 	return (false);
 }
