@@ -8,25 +8,14 @@
 
 static char *spc_extract_operands(char *input);
 static void	store_head_element(t_ast	*ast, char **input);
+static void parse_paren(t_ast *ast, char **input);
 
 void   separate_and_store_cmd_args(t_ast *ast, char	**input)
 {
-	char	*after_trim;
-	char	*paren_input;
-
 	if (input == NULL)
 		return ;
 	if (**input == '(')
-	{//関数分けて再起しよう
-		after_trim = trim_isspc(*input);
-		paren_input = ft_substr(after_trim, 1, find_syntax(after_trim));
-		update_input(input, paren_input);
-		ast->ope = e_ope_paren;
-		parser(&ast->left_ast, paren_input);
-		parser(&ast->right_ast,*input);
-		free(after_trim);
-		free(paren_input);
-	}
+		parse_paren(ast, input);
 	else
 		store_head_element(ast, input);
 	return ;
@@ -88,4 +77,23 @@ static void	store_head_element(t_ast	*ast, char **input)
 	free(after_trim);
 	free(head_element);
 	store_head_element(ast, input);
+}
+
+
+void	parse_paren(t_ast *ast, char **input)
+{
+	char	*after_trim;
+	char	*head_element;
+	char	*paren_input;
+
+	after_trim = trim_isspc(*input);
+	head_element = search_delimiter(after_trim);
+	paren_input = ft_substr(after_trim, 1, find_syntax(after_trim) - 2);
+	update_input(input, head_element);
+	ast->ope = e_ope_paren;
+	parser(&ast->left_ast, paren_input);
+	parser(&ast->right_ast,*input);
+	free(after_trim);
+	free(head_element);
+	free(paren_input);
 }
