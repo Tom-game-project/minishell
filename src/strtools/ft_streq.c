@@ -5,7 +5,7 @@
 //bool ft_streq(char *a, char *b)
 //{
 //	return (
-//		ft_strncmp(a, b, ft_strlen(a)) == 0 && \
+//		ft_strncmp(a, b, ft_strlen(a)) == 0 && 
 //		ft_strncmp(b, a, ft_strlen(b)) == 0
 //	);
 //}

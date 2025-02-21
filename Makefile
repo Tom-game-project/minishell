@@ -103,7 +103,6 @@ DICT_SRC = \
       src/dict/str_dict_len.c\
       src/dict/str_dict_to_env.c\
       src/dict/str_dict_remove.c\
-      src/dict/str_dict_ft_streq.c\
 
 
 PATH_SRC =\
@@ -123,6 +122,8 @@ EXEC_SRC=\
       src/exec/utils/exec_redirect_i_proc.c\
       src/exec/utils/exec_redirect_o_proc.c\
       src/exec/utils/exec_heredoc_o_proc.c\
+      src/exec/heredoc/create_shadow_file.c\
+      src/exec/heredoc/heredoc.c\
 
 
 STRTOOLS_SRC = \
@@ -145,6 +146,7 @@ SRC = \
 	$(EXEC_SRC)\
 	$(FOR_TEST_SRC)\
 	$(PARSER_SRC)\
+	$(STRTOOLS_SRC)\
 
 
 MAIN = \

@@ -1,6 +1,6 @@
 #include "dict.h"
 #include <stdlib.h>
-#include "str_dict.h"
+#include "strtools.h"
 
 /// 与えられた`key`の要素を削除する
 ///

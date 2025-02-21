@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/// 名前のかぶらないファイル名を生成する関数
 /// ```bash
 /// make vtest TEST_FILE=tests/tom_path_test02.c
 /// ```
