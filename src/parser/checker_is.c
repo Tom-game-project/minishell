@@ -7,7 +7,7 @@ bool	is_enclosed_by_parentheses(char *element);
 bool	is_enclosed_by_single_quotes(char *element);
 bool	is_enclosed_by_double_quotes(char *element);
 
-bool is_string(char *element)//searchで’””みたいなケース正常に処理できるか不安
+bool is_string(char *element)
 {
 	if (is_enclosed_by_parentheses(element))
 		return (true);

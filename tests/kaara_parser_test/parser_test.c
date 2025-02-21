@@ -9,7 +9,7 @@
 
 int main(void)
 {
-    char *input = ft_strdup("(echo && (echo world))");
+    char *input = ft_strdup("e(hello world)e");
     t_ast *ast;
     ast = NULL;
 

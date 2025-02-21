@@ -1,5 +1,66 @@
+# parse testcase
 
-## parse要件
+通常
+```c
+echo hello
+```
+ctl_or
+```c
+echo hello || ls -la
+```
+ctl_and
+```c
+echo hello && ls -la
+```
+rdt_rdt_out
+```c
+echo hello > outfile
+echo hello>outfile
+```
+rdt_rdt_in
+```c
+cat < infile
+cat<infile
+< infile cat
+```
+rdt_pipe
+```c
+ls -la | grep .c
+```
+rdt_heardoc_in
+```c
+<< EOF echo
+echo<<EOF
+```
+rdt_heardoc_out
+```c
+>> outfile cat outfile
+cat outfile>>outfile
+```
+```c
+
+```
+```c
+
+```
+```c
+
+```
+```c
+
+```
+```c
+
+```
+```c
+
+```
+```c
+
+```
+
+
+# parse要件
 課題で要求されていない、閉じられていない引用符や特殊文字（例: \（バックスラッシュ）、;（セミコロン）など）を解釈しないこと。
 
 シングルクォート ' を適切に処理し、引用されたシーケンス内のメタ文字の解釈を防ぐこと。

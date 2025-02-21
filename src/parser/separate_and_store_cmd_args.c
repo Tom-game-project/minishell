@@ -17,11 +17,13 @@ void   separate_and_store_cmd_args(t_ast *ast, char	**input)
 	if (input == NULL)
 		return ;
 	if (**input == '(')
-	{
+	{//関数分けて再起しよう
 		after_trim = trim_isspc(*input);
-		paren_input = ft_substr(after_trim, 1, ft_strlen(after_trim) - 2);
+		paren_input = ft_substr(after_trim, 1, find_syntax(after_trim));
+		update_input(input, paren_input);
 		ast->ope = e_ope_paren;
 		parser(&ast->left_ast, paren_input);
+		parser(&ast->right_ast,*input);
 		free(after_trim);
 		free(paren_input);
 	}
