@@ -8,13 +8,9 @@
  */
 t_char_list *init_char_list(char c)
 {
-	t_char_list	*node;
+	t_anytype elem;
 
-	node = (t_char_list *)malloc(sizeof(t_char_list));
-	if (node == NULL)
-		return (NULL);
-	node->next = NULL;
-	node->data = c;
-	return (node);
-
+	elem.c = c;
+	return (void_list_init(elem))
+		;
 }

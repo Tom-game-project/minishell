@@ -52,7 +52,7 @@ char char_list_pop(t_char_list **node, int index)
 	head_p = char_list_pop_index_elem(node, index);
 	if (head_p == NULL)
 		return ('\0');
-	rvalue = head_p->data;
+	rvalue = head_p->ptr.c;
 	free(head_p);
 	return (rvalue);
 }

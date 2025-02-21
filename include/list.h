@@ -13,6 +13,7 @@ union  u_anytype
 };
 
 /// void ptrを格納するリスト
+/// 拡張性を上げるために定義した構造体
 typedef struct s_void_list t_void_list;
 struct s_void_list
 {
@@ -20,14 +21,8 @@ struct s_void_list
 	t_void_list *next;
 };
 
-
 /// charを格納するリスト
-typedef struct s_char_list t_char_list;
-struct s_char_list
-{
-	char data;
-	t_char_list *next;
-};
+typedef struct s_void_list t_char_list;
 
 // strを格納するリスト
 typedef struct s_str_list t_str_list;
@@ -39,11 +34,6 @@ struct s_str_list
 
 // intを格納するリスト
 typedef struct s_void_list t_int_list;
-//struct s_int_list
-//{
-//	int i;
-//	t_int_list *next;
-//};
 
 // char_list functions
 t_char_list *init_char_list(char c);
@@ -54,7 +44,7 @@ int char_list_push_str(t_char_list **node, char *str);
 
 char char_list_pop(t_char_list **node, int index);
 
-int	char_list_get_elem(t_char_list *node, int index);
+char	char_list_get_elem(t_char_list *node, int index);
 
 t_str_list *str_list_get_back(t_str_list *node);
 
@@ -143,6 +133,8 @@ int void_list_len(t_void_list *node);
 int void_list_print(t_void_list *node, int (*print)(int, t_anytype));
 
 t_void_list *void_list_get_elem(t_void_list *node, int index);
+
+int void_list_insert(t_void_list **node, int index, t_anytype elem);
 
 // TODO for test
 // 以下の関数は、成果物に含めない

@@ -1,16 +1,14 @@
 #include "list.h"
+#include <stdlib.h>
 
-
-int	char_list_get_elem(t_char_list *node, int index)
+/// 存在しないindexを指定した場合はNULL文字を返却
+char	char_list_get_elem(t_char_list *node, int index)
 {
-	int	i;
+	t_void_list *a;
 
-	i = 0;
-	while (i < index)
-	{
-		i += 1;
-		node = node -> next;
-	}
-	return (node -> data);
+	a = void_list_get_elem(node, index);
+	if (a == NULL)
+		return ('\0');
+	return (a->ptr.c);
 }
 

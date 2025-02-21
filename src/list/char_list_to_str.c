@@ -14,7 +14,7 @@ char *char_list_to_str(t_char_list *node)
 		return (NULL);
 	while (node != NULL)
 	{
-		*rstr = node->data;
+		*rstr = node->ptr.c;
 		node = node->next;
 		rstr++;
 	}
