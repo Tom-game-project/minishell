@@ -85,6 +85,10 @@ PARSER_SRC = \
       src/parser/trim_isspc.c\
       src/parser/clear_ast.c\
       src/parser/syntax_checker.c\
+      src/ast_checker/ast_checker.c\
+      src/ast_checker/check_ctl_adjacent.c\
+      src/ast_checker/check_rdt_no_arg.c\
+      src/ast_checker/print_checker_result.c\
 
 DICT_SRC = \
       src/dict/envp_to_str_dict.c\

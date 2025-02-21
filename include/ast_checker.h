@@ -17,6 +17,7 @@ enum e_syntax_result
 	e_ctl_near_unexpected_token_and,
 	e_ctl_near_unexpected_token_or,
 	e_rdt_near_unexpected_token_pipe,
+	e_rdt_near_unexpected_token_newline,
 	e_rdt_near_unexpected_token_rdt_in,
 	e_rdt_near_unexpected_token_rdt_out,
 	e_rdt_near_unexpected_token_heardoc_in,
@@ -27,7 +28,14 @@ enum e_syntax_result
 	e_rdt_no_element_left_and_left,
 };
 
-t_syntax_result	check_ctl_adjacent(t_ast *ast);
-t_syntax_result	check_rdt_adjacent(t_ast *ast);
+//ast_checker.c
+t_syntax_result ast_checker(t_ast	*ast);
+
+//check_case
+t_syntax_result check_ctl_adjacent(t_ast *ast);
+t_syntax_result check_rdt_no_arg(t_ast *ast);
+
+//print
+bool    print_checker_result(t_syntax_result result);
 
 #endif

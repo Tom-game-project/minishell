@@ -8,10 +8,14 @@ t_syntax_result check_ctl_adjacent(t_ast *ast)
     result = e_syntax_ok;
     if (ast->ope == e_ope_and || ast->ope == e_ope_or)
     {
-        if (ast->ope == e_ope_and)
+        if (ast->left_ast != NULL && ast->left_ast->ope == e_ope_and)
             result = e_ctl_near_unexpected_token_and;
-        else if (ast->ope == e_ope_or)
+        else if (ast->left_ast != NULL && ast->left_ast->ope == e_ope_or)
             result = e_ctl_near_unexpected_token_or;
+        if (ast->right_ast != NULL && ast->right_ast->ope == e_ope_and)
+            result = e_ctl_near_unexpected_token_and;
+        else if (ast->right_ast != NULL && ast->right_ast->ope == e_ope_or)
+            result = e_ctl_near_unexpected_token_or;    
     }
     return (result);
 }

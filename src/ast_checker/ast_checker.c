@@ -7,7 +7,7 @@ t_syntax_result ast_checker(t_ast	*ast)
 {
 	t_syntax_result	check_result;
 
-	if (ast->left_ast == NULL && ast->right_ast == NULL)
+	if (ast == NULL)
 		return (e_syntax_ok);
 	check_result = syntax_check(ast);
 	if (check_result != e_syntax_ok)
