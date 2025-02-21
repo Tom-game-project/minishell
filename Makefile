@@ -70,6 +70,12 @@ LIST_SRC = \
       src/list/void_list_print.c\
       src/list/void_list_get_back.c\
       src/list/void_list_len.c\
+      src/list/void_list_get_elem.c\
+      src/list/int_list_len.c\
+      src/list/int_list_push.c\
+      src/list/int_list_print.c\
+      src/list/int_list_init.c\
+      src/list/int_list_clear.c\
 
 
 EXPAND_STRING_SRC = \

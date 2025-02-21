@@ -4,12 +4,8 @@
 ///
 t_int_list *init_int_list(int i)
 {
-	t_int_list *node;
+	t_anytype elem;
 
-	node = (t_int_list *)malloc(sizeof(t_int_list));
-	if (node == NULL)
-		return (NULL);
-	node->next = NULL;
-	node->i = i;
-	return (node);
+	elem.i32 = i;
+	return (void_list_init(elem));
 }

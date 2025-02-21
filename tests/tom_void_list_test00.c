@@ -26,7 +26,6 @@ int main()
 	//	t_void_list *b;
 
 	a = NULL;
-
 	printf("sizeof void pointer str%ld \n", sizeof(void *));
 	printf("sizeof void pointer str%ld \n", sizeof(int));
 	elem.str =ft_strdup("0hello world");

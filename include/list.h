@@ -38,12 +38,12 @@ struct s_str_list
 };
 
 // intを格納するリスト
-typedef struct s_int_list t_int_list;
-struct s_int_list
-{
-	int i;
-	t_int_list *next;
-};
+typedef struct s_void_list t_int_list;
+//struct s_int_list
+//{
+//	int i;
+//	t_int_list *next;
+//};
 
 // char_list functions
 t_char_list *init_char_list(char c);
@@ -120,7 +120,13 @@ bool str_list_in(char *str, t_str_list *lst);
 
 t_int_list *init_int_list(int i);
 
-t_int_list *int_list_get_back(t_int_list *node);
+int int_list_push(t_int_list **node, int i);
+
+int int_list_len(t_int_list *node);
+
+int int_list_clear(t_int_list **node);
+
+int int_list_print(t_int_list *node);
 
 // void_list functions
 
@@ -135,6 +141,8 @@ int *void_list_clear(t_void_list **node, void (*f)(t_anytype));
 int void_list_len(t_void_list *node);
 
 int void_list_print(t_void_list *node, int (*print)(int, t_anytype));
+
+t_void_list *void_list_get_elem(t_void_list *node, int index);
 
 // TODO for test
 // 以下の関数は、成果物に含めない
