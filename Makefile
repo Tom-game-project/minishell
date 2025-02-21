@@ -64,6 +64,12 @@ LIST_SRC = \
       src/list/str_list_clone.c\
       src/list/str_list_cut.c\
       src/list/str_list_in.c\
+      src/list/void_list_init.c\
+      src/list/void_list_push.c\
+      src/list/void_list_clear.c\
+      src/list/void_list_print.c\
+      src/list/void_list_get_back.c\
+      src/list/void_list_len.c\
 
 
 EXPAND_STRING_SRC = \

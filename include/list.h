@@ -3,6 +3,24 @@
 
 #include <stdbool.h>
 
+typedef union u_anytype t_anytype;
+
+union  u_anytype
+{
+	int i32;
+	char c;
+	char *str;
+};
+
+/// void ptrを格納するリスト
+typedef struct s_void_list t_void_list;
+struct s_void_list
+{
+	t_anytype ptr;
+	t_void_list *next;
+};
+
+
 /// charを格納するリスト
 typedef struct s_char_list t_char_list;
 struct s_char_list
@@ -101,6 +119,22 @@ bool str_list_in(char *str, t_str_list *lst);
 // int_list functions
 
 t_int_list *init_int_list(int i);
+
+t_int_list *int_list_get_back(t_int_list *node);
+
+// void_list functions
+
+t_void_list *void_list_init(t_anytype ptr);
+
+t_void_list *void_list_get_back(t_void_list *node);
+
+int void_list_push(t_void_list **node, t_anytype ptr);
+
+int *void_list_clear(t_void_list **node, void (*f)(t_anytype));
+
+int void_list_len(t_void_list *node);
+
+int void_list_print(t_void_list *node, int (*print)(int, t_anytype));
 
 // TODO for test
 // 以下の関数は、成果物に含めない

@@ -9,7 +9,6 @@ int heredoc_proc(t_ast *ast)
 {
 	if (ast->ope != e_ope_heredoc_i)
 	{
-		
 	}
 	else
 	{
@@ -18,7 +17,8 @@ int heredoc_proc(t_ast *ast)
 }
 
 
-/// 
+/// heredoc_fd_list内にfdを詰め込む
+/// ヒアドキュメント
 int heredoc_setup()
 {
 	return 0;
