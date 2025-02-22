@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    char *input = ft_strdup("< Makefile sleep 3 | echo '{' | wc -l");
+    char *input = ft_strdup("echo hello <");
     t_ast *ast;
     t_syntax_result result;
     ast = NULL;

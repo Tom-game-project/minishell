@@ -12,6 +12,8 @@ bool    print_checker_result(t_syntax_result result)
         printf("minishell : near_unexpected_token_and\n");
     else if (result == e_ctl_near_unexpected_token_or)
         printf("minishell : near_unexpected_token_or\n");
+    else if (result == e_rdt_near_unexpected_token_pipe)
+        printf("minishell : near_unexpected_token_pipe\n");
     else if (result == e_rdt_near_unexpected_token_newline)
         printf("minishell : near_unexpected_token_newline\n");
     else

@@ -31,9 +31,12 @@ enum e_syntax_result
 //ast_checker.c
 t_syntax_result ast_checker(t_ast	*ast);
 
+//ast_checker_u.c
+bool is_enum_rdtope(t_operator ope);
+
 //check_case
-t_syntax_result check_ctl_adjacent(t_ast *ast);
-t_syntax_result check_rdt_no_arg(t_ast *ast);
+t_syntax_result ast_check_ctl_adjacent(t_ast *ast);
+t_syntax_result ast_check_rdt_no_arg(t_ast *ast);
 
 //print
 bool    print_checker_result(t_syntax_result result);
