@@ -1,5 +1,4 @@
 #include "list.h"
-#include <stdlib.h>
 
 /// 型を脱がす関数
 static void strip_anytype(t_anytype elem, void (*f)(void *))

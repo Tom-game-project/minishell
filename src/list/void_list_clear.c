@@ -1,7 +1,7 @@
 #include "list.h"
 #include <stdlib.h>
 
-int *void_list_clear(t_void_list **node, void (*f)(t_anytype))
+int void_list_clear(t_void_list **node, void (*f)(t_anytype))
 {
 	t_void_list *tmp;
 

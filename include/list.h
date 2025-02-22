@@ -131,7 +131,7 @@ int void_list_push(t_void_list **node, t_anytype ptr);
 
 int void_list_concat(t_void_list **a, t_void_list *b);
 
-int *void_list_clear(t_void_list **node, void (*f)(t_anytype));
+int void_list_clear(t_void_list **node, void (*f)(t_anytype));
 
 t_void_list *
 void_list_cut(t_void_list **node, int index);

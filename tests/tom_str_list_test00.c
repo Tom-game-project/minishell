@@ -9,7 +9,6 @@ void nop(void *a)
 }
 
 
-
 /// # str_list_push関数のテスト
 /// ```bash
 /// make vtest TEST_FILE=tests/tom_str_list_test00.c
