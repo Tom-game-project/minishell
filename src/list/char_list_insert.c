@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include "char_list.h"
 #include "list.h"
-
-#include <stdio.h>
 
 /// @brief 
 /// @param node_p 

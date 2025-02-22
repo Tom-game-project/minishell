@@ -83,6 +83,7 @@ LIST_SRC = \
       src/list/int_list_init.c\
       src/list/int_list_clear.c\
       src/list/int_list_pop.c\
+      src/list/int_list_insert.c\
 
 
 EXPAND_STRING_SRC = \

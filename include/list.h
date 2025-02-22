@@ -124,6 +124,8 @@ int int_list_print(t_int_list *node);
 
 int int_list_pop(t_int_list **node, int index);
 
+int int_list_insert(t_int_list **node, int index, int i);
+
 /// ================ void_list functions ================
 ///
 /// 格納するデータのtypeによらないlistそのものの実装は以下の関数に定義されている.
