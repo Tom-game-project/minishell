@@ -5,6 +5,7 @@
 
 typedef union u_anytype t_anytype;
 
+// listで扱いたい型
 union  u_anytype
 {
 	int i32;
@@ -15,8 +16,7 @@ union  u_anytype
 /// void ptrを格納するリスト
 /// 拡張性,抽象度を上げるために定義した構造体
 ///
-/// この構造体はすべてのリストの基本的なベースになっている
-///
+/// この構造体はすべてのリストのベース
 typedef struct s_void_list t_void_list;
 struct s_void_list
 {
@@ -24,21 +24,22 @@ struct s_void_list
 	t_void_list *next;
 };
 
+/// ================ 拡張 ================
+/// すべてのlistのベースは`s_void_list`
+
 /// charを格納するリスト
 typedef struct s_void_list t_char_list;
 
-// strを格納するリスト
+/// strを格納するリスト
 typedef struct s_void_list t_str_list;
-//struct s_str_list
-//{
-//	char *str;
-//	t_str_list *next;
-//};
 
-// intを格納するリスト
+/// intを格納するリスト
 typedef struct s_void_list t_int_list;
 
-// char_list functions
+/// ================ 実装 ================
+/// 格納するデータtypeによらない操作の実装は、void_listをwrapしている
+
+/// ================ char_list functions ================
 t_char_list *init_char_list(char c);
 
 int char_list_push(t_char_list **node, char c);
@@ -65,7 +66,7 @@ char *char_list_to_str(t_char_list *node);
 
 bool char_list_is_empty(t_char_list *node);
 
-// str_list functions
+/// ================ str_list functions ================
 
 t_str_list *init_str_list(char *str);
 
@@ -109,7 +110,7 @@ t_str_list *str_list_cut(t_str_list **node, int index);
 
 bool str_list_in(char *str, t_str_list *lst);
 
-// int_list functions
+/// ================ int_list functions ================
 
 t_int_list *init_int_list(int i);
 
@@ -121,7 +122,10 @@ int int_list_clear(t_int_list **node);
 
 int int_list_print(t_int_list *node);
 
-// void_list functions
+/// ================ void_list functions ================
+///
+/// 格納するデータのtypeによらないlistそのものの実装は以下の関数に定義されている.
+///
 
 t_void_list *void_list_init(t_anytype ptr);
 
@@ -137,6 +141,8 @@ t_void_list *
 void_list_cut(t_void_list **node, int index);
 
 int void_list_clear_func(t_void_list **node, void (*func)(t_anytype, void (*g)(void *)), void(*f)(void *));
+
+/// map
 
 int void_list_map(
 		t_void_list **node,
@@ -161,7 +167,7 @@ t_void_list *void_list_get_elem(t_void_list *node, int index);
 
 int void_list_insert(t_void_list **node, int index, t_anytype elem);
 
-// search
+/// search
 
 int void_list_search(
 	t_void_list *node,
