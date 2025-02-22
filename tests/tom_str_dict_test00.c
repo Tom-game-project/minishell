@@ -3,6 +3,11 @@
 
 
 /// str_dict_push関数が正しく追加できるかどうかを確かめる関数
+///
+/// ```bash
+/// make test TEST_FILE=tests/tom_str_dict_test00.c
+/// ```
+///
 int main()
 {
 	t_str_dict *a;

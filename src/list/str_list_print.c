@@ -3,16 +3,15 @@
 
 #include <stdio.h>
 
+static
+int print_string(int index, t_anytype elem)
+{
+	printf("[%d] \"%s\"\n", index, elem.str);
+	return (0);
+}
+
+
 int str_list_print(t_str_list *node)
 {
-	int i;
-
-	i = 0;
-	while (node != NULL)
-	{
-		printf("[%d] [%s]\n", i, node->str);
-		node = node->next;
-		i += 1;
-	}
-	return (0);
+	return (void_list_print(node, print_string));
 }

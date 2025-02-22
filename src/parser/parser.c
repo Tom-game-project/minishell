@@ -31,10 +31,10 @@ t_parse_result	parser(t_ast **ast, char *input)
 	}
 	//
 	head = next_input;
-	result = parser(&((*ast)->left_ast), head->str);
+	result = parser(&((*ast)->left_ast), head->ptr.str);
 	if (next_input->next != NULL)//sonoutibetukannsuudecheck
 		head = next_input->next;
-	result = parser(&((*ast)->right_ast), head->str);
+	result = parser(&((*ast)->right_ast), head->ptr.str);
 	free(str);
 	str_list_clear(&next_input, free);
 	return (result);

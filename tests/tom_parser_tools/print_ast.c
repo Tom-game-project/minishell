@@ -11,7 +11,7 @@ static int print_str_list_for_test(t_str_list *lst)
 	printf("[");
 	while (lst != NULL)
 	{
-		printf("\"%s\", ", lst->str);
+		printf("\"%s\", ", lst->ptr.str);
 		lst = lst->next;
 	}
 	printf("]");

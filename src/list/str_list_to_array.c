@@ -36,7 +36,7 @@ char **str_list_to_array(t_str_list *node)
 	array_str_tmp = array_str;
 	while (node != NULL)
 	{
-		*array_str = ft_strdup(node->str);
+		*array_str = ft_strdup(node->ptr.str);
 		if (*array_str == NULL)
 		{
 			clear_string_array(array_str_tmp);

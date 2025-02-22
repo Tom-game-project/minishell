@@ -13,7 +13,10 @@ union  u_anytype
 };
 
 /// void ptrを格納するリスト
-/// 拡張性を上げるために定義した構造体
+/// 拡張性,抽象度を上げるために定義した構造体
+///
+/// この構造体はすべてのリストの基本的なベースになっている
+///
 typedef struct s_void_list t_void_list;
 struct s_void_list
 {
@@ -25,12 +28,12 @@ struct s_void_list
 typedef struct s_void_list t_char_list;
 
 // strを格納するリスト
-typedef struct s_str_list t_str_list;
-struct s_str_list
-{
-	char *str;
-	t_str_list *next;
-};
+typedef struct s_void_list t_str_list;
+//struct s_str_list
+//{
+//	char *str;
+//	t_str_list *next;
+//};
 
 // intを格納するリスト
 typedef struct s_void_list t_int_list;
@@ -126,7 +129,29 @@ t_void_list *void_list_get_back(t_void_list *node);
 
 int void_list_push(t_void_list **node, t_anytype ptr);
 
+int void_list_concat(t_void_list **a, t_void_list *b);
+
 int *void_list_clear(t_void_list **node, void (*f)(t_anytype));
+
+t_void_list *
+void_list_cut(t_void_list **node, int index);
+
+int void_list_clear_func(t_void_list **node, void (*func)(t_anytype, void (*g)(void *)), void(*f)(void *));
+
+int void_list_map(
+		t_void_list **node,
+	       	t_anytype (*func)(t_anytype, void *(*g)(void *)),
+	       	void *(*f)(void *)
+);
+
+int void_list_map_arg1(
+		t_void_list **node,
+	       	t_anytype (*func)(t_anytype, void *(*g)(void *, void *), void *),
+	       	void *(*f)(void *, void *),
+		void *arg
+);
+
+int void_list_pop(t_void_list **node, int index, t_anytype *rvalue);
 
 int void_list_len(t_void_list *node);
 
@@ -135,6 +160,35 @@ int void_list_print(t_void_list *node, int (*print)(int, t_anytype));
 t_void_list *void_list_get_elem(t_void_list *node, int index);
 
 int void_list_insert(t_void_list **node, int index, t_anytype elem);
+
+// search
+
+int void_list_search(
+	t_void_list *node,
+       	bool (*func)(
+		t_anytype,
+		bool (*g)(void *)), 
+	bool (*f)(void *),
+       	t_anytype *rvalue
+);
+
+int void_list_search_index(
+	t_void_list *node, 
+	bool (*func)(
+		t_anytype,
+		bool (*g)(void *)),
+       	bool (*f)(void *)
+);
+
+int void_list_search2_index(
+	t_void_list *node,
+	bool (*func)(
+		t_anytype, 
+		bool (*g)(void *, void *), 
+		void *), 
+	bool (*f)(void *, void *),
+	void *str
+);
 
 // TODO for test
 // 以下の関数は、成果物に含めない

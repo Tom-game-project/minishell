@@ -2,6 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static
+void nop(void *a)
+{
+	(void) a;
+}
+
 /// # str_list_push関数のテスト
 /// ```bash
 /// make test TEST_FILE=tests/tom_str_list_test01.c
@@ -9,7 +15,7 @@
 int main()
 {
 	t_str_list *a;
-	//char *s;
+	char *str;
 
 	a = NULL;
 	str_list_push(&a, "hello1");
@@ -28,8 +34,11 @@ int main()
 	//{
 	//	printf("rrr %s\n", s);
 	//}
-	
-	printf("[%s]\n",str_list_to_str(a));
+
+	str =str_list_to_str(a);
+	printf("[%s]\n", str);
+	str_list_clear(&a, nop);
+	free(str);
 	return (0);
 }
 

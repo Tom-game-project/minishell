@@ -1,19 +1,15 @@
 #include "list.h"
 #include <stdlib.h>
 
+/// 型を脱がす関数
+static void strip_anytype(t_anytype elem, void (*f)(void *))
+{
+	f(elem.str);
+}
+
+/// str_listをclearする関数
 int str_list_clear(t_str_list **node, void (*f)(void *))
 {
-	t_str_list *p;
-	t_str_list *tmp;
-
-	p = *node;
-	while (p != NULL)
-	{
-		tmp = p;
-		p = p->next;
-		f(tmp->str);
-		free(tmp);
-	}
-	return (0);
+	return (void_list_clear_func(node, strip_anytype, f));
 }
 
