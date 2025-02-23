@@ -10,7 +10,9 @@ RM = rm
 
 CC_VERSION = $(CC) --version
 VALGRIND = valgrind
-VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q --show-leak-kinds=all
+VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q 
+
+#--show-leak-kinds=all
 
 
 RMFLAGS = -rf
@@ -28,6 +30,7 @@ BUILD_IN_SRC = \
       src/built-in/export.c\
       src/built-in/pwd.c\
       src/built-in/unset.c\
+
 
 CHAR_LIST = \
       src/list/char_list_push.c\
@@ -166,6 +169,9 @@ STRTOOLS_SRC = \
      src/strtools/ft_streq.c\
 
 
+LOOP_SRC = \
+     src/loop/main_loop.c
+
 # 成果物には含めない
 # TODO: testのときのみ含まれるようなruleを追加する
 FOR_TEST_SRC=\
@@ -183,6 +189,7 @@ SRC = \
 	$(FOR_TEST_SRC)\
 	$(PARSER_SRC)\
 	$(STRTOOLS_SRC)\
+	$(LOOP_SRC)\
 
 
 MAIN = \
@@ -217,7 +224,8 @@ $(NAME): $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
 		-DCC_VERSION="$(shell $(CC) --version | head -n1)"\
 		-Iinclude \
 		-o $(NAME) \
-		$(OBJ) $(MAIN) $(LIBFT_NAME) 
+		$(OBJ) $(MAIN) $(LIBFT_NAME) \
+		-lreadline
 
 $(LIBFT_NAME): $(LIBFT_HEADER)
 	make -C $(LIBFT_DIR)

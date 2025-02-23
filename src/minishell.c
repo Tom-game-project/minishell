@@ -1,4 +1,6 @@
+#include "loop.h"
 #include <stdio.h>
+
 //#include "minishell.h"
 
 // ビルド情報の取得
@@ -56,10 +58,12 @@ STRINGER(BUILD_TIMESTAMP)")"
 }
 
 #include <stdio.h>
-int main()
+int main(int argc, char *argv[], char *envp[])
 {
-	//
+	(void) argc;
+	(void) argv;
 	//
 	header();
+	main_loop(envp);
 	return (0); 
 }

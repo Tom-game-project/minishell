@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 /// 実行に必要なコマンド列を、生成する
-/// 全く新しい領域が確保されるので、解放が必要
+/// 全く新しい領域が確保されるので、返り値は解放が必要
 t_str_list *assemble_cmd_list(t_exec_args *args)
 {
 	t_str_list *rl;

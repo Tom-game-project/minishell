@@ -5,10 +5,10 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "tom_parser_tools/tools.h"
 
-
-static t_ast *
+t_ast *
 parser_wrap(char *str)
 {
     char *input = ft_strdup(str);
@@ -39,9 +39,11 @@ int main(int argc, char *argv[], char *envp[])
 
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	// ast = parser_wrap("< infile cat | grep 5");
-	ast = parser_wrap("ls -la | (ls -la | grep src)");
+	//ast = parser_wrap("< infile cat | grep 5");
+	//ast = parser_wrap("ls -la | (ls -la | grep src)");
+	ast = parser_wrap("sleep 10 | true && echo hello");
 	exec(ast, d);
         clear_ast(&ast);
+	str_dict_clear(&d, free, free);
 	return (0);
 }

@@ -39,11 +39,6 @@ static char *get_value_from_envp_ptr(char *str)
 	return (ft_substr(str_tmp, s + 1, ft_strlen(str_tmp) - s - 1));
 }
 
-/// valueを取得する関数
-//char *get_value_from_envp_ptr(char *str)
-//{
-//	return ();
-//}
 
 /// envpをstr_dictに変換する関数
 /// 第一引数に渡されたディクショナリに、解釈されたenvpが渡される
