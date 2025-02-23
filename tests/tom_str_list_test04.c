@@ -1,6 +1,11 @@
 #include "list.h"
 #include <stdlib.h>
 
+static
+void nop(void *a)
+{
+	(void) a;
+}
 
 /// ```bash
 /// make test TEST_FILE=tests/tom_str_list_test04.c
@@ -16,8 +21,9 @@ int main()
 	str_list_push(&a, "arg2");
 	node = str_list_get_ptr(a, 0);
 	if (node != NULL)
-		node->str = "hello";
+		node->ptr.str = "hello";
 
 	str_list_print(a);
+	str_list_clear(&a, nop);
 	return (0);
 }

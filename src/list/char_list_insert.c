@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include "char_list.h"
 #include "list.h"
-
-#include <stdio.h>
 
 /// @brief 
 /// @param node_p 
@@ -14,22 +10,9 @@
 ///
 int	char_list_insert(t_char_list **node, int index, char c)
 {
-	t_char_list	*target_node;
-	t_char_list	*new_node;
-	t_char_list	*start_node;
+	t_anytype elem;
 
-	target_node = char_list_get_ptr(*node, index);
-	new_node = init_char_list(c);
-	if (new_node == NULL)
-		return (1);
-	new_node->next = target_node;
-	if (0 < index)
-	{
-		start_node = char_list_get_ptr(*node, index - 1);
-		start_node->next = new_node;
-	}
-	else
-		*node = new_node;
-	return (0);
+	elem.c = c;
+	return (void_list_insert(node, index, elem));
 }
 

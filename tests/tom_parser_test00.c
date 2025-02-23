@@ -9,7 +9,8 @@
 /// ```
 int main(void)
 {
-    char *input = ft_strdup("ls -la | grep src | head");
+    //char *input = ft_strdup("ls -la | grep src | head");
+    char *input = ft_strdup("ls -la | (ls -la | grep src)");
     t_ast *ast;
 
     ast = NULL;

@@ -9,6 +9,7 @@
 # define BUF_SIZE 1
 #endif
 
+/// 改行を含むかどうかをチェックする関数
 static bool includes_newline(char *str)
 {
 	while (*str != '\0')

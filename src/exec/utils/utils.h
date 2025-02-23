@@ -16,4 +16,9 @@ int pipe_proc(t_exec_args *args);
 int exec_redirect_i_proc(t_exec_args *args);
 
 int exec_redirect_o_proc(t_exec_args *args);
+
+int exec_heredoc_o_proc(t_exec_args *args);
+
+int paren_proc(t_exec_args *args);
+
 #endif

@@ -1,5 +1,4 @@
 #include "list.h"
-#include <stdlib.h>
 
 /// リストを任意のindexでに分割する関数
 ///
@@ -21,23 +20,5 @@
 t_str_list *
 str_list_cut(t_str_list **node, int index)
 {
-	int i;
-	t_str_list *p;
-	t_str_list *tmp;
-
-	i = 0;
-	p = *node;
-	while (p != NULL)
-	{
-		if (i == index) 
-		{
-			tmp = *node;
-			*node = p->next;
-			p->next = NULL;
-			return (tmp);
-		}
-		i += 1;
-		p = p->next;
-	}
-	return (*node);
+	return (void_list_cut(node, index));
 }

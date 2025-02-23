@@ -3,7 +3,13 @@
 
 
 /// カレントディレクトリを変更する関数
-/// return exit_status
+/// ```bash
+/// cd 
+/// ```
+/// ## case
+/// - pathが存在しない
+/// - pathがファイル
+/// - return exit_status
 int built_in_cd(char *path)
 {
     int exit_status;

@@ -14,7 +14,7 @@ char *str_list_to_str(t_str_list *node)
 	rstr_tmp = rstr;
 	while (node != NULL)
 	{
-		i_str = node->str;
+		i_str = node->ptr.str;
 		while (*i_str != '\0')
 		{
 			*rstr = *i_str;

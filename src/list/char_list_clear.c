@@ -1,12 +1,13 @@
-#include <stdlib.h>
 #include "list.h"
+
+static void nop(t_anytype elem)
+{
+	(void) elem;
+}
+
 
 /// TODO
 int char_list_clear(t_char_list **node)
 {
-
-	while (char_list_pop(node, 0) != '\0')
-	{
-	}
-	return (0);
+	return (void_list_clear(node, nop));
 }

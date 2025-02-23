@@ -6,8 +6,13 @@
 
 CC = cc
 RM = rm
+
+
+CC_VERSION = $(CC) --version
 VALGRIND = valgrind
-VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q --show-leak-kinds=all
+VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q 
+
+#--show-leak-kinds=all
 
 
 RMFLAGS = -rf
@@ -27,7 +32,7 @@ BUILD_IN_SRC = \
       src/built-in/unset.c\
 
 
-LIST_SRC = \
+CHAR_LIST = \
       src/list/char_list_push.c\
       src/list/char_list_pop.c\
       src/list/char_list_len.c\
@@ -41,6 +46,9 @@ LIST_SRC = \
       src/list/char_list_clear.c\
       src/list/char_list_to_str.c\
       src/list/char_list_is_empty.c\
+
+
+STR_LIST = \
       src/list/str_list_init.c\
       src/list/str_list_get_ptr.c\
       src/list/str_list_get_back.c\
@@ -60,6 +68,40 @@ LIST_SRC = \
       src/list/str_list_concat.c\
       src/list/str_list_clone.c\
       src/list/str_list_cut.c\
+      src/list/str_list_in.c\
+
+
+INT_LIST = \
+      src/list/int_list_len.c\
+      src/list/int_list_push.c\
+      src/list/int_list_print.c\
+      src/list/int_list_init.c\
+      src/list/int_list_clear.c\
+      src/list/int_list_pop.c\
+      src/list/int_list_insert.c\
+
+
+VOID_LIST = \
+      src/list/void_list_init.c\
+      src/list/void_list_push.c\
+      src/list/void_list_clear.c\
+      src/list/void_list_print.c\
+      src/list/void_list_get_back.c\
+      src/list/void_list_len.c\
+      src/list/void_list_get_elem.c\
+      src/list/void_list_insert.c\
+      src/list/void_list_pop.c\
+      src/list/void_list_map.c\
+      src/list/void_list_search.c\
+      src/list/void_list_concat.c\
+      src/list/void_list_cut.c\
+
+
+LIST_SRC = \
+     $(INT_LIST)\
+     $(CHAR_LIST)\
+     $(STR_LIST)\
+     $(VOID_LIST)\
 
 
 EXPAND_STRING_SRC = \
@@ -106,12 +148,12 @@ DICT_SRC = \
       src/dict/str_dict_len.c\
       src/dict/str_dict_to_env.c\
       src/dict/str_dict_remove.c\
-      src/dict/str_dict_ft_streq.c\
 
 
 PATH_SRC =\
       src/path/get_full_path.c\
-      src/path/get_dir_list.c
+      src/path/get_dir_list.c\
+      src/path/gen_nondup_name.c\
 
 
 EXEC_SRC=\
@@ -124,7 +166,18 @@ EXEC_SRC=\
       src/exec/utils/exec_execve_wrap.c\
       src/exec/utils/exec_redirect_i_proc.c\
       src/exec/utils/exec_redirect_o_proc.c\
+      src/exec/utils/exec_heredoc_o_proc.c\
+      src/exec/utils/exec_paren_proc.c\
+      src/exec/heredoc/create_shadow_file.c\
+      src/exec/heredoc/heredoc.c\
 
+
+STRTOOLS_SRC = \
+     src/strtools/ft_streq.c\
+
+
+LOOP_SRC = \
+     src/loop/main_loop.c
 
 # 成果物には含めない
 # TODO: testのときのみ含まれるようなruleを追加する
@@ -142,6 +195,8 @@ SRC = \
 	$(EXEC_SRC)\
 	$(FOR_TEST_SRC)\
 	$(PARSER_SRC)\
+	$(STRTOOLS_SRC)\
+	$(LOOP_SRC)\
 
 
 MAIN = \
@@ -172,9 +227,12 @@ all: $(NAME)
 $(NAME): $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
 	$(CC) $(CFLAGS) \
 		-DCOMMIT_HASH="$(shell git show --format='%h' --no-patch)" \
+		-DBUILD_TIMESTAMP='$(shell date "+%Y/%m/%d-%H:%M:%S")'\
+		-DCC_VERSION="$(shell $(CC) --version | head -n1)"\
 		-Iinclude \
 		-o $(NAME) \
-		$(OBJ) $(MAIN) $(LIBFT_NAME) 
+		$(OBJ) $(MAIN) $(LIBFT_NAME) \
+		-lreadline
 
 $(LIBFT_NAME): $(LIBFT_HEADER)
 	make -C $(LIBFT_DIR)

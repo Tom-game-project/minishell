@@ -16,7 +16,7 @@
 
 // src/exec/exec.c
 
-int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd);
+int exec(t_ast *ast, t_str_dict *envp_dict);
 
 /// exec2 関数に引数を渡すためだけに使います
 typedef struct s_exec_args t_exec_args;

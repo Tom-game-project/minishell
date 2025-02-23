@@ -11,7 +11,7 @@ int str_list_len_sum(t_str_list *node)
 	i = 0;
 	while (node != NULL)
 	{
-		i += ft_strlen(node->str);
+		i += ft_strlen(node->ptr.str);
 		node = node->next;
 	}
 	return (i);

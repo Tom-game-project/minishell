@@ -25,11 +25,5 @@
 /// 基本的に、この関数を実行したあとは、`b`の使用を避けるべきである
 int str_list_concat(t_str_list **a, t_str_list *b)
 {
-	t_str_list *node;
-
-	if (*a == NULL)
-		return (*a = b, 0);
-	node = str_list_get_back(*a);
-	node->next = b;
-	return (0);
+	return (void_list_concat(a, b));
 }

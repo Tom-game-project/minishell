@@ -11,7 +11,7 @@ int str_list_dprint(int pid, t_str_list *node)
 	i = 0;
 	while (node != NULL)
 	{
-		dprintf(pid, "[%d] \"%s\"\n", i, node->str);
+		dprintf(pid, "[%d] \"%s\"\n", i, node->ptr.str);
 		node = node->next;
 		i += 1;
 	}

@@ -8,12 +8,8 @@
  */
 t_str_list *init_str_list(char *str)
 {
-	t_str_list	*node;
+	t_anytype elem;
 
-	node = (t_str_list *)malloc(sizeof(t_str_list));
-	if (node == NULL)
-		return (NULL);
-	node->next = NULL;
-	node->str = str;
-	return (node);
+	elem.str = str;
+	return (void_list_init(elem));
 }

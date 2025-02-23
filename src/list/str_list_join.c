@@ -42,7 +42,7 @@ char *str_list_join(t_str_list *node, char *sep)
 	str_tmp = str;
 	while (node != NULL)
 	{
-		str = unsafe_copy_string(&str, node->str);
+		str = unsafe_copy_string(&str, node->ptr.str);
 		if (node->next != NULL)
 			str = unsafe_copy_string(&str, sep);
 		node = node->next;

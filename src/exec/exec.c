@@ -14,7 +14,7 @@
 ///     そうすることで、自分が子プロセスか否かを判定できる
 ///
 
-int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd);
+int exec(t_ast *ast, t_str_dict *envp_dict);
 
 int exec2(t_exec_args *args);
 
@@ -57,9 +57,12 @@ int exec2(t_exec_args *args)
 		return (exec_redirect_i_proc(args));
 	else if (args->ast->ope == e_ope_redirect_o) // >
 		return (exec_redirect_o_proc(args));
+	else if (args->ast->ope == e_ope_heredoc_o) // >>
+		return (exec_heredoc_o_proc(args));
 	else if (args->ast->ope == e_ope_paren)
 	{
 		// TODO: 子プロセスを生成する
+		paren_proc(args);
 		return (0);
 	}
 	else if (args->ast->ope == e_ope_none) // 普通のコマンド
@@ -91,7 +94,7 @@ int exec2(t_exec_args *args)
 /// ```
 /// これは文法のエラーになる
 /// 
-int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd)
+int exec(t_ast *ast, t_str_dict *envp_dict)
 {
 	int exit_status;
 	t_str_list *args;
@@ -102,7 +105,7 @@ int exec(t_ast *ast, t_str_dict *envp_dict, int input_fd)
 			ast, 
 			envp_dict,
 			args,
-			input_fd,
+			STDIN_FILENO,
 			STDOUT_FILENO,
 			-1
 		}

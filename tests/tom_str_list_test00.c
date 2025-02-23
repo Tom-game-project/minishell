@@ -2,9 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static
+void nop(void *a)
+{
+	(void) a;
+}
+
+
 /// # str_list_push関数のテスト
 /// ```bash
-/// make test TEST_FILE=tests/tom_str_list_test00.c
+/// make vtest TEST_FILE=tests/tom_str_list_test00.c
 /// ```
 int main()
 {
@@ -23,6 +30,7 @@ int main()
 	str_list_print(a);
 	printf("len %d\n", str_list_len(a));
 
+	str_list_clear(&a, nop);
 	//while ((s = str_list_pop(&a, 0)) != NULL)
 	//{
 	//	printf("rrr %s\n", s);

@@ -12,18 +12,8 @@
  */
 int str_list_push(t_str_list **node, char *str)
 {
-	t_str_list	*back_node_p;
-	t_str_list	*new_node_p;
+	t_anytype elem;
 
-	new_node_p = init_str_list(str);
-	if (new_node_p == NULL)
-		return (1);
-	back_node_p = str_list_get_back(*node);
-	if (back_node_p == NULL)
-	{
-		*node = new_node_p;
-		return (0);
-	}
-	back_node_p->next = new_node_p;
-	return (0);
+	elem.str = str;
+	return (void_list_push(node, elem));
 }

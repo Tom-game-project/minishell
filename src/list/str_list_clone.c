@@ -26,7 +26,7 @@ t_str_list *str_list_clone(t_str_list *a, char *(*f)(char *))
 	rl = NULL;
 	while (a != NULL)
 	{
-		str_list_push(&rl, f(a->str));
+		str_list_push(&rl, f(a->ptr.str));
 		a = a->next;
 	}
 	return (rl);

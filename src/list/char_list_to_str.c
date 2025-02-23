@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-/// 与えられたnodeをstring化する
+/// 与えられたnodeを文字列にする
 char *char_list_to_str(t_char_list *node)
 {
 	char *rstr;
@@ -14,7 +14,7 @@ char *char_list_to_str(t_char_list *node)
 		return (NULL);
 	while (node != NULL)
 	{
-		*rstr = node->data;
+		*rstr = node->ptr.c;
 		node = node->next;
 		rstr++;
 	}
