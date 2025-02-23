@@ -15,7 +15,7 @@ t_syntax_result check_rdt_no_arg(t_ast *ast)
         result = e_rdt_near_unexpected_token_pipe;
     else if (ast->ope != e_ope_pipe && is_enum_rdtope(ast->ope))
     {
-        if (ast->arg->str == NULL)
+        if (ast->arg->ptr.str == NULL)
             result = e_rdt_near_unexpected_token_newline;
     }
     return (result);
