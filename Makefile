@@ -243,11 +243,11 @@ $(LIBFT_HEADER):
 
 # ここにはあえてフラグをつけていない
 test: cleantest $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
-	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME) -lreadline
 	./test_
 
 vtest: cleantest $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
-	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME) -lreadline
 	$(VALGRIND) $(VALGRINDFLAGS) ./test_
 
 example:
