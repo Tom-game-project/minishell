@@ -62,6 +62,7 @@ int exec2(t_exec_args *args)
 	else if (args->ast->ope == e_ope_paren)
 	{
 		// TODO: 子プロセスを生成する
+		paren_proc(args);
 		return (0);
 	}
 	else if (args->ast->ope == e_ope_none) // 普通のコマンド

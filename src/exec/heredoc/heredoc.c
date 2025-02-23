@@ -35,7 +35,7 @@ candy_cutter(t_str_list **lst, int index)
 	return (str);
 }
 
-/// here doc
+/// here docとして
 /// ユーザの入力を受け取る関数
 int read_heredocline(char *eof, int fd)
 {

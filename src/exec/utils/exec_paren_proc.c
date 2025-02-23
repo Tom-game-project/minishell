@@ -3,7 +3,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-///
+/// parenは特別なデータ形式
+/// right_astを持たない
 int paren_proc(t_exec_args *args)
 {
 	int pid;
@@ -13,7 +14,14 @@ int paren_proc(t_exec_args *args)
 	if (pid == 0)
 	// 子プロセス
 	{
-		exec2(args); // カッコの場合は子プロセス
+		exec2(&(t_exec_args){
+			args->ast->left_ast,
+			args->envp_dict,
+			args->args,
+			args->input_fd,
+			args->output_fd,
+			pid
+		}); // カッコの場合は子プロセス
 		exit(0);
 	}
 	// 親プロセス

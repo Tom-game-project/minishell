@@ -26,6 +26,10 @@ parser_wrap(char *str)
 }
 
 /// parserとexecを合わせたテスト
+///
+/// ```bash
+/// make test TEST_FILE=tests/tom_parse_exec_test00.c
+/// ```
 int main(int argc, char *argv[], char *envp[])
 {
 	(void) argc;
@@ -35,7 +39,8 @@ int main(int argc, char *argv[], char *envp[])
 
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	ast = parser_wrap("< infile cat | grep 5");
+	// ast = parser_wrap("< infile cat | grep 5");
+	ast = parser_wrap("ls -la | (ls -la | grep src)");
 	exec(ast, d);
         clear_ast(&ast);
 	return (0);
