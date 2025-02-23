@@ -85,4 +85,6 @@ bool    checker_str_pipe(char *str);
 
 t_str_list	*separate_and_store_pipe_operators(t_ast  *ast, char **input);
 
+int    str_pipe_len(char *str);
+
 # endif

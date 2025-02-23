@@ -58,8 +58,6 @@ bool    checker_str_rdt(char *str)
             return (true);
         else if (*(str + idx) == '>')
             return (true);
-        else if (*(str + idx) == '|')
-            return (true);
         tmp = find_syntax(str + idx);
         if (tmp > 0)
             idx += tmp;
@@ -88,6 +86,29 @@ int    str_ctl_len(char *str)
             len += find_syntax(str + len);
         else if (*(str + len) == '(')
             len += (find_syntax(str + len));
+        else
+            len++;
+    }
+    return (0);
+}
+
+int    str_pipe_len(char *str)
+{
+    int len;
+
+    len = 0;
+    while (*(str + len) != '\0') 
+    {
+        if (*(str + len) == '|')
+            return (len);
+        if (*(str + len) == '"')
+            len += find_syntax(str + len);
+        else if (*(str + len) == '\'')
+            len += find_syntax(str + len);
+        else if (ft_strncmp((str + len), "$(", 2) == 0)
+            len += find_syntax(str + len);
+        else if (*(str + len) == '(')
+            len += find_syntax(str + len);
         else
             len++;
     }

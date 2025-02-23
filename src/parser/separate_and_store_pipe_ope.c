@@ -5,7 +5,7 @@
 static t_str_list	*store_left_next_input(char **input);
 static void	store_pipe_ast(t_ast	**ast, char **input);
 static t_str_list	*store_right_next_input(char	*input);
-static char	*search_rdt_operater(char *input);
+static char *search_pipe_operater(char *input);
 
 t_str_list	*separate_and_store_pipe_operators(t_ast  *ast, char **input)
 {
@@ -24,7 +24,7 @@ static t_str_list	*store_left_next_input(char **input)
 	char		*after_trim;
 
 	next_input = NULL;
-	if (is_redirect_operators(*input))
+	if (ft_strncmp(*input, "|", 1) == 0)
 	{
 		str_list_push(&next_input, NULL);
 		return (next_input);
@@ -32,7 +32,7 @@ static t_str_list	*store_left_next_input(char **input)
 	if (**input == '\0')
 		return (next_input);
 	after_trim = trim_isspc(*input);
-	head_element = search_rdt_operater(after_trim);
+	head_element = search_pipe_operater(after_trim);
 	update_input(input, head_element);
 	str_list_push(&next_input, trim_isspc(head_element));
 	free(after_trim);
@@ -48,7 +48,7 @@ static void	store_pipe_ast(t_ast	**ast, char **input)
 	if (**input == '\0')
 		return ;
 	after_trim = trim_isspc(*input);
-	head_element = search_rdt_operater(after_trim);
+	head_element = search_pipe_operater(after_trim);
 	update_input(input, head_element);
 	if (*head_element == '|')
 		(*ast)->ope = e_ope_pipe;
@@ -73,13 +73,13 @@ static t_str_list	*store_right_next_input(char	*input)
 	return (next_input);
 }
 
-static char *search_rdt_operater(char *input)
+static char *search_pipe_operater(char *input)
 {
 	char *head_element;
 
 	if (*input == '|')
 		head_element = ft_strdup("|");
 	else
-		head_element = ft_substr(input, 0, str_rdt_len(input));
+		head_element = ft_substr(input, 0, str_pipe_len(input));
 	return (head_element);
 }

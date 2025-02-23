@@ -36,6 +36,7 @@ bool is_enum_rdtope(t_operator ope);
 
 //check_case
 t_syntax_result ast_check_ctl_adjacent(t_ast *ast);
+t_syntax_result ast_check_pipe_no_arg(t_ast *ast);
 t_syntax_result ast_check_rdt_no_arg(t_ast *ast);
 
 //print

@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    char *input = ft_strdup(" < infile | echo world");
+    char *input = ft_strdup("ls &&| echo world");
     t_ast *ast;
     t_syntax_result result;
     ast = NULL;
