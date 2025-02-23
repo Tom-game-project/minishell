@@ -50,7 +50,7 @@ int header()
 "        +#+ +#+    +#+ +#+        +#+        +#+       \n"
 "#+#    #+# #+#    #+# #+#        #+#        #+#        \n"
 "########  ###    ### ########## ########## ##########  \n"
-"created by kaara && Tom in 2025                        \n"
+"created by arakan && Tom in 2025                        \n"
 "minishell("STRINGER(COMMIT_HASH)", "
 STRINGER(BUILD_TIMESTAMP)")"
 "["STRINGER(CC_VERSION)"]\n"); 
