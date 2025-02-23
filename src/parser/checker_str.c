@@ -23,6 +23,25 @@ bool    checker_str_ctl(char *str)
     return (false);
 }
 
+bool    checker_str_pipe(char *str)
+{
+    int tmp;
+    int idx;
+
+    idx = 0;
+    while (*(str + idx) != '\0')
+    {
+        if (*(str + idx) == '|')
+            return (true);
+        tmp = find_syntax(str + idx);
+        if (tmp > 0)
+            idx += tmp;
+        else
+            idx++;
+    }
+    return (false);
+}
+
 bool    checker_str_rdt(char *str)
 {
     int tmp;

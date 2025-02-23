@@ -21,6 +21,8 @@ t_parse_result	parser(t_ast **ast, char *input)
 	//別関数へ
 	if (checker_str_ctl(input))
 		next_input = separate_and_store_control_operators(*ast, &str);
+	else if (checker_str_pipe(input))
+		next_input = separate_and_store_pipe_operators(*ast, &str);
 	else if (checker_str_rdt(input))
 		next_input = separate_and_store_redirect_operators(*ast, &str);
 	else

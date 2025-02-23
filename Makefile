@@ -81,6 +81,7 @@ PARSER_SRC = \
       src/parser/separate_and_store_cmd_args.c\
       src/parser/separate_and_store_ctl_ope.c\
       src/parser/separate_and_store_rdt_ope.c\
+      src/parser/separate_and_store_pipe_ope.c\
       src/parser/update_input.c\
       src/parser/trim_isspc.c\
       src/parser/clear_ast.c\

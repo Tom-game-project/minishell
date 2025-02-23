@@ -81,4 +81,8 @@ void clear_ast(t_ast **ast);
 
 t_parse_result syntax_checker(char *input);
 
+bool    checker_str_pipe(char *str);
+
+t_str_list	*separate_and_store_pipe_operators(t_ast  *ast, char **input);
+
 # endif
