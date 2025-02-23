@@ -27,13 +27,19 @@ t_parse_result	parser(t_ast **ast, char *input)
 		next_input = separate_and_store_redirect_operators(*ast, &str);
 	else
 	{
-		separate_and_store_cmd_args(*ast, &str);
+		result = separate_and_store_cmd_args(*ast, &str);
 		free(str);
 		return (result);
 	}
 	//
 	head = next_input;
 	result = parser(&((*ast)->left_ast), head->ptr.str);
+	if (result == e_result_ok)
+	{
+		free(str);
+		str_list_clear(&next_input, free);
+		return (result);
+	}
 	if (next_input->next != NULL)//sonoutibetukannsuudecheck
 		head = next_input->next;
 	result = parser(&((*ast)->right_ast), head->ptr.str);

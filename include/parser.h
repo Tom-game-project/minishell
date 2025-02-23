@@ -56,7 +56,7 @@ bool ft_isspace(char c);
 int find_syntax(char *input);
 
 //separate_and_store_cmd_args.c
-void   separate_and_store_cmd_args(t_ast *ast, char **input);
+t_parse_result   separate_and_store_cmd_args(t_ast *ast, char	**input);
 char	*search_delimiter(char *input);
 
 //separate_and_store_ctl_ope.c

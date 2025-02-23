@@ -1,4 +1,5 @@
 
+#include "ast_checker.h"
 #include "parser.h"
 #include "list.h"
 #include "libft.h"
@@ -8,17 +9,20 @@
 
 static char *spc_extract_operands(char *input);
 static void	store_head_element(t_ast	*ast, char **input);
-static void parse_paren(t_ast *ast, char **input);
+t_parse_result	parse_paren(t_ast *ast, char **input);
 
-void   separate_and_store_cmd_args(t_ast *ast, char	**input)
+t_parse_result   separate_and_store_cmd_args(t_ast *ast, char	**input)
 {
+	t_parse_result result;
+
+	result = e_result_ok;
 	if (input == NULL)
-		return ;
+		return (result);
 	if (**input == '(')
-		parse_paren(ast, input);
+		result = parse_paren(ast, input);
 	else
 		store_head_element(ast, input);
-	return ;
+	return (result);
 }
 
 char *search_delimiter(char *input)
@@ -80,8 +84,9 @@ static void	store_head_element(t_ast	*ast, char **input)
 }
 
 
-void	parse_paren(t_ast *ast, char **input)
+t_parse_result	parse_paren(t_ast *ast, char **input)
 {
+	t_parse_result result;
 	char	*after_trim;
 	char	*head_element;
 	char	*paren_input;
@@ -91,9 +96,11 @@ void	parse_paren(t_ast *ast, char **input)
 	paren_input = ft_substr(after_trim, 1, find_syntax(after_trim) - 2);
 	update_input(input, head_element);
 	ast->ope = e_ope_paren;
-	parser(&ast->left_ast, paren_input);
-	parser(&ast->right_ast,*input);
+	result = parser(&ast->left_ast, paren_input);//エラーを伝達
+	if (result == e_result_ok)
+		result = parser(&ast->right_ast,*input);
 	free(after_trim);
 	free(head_element);
 	free(paren_input);
+	return (result);
 }

@@ -2,6 +2,7 @@
 # include "parser.h"
 # include "libft.h"
 # include <limits.h>
+#include <unistd.h>
 
 static int	find_chr(char *input, char find);
 
