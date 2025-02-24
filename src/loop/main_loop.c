@@ -10,6 +10,7 @@
 
 // for test 
 #include <stdio.h>
+#include <unistd.h>
 #include "../tests/tom_parser_tools/tools.h"
 
 static t_ast *
@@ -64,7 +65,8 @@ exec_shell_cmd(char *str, t_str_dict *env_dict)
 		return (1); // syntax error occured
 	}
 	exit_status = exec(ast, env_dict);
-    clear_ast(&ast);
+	dprintf(STDERR_FILENO, "exit_status %d\n", exit_status);
+	clear_ast(&ast);
 	return (exit_status);
 }
 

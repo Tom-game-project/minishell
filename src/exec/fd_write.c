@@ -1,19 +1,22 @@
 #include "libft.h"
 #include <stdbool.h>
 
-#define BUF_SIZE 1024
+// EOFを知るために、ここのマクロのサイズは1で固定的でなければならない
+#define READ_BUF_SIZE 1
 
 /// fdに書き込まれた内容を標準出力に書き込む
-int fd_write(int fd)
+///
+/// バイナリが送られる可能性もある
+int fd_write(int from_fd, int to_fd)
 {
-	char buf[BUF_SIZE];
+	char buf[READ_BUF_SIZE];
 
 	while(1)
 	{
-		ft_memset(buf, '\0', BUF_SIZE);
-		if (read(fd, buf, BUF_SIZE) == 0)
+		ft_memset(buf, '\0', READ_BUF_SIZE);
+		if (read(from_fd, buf, READ_BUF_SIZE) == 0)
 			break ;
-		write(STDOUT_FILENO, buf, BUF_SIZE);
+		write(to_fd, buf,READ_BUF_SIZE);
 	}
 	return (0);
 }

@@ -56,7 +56,7 @@ int execve_wrap(t_exec_args *args)
 		free(argv);
 		// TODO
 		// あとで実装する必要がある
-		exit(1);
+		exit(127);
 	}
 	// PATH環境変数を解析して実行可能なフルパスを検索
 	fullpath = get_full_path(cmd, env_path_node->value);

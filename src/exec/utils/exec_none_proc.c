@@ -1,10 +1,7 @@
-#include "dict.h"
 #include "list.h"
-#include "parser.h"
 #include "exec.h"
 #include "utils.h"
 
-#include <stdio.h>
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -33,12 +30,12 @@ int child_proc_none(int pipe_fd[2], t_exec_args *args)
 }
 
 /// 返り値はexit_status
-int parent_proc_none(int pipe_fd[2], int pid)
+int parent_proc_none(int pipe_fd[2], t_exec_args *args, int pid)
 {
 	int status;
 
-	close(pipe_fd[PIPE_WRITE]);// 子プロセスに伝えることはない						
-	fd_write(pipe_fd[PIPE_READ]);
+	close(pipe_fd[PIPE_WRITE]);// 子プロセスに伝えることはない
+	fd_write(pipe_fd[PIPE_READ], args->output_fd);
 	waitpid(pid, &status, WUNTRACED);
 	close(pipe_fd[PIPE_READ]);
 	return (WEXITSTATUS(status));
@@ -59,9 +56,8 @@ int none_proc(t_exec_args *args)
 	{
 		child_proc_none(pipe_fd, args);
 	}
-	str_list_clear(&(args->args), free); // 実行のためにコマンドを使い終えたので消す
 						      //
 						      // フォークした子プロセスでは、有効
-	return (parent_proc_none(pipe_fd, pid));
+	return (parent_proc_none(pipe_fd, args , pid));
 }
 

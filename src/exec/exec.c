@@ -74,7 +74,8 @@ int exec2(t_exec_args *args)
 		if (args->ppid == 0)
 			exit_status = execve_wrap(args);
 		// もし、子プロセスでなければ
-		else
+		else // 実行しようとしているコマンドが、
+		     // built in functionに含まれるかどうかを調る
 			exit_status = none_proc(args);
 		return (exit_status); // TODO exit status を返却するように変更
 	}

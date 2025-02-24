@@ -27,13 +27,14 @@ int exec_redirect_o_proc(t_exec_args *args)
 	{
 		perror("minishell"); // TODO
 	}
-	if (args->ast->left_ast != NULL && args->ast->left_ast->ope == e_ope_none)
+	if (args->ast->left_ast != NULL && args->ast->left_ast->ope == e_ope_none){
 		// -- .2
 		str_list_concat(
 				&args_list,
 			       	str_list_clone(
 					args->ast->left_ast->arg,
 				       	ft_strdup));
+	}
 	if (args->ast->right_ast != NULL)
 	{
 		exec2(&(t_exec_args)
