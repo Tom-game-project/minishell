@@ -42,7 +42,7 @@ int exec_redirect_o_proc(t_exec_args *args)
 		    args->ast->right_ast,
 		    args->envp_dict,
 		    args_list,
-		    STDIN_FILENO, 
+		    args->input_fd,
 		    output_fd,
 		    -1 // 子プロセスを生み出すため
 		});
@@ -54,7 +54,7 @@ int exec_redirect_o_proc(t_exec_args *args)
 		    args->ast->left_ast,
 		    args->envp_dict,
 		    NULL,
-		    STDIN_FILENO,
+		    args->input_fd,
 		    output_fd,
 		    -1 // 子プロセスを生み出すため
 		});

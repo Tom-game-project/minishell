@@ -70,7 +70,7 @@ int exec_redirect_i_proc(t_exec_args *args)
 		    args->envp_dict,
 		    args_list,
 		    input_fd, 
-		    STDOUT_FILENO, 
+		    args->output_fd, 
 		    -1 // 子プロセスを生み出すため
 		});
 	}
@@ -82,7 +82,7 @@ int exec_redirect_i_proc(t_exec_args *args)
 		    args->envp_dict,
 		    NULL,
 		    input_fd, 
-		    STDOUT_FILENO, 
+		    args->output_fd, 
 		    -1 // 子プロセスを生み出すため
 		}
 		);

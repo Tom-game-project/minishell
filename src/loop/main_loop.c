@@ -11,7 +11,7 @@
 // for test 
 #include <stdio.h>
 #include <unistd.h>
-// #include "../tests/tom_parser_tools/tools.h"
+#include "../tests/tom_parser_tools/tools.h"
 
 static t_ast *
 parser_wrap(char *input)
@@ -42,7 +42,7 @@ bool	ast_checker_wrap(t_ast	*ast)
 	result = ast_checker(ast);
 	if (print_checker_result(result))
 	{
-		// print_ast(ast, 0);
+		print_ast(ast, 0);
 		return (true);
 	}
 	else
