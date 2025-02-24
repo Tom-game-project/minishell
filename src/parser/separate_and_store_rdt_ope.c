@@ -1,3 +1,4 @@
+#include "list.h"
 #include "parser.h"
 #include "libft.h"
 #include <stdio.h>
@@ -11,16 +12,25 @@ static void	store_rdtarg(t_ast *ast, char **input);
 
 t_str_list	*separate_and_store_redirect_operators(t_ast  *ast, char **input)
 {
+	char		*tmp;
 	t_str_list	*next_input;
 
 	next_input = store_left_next_input(input);
 	store_rdtope_ast(&ast, input);
-	if (ast->ope == e_ope_redirect_i
-		|| ast->ope == e_ope_redirect_o
-		|| ast->ope == e_ope_heredoc_i
-		|| ast->ope == e_ope_heredoc_o)
-		store_rdtarg(ast, input);
+	store_rdtarg(ast, input);
 	next_input->next = store_right_next_input(*input);
+	tmp = str_list_join(next_input, " ");
+	str_list_clear(&next_input, free);
+	if (checker_str_rdt(tmp))
+	{
+		str_list_push(&next_input ,NULL);
+		str_list_push(&next_input ,tmp);
+	}
+	else
+	{
+		str_list_push(&next_input ,tmp);
+		str_list_push(&next_input ,NULL);
+	}
 	return (next_input);
 }
 
