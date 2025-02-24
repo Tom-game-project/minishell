@@ -1,3 +1,4 @@
+#include "built_in.h"
 #include "dict.h"
 #include "list.h"
 #include "parser.h"
@@ -69,15 +70,25 @@ int exec2(t_exec_args *args)
 	{
 		// TODO: built-in関数を判別するためのプログラムをここに追加
 		//
-		// もしppidが子プロセス中なら
-		// この場で実行
-		if (args->ppid == 0)
-			exit_status = execve_wrap(args);
-		// もし、子プロセスでなければ
-		else // 実行しようとしているコマンドが、
-		     // built in functionに含まれるかどうかを調る
-			exit_status = none_proc(args);
-		return (exit_status); // TODO exit status を返却するように変更
+		t_built_in tbi;
+		tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
+		if (tbi == e_not_built_in)
+		{
+			if (args->ppid == 0)
+				exit_status = execve_wrap(args);
+			else 
+				exit_status = none_proc(args);
+			return (exit_status); // TODO exit status を返却するように変更
+		}
+		else if (tbi == e_built_in_pwd)
+		{
+			return (built_in_pwd());
+		}
+		else
+		{
+			// unreachable
+			return (1);
+		}
 	}
 	else
 	{

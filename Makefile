@@ -30,6 +30,7 @@ BUILD_IN_SRC = \
       src/built-in/export.c\
       src/built-in/pwd.c\
       src/built-in/unset.c\
+      src/built-in/build_in.c\
 
 
 CHAR_LIST = \
@@ -199,7 +200,7 @@ SRC = \
 	$(EXEC_SRC)\
 	$(FOR_TEST_SRC)\
 	$(PARSER_SRC)\
-      $(AST_CHECKER_SRC)\
+	$(AST_CHECKER_SRC)\
 	$(STRTOOLS_SRC)\
 	$(LOOP_SRC)\
 

@@ -3,11 +3,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>
+#include <stdbool.h>
 
 #include "libft.h"
 
 
-int build_in_pwd()
+/// 
+/// 返り値exit_status
+///
+int built_in_pwd()
 {
 	char buf[PATH_MAX];
 
@@ -17,5 +21,6 @@ int build_in_pwd()
 		return (1);
 	}
 	ft_putstr_fd(buf, STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }

@@ -1,4 +1,6 @@
 #include "libft.h"
+#include "dict.h"
+
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -7,17 +9,28 @@
 /// envに渡されたオプション、引数については、すべて無視する
 ///
 /// minishellにおけるenvコマンドは、プロセスが保持する環境変数を返す
-int built_in_env(char *envp[])
+int built_in_env(t_str_dict *envp_dict)
 {
     int exit_status;
+    char **envp;
+    int i;
 
     exit_status = 0;
-    while (*envp != NULL)
+    envp = str_dict_to_envp(envp_dict);
+    i = 0;
+    while (envp[i] != NULL)
     {
-	    write (STDOUT_FILENO, *envp, ft_strlen(*envp));
-	    write (STDOUT_FILENO, &"\n", 1);
-	    envp++;
+	    ft_putstr_fd(envp[i], STDOUT_FILENO);
+	    ft_putstr_fd("\n", STDOUT_FILENO);
+	    i += 1;
     }
+    i = 0;
+    while (envp[i] != NULL)
+    {
+	    free(envp[i]);
+	    i += 1;
+    }
+    free(envp);
     return (exit_status);
 }
 
