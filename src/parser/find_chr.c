@@ -26,6 +26,7 @@ int find_syntax(char *input)//syntaxエラーの時はマイナス値を返す�
 static int	find_chr(char *input, char find)
 {
 	int i;
+	int tmp;
 	int count;
 
 	i = 0;
@@ -52,8 +53,12 @@ static int	find_chr(char *input, char find)
 	while (input[i] != '\0')
 	{
 		if (find != '"' && find != '\'')//これきれいにしたい
-			i += (find_syntax(input + i));
-		if (*(input + i) == find)
+		{
+			tmp = find_syntax(input + i);
+			if (tmp < 0)
+				break ;
+		}
+		if (input[i] == find)
 		{
 			if (find == '"' || find == '\'')
 				count--;

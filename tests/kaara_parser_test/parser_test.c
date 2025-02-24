@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    char *input = ft_strdup("(\"hello)");
+    char *input = ft_strdup("(echo \"hekko && hello");
     t_ast *ast;
     t_syntax_result result;
     ast = NULL;

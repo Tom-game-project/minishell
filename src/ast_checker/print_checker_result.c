@@ -4,19 +4,16 @@
 bool    print_checker_result(t_syntax_result result)
 {
     if (result == e_syntax_ok)
-    {
-        printf("np");
         return (true);
-    }
     else if (result == e_ctl_near_unexpected_token_and)
-        printf("minishell : near_unexpected_token_and\n");
+        perror("minishell : near_unexpected_token_and\n");//fprintfを作成したら変更
     else if (result == e_ctl_near_unexpected_token_or)
-        printf("minishell : near_unexpected_token_or\n");
+        perror("minishell : near_unexpected_token_or\n");
     else if (result == e_rdt_near_unexpected_token_pipe)
-        printf("minishell : near_unexpected_token_pipe\n");
+        perror("minishell : near_unexpected_token_pipe\n");
     else if (result == e_rdt_near_unexpected_token_newline)
-        printf("minishell : near_unexpected_token_newline\n");
+        perror("minishell : near_unexpected_token_newline\n");
     else
-        printf("minishell : else error");
+        perror("minishell : else error");
     return (false);
 }

@@ -34,7 +34,7 @@ t_parse_result	parser(t_ast **ast, char *input)
 	//
 	head = next_input;
 	result = parser(&((*ast)->left_ast), head->ptr.str);
-	if (result == e_result_ok)
+	if (result != e_result_ok)
 	{
 		free(str);
 		str_list_clear(&next_input, free);
