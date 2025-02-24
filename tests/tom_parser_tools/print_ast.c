@@ -3,18 +3,19 @@
 #include "list.h"
 
 #include <stdio.h>
+#include <unistd.h>
 
 #define INDENT 4
 
 static int print_str_list_for_test(t_str_list *lst)
 {
-	printf("[");
+	dprintf(STDERR_FILENO, "[");
 	while (lst != NULL)
 	{
-		printf("\"%s\", ", lst->ptr.str);
+		dprintf(STDERR_FILENO, "\"%s\", ", lst->ptr.str);
 		lst = lst->next;
 	}
-	printf("]");
+	dprintf(STDERR_FILENO, "]");
 	return (0);
 }
 
@@ -26,10 +27,10 @@ static int indent_print(char *str,  int depth)
 	i = 0;
 	while (i < depth * INDENT)
 	{
-		printf(" ");
+		dprintf(STDERR_FILENO, " ");
 		i += 1;
 	}
-	printf("%s", str);
+	dprintf(STDERR_FILENO, "%s", str);
 	return (0);
 }
 
@@ -37,31 +38,31 @@ static int print_ope(t_operator ope)
 {
 	switch (ope) {
 		case e_ope_none:
-			printf("\"none\"");
+			dprintf(STDERR_FILENO, "\"none\"");
 		break;
 		case e_ope_and: // &&
-			printf("\"&&\"");
+			dprintf(STDERR_FILENO, "\"&&\"");
 		break;
 		case e_ope_or: // ||
-			printf("\"||\"");
+			dprintf(STDERR_FILENO, "\"||\"");
 		break;
 		case e_ope_redirect_i: // <
-			printf("\"<\"");
+			dprintf(STDERR_FILENO, "\"<\"");
 		break;
 		case e_ope_redirect_o:// >
-			printf("\">\"");
+			dprintf(STDERR_FILENO, "\">\"");
 		break;
 		case e_ope_heredoc_i:// <<
-			printf("\"<<\"");
+			dprintf(STDERR_FILENO, "\"<<\"");
 		break;
 		case e_ope_heredoc_o:// >>
-			printf("\">>\"");
+			dprintf(STDERR_FILENO, "\">>\"");
 		break;
 		case e_ope_pipe:// |
-			printf("\"|\"");
+			dprintf(STDERR_FILENO, "\"|\"");
 		break;
 		case e_ope_paren:// )
-			printf("\"paren\"");
+			dprintf(STDERR_FILENO, "\"paren\"");
 		break;
 	}
 	return (0);
@@ -72,26 +73,26 @@ int print_ast(t_ast *ast, int depth)
 	indent_print("&(t_ast) {\n", depth);
 	indent_print(".arg=", depth + 1);
 	print_str_list_for_test(ast->arg);
-	printf("\n");
+	dprintf(STDERR_FILENO, "\n");
 	indent_print(".left_ast = ", depth + 1);
-	printf("\n");
+	dprintf(STDERR_FILENO, "\n");
 	// left_ast
 	if (ast->left_ast != NULL)
 		print_ast(ast->left_ast, depth + 2);
 	else
 		indent_print("NULL", depth + 2);
-	printf("\n");
+	dprintf(STDERR_FILENO, "\n");
 	indent_print(".right_ast = ", depth + 1);
-	printf("\n");
+	dprintf(STDERR_FILENO, "\n");
 	// right_ast
 	if (ast->right_ast != NULL)
 		print_ast(ast->right_ast, depth + 2);
 	else
 		indent_print("NULL", depth + 2);
-	printf("\n");
+	dprintf(STDERR_FILENO, "\n");
 	indent_print(".ope = ", depth + 1);
 	print_ope(ast->ope);
-	printf("\n");
-	indent_print("}", depth);
+	dprintf(STDERR_FILENO, "\n");
+	indent_print("}\n", depth);
 	return (0);
 }

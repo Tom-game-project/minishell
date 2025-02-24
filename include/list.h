@@ -204,6 +204,6 @@ int void_list_search2_index(
 // 以下の関数は、成果物に含めない
 //
 
-int str_list_dprint(int pid, t_str_list *node);
+int str_list_dprint(int fd, t_str_list *node);
 
 #endif

@@ -19,10 +19,10 @@ parser_wrap(char *input)
     t_ast *ast;
     ast = NULL;
     if (e_result_paren_not_closed_err == parser(&ast, input))
-        printf("minishell : not close syntax\n");
+        dprintf(STDERR_FILENO, "minishell : not close syntax\n");
     else
     {
-        printf("\ninput : %s\n\n", input);
+        dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
         // print_ast(ast, 0); // ast を表示する
     }
     return (ast);
@@ -49,7 +49,6 @@ bool	ast_checker_wrap(t_ast	*ast)
 		return (false);
 	}
 }
-
 
 // 返り値はexit status
 int

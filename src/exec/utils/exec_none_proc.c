@@ -1,9 +1,6 @@
-#include "list.h"
-#include "exec.h"
 #include "utils.h"
 
 #include <sys/wait.h>
-#include <stdlib.h>
 #include <unistd.h>
 
 /// TODO:
@@ -56,7 +53,6 @@ int none_proc(t_exec_args *args)
 	{
 		child_proc_none(pipe_fd, args);
 	}
-						      //
 						      // フォークした子プロセスでは、有効
 	return (parent_proc_none(pipe_fd, args , pid));
 }

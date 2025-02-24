@@ -1,5 +1,7 @@
 #include "libft.h"
 #include <stdbool.h>
+#include <stdio.h>
+#include <unistd.h>
 
 // EOFを知るために、ここのマクロのサイズは1で固定的でなければならない
 #define READ_BUF_SIZE 1
@@ -17,6 +19,7 @@ int fd_write(int from_fd, int to_fd)
 		if (read(from_fd, buf, READ_BUF_SIZE) == 0)
 			break ;
 		write(to_fd, buf,READ_BUF_SIZE);
+		// dprintf(STDERR_FILENO, "[%c]\n", *buf);
 	}
 	return (0);
 }
