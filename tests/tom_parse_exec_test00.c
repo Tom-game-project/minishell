@@ -41,7 +41,8 @@ int main(int argc, char *argv[], char *envp[])
 	envp_to_str_dict(&d, envp);
 	//ast = parser_wrap("< infile cat | grep 5");
 	//ast = parser_wrap("ls -la | (ls -la | grep src)");
-	ast = parser_wrap("sleep 10 | true && echo hello");
+	//ast = parser_wrap("sleep 10 | true && echo hello");
+	ast = parser_wrap("< minishell cat | xxd | tail");
 	exec(ast, d);
         clear_ast(&ast);
 	str_dict_clear(&d, free, free);

@@ -11,7 +11,7 @@
 // for test 
 #include <stdio.h>
 #include <unistd.h>
-#include "../tests/tom_parser_tools/tools.h"
+// #include "../tests/tom_parser_tools/tools.h"
 
 static t_ast *
 parser_wrap(char *input)
@@ -19,7 +19,9 @@ parser_wrap(char *input)
     t_ast *ast;
     ast = NULL;
     if (e_result_paren_not_closed_err == parser(&ast, input))
+    {
         dprintf(STDERR_FILENO, "minishell : not close syntax\n");
+    }
     else
     {
         dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
@@ -40,7 +42,7 @@ bool	ast_checker_wrap(t_ast	*ast)
 	result = ast_checker(ast);
 	if (print_checker_result(result))
 	{
-		print_ast(ast, 0);
+		// print_ast(ast, 0);
 		return (true);
 	}
 	else
@@ -60,7 +62,7 @@ exec_shell_cmd(char *str, t_str_dict *env_dict)
 	ast = parser_wrap(str);
 	if (!ast_checker_wrap(ast))
 	{
-	    clear_ast(&ast);
+		    clear_ast(&ast);
 		return (1); // syntax error occured
 	}
 	exit_status = exec(ast, env_dict);
