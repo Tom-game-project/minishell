@@ -1,13 +1,26 @@
-
+#include <linux/limits.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
+#include <stdbool.h>
 
-#define FILENAMEBUF 512
+#include "libft.h"
 
-int build_in_pwd(char *path)
+
+/// 
+/// 返り値exit_status
+///
+int built_in_pwd()
 {
-	int exit_status;
+	char buf[PATH_MAX];
 
-	(void) path; // TODO
-	exit_status = 0;
-	return (exit_status);
+	if (getcwd(buf, PATH_MAX) == NULL)
+	{
+		perror("minishell");
+		return (1);
+	}
+	ft_putstr_fd(buf, STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	return (0);
 }

@@ -8,7 +8,10 @@ minishell
 # test,example関係
 test_
 example_
+*infile*
+*outfile*
 
 # lsp関係
 .cache/
+.vscode/
 compile_commands.json
