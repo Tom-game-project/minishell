@@ -16,7 +16,8 @@ int main(void)
     // char *input = ft_strdup("echo hello > /dev/stderr | echo world > /dev/stderr");
     //char *input = ft_strdup("grep hello << EOF1 << EOF2");
     //char *input = ft_strdup("< infile grep a1 | wc -w > outfile");
-    char *input = ft_strdup("(ls - la)|");
+    //char *input = ft_strdup("(ls - la)|");
+    char *input = ft_strdup("cat < infile | cat < infile2 -e | echo hello");
 
     t_ast *ast;
 
