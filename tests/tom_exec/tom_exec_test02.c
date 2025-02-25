@@ -3,22 +3,21 @@
 #include "exec.h"
 #include <stdio.h>
 
-/// exec2 のテスト
-///
-/// `<`の処理のテスト
+
+/// exec2のtest
 ///
 /// ```bash
-/// make test TEST_FILE=tests/tom_exec_test08.c
+/// make test TEST_FILE=tests/tom_exec_test02.c
 /// ```
 ///
 /// ```bash
-/// < infile cat
+/// echo hello | echo world
 /// ```
 int test00(int argc, char *argv[], char *envp[])
 {
 	(void) argc;
 	(void) argv;
-	
+
 	int exit_status;
 
 	t_ast *ast;
@@ -28,39 +27,31 @@ int test00(int argc, char *argv[], char *envp[])
 	t_str_list *l1;
 
 	l0 = NULL;
-	str_list_push(&l0, "cat");
+	str_list_push(&l0, "echo");
+	str_list_push(&l0, "hello");
 
 	l1 = NULL;
-	str_list_push(&l1, "infile");
+	str_list_push(&l1, "grep");
+	str_list_push(&l1, "hel");
+
+	//str_list_push(&l2, "echo");
+	//str_list_push(&l2, "$(ls -la)");
+
+	// test case: echo hello | cat
 
 	ast = &(t_ast) {
 		NULL,
-		&(t_ast) 
-		{
-			NULL,
-			&(t_ast) {
-				NULL,
-				NULL,
-				e_ope_none,
-				l0 // cat
-			},
-			e_ope_none,
-			l1 // infile
-		},
-		e_ope_redirect_i, // `<`
 		NULL,
+		e_ope_none,
+		l0 // echo hello
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exit_status = exec(ast, d);
+	exit_status = exec(ast, &d);
 	printf("exit status (%d)\n", exit_status);
-	return (exit_status);
+	return (0);
 }
 
-
-/// ```bash
-/// make test TEST_FILE=tests/tom_exec_test07.c
-/// ```
 int main(int argc, char *argv[], char *envp[])
 {
 	test00(argc, argv ,envp);
