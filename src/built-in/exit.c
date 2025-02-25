@@ -30,7 +30,7 @@ int built_in_exit(t_str_list *args)
 {
 	char *str;
 
-	if (str_list_len(args) == 0)
+	if (str_list_len(args) == 1)
 	{
 		// exit直前のリソースの解放はOSの仕事
 		// リークではない

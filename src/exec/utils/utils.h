@@ -21,4 +21,7 @@ int exec_heredoc_o_proc(t_exec_args *args);
 
 int paren_proc(t_exec_args *args);
 
+
+int sequential_proc(t_exec_args *args, bool (*f)(int));
+
 #endif

@@ -2,6 +2,7 @@
 
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdio.h>
 
 /// TODO:
 /// リファクタリングをするときは、
@@ -30,12 +31,15 @@ int child_proc_none(int pipe_fd[2], t_exec_args *args)
 int parent_proc_none(int pipe_fd[2], t_exec_args *args, int pid)
 {
 	int status;
+	int exit_status;
 
 	close(pipe_fd[PIPE_WRITE]);// 子プロセスに伝えることはない
 	fd_write(pipe_fd[PIPE_READ], args->output_fd);
 	waitpid(pid, &status, WUNTRACED);
 	close(pipe_fd[PIPE_READ]);
-	return (WEXITSTATUS(status));
+	exit_status = WEXITSTATUS(status);
+	dprintf(STDERR_FILENO ,"exit status [%d]\n", exit_status);
+	return (exit_status);
 }
 
 
