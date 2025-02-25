@@ -30,6 +30,7 @@ BUILD_IN_SRC = \
       src/built-in/export.c\
       src/built-in/pwd.c\
       src/built-in/unset.c\
+      src/built-in/build_in.c\
 
 
 CHAR_LIST = \
@@ -107,7 +108,6 @@ LIST_SRC = \
 EXPAND_STRING_SRC = \
       src/expand_string/utils/in_double_quotation.c\
       src/expand_string/utils/in_single_quotation.c\
-      src/expand_string/utils/is_valid_env_char.c\
       src/expand_string/utils/out_of_quotation.c\
       src/expand_string/utils/push_expand_env.c\
       src/expand_string/utils/push_str_group.c\
@@ -172,8 +172,16 @@ EXEC_SRC=\
       src/exec/utils/exec_redirect_o_proc.c\
       src/exec/utils/exec_heredoc_o_proc.c\
       src/exec/utils/exec_paren_proc.c\
+      src/exec/utils/exec_sequential.c\
       src/exec/heredoc/create_shadow_file.c\
       src/exec/heredoc/heredoc.c\
+
+
+ENVTOOLS_SRC = \
+      src/envtools/is_valid_env_char.c\
+      src/envtools/is_valid_identifier.c\
+      src/envtools/get_key_from_envp_ptr.c\
+      src/envtools/get_value_from_envp_ptr.c\
 
 
 STRTOOLS_SRC = \
@@ -199,8 +207,9 @@ SRC = \
 	$(EXEC_SRC)\
 	$(FOR_TEST_SRC)\
 	$(PARSER_SRC)\
-      $(AST_CHECKER_SRC)\
+	$(AST_CHECKER_SRC)\
 	$(STRTOOLS_SRC)\
+	$(ENVTOOLS_SRC)\
 	$(LOOP_SRC)\
 
 

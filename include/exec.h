@@ -6,7 +6,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 
-#define BUF_SIZE 2
+// #define BUF_SIZE 2
 
 // (パイプを)読む
 #define PIPE_READ 0
@@ -16,14 +16,14 @@
 
 // src/exec/exec.c
 
-int exec(t_ast *ast, t_str_dict *envp_dict);
+int exec(t_ast *ast, t_str_dict **envp_dict);
 
 /// exec2 関数に引数を渡すためだけに使います
 typedef struct s_exec_args t_exec_args;
 struct s_exec_args
 {
 	t_ast *ast; // 抽象構文木
-       	t_str_dict *envp_dict; // 環境変数リスト
+       	t_str_dict **envp_dict; // 環境変数リスト
 	t_str_list *args; // # buffer コマンド リスト
 			  // コマンドを格納するリスト
 			  // bashの不思議な仕様を模倣するためにつけた
@@ -46,6 +46,6 @@ int exec2(t_exec_args *args);
 
 // bool	check_update_arg(t_ast *ast);
 
-int fd_write(int fd);
+int fd_write(int from_fd, int to_fd);
 
 # endif

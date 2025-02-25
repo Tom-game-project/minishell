@@ -10,6 +10,7 @@
 
 // for test 
 #include <stdio.h>
+#include <unistd.h>
 #include "../tests/tom_parser_tools/tools.h"
 
 static t_ast *
@@ -18,10 +19,12 @@ parser_wrap(char *input)
     t_ast *ast;
     ast = NULL;
     if (e_result_paren_not_closed_err == parser(&ast, input))
-        printf("minishell : not close syntax\n");
+    {
+        dprintf(STDERR_FILENO, "minishell : not close syntax\n");
+    }
     else
     {
-        printf("\ninput : %s\n\n", input);
+        dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
         // print_ast(ast, 0); // ast を表示する
     }
     return (ast);
@@ -49,10 +52,9 @@ bool	ast_checker_wrap(t_ast	*ast)
 	}
 }
 
-
 // 返り値はexit status
 int
-exec_shell_cmd(char *str, t_str_dict *env_dict)
+exec_shell_cmd(char *str, t_str_dict **env_dict)
 {
 	t_ast *ast;
 	int exit_status;
@@ -60,11 +62,12 @@ exec_shell_cmd(char *str, t_str_dict *env_dict)
 	ast = parser_wrap(str);
 	if (!ast_checker_wrap(ast))
 	{
-	    clear_ast(&ast);
+		    clear_ast(&ast);
 		return (1); // syntax error occured
 	}
 	exit_status = exec(ast, env_dict);
-    clear_ast(&ast);
+	dprintf(STDERR_FILENO, "exit_status %d\n", exit_status);
+	clear_ast(&ast);
 	return (exit_status);
 }
 
@@ -77,13 +80,13 @@ main_loop(char *envp[])
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp);
 	while (1) {
-		input = readline("minishell> ");
+		input = readline("minishell> "); // 味気ないプロンプトをあとで変更する
 		if (input == NULL)
 			continue;
 		if (*input) {  // 入力が空でない場合
 			add_history(input);  // 入力を履歴に追加
 		}
-		exec_shell_cmd(input, env_dict);
+		exec_shell_cmd(input, &env_dict);
 		free(input);
 	}
 	return (0);

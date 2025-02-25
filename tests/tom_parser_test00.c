@@ -9,8 +9,15 @@
 /// ```
 int main(void)
 {
-    //char *input = ft_strdup("ls -la | grep src | head");
-    char *input = ft_strdup("ls -la | (ls -la | grep src)");
+    // char *input = ft_strdup("ls -la | grep src | head");
+    // char *input = ft_strdup("ls -la | (ls -la | grep src)");
+    // char *input = ft_strdup("cat < infile -e | grep 5");
+    // char *input = ft_strdup("ls -la | cat < infile | grep 5");
+    // 何故かsyntax errorとして処理されるケース
+    // char *input = ft_strdup("< infile (cat)");
+    // char *input = ft_strdup("ls -la | < infile (cat) | cat");
+    //char *input = ft_strdup("< infile cat -e | grep 5");
+    char *input = ft_strdup("< infile cat | grep 5");
     t_ast *ast;
 
     ast = NULL;

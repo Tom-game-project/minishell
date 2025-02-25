@@ -28,7 +28,6 @@
 
 // int minishell(int argc, char *argv[], char *envp[])
 // {
-
 // }
 //
 
@@ -57,7 +56,6 @@ STRINGER(BUILD_TIMESTAMP)")"
 	return (0);
 }
 
-#include <stdio.h>
 int main(int argc, char *argv[], char *envp[])
 {
 	(void) argc;

@@ -15,7 +15,7 @@ int main()
 	if (create_shadow_file(rw_fd) == -1)
 		return (1);
 	write(rw_fd[1], "hello world\n", 12);
-	fd_write(rw_fd[0]);
+	fd_write(rw_fd[0], STDOUT_FILENO);
 	close(rw_fd[1]);
 	close(rw_fd[0]);
 	return (0);

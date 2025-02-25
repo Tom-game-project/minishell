@@ -2,6 +2,8 @@
 #include "list.h"
 #include "dict.h"
 #include "private.h"
+#include "envtools.h"
+
 
 static t_anchor single_quotation_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {

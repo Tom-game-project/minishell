@@ -79,7 +79,7 @@ int test00(int argc, char *argv[], char *envp[])
 	};
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exit_status = exec(ast, d);
+	exit_status = exec(ast, &d);
 	printf("exit status (%d)\n", exit_status);
 	return (0);
 }
