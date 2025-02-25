@@ -54,7 +54,7 @@ bool	ast_checker_wrap(t_ast	*ast)
 
 // 返り値はexit status
 int
-exec_shell_cmd(char *str, t_str_dict *env_dict)
+exec_shell_cmd(char *str, t_str_dict **env_dict)
 {
 	t_ast *ast;
 	int exit_status;
@@ -86,7 +86,7 @@ main_loop(char *envp[])
 		if (*input) {  // 入力が空でない場合
 			add_history(input);  // 入力を履歴に追加
 		}
-		exec_shell_cmd(input, env_dict);
+		exec_shell_cmd(input, &env_dict);
 		free(input);
 	}
 	return (0);

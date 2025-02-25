@@ -1,44 +1,7 @@
 #include "dict.h"
-#include "libft.h"
+#include "envtools.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-/// keyを取得する関数を作る
-static char *get_key_from_envp_ptr(char *str)
-{
-	unsigned int l;
-	char *str_tmp;
-
-	l = 0;
-	str_tmp = str;
-	while (*str != '=')
-	{
-		if (*str == '\0')
-			return (NULL);
-		l++;
-		str++;
-	}
-	return (ft_substr(str_tmp, 0, l));
-}
-
-/// valueを取得する関数を作る
-static char *get_value_from_envp_ptr(char *str)
-{
-	unsigned int s;
-	char *str_tmp;
-
-	s = 0;
-	str_tmp = str;
-	while (*str != '=')
-	{
-		if (*str == '\0')
-			return (NULL);
-		s++;
-		str++;
-	}
-	return (ft_substr(str_tmp, s + 1, ft_strlen(str_tmp) - s - 1));
-}
-
 
 /// envpをstr_dictに変換する関数
 /// 第一引数に渡されたディクショナリに、解釈されたenvpが渡される

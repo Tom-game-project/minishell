@@ -50,7 +50,7 @@ int execve_wrap(t_exec_args *args)
 	/// test 用のprint
 	str_list_dprint(STDERR_FILENO, cmd_list);
 	str_list_clear(&cmd_list, free); // cmd_listの解放
-	env_path_node = get_str_dict_by_key(args->envp_dict, "PATH");
+	env_path_node = get_str_dict_by_key(*args->envp_dict, "PATH");
 	if (env_path_node == NULL) // 環境変数に`PATH`が見つからない
 	{
 		free(cmd);
@@ -80,7 +80,7 @@ int execve_wrap(t_exec_args *args)
 	// get_full_pathはあとから更に機能追加が必要
 	// TODO WARN
 	// fullpathはNULLになって返る可能性がある
-	envp = str_dict_to_envp(args->envp_dict); // 環境変数をexecveに渡せる形に固定する
+	envp = str_dict_to_envp(*args->envp_dict); // 環境変数をexecveに渡せる形に固定する
 	dprintf(STDERR_FILENO, "cmd %s running on pid(%d, -> ppid(%d))\n", fullpath, getpid(), getppid());
 	execve(fullpath, argv, envp);
 	return (1);// ここに到達した場合は不正

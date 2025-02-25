@@ -108,7 +108,6 @@ LIST_SRC = \
 EXPAND_STRING_SRC = \
       src/expand_string/utils/in_double_quotation.c\
       src/expand_string/utils/in_single_quotation.c\
-      src/expand_string/utils/is_valid_env_char.c\
       src/expand_string/utils/out_of_quotation.c\
       src/expand_string/utils/push_expand_env.c\
       src/expand_string/utils/push_str_group.c\
@@ -177,6 +176,13 @@ EXEC_SRC=\
       src/exec/heredoc/heredoc.c\
 
 
+ENVTOOLS_SRC = \
+      src/envtools/is_valid_env_char.c\
+      src/envtools/is_valid_identifier.c\
+      src/envtools/get_key_from_envp_ptr.c\
+      src/envtools/get_value_from_envp_ptr.c\
+
+
 STRTOOLS_SRC = \
      src/strtools/ft_streq.c\
 
@@ -202,6 +208,7 @@ SRC = \
 	$(PARSER_SRC)\
 	$(AST_CHECKER_SRC)\
 	$(STRTOOLS_SRC)\
+	$(ENVTOOLS_SRC)\
 	$(LOOP_SRC)\
 
 

@@ -28,7 +28,7 @@ struct s_list_args
 	t_char_list **str_group;
 };
 
-bool is_valid_env_char(char c);
+// bool is_valid_env_char(char c);
 
 int push_str_group(t_list_args *group_args);
 int push_expand_env(t_list_args *group_args, t_str_dict *dict);

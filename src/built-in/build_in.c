@@ -10,6 +10,12 @@ t_built_in get_built_in_enum(char *cmd)
 		return (e_built_in_pwd);
 	else if (ft_streq(cmd, "cd"))
 		return (e_built_in_cd);
+	else if (ft_streq(cmd, "export"))
+		return (e_built_in_export);
+	else if (ft_streq(cmd, "unset"))
+		return (e_built_in_unset);
+	else if (ft_streq(cmd, "env"))
+		return (e_built_in_env);
 	else
 		return (e_not_built_in);
 }

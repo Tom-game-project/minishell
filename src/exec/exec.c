@@ -15,10 +15,6 @@
 ///     そうすることで、自分が子プロセスか否かを判定できる
 ///
 
-int exec(t_ast *ast, t_str_dict *envp_dict);
-
-int exec2(t_exec_args *args);
-
 // # menu
 //enum    e_operato
 //{
@@ -71,6 +67,8 @@ int exec2(t_exec_args *args)
 		// TODO: built-in関数を判別するためのプログラムをここに追加
 		//
 		t_built_in tbi;
+		if (str_list_len(args->ast->arg) == 0)
+			return (0); // TODO とりあえずsegvを防いでいる
 		tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
 		if (tbi == e_not_built_in)
 		{
@@ -83,6 +81,22 @@ int exec2(t_exec_args *args)
 		else if (tbi == e_built_in_pwd)
 		{
 			return (built_in_pwd());
+		}
+		else if (tbi == e_built_in_env)
+		{
+			return (built_in_env(*(args->envp_dict)));
+		}
+		else if (tbi == e_built_in_cd)
+		{
+			return (built_in_cd(args->ast->arg));
+		}
+		else if (tbi == e_built_in_export)
+		{
+			return (built_in_export(args->ast->arg,  args->envp_dict));
+		}
+		else if (tbi == e_built_in_unset)
+		{
+			return (built_in_unset(args->ast->arg,  args->envp_dict));
 		}
 		else
 		{
@@ -106,7 +120,7 @@ int exec2(t_exec_args *args)
 /// ```
 /// これは文法のエラーになる
 /// 
-int exec(t_ast *ast, t_str_dict *envp_dict)
+int exec(t_ast *ast, t_str_dict **envp_dict)
 {
 	int exit_status;
 	t_str_list *args;
