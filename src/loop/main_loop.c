@@ -80,7 +80,7 @@ main_loop(char *envp[])
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp);
 	while (1) {
-		input = readline("minishell> ");
+		input = readline("minishell> "); // 味気ないプロンプトをあとで変更する
 		if (input == NULL)
 			continue;
 		if (*input) {  // 入力が空でない場合

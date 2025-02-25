@@ -14,6 +14,7 @@ enum e_built_in
 	e_built_in_unset,
 	e_built_in_echo,
 	e_built_in_env,
+	e_built_in_exit,
 	e_not_built_in,
 };
 
@@ -35,6 +36,7 @@ int built_in_export(
 	t_str_dict **envp_dict
 );
 
+int built_in_exit(t_str_list *args);
 
 int built_in_unset(
 	t_str_list *args,

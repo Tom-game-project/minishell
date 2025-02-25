@@ -98,6 +98,10 @@ int exec2(t_exec_args *args)
 		{
 			return (built_in_unset(args->ast->arg,  args->envp_dict));
 		}
+		else if (tbi == e_built_in_exit)
+		{
+			return (built_in_exit(args->ast->arg));
+		}
 		else
 		{
 			// unreachable

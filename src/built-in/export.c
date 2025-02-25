@@ -32,7 +32,11 @@
 /// ```
 
 static
-int set_envp(t_str_dict **envp_dict ,char *key, char *value)
+int set_envp(
+	t_str_dict **envp_dict,
+	char *key,
+       	char *value
+)
 {
 	if (ft_strlen(key) == 0)
 	{
