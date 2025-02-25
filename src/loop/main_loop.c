@@ -66,7 +66,7 @@ exec_shell_cmd(char *str, t_str_dict **env_dict)
 		return (1); // syntax error occured
 	}
 	exit_status = exec(ast, env_dict);
-	dprintf(STDERR_FILENO, "exit_status %d\n", exit_status);
+	//dprintf(STDERR_FILENO, "exit_status %d\n", exit_status);
 	clear_ast(&ast);
 	return (exit_status);
 }
@@ -76,6 +76,7 @@ main_loop(char *envp[])
 {
 	t_str_dict *env_dict;
 	char *input;
+	int exit_status;
 
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp);
@@ -86,8 +87,9 @@ main_loop(char *envp[])
 		if (*input) {  // 入力が空でない場合
 			add_history(input);  // 入力を履歴に追加
 		}
-		exec_shell_cmd(input, &env_dict);
+		exit_status = exec_shell_cmd(input, &env_dict);
 		free(input);
 	}
+	(void) exit_status; //TODO:あとで消す
 	return (0);
 }
