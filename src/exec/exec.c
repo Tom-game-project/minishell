@@ -9,25 +9,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-/// メモ
-///
-/// - 実際に実行を行う関数の引数にはpidを渡してもいいかもしれない
-///     そうすることで、自分が子プロセスか否かを判定できる
-///
-
-// # menu
-//enum    e_operato
-//{
-//	e_ope_none,
-//	e_ope_and,// &&
-//	e_ope_or,// ||
-//	e_ope_redirect_i,// < ファイルを入力
-//	e_ope_redirect_o,// > ファイルを出力
-//	e_ope_heredoc_i,// << here doc
-//	e_ope_heredoc_o,// >> ファイルの末尾に追記
-//	e_ope_pipe// |
-//};
-
 /// exec2 関数に引数を渡すためだけに使います
 /// 試作品２つ目
 ///
@@ -67,6 +48,7 @@ int exec2(t_exec_args *args)
 		// TODO: built-in関数を判別するためのプログラムをここに追加
 		//
 		t_built_in tbi;
+
 		if (str_list_len(args->ast->arg) == 0)
 			return (0); // TODO とりあえずsegvを防いでいる
 		tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
@@ -79,34 +61,20 @@ int exec2(t_exec_args *args)
 			return (exit_status); // TODO exit status を返却するように変更
 		}
 		else if (tbi == e_built_in_pwd)
-		{
 			return (built_in_pwd());
-		}
 		else if (tbi == e_built_in_env)
-		{
 			return (built_in_env(*(args->envp_dict)));
-		}
 		else if (tbi == e_built_in_cd)
-		{
 			return (built_in_cd(args->ast->arg));
-		}
 		else if (tbi == e_built_in_export)
-		{
 			return (built_in_export(args->ast->arg,  args->envp_dict));
-		}
 		else if (tbi == e_built_in_unset)
-		{
 			return (built_in_unset(args->ast->arg,  args->envp_dict));
-		}
 		else if (tbi == e_built_in_exit)
-		{
 			return (built_in_exit(args->ast->arg));
-		}
 		else
-		{
 			// unreachable
 			return (1);
-		}
 	}
 	else
 	{
