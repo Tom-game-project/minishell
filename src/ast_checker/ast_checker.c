@@ -23,6 +23,10 @@ static t_syntax_result	syntax_check(t_ast	*ast)
 {
 	t_syntax_result	check_result;
 
+	check_result = e_syntax_ok;
+	check_result = check_no_input(ast);
+	if (check_result != e_syntax_ok)
+		return (check_result); 
 	check_result = check_ctl_no_element(ast);//隣り合うctlopeの確認
 	if (check_result != e_syntax_ok)
 		return (check_result);
@@ -38,5 +42,5 @@ static t_syntax_result	syntax_check(t_ast	*ast)
 	check_result = check_element(ast);
 	if (check_result != e_syntax_ok)
 		return (check_result);
-	return (e_syntax_ok);
+	return (check_result);
 }

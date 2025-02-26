@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    char *input = ft_strdup("\"e(echo helllo)\"");
+    char *input = ft_strdup("&&");
     t_ast *ast;
     t_syntax_result result;
     ast = NULL;
@@ -20,7 +20,13 @@ int main(void)
     else
     {
         result = ast_checker(ast);
-        if (print_checker_result(result) == true)
+        if (result == e_no_input)
+        {
+            clear_ast(&ast);
+            free(input);
+            return (0);
+        }
+        else if (print_checker_result(result) == true)
         {
             printf("\ninput : %s\n\n", input);
             print_ast(ast, 0);

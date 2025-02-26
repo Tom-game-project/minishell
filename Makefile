@@ -139,7 +139,7 @@ AST_CHECKER_SRC = \
       src/ast_checker/print_checker_result.c\
       src/ast_checker/check_rdt_adjacent.c\
       src/ast_checker/check_element.c\
-
+      src/parser/check_no_input.c\
 
 
 DICT_SRC = \

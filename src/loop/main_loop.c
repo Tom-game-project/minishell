@@ -25,6 +25,8 @@ parser_wrap(char *input)
     if (e_result_paren_not_closed_err == parser(&ast, input))
     {
         dprintf(STDERR_FILENO, "minishell : not close syntax\n");
+		clear_ast(&ast);
+		return (NULL);
     }
     else
     {
@@ -58,21 +60,33 @@ bool	ast_checker_wrap(t_ast	*ast)
 
 // 返り値はexit status
 int
-exec_shell_cmd(char *str, t_str_dict **env_dict)
+exec_shell_cmd(char *str, t_str_dict **env_dict, int pre_exit_status)
 {
 	t_ast *ast;
 	int exit_status;
+	t_syntax_result result;
 
 	ast = parser_wrap(str);
-	if (!ast_checker_wrap(ast))
+	if (ast == NULL)
+		return (1);
+	result = ast_checker(ast);
+	print_checker_result(result);
+	if (result == e_no_input)
 	{
-		    clear_ast(&ast);
+		clear_ast(&ast);
+		return (pre_exit_status);
+	}
+	else if (result != e_syntax_ok)
+	{
+		clear_ast(&ast);
 		return (1); // syntax error occured
 	}
+	else{
 	exit_status = exec(ast, env_dict);
 	//dprintf(STDERR_FILENO, "exit_status %d\n", exit_status);
 	clear_ast(&ast);
 	return (exit_status);
+	}
 }
 
 
@@ -126,7 +140,7 @@ main_loop(char *envp[])
 		if (*input) {  // 入力が空でない場合
 			add_history(input);  // 入力を履歴に追加
 		}
-		exit_status = exec_shell_cmd(input, &env_dict);
+		exit_status = exec_shell_cmd(input, &env_dict, exit_status);
 
 		str_tmp = ft_strdup("?");
 		if (str_dict_add(&env_dict, str_tmp, ft_itoa(exit_status), free))
