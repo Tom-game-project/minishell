@@ -1,5 +1,5 @@
-# include "ast_checker.h"
-# include <stdio.h>
+#include "ast_checker.h"
+#include <stdio.h>
 #include <unistd.h>
 
 /// TODO 書き換える！！！

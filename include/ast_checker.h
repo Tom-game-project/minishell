@@ -42,6 +42,7 @@ t_syntax_result check_pipe_no_arg(t_ast *ast);
 t_syntax_result check_rdt_no_arg(t_ast *ast);
 t_syntax_result check_rdt_no_element(t_ast *ast);
 t_syntax_result check_element(t_ast *ast);
+t_syntax_result	check_adjacent_strings(t_ast *ast);
 
 //print
 bool    print_checker_result(t_syntax_result result);
