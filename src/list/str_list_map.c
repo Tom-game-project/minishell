@@ -35,14 +35,14 @@ t_anytype strip_str_list_func2(
 
 /// t_str_listの各要素に対して、関数fを適用する
 /// 適用する関数の第二引数に常に`str_list_map_arg1`が与えられる
-int str_list_map_arg1(t_str_list **node, char *(*f)(char *,char *), char *str)
+int str_list_map_arg1(t_str_list **node, char *(*f)(char *, void *), void *arg)
 {
 	return (
 		void_list_map_arg1(
 			node,
 			strip_str_list_func2,
 			(t_vv2vfunc) f,
-			(void *) str
+			arg
 		)
 	);
 }

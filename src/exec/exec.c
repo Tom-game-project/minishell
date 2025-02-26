@@ -9,6 +9,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+typedef char *(*sd2cfunc)(char *, void *);
+
+
 /// コマンドが実際に実行される場所
 /// 
 int run_cmd_proc(t_exec_args *args)
@@ -20,11 +23,12 @@ int run_cmd_proc(t_exec_args *args)
 	if (str_list_len(args->ast->arg) == 0)
 		return (0); // TODO とりあえずsegvを防いでいる
 	tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
-	if (tbi == e_not_built_in){
+	/// 環境変数を展開、展開後のリストをastにもう一度格納
+	if (tbi == e_not_built_in) 
 		if (args->ppid == 0)
 			return (execve_wrap(args));
 		else 
-			return (none_proc(args));}
+			return (none_proc(args));
 	else if (tbi == e_built_in_pwd)
 		return (built_in_pwd());
 	else if (tbi == e_built_in_env)
