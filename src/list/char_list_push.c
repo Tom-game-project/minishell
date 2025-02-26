@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   char_list_push.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 17:18:59 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/02/26 17:19:28 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include <stdlib.h>
 #include "char_list.h"
@@ -10,19 +22,20 @@
  * @param i32_data 
  * @return
  */
-int char_list_push(t_char_list **node, char c)
+int	char_list_push(t_char_list **node, char c)
 {
-	t_anytype elem;
+	t_anytype	elem;
+
 	elem.c = c;
 	return (void_list_push(node, elem));
 }
 
 /// char *をstringとして追加する関数
-int char_list_push_str(t_char_list **node, char *str)
+int	char_list_push_str(t_char_list **node, char *str)
 {	
 	while (*str != '\0')
 	{
-		if (char_list_push(node, *str) == 1)// err
+		if (char_list_push(node, *str) == 1)
 			return (1);
 		str++;
 	}

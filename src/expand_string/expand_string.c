@@ -30,7 +30,7 @@
 /// ```
 /// return new_string
 
-t_str_list *expand_string(char *str, t_str_dict *env_dicts)
+t_str_list *expand_string2list(char *str, t_str_dict *env_dicts)
 {
 	t_anchor anc;
 	t_char_list *path_group;
@@ -62,6 +62,18 @@ t_str_list *expand_string(char *str, t_str_dict *env_dicts)
 	return (rlist);
 }
 
+/// 環境変数展開済みの文字列が返却される
+char *expand_string(char *str, t_str_dict *env_dicts)
+{
+	t_str_list *lst;
+	char *rstr;
+
+	lst = expand_string2list(str, env_dicts);
+	rstr = str_list_join(lst, "");
+	str_list_clear(&lst, free);
+	return (rstr);
+}
+
 /// 文字列の展開
 /// 環境変数を展開する
 /// example
@@ -78,3 +90,7 @@ t_str_list *expand_string(char *str, t_str_dict *env_dicts)
 //	// get_str_dict_by_key();
 //	return ();
 //}
+
+
+/// minishellでは、$?を、環境変数として扱う
+/// env内に入る

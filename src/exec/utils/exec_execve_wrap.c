@@ -12,22 +12,6 @@
 
 /// 実行に必要なコマンド列を、生成する
 /// 全く新しい領域が確保されるので、返り値は解放が必要
-t_str_list *assemble_cmd_list(t_exec_args *args)
-{
-	t_str_list *rl;
-
-	rl = NULL;
-	str_list_concat(
-		&rl,
-		str_list_clone(args->args, ft_strdup) // 溜まったコマンド
-	 );
-	if (args->ast != NULL)
-		str_list_concat(
-			&rl,
-			str_list_clone(args->ast->arg, ft_strdup) // 一番最新のコマンド
-	);
-	return (rl);
-}
 
 /// 扱いやすい引数を渡すことで実行できるexecve
 /// この関数では以下の処理を行う
@@ -41,15 +25,11 @@ int execve_wrap(t_exec_args *args)
 	char **argv;
 	char **envp;
 	t_str_dict *env_path_node;
-	t_str_list *cmd_list;
 
-	cmd_list = assemble_cmd_list(args);
-	cmd = ft_strdup(str_list_get_elem(cmd_list, 0)); // 0番目の要素を取り出す
-
-	argv = str_list_to_array(cmd_list);
+	cmd = ft_strdup(str_list_get_elem(args->ast->arg, 0)); // 0番目の要素を取り出す
+	argv = str_list_to_array(args->ast->arg);
 	/// test 用のprint
-	str_list_dprint(STDERR_FILENO, cmd_list);
-	str_list_clear(&cmd_list, free); // cmd_listの解放
+	//str_list_dprint(STDERR_FILENO, args->ast->arg);
 	env_path_node = get_str_dict_by_key(*args->envp_dict, "PATH");
 	if (env_path_node == NULL) // 環境変数に`PATH`が見つからない
 	{

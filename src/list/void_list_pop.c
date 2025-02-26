@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   void_list_pop.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 17:47:21 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/02/26 17:47:28 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include "str_list.h"
 #include <stdlib.h>
@@ -46,7 +58,7 @@ static t_void_list	*pop_index_elem(t_void_list **node_p_p, int index)
 ///
 /// `0`  : 正常に終了し、rvalueに適切な値がセットされている
 /// `-1` : 範囲外アクセスなど、エラーを起こした
-int void_list_pop(t_void_list **node, int index, t_anytype *rvalue)
+int	void_list_pop(t_void_list **node, int index, t_anytype *rvalue)
 {
 	t_void_list	*head_p;
 
