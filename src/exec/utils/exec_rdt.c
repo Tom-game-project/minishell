@@ -1,7 +1,6 @@
 #include "list.h"
 #include "parser.h"
 #include "exec.h"
-#include "libft.h"
 #include "utils.h"
 
 #include <fcntl.h>
@@ -33,6 +32,7 @@ int exec_rdt_proc(
 	if (fd == -1)
 	{
 		perror("minishell"); // TODO
+		return (1);
 	}
 	inner_exec(args, fd);
 	//close(fd);
