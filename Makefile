@@ -137,6 +137,7 @@ AST_CHECKER_SRC = \
       src/ast_checker/check_rdt_no_arg.c\
       src/ast_checker/check_pipe_no_arg.c\
       src/ast_checker/print_checker_result.c\
+      src/ast_checker/check_rdt_adjacent.c\
 
 
 DICT_SRC = \

@@ -22,6 +22,7 @@ enum e_syntax_result
 	e_rdt_near_unexpected_token_rdt_out,
 	e_rdt_near_unexpected_token_heardoc_in,
 	e_rdt_near_unexpected_token_heardoc_out,
+	e_rdt_near_unexpected_token_rdt,
 	e_ctl_no_element_left_and_right,
 	e_ctl_no_element_left_and_left,
 	e_rdt_no_element_left_and_right,
@@ -38,6 +39,7 @@ bool is_enum_rdtope(t_operator ope);
 t_syntax_result check_ctl_no_element(t_ast *ast);
 t_syntax_result check_pipe_no_arg(t_ast *ast);
 t_syntax_result check_rdt_no_arg(t_ast *ast);
+t_syntax_result check_rdt_no_element(t_ast *ast);
 
 //print
 bool    print_checker_result(t_syntax_result result);
