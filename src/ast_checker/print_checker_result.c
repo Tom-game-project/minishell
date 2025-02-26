@@ -5,10 +5,8 @@
 /// TODO 書き換える！！！
 bool    print_checker_result(t_syntax_result result)
 {
-    if (result == e_syntax_ok){
-        dprintf(STDERR_FILENO, "np");
+    if (result == e_syntax_ok)
         return (true);
-    }
     else if (result == e_ctl_near_unexpected_token_and)
         dprintf(STDERR_FILENO, "minishell : near_unexpected_token_and\n");
     else if (result == e_ctl_near_unexpected_token_or)

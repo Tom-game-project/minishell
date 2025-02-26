@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    char *input = ft_strdup("cat < infile -e |  < infile cat -e");
+    char *input = ft_strdup("echo e(helllo)");
     t_ast *ast;
     t_syntax_result result;
     ast = NULL;

@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 
-static char *spc_extract_operands(char *input);
 static void	store_head_element(t_ast	*ast, char **input);
 t_parse_result	parse_paren(t_ast *ast, char **input);
 
@@ -25,42 +24,51 @@ t_parse_result   separate_and_store_cmd_args(t_ast *ast, char	**input)
 	return (result);
 }
 
-char *search_delimiter(char *input)
-{
-	char *head_element;
+// char *search_delimiter(char *input)
+// {
+// 	char *head_element;
 
-	if (input[0] == '"')
-		head_element = ft_substr(input, 0, find_syntax(input));
-	else if (input[0] == '\'')
-		head_element = ft_substr(input, 0, find_syntax(input));
-	else if (ft_strncmp(input,"$(", 2) == 0)
-		head_element = ft_substr(input, 0, find_syntax(input));
-	else if (input[0] == '(')
-		head_element = ft_substr(input, 0, find_syntax(input));
-	else
-		head_element = spc_extract_operands(input);
-	if (head_element[0] == '\0')
+// 	if (input[0] == '"')
+// 		head_element = ft_substr(input, 0, find_syntax(input));
+// 	else if (input[0] == '\'')
+// 		head_element = ft_substr(input, 0, find_syntax(input));
+// 	else if (ft_strncmp(input,"$(", 2) == 0)
+// 		head_element = ft_substr(input, 0, find_syntax(input));
+// 	else if (input[0] == '(')
+// 		head_element = ft_substr(input, 0, find_syntax(input));
+// 	else
+// 		head_element = spc_extract_operands(input);
+// 	if (head_element[0] == '\0')
+// 	{
+// 		free(head_element);
+// 		return (NULL);
+// 	}
+// 	return (head_element);
+// }
+
+char *spc_extract_operands(char *input)//spcの前に文字列文字が来たらそれで区切りたい
+{
+	int		head;
+	int		tmp;
+	char	*head_element;
+
+	head = 0;
+	while (!ft_isspace(*(input + head)) && *(input + head) != '\0')
+	{
+		tmp = find_syntax(input + head);
+		if (tmp < 0)
+			return (NULL);
+		else if (tmp > 0)
+			head += tmp;
+		else
+			head++;
+	}
+    head_element = ft_substr(input, 0, head);
+	if (*head_element == '\0')
 	{
 		free(head_element);
 		return (NULL);
 	}
-	return (head_element);
-}
-
-static char *spc_extract_operands(char *input)//spcの前に文字列文字が来たらそれで区切りたい
-{
-	size_t	len;
-	size_t	start;
-	char	*head_element;
-
-    start = 0;
-    while (input[start] != '\0' && ft_isspace(input[start]))
-        start++;
-    len = start;
-    while (input[len] != '\0' && !ft_isspace(input[len]) && !is_string(input + len))
-        len++;
-    len = len - start;
-    head_element = ft_substr(input, start, len);
 	return (head_element);
 }
 
@@ -75,7 +83,7 @@ static void	store_head_element(t_ast	*ast, char **input)
 		free(after_trim);
 		return ;
 	}
-	head_element = search_delimiter(after_trim);
+	head_element = spc_extract_operands(after_trim);
 	update_input(input, head_element);
 	str_list_push(&ast->arg, ft_strdup(head_element));
 	free(after_trim);
@@ -92,7 +100,7 @@ t_parse_result	parse_paren(t_ast *ast, char **input)
 	char	*paren_input;
 
 	after_trim = trim_isspc(*input);
-	head_element = search_delimiter(after_trim);
+	head_element = spc_extract_operands(after_trim);
 	paren_input = ft_substr(after_trim, 1, find_syntax(after_trim) - 2);
 	update_input(input, head_element);
 	ast->ope = e_ope_paren;
