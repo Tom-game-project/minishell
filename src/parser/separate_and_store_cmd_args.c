@@ -1,5 +1,4 @@
 
-#include "ast_checker.h"
 #include "parser.h"
 #include "list.h"
 #include "libft.h"
@@ -102,12 +101,14 @@ t_parse_result	parse_paren(t_ast *ast, char **input)
 	after_trim = trim_isspc(*input);
 	head_element = spc_extract_operands(after_trim);
 	paren_input = ft_substr(after_trim, 1, find_syntax(after_trim) - 2);
+	free(after_trim);
+	free(head_element);
+	head_element = ft_substr(after_trim, 0, find_syntax(after_trim));
 	update_input(input, head_element);
 	ast->ope = e_ope_paren;
 	result = parser(&ast->left_ast, paren_input);//エラーを伝達
 	if (result == e_result_ok)
 		result = parser(&ast->right_ast,*input);
-	free(after_trim);
 	free(head_element);
 	free(paren_input);
 	return (result);
