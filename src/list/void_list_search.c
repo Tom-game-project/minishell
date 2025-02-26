@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   void_list_search.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 17:48:09 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/02/26 17:55:19 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,13 +20,13 @@
 /// - err(-1)
 /// - ok(0)
 /// 検索の結果はrvalueに格納される
-int void_list_search(
-	t_void_list *node,
-       	bool (*func)(
+int	void_list_search(
+	t_void_list *node, \
+	bool (*func)(
 		t_anytype,
-		bool (*g)(void *)), 
+		bool (*g)(void *)), \
 	bool (*f)(void *),
-       	t_anytype *rvalue
+	t_anytype *rvalue
 )
 {
 	while (node != NULL)
@@ -35,15 +47,15 @@ int void_list_search(
 /// 返り値
 /// - not found (-1)
 /// - index(n >= 0)
-int void_list_search_index(
-	t_void_list *node, 
+int	void_list_search_index(
+	t_void_list *node, \
 	bool (*func)(
 		t_anytype,
-		bool (*g)(void *)),
-       	bool (*f)(void *)
+		bool (*g)(void *)), \
+	bool (*f)(void *)
 )
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (node != NULL)
@@ -63,17 +75,17 @@ int void_list_search_index(
 /// 返り値
 /// - not found (-1)
 /// - index(n >= 0)
-int void_list_search2_index(
+int	void_list_search2_index(
 	t_void_list *node,
 	bool (*func)(
-		t_anytype, 
-		bool (*g)(void *, void *), 
-		void *), 
+		t_anytype, \
+		bool (*g)(void *, void *), \
+		void *), \
 	bool (*f)(void *, void *),
 	void *str
 )
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (node != NULL)
@@ -82,7 +94,7 @@ int void_list_search2_index(
 			func(
 				node->ptr,
 				f,
-			       	str
+				str
 			)
 		)
 			return (i);
@@ -91,4 +103,3 @@ int void_list_search2_index(
 	}
 	return (-1);
 }
-

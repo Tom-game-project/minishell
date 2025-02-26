@@ -176,6 +176,7 @@ EXEC_SRC=\
       src/exec/utils/exec_heredoc_o_proc.c\
       src/exec/utils/exec_paren_proc.c\
       src/exec/utils/exec_sequential.c\
+      src/exec/utils/exec_rdt.c\
       src/exec/heredoc/create_shadow_file.c\
       src/exec/heredoc/heredoc.c\
 

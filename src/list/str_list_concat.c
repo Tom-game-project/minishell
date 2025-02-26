@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_list_concat.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 17:25:46 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/02/26 17:25:47 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include "list.h"
 #include "str_list.h"
@@ -23,7 +35,7 @@
 /// concatを実行したあと、もともと`b`に入っていたコンテンツは
 /// `a`からも`b`からもアクセスできる状態にあり、二重freeのリスクがある
 /// 基本的に、この関数を実行したあとは、`b`の使用を避けるべきである
-int str_list_concat(t_str_list **a, t_str_list *b)
+int	str_list_concat(t_str_list **a, t_str_list *b)
 {
 	return (void_list_concat(a, b));
 }

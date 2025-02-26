@@ -38,7 +38,6 @@ int parent_proc_none(int pipe_fd[2], t_exec_args *args, int pid)
 	waitpid(pid, &status, WUNTRACED);
 	close(pipe_fd[PIPE_READ]);
 	exit_status = WEXITSTATUS(status);
-	dprintf(STDERR_FILENO ,"exit status [%d]\n", exit_status);
 	return (exit_status);
 }
 

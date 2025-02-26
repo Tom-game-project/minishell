@@ -1,14 +1,26 @@
-#ifndef void_list_h
-#define void_list_h
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   void_list.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 17:49:29 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/02/26 17:50:01 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdbool.h>
+#ifndef VOID_LIST_H
+# define VOID_LIST_H
 
-typedef void *(*t_v2vfunc)(void *);
+# include <stdbool.h>
 
-typedef void *(*t_vv2vfunc)(void *, void *);
+typedef void	*(*t_v2vfunc)(void *);
 
-typedef bool (*t_v2bfunc)(void *);
+typedef void	*(*t_vv2vfunc)(void *, void *);
 
-typedef bool (*t_vv2bfunc)(void *, void *);
+typedef bool	(*t_v2bfunc)(void *);
+
+typedef bool	(*t_vv2bfunc)(void *, void *);
 
 #endif

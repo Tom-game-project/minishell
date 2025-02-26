@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_list_join.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 17:27:59 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/02/26 17:56:18 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "list.h"
 #include "str_list.h"
@@ -7,10 +19,9 @@
 
 #include "str_list.h"
 
-
 /// 文字列をコピーしていく関数
 /// 危険な関数なので外部から呼び出して使用しない
-static char *unsafe_copy_string(char **target, char *str)
+static char	*unsafe_copy_string(char **target, char *str)
 {
 	while (*str != '\0')
 	{
@@ -29,16 +40,16 @@ static char *unsafe_copy_string(char **target, char *str)
 /// -----------------------------------------------
 /// return char *:"word1(^_^)word2(^_^)word3"
 /// ```
-char *str_list_join(t_str_list *node, char *sep)
+char	*str_list_join(t_str_list *node, char *sep)
 {
-	char *str;
-	char *str_tmp;
+	char	*str;
+	char	*str_tmp;
 
 	str = (char *) malloc(\
-		sizeof(char) * (
-			str_list_len_sum(node) +\
-			(str_list_len(node) - 1) * ft_strlen(sep)\
-			+ 1));
+		sizeof(char) * (\
+		str_list_len_sum(node) + \
+		(str_list_len(node) - 1) * ft_strlen(sep) \
+		+ 1));
 	str_tmp = str;
 	while (node != NULL)
 	{

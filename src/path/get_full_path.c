@@ -5,14 +5,14 @@
 #include "libft.h"
 
 /// コマンドとパスをくっつけて、フルパスを作る
-static char *join_path_and_free_func(char *a, char *b)
+static char *join_path_and_free_func(char *a, void *b)
 {
 	char *rstr;
 	char *tmp;
 
 	tmp = ft_strjoin(a, "/");
 	free(a);
-	rstr = ft_strjoin(tmp, b);
+	rstr = ft_strjoin(tmp, (char *) b);
 	free(tmp);
 	return (rstr);
 }

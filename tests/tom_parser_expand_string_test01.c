@@ -4,7 +4,6 @@
 
 #include "expand_string.h"
 
-#include "list.h"
 #include "dict.h"
 
 ///
@@ -14,7 +13,7 @@
 /// ```
 int main()
 {
-	t_str_list *s;
+	char *rstr;
 	t_str_dict *d;
 
 	//char *str = "aaa$HELLO'$WORLD'$HELLOaaa|aaa";
@@ -44,13 +43,13 @@ int main()
 	);
 	// str_dict_add();
 	//s = expand_string("\"  $PATH  \"\"   hello  \"" , NULL);
-	s = expand_string2list(
+	rstr = expand_string(
 		str,
 		d
 	);
 	printf("test case [%s]\n", str);
-	str_list_print(s);
-	str_list_clear(&s, free);
+	printf("%s\n", rstr);
+	free(rstr);
 	str_dict_clear(&d, free, free);
 	//printf("hello world\n");
 	return (0);
