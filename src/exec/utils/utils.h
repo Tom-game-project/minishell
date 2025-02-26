@@ -24,4 +24,12 @@ int paren_proc(t_exec_args *args);
 
 int sequential_proc(t_exec_args *args, bool (*f)(int));
 
+int exec_rdt_proc(
+	t_exec_args *args,
+	void (*close_fd)(t_exec_args *), // close
+	int (*open_func)(char *),// open
+	int (*inner_exec)(t_exec_args *, int) //
+			// args        , fd
+);
+
 #endif

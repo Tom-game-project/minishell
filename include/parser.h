@@ -1,11 +1,8 @@
 # ifndef PARSER_H
 #define PARSER_H
 #include "list.h"
-#include "dict.h"
 # include <unistd.h>
 # include <stdbool.h>
-
-t_str_list *expand_string(char *str, t_str_dict *env_dicts);
 
 typedef enum    e_operator t_operator;
 

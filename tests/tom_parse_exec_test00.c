@@ -43,7 +43,8 @@ int main(int argc, char *argv[], char *envp[])
 	//ast = parser_wrap("ls -la | (ls -la | grep src)");
 	//ast = parser_wrap("sleep 10 | true && echo hello");
 	//ast = parser_wrap("< minishell cat | xxd | tail");
-	ast = parser_wrap("export aaaa=hello");
+	//ast = parser_wrap("< infile cat | grep 5");
+	ast = parser_wrap("echo $PATH");
 	exec(ast, &d);
         clear_ast(&ast);
 	str_dict_clear(&d, free, free);

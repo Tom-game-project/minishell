@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_list_cut.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 17:25:54 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/02/26 17:26:02 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 
 /// リストを任意のindexでに分割する関数
@@ -17,8 +29,7 @@
 /// &lst = [3] -> ...
 ///
 /// return [0] -> [1] -> [2] -> NULL
-t_str_list *
-str_list_cut(t_str_list **node, int index)
+t_str_list	*str_list_cut(t_str_list **node, int index)
 {
 	return (void_list_cut(node, index));
 }

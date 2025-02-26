@@ -24,11 +24,15 @@
 int push_expand_env(t_list_args *group_args, t_str_dict *dict)
 {
 	t_str_dict *r;
+	char *str;
 
 	if (!char_list_is_empty(*group_args->path_group)) // 空じゃないとき
 	{
 		char_list_pop(group_args->path_group, 0); // `$`を取り除く
-		r = get_str_dict_by_key(dict, char_list_to_str(*group_args->path_group));
+		str =  char_list_to_str(*group_args->path_group);
+
+		r = get_str_dict_by_key(dict, str);
+		free(str);
 		if (r == NULL)
 		{
 		}

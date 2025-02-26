@@ -98,7 +98,7 @@ int str_list_search_index(t_str_list *node, bool (*f)(char *));
 
 t_str_list *str_list_search_node(t_str_list *node, bool (*f)(char *, char *), char *str);
 
-int str_list_map_arg1(t_str_list **node, char *(*f)(char *,char *), char *str);
+int str_list_map_arg1(t_str_list **node, char *(*f)(char *, void *), void *arg);
 
 char *str_list_get_elem(t_str_list *node, int index);
 
