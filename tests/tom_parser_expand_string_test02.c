@@ -7,8 +7,9 @@
 #include "list.h"
 #include "dict.h"
 
-typedef char *(*sd2cfunc)(char *, void *);
+typedef char *(*sd2sfunc)(char *, void *);
 
+static
 char *
 expand_string_wrap_str_free(char *str, t_str_dict *d)
 {
@@ -19,11 +20,10 @@ expand_string_wrap_str_free(char *str, t_str_dict *d)
 	return (rstr);
 }
 
-
 ///
 ///
 /// ```
-/// make vtest TEST_FILE=tests/tom_parser_expand_string_test01.c
+/// make vtest TEST_FILE=tests/tom_parser_expand_string_test02.c
 /// ```
 int main()
 {
@@ -36,6 +36,10 @@ int main()
 	str_list_push(&args, ft_strdup("---\"\"\"'$HELLO'\"\"\"---"));
 	str_list_push(&args, ft_strdup("???$HELLO$$?$?HELLO$?$WO"));
 	str_list_push(&args, ft_strdup("$$$$"));
+	str_list_push(&args, ft_strdup("$PATH"));
+	str_list_push(&args, ft_strdup("\"hello\"$PATH"));
+	str_list_push(&args, ft_strdup("\"hello\"\"world\""));
+
 
 	d = NULL;
 	// 環境変数を模したもの
@@ -53,12 +57,19 @@ int main()
 	);
 	str_dict_add(
 		&d,
+		ft_strdup("PATH"),
+		ft_strdup("hello this is path"), 
+		free
+	);
+	str_dict_add(
+		&d,
 		ft_strdup("?"),
 		ft_strdup("EXIT STATUS"), 
 		free
 	);
 
-	str_list_map_arg1(&args, (sd2cfunc) expand_string_wrap_str_free, d);
+	str_dict_print(d);
+	str_list_map_arg1(&args, (sd2sfunc) expand_string_wrap_str_free, d);
 	str_dict_clear(&d, free, free);
 	str_list_print(args);
 	str_list_clear(&args, free);

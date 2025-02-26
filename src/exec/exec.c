@@ -4,13 +4,24 @@
 #include "parser.h"
 #include "utils/utils.h"
 #include "exec.h"
+#include "expand_string.h"
+
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
 
-typedef char *(*sd2cfunc)(char *, void *);
+typedef char *(*sd2sfunc)(char *, void *);
 
+char *
+expand_string_wrap_str_free(char *str, t_str_dict *d)
+{
+	char *rstr;
+
+	rstr = expand_string(str, d);
+	free(str);
+	return (rstr);
+}
 
 /// コマンドが実際に実行される場所
 /// 
@@ -22,8 +33,13 @@ int run_cmd_proc(t_exec_args *args)
 
 	if (str_list_len(args->ast->arg) == 0)
 		return (0); // TODO とりあえずsegvを防いでいる
-	tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
 	/// 環境変数を展開、展開後のリストをastにもう一度格納
+
+	str_list_map_arg1(
+		&(args->ast->arg),
+		(sd2sfunc) expand_string_wrap_str_free,
+		*args->envp_dict);
+	tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
 	if (tbi == e_not_built_in) 
 		if (args->ppid == 0)
 			return (execve_wrap(args));
@@ -58,7 +74,6 @@ int run_cmd_proc(t_exec_args *args)
 int exec2(t_exec_args *args)
 {
 	str_list_dprint(STDERR_FILENO, args->ast->arg);
-	// dprintf(STDERR_FILENO, "^ppid %d, pid %d\n", getppid(), getpid());
 	if (args->ast->ope == e_ope_pipe) // |
 		return (pipe_proc(args));
 	else if (args->ast->ope == e_ope_and) // &&
@@ -72,14 +87,10 @@ int exec2(t_exec_args *args)
 	else if (args->ast->ope == e_ope_heredoc_o) // >>
 		return (exec_heredoc_o_proc(args));
 	else if (args->ast->ope == e_ope_paren)
-	{
-		// TODO: 子プロセスを生成する
-		paren_proc(args);
-		return (0);
-	}
+		return (paren_proc(args));
 	else if (args->ast->ope == e_ope_none) // 普通のコマンド
 		return (run_cmd_proc(args));
-	else
+	else // unreachable
 	{
 		dprintf(STDERR_FILENO, "unexpected ope!\n");
 		return (1); // exit status を返すように変更
