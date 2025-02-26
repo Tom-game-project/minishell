@@ -29,7 +29,13 @@ static t_syntax_result	syntax_check(t_ast	*ast)
 	check_result = check_pipe_no_arg(ast);//pipeが左右に要素を持っているかの確認
 	if (check_result != e_syntax_ok)
 		return (check_result);
-	check_result = check_rdt_no_arg(ast);//隣り合うrdtopeの確認
+	check_result = check_rdt_no_arg(ast);//rdt文字が引数を持たないとき
+	if (check_result != e_syntax_ok)
+		return (check_result);
+	check_result = check_rdt_no_element(ast);//隣り合うrdtopeの確認(引数にrdt文字を持つとき)
+	if (check_result != e_syntax_ok)
+		return (check_result);
+	check_result = check_element(ast);
 	if (check_result != e_syntax_ok)
 		return (check_result);
 	return (e_syntax_ok);

@@ -3,9 +3,7 @@
 
 bool is_enum_rdtope(t_operator ope)
 {
-    if (ope == e_ope_pipe)
-        return (true);
-    else if (ope == e_ope_redirect_i)
+    if (ope == e_ope_redirect_i)
         return (true);
     else if (ope == e_ope_redirect_o)
         return (true);

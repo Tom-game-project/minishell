@@ -123,7 +123,7 @@ static void	store_rdtarg(t_ast *ast, char **input)
 	char	*after_trim;
 
 	after_trim = trim_isspc(*input);
-	head_element = search_delimiter(after_trim);
+	head_element = spc_extract_operands(after_trim);
 	str_list_push(&ast->arg, head_element);
 	update_input(input, head_element);
 	free(after_trim);
