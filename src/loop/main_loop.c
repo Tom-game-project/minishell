@@ -85,19 +85,11 @@ char *prompt(int exit_status)
 
 	exit_str = ft_itoa(exit_status);
 	rstr_list = NULL;
-	if (getcwd(buf, PATH_MAX) == NULL)
-	{
-		char_list_push_str(&rstr_list, " [");
-		char_list_push_str(&rstr_list, exit_str);
-		char_list_push(&rstr_list, ']');
-	}
-	else
-	{
+	if (getcwd(buf, PATH_MAX) != NULL)
 		char_list_push_str(&rstr_list, buf);
-		char_list_push_str(&rstr_list, " [");
-		char_list_push_str(&rstr_list, exit_str);
-		char_list_push(&rstr_list, ']');
-	}
+	char_list_push_str(&rstr_list, " [");
+	char_list_push_str(&rstr_list, exit_str);
+	char_list_push(&rstr_list, ']');
 	char_list_push_str(&rstr_list, "> ");
 	rstr = char_list_to_str(rstr_list);
 	char_list_clear(&rstr_list);
@@ -127,7 +119,7 @@ main_loop(char *envp[])
 		char *prompt_str;
 
 		prompt_str = prompt(exit_status);
-		input = readline(prompt_str); // 味気ないプロンプトをあとで変更する
+		input = readline(prompt_str);
 		free(prompt_str);
 		if (input == NULL)
 			continue;
@@ -149,6 +141,5 @@ main_loop(char *envp[])
 		free(input);
 	}
 	str_dict_clear(&env_dict, free, free);
-	(void) exit_status; //TODO:あとで消す
 	return (0);
 }
