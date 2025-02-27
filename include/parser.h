@@ -1,8 +1,6 @@
 # ifndef PARSER_H
 #define PARSER_H
 #include "list.h"
-# include <unistd.h>
-# include <stdbool.h>
 
 typedef enum    e_operator t_operator;
 
@@ -37,9 +35,11 @@ enum e_parse_result
 	e_result_paren_not_closed_err,
 };
 
+
 //parser.c
 t_parse_result	parser(t_ast **ast, char *input);
 
+bool parser_wrap2(t_ast **ast, char *input);
 //allocation_ast.c
 t_ast  *allocation_ast(void);
 
@@ -77,7 +77,7 @@ int    	str_rdt_len(char *str);
 
 void clear_ast(t_ast **ast);
 
-t_parse_result syntax_checker(char *input);
+bool syntax_checker(char *input);
 
 bool    checker_str_pipe(char *str);
 

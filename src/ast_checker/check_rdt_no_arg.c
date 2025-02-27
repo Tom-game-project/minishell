@@ -1,5 +1,7 @@
 # include "ast_checker.h"
 # include "parser.h"
+#include <unistd.h>
+
 
 t_syntax_result check_rdt_no_arg(t_ast *ast)
 {

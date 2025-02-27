@@ -5,17 +5,15 @@
 
 t_parse_result	parser(t_ast **ast, char *input)
 {
-	t_parse_result	result;
 	char			*str;
 	t_str_list		*next_input;
 	t_str_list		*head;
+	t_parse_result	result;
 
-	result = e_result_ok;
 	if (input == NULL)
-		return (result);
-	result = syntax_checker(input);
-	if (result == e_result_paren_not_closed_err)
-		return (result);
+		return (e_result_ok);
+	if (syntax_checker(input) == false)
+		return (e_result_paren_not_closed_err);
 	str = ft_strdup(input);
 	*ast = allocation_ast();
 	//別関数へ
@@ -34,15 +32,12 @@ t_parse_result	parser(t_ast **ast, char *input)
 	//
 	head = next_input;
 	result = parser(&((*ast)->left_ast), head->ptr.str);
-	if (result != e_result_ok)
+	if (result == e_result_ok)
 	{
-		free(str);
-		str_list_clear(&next_input, free);
-		return (result);
+		if (next_input->next != NULL)
+			head = next_input->next;
+		result = parser(&((*ast)->right_ast), head->ptr.str);
 	}
-	if (next_input->next != NULL)//sonoutibetukannsuudecheck
-		head = next_input->next;
-	result = parser(&((*ast)->right_ast), head->ptr.str);
 	free(str);
 	str_list_clear(&next_input, free);
 	return (result);

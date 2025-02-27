@@ -1,6 +1,7 @@
 #include "ast_checker.h"
-#include "list.h"
 #include "parser.h"
+#include "list.h"
+#include <unistd.h>
 
 t_syntax_result check_element(t_ast *ast)
 {
