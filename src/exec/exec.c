@@ -121,7 +121,7 @@ int exec(t_ast *ast, t_str_dict **envp_dict)
 		&(t_exec_args){
 			ast, 
 			envp_dict,
-			heredoc_fd_list,
+			&heredoc_fd_list,
 			STDIN_FILENO,
 			STDOUT_FILENO,
 			-1

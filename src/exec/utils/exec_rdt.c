@@ -49,7 +49,7 @@ int exec_rdt_proc_heredoc(
 	int fd;
 
 	close_fd(args);
-	fd = int_list_pop(&(args->heredoc_fd_list), 0);
+	fd = int_list_pop(args->heredoc_fd_list, 0);
 	if (fd == -1)
 	{
 		perror("minishell"); // TODO

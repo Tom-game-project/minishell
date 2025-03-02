@@ -28,9 +28,9 @@ int heredoc_proc(t_ast *ast, t_int_list **heredoc_fd_list)
 		int_list_push(heredoc_fd_list, rw_fd[0]);
 	}
 	if (ast->left_ast != NULL)
-		return (heredoc_proc(ast->left_ast, heredoc_fd_list));
+		heredoc_proc(ast->left_ast, heredoc_fd_list);
 	if (ast->right_ast != NULL)
-		return (heredoc_proc(ast->right_ast, heredoc_fd_list));
+		heredoc_proc(ast->right_ast, heredoc_fd_list);
 	return (0);
 }
 

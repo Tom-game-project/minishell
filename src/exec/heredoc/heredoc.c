@@ -1,6 +1,7 @@
 #include "list.h"
 #include "libft.h"
 #include "strtools.h"
+#include "parser.h"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -69,5 +70,20 @@ int read_heredocline(char *eof, int fd)
 	str_list_clear(&lst, free);
 	free(str);
 	return (0);
+}
+
+int
+count_heredoc(t_ast *ast)
+{
+	int count;
+
+	count = 0;
+	if (ast == NULL)
+		return (count);
+	if (ast->ope == e_ope_heredoc_i)
+		count += 1;
+	count += count_heredoc(ast->left_ast);
+	count += count_heredoc(ast->right_ast);
+	return (count);
 }
 

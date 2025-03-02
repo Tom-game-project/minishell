@@ -49,7 +49,16 @@ int heredoc_test()
 	t_int_list *heredoc_fd_list;
 	t_ast *ast;
 
-	ast = parser_wrap("<< EOF1 << EOF2");
+	//ast = parser_wrap("<< EOF1 cat && (<< EOF2 cat) && << EOF3 cat");
+	ast = parser_wrap("<< EOF1 << EOF2 && (<< EOF3)");
+
+
+	int heredoc_count;
+
+	heredoc_count = count_heredoc(ast);
+	printf("heredoc_count %d\n", heredoc_count);
+
+
 	heredoc_fd_list = NULL;
 	heredoc_proc(ast, &heredoc_fd_list);
 

@@ -13,4 +13,7 @@ int heredoc_proc(t_ast *ast, t_int_list **heredoc_fd_list);
 
 int close_all_heredoc_fd(t_int_list **node);
 
+int
+count_heredoc(t_ast *ast);
+
 #endif
