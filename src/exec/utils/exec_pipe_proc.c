@@ -1,5 +1,7 @@
+#include "list.h"
 #include "parser.h"
 #include "exec.h"
+#include "../heredoc/heredoc.h"
 
 #include <stdio.h>
 #include <sys/wait.h>
@@ -61,15 +63,24 @@ int pipe_proc(t_exec_args *args)
 {
 	int pid;
 	int pipe_fd[2];
+	int heredoc_c;
 
 	if (pipe(pipe_fd) == -1)
 		// パイプの生成に失敗 , TODO: perrorを出力するように
 		return (1);
+	heredoc_c = count_heredoc(args->ast->left_ast); // 左の方
 	pid = fork();
 	if (pid == 0)
 		// 子
 		return (child_proc_pipe(pipe_fd, args, pid));
-	else
-		// 親
-		return (parent_proc_pipe(pipe_fd, args, pid));
+	/// 子プロセスで読まれたheredocをskipする
+	int i;
+	i = 0;
+	while (i < heredoc_c)
+	{
+		int_list_pop(args->heredoc_fd_list, 0);
+		i += 1;
+	}
+	// 親
+	return (parent_proc_pipe(pipe_fd, args, pid));
 }

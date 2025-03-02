@@ -15,6 +15,7 @@ int paren_proc(t_exec_args *args)
 	int status;
 	int heredoc_c;
 
+	heredoc_c = count_heredoc(args->ast);
 	pid = fork();
 	/// 子プロセス
 	///
@@ -31,7 +32,6 @@ int paren_proc(t_exec_args *args)
 	///  << 4        .-1      [4, 5, 6];
 	/// (<< 5 << 6)  .-2      [5, 6];
 	/// ```
-	heredoc_c = count_heredoc(args->ast);
 	if (pid == 0)
 	{
 		exec2(&(t_exec_args)
@@ -47,9 +47,10 @@ int paren_proc(t_exec_args *args)
 		exit(0);
 	}
 
+	/// 子プロセスで読まれたheredocをskipする
 	int i = 0;
 	while (i < heredoc_c){
-		int_list_pop(args->heredoc_fd_list,0);
+		int_list_pop(args->heredoc_fd_list, 0);
 		i += 1;
 	}
 	// 親プロセス
