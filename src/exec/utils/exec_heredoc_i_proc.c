@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "exec.h"
 #include "utils.h"
 
 #include <fcntl.h>
@@ -7,22 +8,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
-/// もし書き込み側にすでにfdが設定されていたら、閉じる
 static void close_fd(t_exec_args *args)
 {
-	if (args->output_fd != STDOUT_FILENO)
-		close(args->output_fd);
+	if (args->input_fd != STDIN_FILENO)
+		close(args->input_fd);
 }
 
-/// 書き込み専用でファイルを開く
-static int open_func(char *path)
-{
-	return (open(path,  O_WRONLY | O_CREAT | O_TRUNC, 0644));
-}
-
-/// 再帰的な関数呼び出し
-static int inner_exec(t_exec_args *args, int output_fd)
+static int inner_exec(t_exec_args *args, int input_fd)
 {
 	if (args->ast->right_ast != NULL)
 	{
@@ -31,8 +23,8 @@ static int inner_exec(t_exec_args *args, int output_fd)
 		    args->ast->right_ast,
 		    args->envp_dict,
 		    args->heredoc_fd_list,
-		    args->input_fd,
-		    output_fd,
+		    input_fd, 
+		    args->output_fd,
 		    -1 // 子プロセスを生み出すため
 		});
 	}
@@ -42,24 +34,22 @@ static int inner_exec(t_exec_args *args, int output_fd)
 		{
 		    args->ast->left_ast,
 		    args->envp_dict,
-		    NULL,
-		    args->input_fd,
-		    output_fd,
+		    args->heredoc_fd_list,
+		    input_fd,
+		    args->output_fd,
 		    -1 // 子プロセスを生み出すため
 		});
 	} // TODO:考える
 	return (1);
 }
 
-int exec_redirect_o_proc(t_exec_args *args)
+int exec_heredoc_i_proc(t_exec_args *args)
 {
 	return (
-		exec_rdt_proc(
+		exec_rdt_proc_heredoc(
 			args,
 			close_fd,
-			open_func,
 			inner_exec
 		)
 	);
 }
-

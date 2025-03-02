@@ -17,7 +17,7 @@ int paren_proc(t_exec_args *args)
 		exec2(&(t_exec_args){
 			args->ast->left_ast,
 			args->envp_dict,
-			args->args,
+			args->heredoc_fd_list,
 			args->input_fd,
 			args->output_fd,
 			pid

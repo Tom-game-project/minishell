@@ -17,6 +17,8 @@ int exec_redirect_i_proc(t_exec_args *args);
 
 int exec_redirect_o_proc(t_exec_args *args);
 
+int exec_heredoc_i_proc(t_exec_args *args);
+
 int exec_heredoc_o_proc(t_exec_args *args);
 
 int paren_proc(t_exec_args *args);
@@ -28,6 +30,13 @@ int exec_rdt_proc(
 	t_exec_args *args,
 	void (*close_fd)(t_exec_args *), // close
 	int (*open_func)(char *),// open
+	int (*inner_exec)(t_exec_args *, int) //
+			// args        , fd
+);
+
+int exec_rdt_proc_heredoc(
+	t_exec_args *args,
+	void (*close_fd)(t_exec_args *), // close
 	int (*inner_exec)(t_exec_args *, int) //
 			// args        , fd
 );

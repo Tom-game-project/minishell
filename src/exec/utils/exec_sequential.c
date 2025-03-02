@@ -23,7 +23,7 @@ int sequential_proc(t_exec_args *args, bool (*f)(int))
 		{
 			args->ast->left_ast,
 			args->envp_dict,
-			args->args,
+			args->heredoc_fd_list,
 			args->input_fd,
 			args->output_fd,
 			-1
@@ -35,7 +35,7 @@ int sequential_proc(t_exec_args *args, bool (*f)(int))
 			{
 				args->ast->right_ast,
 				args->envp_dict,
-				args->args,
+				args->heredoc_fd_list,
 				args->input_fd,
 				args->output_fd,
 				-1
@@ -45,3 +45,4 @@ int sequential_proc(t_exec_args *args, bool (*f)(int))
 	return (exit_status);
 
 }
+

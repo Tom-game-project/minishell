@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "list.h"
-#include <stdlib.h>
 
 ///
 t_int_list	*init_int_list(int i)

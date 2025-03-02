@@ -27,7 +27,7 @@ static int inner_exec(t_exec_args *args, int output_fd)
 		{
 		    args->ast->right_ast,
 		    args->envp_dict,
-		    NULL,
+		    args->heredoc_fd_list,
 		    args->input_fd, 
 		    output_fd,
 		    -1 // 子プロセスを生み出すため
@@ -39,7 +39,7 @@ static int inner_exec(t_exec_args *args, int output_fd)
 		{
 		    args->ast->left_ast,
 		    args->envp_dict,
-		    NULL,
+		    args->heredoc_fd_list,
 		    args->input_fd,
 		    output_fd,
 		    -1 // 子プロセスを生み出すため

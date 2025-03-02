@@ -2,9 +2,10 @@
 #include "dict.h"
 #include "list.h"
 #include "parser.h"
-#include "utils/utils.h"
 #include "exec.h"
 #include "expand_string.h"
+#include "utils/utils.h"
+#include "heredoc/heredoc.h"
 
 #include <stdio.h>
 #include <sys/wait.h>
@@ -86,6 +87,8 @@ int exec2(t_exec_args *args)
 		return (exec_redirect_o_proc(args));
 	else if (args->ast->ope == e_ope_heredoc_o) // >>
 		return (exec_heredoc_o_proc(args));
+	else if (args->ast->ope == e_ope_heredoc_i) // <<
+		return (exec_heredoc_i_proc(args));
 	else if (args->ast->ope == e_ope_paren)
 		return (paren_proc(args));
 	else if (args->ast->ope == e_ope_none) // 普通のコマンド
@@ -109,19 +112,21 @@ int exec2(t_exec_args *args)
 int exec(t_ast *ast, t_str_dict **envp_dict)
 {
 	int exit_status;
-	t_str_list *args;
+	t_int_list *heredoc_fd_list;
 
-	args = NULL;
+	heredoc_fd_list = NULL;
+	heredoc_proc(ast, &heredoc_fd_list); // もしここにエラーが出た場合
+							      // 返り値を設定してそれを処理するのはアリ
 	exit_status = exec2(
 		&(t_exec_args){
 			ast, 
 			envp_dict,
-			args,
+			heredoc_fd_list,
 			STDIN_FILENO,
 			STDOUT_FILENO,
 			-1
 		}
 	);
-	str_list_clear(&args, free);
+	// close_all_heredoc_fd(&heredoc_fd_list);
 	return (exit_status);
 }

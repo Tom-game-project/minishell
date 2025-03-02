@@ -22,7 +22,7 @@ static int child_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 		{
 			args->ast->left_ast,
 			args->envp_dict, 
-			args->args,
+			args->heredoc_fd_list,
 			args->input_fd, 
 			args->output_fd, 
 			pid
@@ -45,7 +45,7 @@ static int parent_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 		{
 			args->ast->right_ast,
 			args->envp_dict, 
-			args->args,
+			args->heredoc_fd_list,
 			pipe_fd[PIPE_READ], 
 			STDOUT_FILENO,
 			pid

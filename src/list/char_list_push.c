@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "list.h"
-#include <stdlib.h>
-#include "char_list.h"
 
 /** 
  * pub char_list_push

@@ -38,3 +38,23 @@ int exec_rdt_proc(
 	//close(fd);
 	return (0);
 }
+
+int exec_rdt_proc_heredoc(
+	t_exec_args *args,
+	void (*close_fd)(t_exec_args *), // close
+	int (*inner_exec)(t_exec_args *, int) //
+			// args        , fd
+)
+{
+	int fd;
+
+	close_fd(args);
+	fd = int_list_pop(&(args->heredoc_fd_list), 0);
+	if (fd == -1)
+	{
+		perror("minishell"); // TODO
+		return (1);
+	}
+	inner_exec(args, fd);
+	return (0);
+}
