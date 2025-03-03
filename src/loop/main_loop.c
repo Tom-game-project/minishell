@@ -4,6 +4,7 @@
 #include "parser.h"
 #include "exec.h"
 #include "libft.h"
+#include "envtools.h"
 
 #include <linux/limits.h>
 #include <stdlib.h>
@@ -17,6 +18,7 @@
 #include <stdio.h>
 #include "../tests/tom_parser_tools/tools.h"
 
+/// 与えられた、shell cmdを解釈する関数
 static t_ast *
 parser_wrap(char *input)
 {
@@ -75,7 +77,7 @@ exec_shell_cmd(char *str, t_str_dict **env_dict)
 	return (exit_status);
 }
 
-
+/// exit statusと、今いるディレクトリを表示するプロンプト
 char *prompt(int exit_status)
 {
 	char buf[PATH_MAX];
@@ -103,7 +105,6 @@ main_loop(char *envp[])
 	t_str_dict *env_dict;
 	char *input;
 	int exit_status;
-	char *str_tmp;
 
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp);
@@ -123,21 +124,10 @@ main_loop(char *envp[])
 		free(prompt_str);
 		if (input == NULL)
 			continue;
-		if (*input) {  // 入力が空でない場合
-			add_history(input);  // 入力を履歴に追加
-		}
+		if (*input)
+			add_history(input);
 		exit_status = exec_shell_cmd(input, &env_dict);
-
-		str_tmp = ft_strdup("?");
-		if (str_dict_add(&env_dict, str_tmp, ft_itoa(exit_status), free))
-		{
-			// 更新されただけなのでstr_tmpはfreeして良い
-			free(str_tmp);
-		}
-		else
-		{
-			// 追加しているのでfreeしてはいけない
-		}
+		update_exit_status(exit_status, &env_dict); // exit_statusを更新する
 		free(input);
 	}
 	str_dict_clear(&env_dict, free, free);

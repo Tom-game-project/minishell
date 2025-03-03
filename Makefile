@@ -189,6 +189,7 @@ ENVTOOLS_SRC = \
       src/envtools/is_valid_identifier.c\
       src/envtools/get_key_from_envp_ptr.c\
       src/envtools/get_value_from_envp_ptr.c\
+      src/envtools/update_exit_status.c\
 
 
 STRTOOLS_SRC = \

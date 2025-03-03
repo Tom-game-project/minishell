@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "exec.h"
+#include "envtools.h"
 
 #include <sys/wait.h>
 #include <unistd.h>
@@ -28,6 +29,8 @@ int sequential_proc(t_exec_args *args, bool (*f)(int))
 			args->output_fd,
 			-1
 		});
+	// 環境変数の更新
+	update_exit_status(exit_status, args->envp_dict);
 	if (f(exit_status))
 	{
 		return (exec2(
@@ -43,6 +46,5 @@ int sequential_proc(t_exec_args *args, bool (*f)(int))
 		);
 	}
 	return (exit_status);
-
 }
 

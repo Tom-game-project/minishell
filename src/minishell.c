@@ -47,7 +47,7 @@ int main(int argc, char *argv[], char *envp[])
 {
 	(void) argc;
 	(void) argv;
-	//
+
 	header();
 	main_loop(envp);
 	return (0); 

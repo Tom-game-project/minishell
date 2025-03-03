@@ -14,12 +14,13 @@
 
 typedef char *(*sd2sfunc)(char *, void *);
 
-char *
-expand_string_wrap_str_free(char *str, t_str_dict *d)
+/// もとの文字列を、環境変数に基づいて展開する関数
+static char *
+expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
 {
 	char *rstr;
 
-	rstr = expand_string(str, d);
+	rstr = expand_string(str, env_dict);
 	free(str);
 	return (rstr);
 }
@@ -35,7 +36,6 @@ int run_cmd_proc(t_exec_args *args)
 	if (str_list_len(args->ast->arg) == 0)
 		return (0); // TODO とりあえずsegvを防いでいる
 	/// 環境変数を展開、展開後のリストをastにもう一度格納
-
 	str_list_map_arg1(
 		&(args->ast->arg),
 		(sd2sfunc) expand_string_wrap_str_free,
@@ -74,7 +74,7 @@ int run_cmd_proc(t_exec_args *args)
 /// ```
 int exec2(t_exec_args *args)
 {
-	str_list_dprint(STDERR_FILENO, args->ast->arg);
+	// str_list_dprint(STDERR_FILENO, args->ast->arg);
 	if (args->ast->ope == e_ope_pipe) // |
 		return (pipe_proc(args));
 	else if (args->ast->ope == e_ope_and) // &&
@@ -89,15 +89,13 @@ int exec2(t_exec_args *args)
 		return (exec_heredoc_o_proc(args));
 	else if (args->ast->ope == e_ope_heredoc_i) // <<
 		return (exec_heredoc_i_proc(args));
-	else if (args->ast->ope == e_ope_paren)
+	else if (args->ast->ope == e_ope_paren)     // ()
 		return (paren_proc(args));
 	else if (args->ast->ope == e_ope_none) // 普通のコマンド
 		return (run_cmd_proc(args));
-	else // unreachable
-	{
-		dprintf(STDERR_FILENO, "unexpected ope!\n");
-		return (1); // exit status を返すように変更
-	}
+	// dprintf(STDERR_FILENO, "unexpected ope!\n");
+	return (1); // exit status を返すように変更
+		    // unreachable
 }
 
 /// この処理に入る時点で、junkなケースが弾かれていることを期待する
@@ -127,6 +125,6 @@ int exec(t_ast *ast, t_str_dict **envp_dict)
 			-1
 		}
 	);
-	// close_all_heredoc_fd(&heredoc_fd_list);
+	close_all_heredoc_fd(&heredoc_fd_list);
 	return (exit_status);
 }
