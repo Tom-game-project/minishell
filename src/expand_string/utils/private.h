@@ -39,4 +39,11 @@ t_anchor anchor_out_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 t_anchor anchor_q_proc(char c, t_list_args *group_args);
 
 t_anchor anchor_dq_proc(char c, t_list_args *group_args, t_str_dict *env_dicts);
+
+t_anchor dollar_proc(char c, t_list_args *group_args, t_str_dict *env_dicts);
+
+t_anchor question_proc(char c, t_list_args *group_args, t_str_dict *env_dicts);
+
+t_anchor anchor_heredoc_proc(char c, t_list_args *group_args, t_str_dict *env_dicts);
+
 #endif

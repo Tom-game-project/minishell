@@ -18,6 +18,8 @@ t_built_in get_built_in_enum(char *cmd)
 		return (e_built_in_env);
 	else if (ft_streq(cmd, "exit"))
 		return (e_built_in_exit);
+	else if (ft_streq(cmd, "echo"))
+		return (e_built_in_echo);
 	else
 		return (e_not_built_in);
 }

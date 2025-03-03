@@ -45,4 +45,6 @@ int built_in_unset(
 
 t_built_in get_built_in_enum(char *cmd);
 
+int built_in_echo(t_str_list *args);
+
 #endif

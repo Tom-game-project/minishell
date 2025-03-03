@@ -108,6 +108,7 @@ LIST_SRC = \
 EXPAND_STRING_SRC = \
       src/expand_string/utils/in_double_quotation.c\
       src/expand_string/utils/in_single_quotation.c\
+      src/expand_string/utils/heredoc.c\
       src/expand_string/utils/out_of_quotation.c\
       src/expand_string/utils/push_expand_env.c\
       src/expand_string/utils/push_str_group.c\

@@ -74,6 +74,45 @@ char *expand_string(char *str, t_str_dict *env_dicts)
 	return (rstr);
 }
 
+t_str_list *heredoc_expand_string2list(char *str, t_str_dict *env_dicts)
+{
+	t_char_list *path_group;
+	t_char_list *str_group;
+	t_str_list *rlist;
+
+	str_group = NULL;
+	path_group = NULL;
+	rlist = NULL;
+	while (*str != '\0')
+	{
+		anchor_heredoc_proc(
+			*str, 
+			&(t_list_args){
+				&rlist,
+			       	&path_group,
+			       	&str_group}, 
+			env_dicts
+		);
+		str++;
+	}
+	push_expand_env(&(t_list_args){
+		&rlist, &path_group, &str_group}, env_dicts);
+	push_str_group(&(t_list_args){
+		&rlist, &path_group, &str_group});
+	return (rlist);
+}
+
+char *heredoc_expand_string(char *str, t_str_dict *env_dicts)
+{
+	t_str_list *lst;
+	char *rstr;
+
+	lst = heredoc_expand_string2list(str, env_dicts);
+	rstr = str_list_join(lst, "");
+	str_list_clear(&lst, free);
+	return (rstr);
+}
+
 /// 文字列の展開
 /// 環境変数を展開する
 /// example

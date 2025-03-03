@@ -58,6 +58,8 @@ int run_cmd_proc(t_exec_args *args)
 		return (built_in_unset(args->ast->arg,  args->envp_dict));
 	else if (tbi == e_built_in_exit)
 		return (built_in_exit(args->ast->arg));
+	else if (tbi == e_built_in_echo)
+		return (built_in_echo(args->ast->arg));
 	else
 		// unreachable
 		return (1);

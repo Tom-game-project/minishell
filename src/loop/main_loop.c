@@ -23,6 +23,7 @@ static t_ast *
 parser_wrap(char *input)
 {
     t_ast *ast;
+
     ast = NULL;
     if (e_result_paren_not_closed_err == parser(&ast, input))
     {
@@ -99,8 +100,7 @@ char *prompt(int exit_status)
 	return (rstr);
 }
 
-int
-main_loop(char *envp[])
+int main_loop(char *envp[])
 {
 	t_str_dict *env_dict;
 	char *input;
@@ -109,7 +109,6 @@ main_loop(char *envp[])
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp);
 	exit_status = 0;
-
 	str_dict_add(
 		&env_dict,
 		ft_strdup("?"),

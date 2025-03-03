@@ -8,4 +8,6 @@ t_str_list *expand_string2list(char *str, t_str_dict *env_dicts);
 
 char *expand_string(char *str, t_str_dict *env_dicts);
 
+char *heredoc_expand_string(char *str, t_str_dict *env_dicts);
+
 #endif

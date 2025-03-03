@@ -38,7 +38,10 @@ candy_cutter(t_str_list **lst, int index)
 
 /// here docとして
 /// ユーザの入力を受け取る関数
-int read_heredocline(char *eof, int fd)
+int read_heredocline(
+	char *eof,
+       	int fd
+)
 {
 	t_str_list *lst;
 	char buf[BUF_SIZE];
@@ -72,6 +75,7 @@ int read_heredocline(char *eof, int fd)
 	return (0);
 }
 
+/// astが含んでいるheredocの数をカウントする関数
 int
 count_heredoc(t_ast *ast)
 {

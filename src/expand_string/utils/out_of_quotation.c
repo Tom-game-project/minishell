@@ -21,7 +21,7 @@ static t_anchor double_quotation_proc(char c, t_list_args *group_args, t_str_dic
 	return (e_anchor_dq);
 }
 
-static t_anchor dollar_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
+t_anchor dollar_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {	
 	if (char_list_len(*group_args->path_group) == 1)
 	{
@@ -38,7 +38,7 @@ static t_anchor dollar_proc(char c, t_list_args *group_args, t_str_dict *env_dic
 	return (e_anchor_out);
 }
 
-static t_anchor question_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
+t_anchor question_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
 		if (char_list_len(*group_args->path_group) == 1)
 		{

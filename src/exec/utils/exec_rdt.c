@@ -39,6 +39,10 @@ int exec_rdt_proc(
 	return (0);
 }
 
+/// 環境変数展開が必要なheredocについては、
+/// 環境変数展開後の文字列を格納した隠しファイルのfdをリストに差し替えて
+/// 他の関数は,展開関係なく普通にfdを読んでいるようになる
+///
 int exec_rdt_proc_heredoc(
 	t_exec_args *args,
 	void (*close_fd)(t_exec_args *), // close
@@ -50,6 +54,8 @@ int exec_rdt_proc_heredoc(
 
 	close_fd(args);
 	fd = int_list_pop(args->heredoc_fd_list, 0);
+	// TODO:ここに環境変数を展開した
+	// 隠しファイルのfdを返す関数を追加する
 	if (fd == -1)
 	{
 		perror("minishell"); // TODO
