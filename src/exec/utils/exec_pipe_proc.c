@@ -64,7 +64,6 @@ int pipe_proc(t_exec_args *args)
 	int pid;
 	int pipe_fd[2];
 	int heredoc_c;
-
 	if (pipe(pipe_fd) == -1)
 		// パイプの生成に失敗 , TODO: perrorを出力するように
 		return (1);
@@ -73,12 +72,14 @@ int pipe_proc(t_exec_args *args)
 	if (pid == 0)
 		// 子
 		return (child_proc_pipe(pipe_fd, args, pid));
-	/// 子プロセスで読まれたheredocをskipする
+	// 子プロセスで読まれたheredocをskipする
 	int i;
 	i = 0;
 	while (i < heredoc_c)
 	{
-		int_list_pop(args->heredoc_fd_list, 0);
+		int fd;
+		fd = int_list_pop(args->heredoc_fd_list, 0);
+		close(fd);
 		i += 1;
 	}
 	// 親

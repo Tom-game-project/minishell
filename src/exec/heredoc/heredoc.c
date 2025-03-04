@@ -11,7 +11,7 @@
 # define BUF_SIZE 1
 #endif
 
-/// here docとして
+/// here docのインターフェイス
 /// ユーザの入力を受け取る関数
 int read_heredocline(
 	char *eof,
@@ -51,8 +51,7 @@ int read_heredocline(
 }
 
 /// astが含んでいるheredocの数をカウントする関数
-int
-count_heredoc(t_ast *ast)
+int count_heredoc(t_ast *ast)
 {
 	int count;
 

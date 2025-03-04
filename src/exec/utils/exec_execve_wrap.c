@@ -61,7 +61,7 @@ int execve_wrap(t_exec_args *args)
 	// TODO WARN
 	// fullpathはNULLになって返る可能性がある
 	envp = str_dict_to_envp(*args->envp_dict); // 環境変数をexecveに渡せる形に固定する
-	dprintf(STDERR_FILENO, "cmd %s running on pid(%d, -> ppid(%d))\n", fullpath, getpid(), getppid());
+	dprintf(STDERR_FILENO, "cmd %s running on pid(%d) ppid(%d)\n", fullpath, getpid(), getppid());
 	execve(fullpath, argv, envp);
 	return (1);// ここに到達した場合は不正
 }

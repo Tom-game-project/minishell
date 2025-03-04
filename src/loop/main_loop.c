@@ -60,16 +60,16 @@ bool	ast_checker_wrap(t_ast	*ast)
 }
 
 // 返り値はexit status
-int
-exec_shell_cmd(char *str, t_str_dict **env_dict)
+int exec_shell_cmd(char *str, t_str_dict **env_dict)
 {
 	t_ast *ast;
 	int exit_status;
 
+	dprintf(STDERR_FILENO, "ORIGIN PID (%d)\n", getpid());
 	ast = parser_wrap(str);
 	if (!ast_checker_wrap(ast))
 	{
-		    clear_ast(&ast);
+		clear_ast(&ast);
 		return (1); // syntax error occured
 	}
 	exit_status = exec(ast, env_dict);

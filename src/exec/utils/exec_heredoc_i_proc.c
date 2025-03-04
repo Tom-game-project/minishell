@@ -39,7 +39,7 @@ static int inner_exec(t_exec_args *args, int input_fd)
 		    args->output_fd,
 		    -1 // 子プロセスを生み出すため
 		});
-	} // TODO:考える
+	}
 	return (0);
 }
 

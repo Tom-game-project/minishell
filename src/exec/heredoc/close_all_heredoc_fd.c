@@ -1,4 +1,5 @@
 #include "list.h"
+#include <stdio.h>
 #include <unistd.h>
 
 /// 数字のリストの中に含まれるfdをすべてcloseして、
@@ -6,10 +7,10 @@
 int close_all_heredoc_fd(t_int_list **node)
 {
 	t_anytype rvalue;
-	// close all fds
 	
 	while (void_list_pop(node , 0, &rvalue) != -1)
 	{
+		//dprintf(STDERR_FILENO, "aaaaaaaaaaaaaaaaaaaaaaaaa\n");
 		close(rvalue.i32);
 	}
 	int_list_clear(node);

@@ -36,7 +36,7 @@ int exec_rdt_proc(
 		return (1);
 	}
 	inner_exec(args, fd);
-	//close(fd);
+	close(fd);
 	return (0);
 }
 
@@ -55,11 +55,13 @@ int exec_rdt_proc_heredoc(
 	int new_fd;
 
 	close_fd(args);
+	int_list_print(*args->heredoc_fd_list);
 	fd = int_list_pop(args->heredoc_fd_list, 0);
 	// TODO:ここに環境変数を展開した
 	// 隠しファイルのfdを返す関数を追加する
 	new_fd = heredoc_expand_string_via_fd(fd, *args->envp_dict);
 	// dprintf(STDERR_FILENO,"new_fd %d\n", new_fd);
+	dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, getpid());
 	close(fd);
 	fd = new_fd;
 	if (fd == -1)
@@ -68,5 +70,7 @@ int exec_rdt_proc_heredoc(
 		return (1);
 	}
 	inner_exec(args, fd);
+	dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, getpid());
+	close(fd);
 	return (0);
 }

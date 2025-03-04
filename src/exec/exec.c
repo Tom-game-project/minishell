@@ -15,8 +15,7 @@
 typedef char *(*t_sd2sfunc)(char *, void *);
 
 /// もとの文字列を、環境変数に基づいて展開する関数
-static char *
-expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
+static char *expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
 {
 	char *rstr;
 
@@ -29,8 +28,6 @@ expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
 /// 
 int run_cmd_proc(t_exec_args *args)
 {
-	// TODO: built-in関数を判別するためのプログラムをここに追加
-	//
 	t_built_in tbi;
 
 	if (str_list_len(args->ast->arg) == 0)
@@ -116,6 +113,7 @@ int exec(t_ast *ast, t_str_dict **envp_dict)
 
 	heredoc_fd_list = NULL;
 	heredoc_proc(ast, &heredoc_fd_list); // もしここにエラーが出た場合
+	//int_list_print(heredoc_fd_list);
 							      // 返り値を設定してそれを処理するのはアリ
 	exit_status = exec2(
 		&(t_exec_args){
