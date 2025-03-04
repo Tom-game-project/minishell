@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "heredoc.h"
+#include "path.h"
 
 /// まず最初にheredocの入力だけを処理する,
 ///

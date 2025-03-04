@@ -2,6 +2,7 @@
 #include "parser.h"
 #include "exec.h"
 #include "utils.h"
+#include "expand_string.h"
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -51,11 +52,16 @@ int exec_rdt_proc_heredoc(
 )
 {
 	int fd;
+	int new_fd;
 
 	close_fd(args);
 	fd = int_list_pop(args->heredoc_fd_list, 0);
 	// TODO:ここに環境変数を展開した
 	// 隠しファイルのfdを返す関数を追加する
+	new_fd = heredoc_expand_string_via_fd(fd, *args->envp_dict);
+	// dprintf(STDERR_FILENO,"new_fd %d\n", new_fd);
+	close(fd);
+	fd = new_fd;
 	if (fd == -1)
 	{
 		perror("minishell"); // TODO
