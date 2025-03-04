@@ -20,7 +20,7 @@ int main()
 	// 環境変数を模したもの
 	str_dict_add(
 		&d,
-		ft_strdup("HELLO"),
+		ft_strdup("PATH"),
 		ft_strdup("HELLO_VALUE"), 
 		free
 	);
@@ -38,8 +38,8 @@ int main()
 	);
 	fd = open("infile", O_RDONLY, 0644);
 	new_fd = heredoc_expand_string_via_fd(fd, d);
-	close(fd);
 	fd_write(new_fd, STDOUT_FILENO);
+	close(fd);
 	close(new_fd);
 	str_dict_clear(&d, free, free);
 	return (0);
