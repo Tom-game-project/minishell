@@ -11,31 +11,6 @@
 # define BUF_SIZE 1
 #endif
 
-/// 改行を含むかどうかをチェックする関数
-static bool includes_newline(char *str)
-{
-	while (*str != '\0')
-	{
-		if (*str == '\n')
-			return (true);
-		str++;
-	}
-	return (false);
-}
-
-/// 改行がある部分までで切り取る関数
-static char *
-candy_cutter(t_str_list **lst, int index)
-{
-	t_str_list *t;
-	char *str;
-
-	t = str_list_cut(lst, index);
-	str = str_list_join(t, "");
-	str_list_clear(&t, free);
-	return (str);
-}
-
 /// here docとして
 /// ユーザの入力を受け取る関数
 int read_heredocline(

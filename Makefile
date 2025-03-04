@@ -7,13 +7,11 @@
 CC = cc
 RM = rm
 
-
 CC_VERSION = $(CC) --version
 VALGRIND = valgrind
 VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q 
 
 #--show-leak-kinds=all
-
 
 RMFLAGS = -rf
 
@@ -47,6 +45,9 @@ CHAR_LIST = \
       src/list/char_list_clear.c\
       src/list/char_list_to_str.c\
       src/list/char_list_is_empty.c\
+      src/list/char_list_cut.c\
+      src/list/char_list_search.c\
+
 
 
 STR_LIST = \
@@ -70,6 +71,7 @@ STR_LIST = \
       src/list/str_list_clone.c\
       src/list/str_list_cut.c\
       src/list/str_list_in.c\
+      src/list/candy_cutter.c\
 
 
 INT_LIST = \
@@ -113,6 +115,7 @@ EXPAND_STRING_SRC = \
       src/expand_string/utils/push_expand_env.c\
       src/expand_string/utils/push_str_group.c\
       src/expand_string/expand_string.c\
+      src/expand_string/heredoc_expand_string.c\
 
 
 PARSER_SRC = \
@@ -159,6 +162,7 @@ DICT_SRC = \
 
 
 PATH_SRC =\
+      src/path/create_shadow_file.c\
       src/path/get_full_path.c\
       src/path/get_dir_list.c\
       src/path/gen_nondup_name.c\
@@ -179,7 +183,6 @@ EXEC_SRC=\
       src/exec/utils/exec_paren_proc.c\
       src/exec/utils/exec_sequential.c\
       src/exec/utils/exec_rdt.c\
-      src/exec/heredoc/create_shadow_file.c\
       src/exec/heredoc/heredoc.c\
       src/exec/heredoc/heredoc_proc.c\
       src/exec/heredoc/close_all_heredoc_fd.c\
@@ -195,6 +198,7 @@ ENVTOOLS_SRC = \
 
 STRTOOLS_SRC = \
      src/strtools/ft_streq.c\
+     src/strtools/includes_newline.c\
 
 
 LOOP_SRC = \

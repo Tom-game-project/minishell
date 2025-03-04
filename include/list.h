@@ -40,6 +40,7 @@ typedef struct s_void_list t_int_list;
 /// 格納するデータtypeによらない操作の実装は、void_listをwrapしている
 
 /// ================ char_list functions ================
+
 t_char_list *init_char_list(char c);
 
 int char_list_push(t_char_list **node, char c);
@@ -66,7 +67,13 @@ char *char_list_to_str(t_char_list *node);
 
 bool char_list_is_empty(t_char_list *node);
 
+int char_list_search_index(t_char_list *node, bool (*f)(char *));
+
+t_str_list *char_list_cut(t_char_list **node, int index);
+
 /// ================ str_list functions ================
+
+char *candy_cutter(t_str_list **lst, int index);
 
 t_str_list *init_str_list(char *str);
 

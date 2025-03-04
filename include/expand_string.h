@@ -10,4 +10,5 @@ char *expand_string(char *str, t_str_dict *env_dicts);
 
 char *heredoc_expand_string(char *str, t_str_dict *env_dicts);
 
+int heredoc_expand_string_via_fd(int fd, t_str_dict *env_dict);
 #endif

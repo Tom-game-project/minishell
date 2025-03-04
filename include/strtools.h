@@ -4,4 +4,6 @@
 
 bool ft_streq(char *a, char *b);
 
+bool includes_newline(char *str);
+
 #endif
