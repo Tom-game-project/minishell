@@ -106,10 +106,10 @@ char *prompt(int exit_status)
 /// グローバル変数
 int g_signal_number = 0;
 
+/// back slashに限らないシグナルの受信
 void handle_sigquit(int sig) {
 	(void) sig;
 	g_signal_number = sig;
-	//printf("Caught SIGQUIT (Ctrl-\\), Signal number: %d\n", sig);
 }
 
 void disable_ctrl_backslash() 
@@ -138,17 +138,12 @@ int main_loop(char *envp[])
 	sa_sigquit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_sigquit, NULL);
 
+	/// `Ctrl-\`が標準出力されてしまうのを防ぐ
 	disable_ctrl_backslash();
-	///
+
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp);
 	exit_status = 0;
-	str_dict_add(
-		&env_dict,
-		ft_strdup("?"),
-		ft_itoa(exit_status),
-		free
-	);
 	while (1)
 	{
 		char *prompt_str;

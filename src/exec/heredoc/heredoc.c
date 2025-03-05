@@ -24,6 +24,7 @@ int read_heredocline(
 	char *str;
 
 	lst = NULL;
+	str = NULL;
 	while (1)
 	{
 		ft_memset(buf, '\0', BUF_SIZE);
