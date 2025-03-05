@@ -55,7 +55,7 @@ int exec_rdt_proc_heredoc(
 	int new_fd;
 
 	close_fd(args);
-	int_list_print(*args->heredoc_fd_list);
+	//int_list_print(*args->heredoc_fd_list);
 	fd = int_list_pop(args->heredoc_fd_list, 0);
 	// TODO:ここに環境変数を展開した
 	// 隠しファイルのfdを返す関数を追加する

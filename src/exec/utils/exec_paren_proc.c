@@ -50,7 +50,9 @@ int paren_proc(t_exec_args *args)
 	/// 子プロセスで読まれたheredocをskipする
 	int i = 0;
 	while (i < heredoc_c){
-		int_list_pop(args->heredoc_fd_list, 0);
+		int fd;
+		fd = int_list_pop(args->heredoc_fd_list, 0);
+		close(fd);
 		i += 1;
 	}
 	// 親プロセス
