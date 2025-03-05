@@ -22,9 +22,7 @@ int heredoc_proc(t_ast *ast, t_int_list **heredoc_fd_list)
 	if (ast->ope == e_ope_heredoc_i)
 	{
 		str = str_list_get_elem(ast->arg, 0);
-		strl = ft_strjoin(str, "\n"); // EOF
-						      // 含まれる"'をすべて取り除く
-						      // 
+		strl = ft_strjoin(str, "\n"); 
 		strl2 = remove_quotations(strl);
 		free(strl);
 		if (create_shadow_file(rw_fd) == -1)

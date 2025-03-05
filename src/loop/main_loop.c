@@ -13,6 +13,9 @@
 #include <readline/history.h>
 #include <limits.h>
 #include <unistd.h>
+#include <termios.h>
+// シグナル
+#include <signal.h>
 
 // for test 
 #include <stdio.h>
@@ -100,12 +103,43 @@ char *prompt(int exit_status)
 	return (rstr);
 }
 
+/// グローバル変数
+int g_signal_number = 0;
+
+void handle_sigquit(int sig) {
+	(void) sig;
+	g_signal_number = sig;
+	//printf("Caught SIGQUIT (Ctrl-\\), Signal number: %d\n", sig);
+}
+
+void disable_ctrl_backslash() 
+{
+	struct termios orig_termios;
+	struct termios new_termios;
+
+	tcgetattr(STDIN_FILENO, &orig_termios); // 現在の端末設定を取得
+	new_termios = orig_termios;
+	new_termios.c_cc[VQUIT] = _POSIX_VDISABLE; // `Ctrl-\` を無効化
+	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
+}
+
 int main_loop(char *envp[])
 {
 	t_str_dict *env_dict;
 	char *input;
 	int exit_status;
+	//struct sigaction sa_sigint;
+	struct sigaction sa_sigquit;
 
+	///シグナルハンドラの設定
+	// Ctrl-\ (SIGQUIT) のための sigaction を設定
+	sa_sigquit.sa_handler = handle_sigquit;
+	sigemptyset(&sa_sigquit.sa_mask);
+	sa_sigquit.sa_flags = 0;
+	sigaction(SIGQUIT, &sa_sigquit, NULL);
+
+	disable_ctrl_backslash();
+	///
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp);
 	exit_status = 0;
@@ -123,7 +157,7 @@ int main_loop(char *envp[])
 		input = readline(prompt_str);
 		free(prompt_str);
 		if (input == NULL)
-			continue;
+			break; // EOFが送られたら終了
 		if (*input)
 			add_history(input);
 		exit_status = exec_shell_cmd(input, &env_dict);
