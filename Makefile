@@ -199,6 +199,7 @@ ENVTOOLS_SRC = \
 STRTOOLS_SRC = \
      src/strtools/ft_streq.c\
      src/strtools/includes_newline.c\
+     src/strtools/remove_quotation.c\
 
 
 LOOP_SRC = \

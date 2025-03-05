@@ -115,7 +115,8 @@ int main_loop(char *envp[])
 		ft_itoa(exit_status),
 		free
 	);
-	while (1) {
+	while (1)
+	{
 		char *prompt_str;
 
 		prompt_str = prompt(exit_status);
