@@ -279,7 +279,7 @@ vtest: cleantest $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(VALGRIND) $(VALGRINDFLAGS) ./test_
 
 example:
-	$(CC) $(TEST_FLAGS) -o $(EXAMPLE_NAME) $(EXAMPLE_FILE)
+	$(CC) $(TEST_FLAGS) -o $(EXAMPLE_NAME) $(EXAMPLE_FILE) -lreadline
 
 %.o: %.c 
 	$(CC) $(CFLAGS) -Iinclude -c $< -o $@

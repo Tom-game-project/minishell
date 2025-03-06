@@ -106,10 +106,21 @@ char *prompt(int exit_status)
 /// グローバル変数
 int g_signal_number = 0;
 
+#include <fcntl.h>
+
 /// back slashに限らないシグナルの受信
 void handle_sigquit(int sig) {
 	(void) sig;
 	g_signal_number = sig;
+	if (sig == SIGINT)
+	{
+		//write(STDOUT_FILENO, &"\n", 1);
+		rl_on_new_line();      // 新しい行を準備
+		rl_replace_line("", 0);// 入力行をクリア
+		int devnull = open("/dev/null", O_RDONLY);
+		dup2(devnull, STDIN_FILENO);  // 標準入力を /dev/null にリダイレクト
+		close(devnull); // stdinを閉じて、EOFを送る
+	}
 }
 
 void disable_ctrl_backslash() 
@@ -137,6 +148,7 @@ int main_loop(char *envp[])
 	sigemptyset(&sa_sigquit.sa_mask);
 	sa_sigquit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_sigquit, NULL);
+	sigaction(SIGINT, &sa_sigquit, NULL);
 
 	/// `Ctrl-\`が標準出力されてしまうのを防ぐ
 	disable_ctrl_backslash();
@@ -151,14 +163,33 @@ int main_loop(char *envp[])
 		prompt_str = prompt(exit_status);
 		input = readline(prompt_str);
 		free(prompt_str);
-		if (input == NULL)
+		if (g_signal_number == SIGINT)
+		{
+			if (exit_status == 0)
+				write(STDOUT_FILENO, &"\n", 1);
+			exit_status = 130;
+			// ttyデバイスにstdinを再接続する
+			int tty_fd = open("/dev/tty", O_RDONLY);
+			if (tty_fd != -1)
+			{
+				dup2(tty_fd, STDIN_FILENO);
+				close(tty_fd);
+			}
+			g_signal_number = 0;
+			continue;
+		}
+		else if (input == NULL)
+		{
 			break; // EOFが送られたら終了
+		}
 		if (*input)
 			add_history(input);
 		exit_status = exec_shell_cmd(input, &env_dict);
-		update_exit_status(exit_status, &env_dict); // exit_statusを更新する
+	       	// exit_statusを更新する
+		update_exit_status(exit_status, &env_dict);
 		free(input);
 	}
 	str_dict_clear(&env_dict, free, free);
 	return (0);
 }
+
