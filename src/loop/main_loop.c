@@ -134,6 +134,24 @@ void disable_ctrl_backslash()
 	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
 }
 
+/// シグナル発生で切断された標準入力を復元させる
+void
+reconnect_stdin(int *exit_status)
+{
+	if (*exit_status == 0)
+		write(STDOUT_FILENO, &"\n", 1);
+	*exit_status = 130;
+	// ttyデバイスにstdinを再接続する
+	int tty_fd = open("/dev/tty", O_RDONLY);
+	if (tty_fd != -1)
+	{
+		dup2(tty_fd, STDIN_FILENO);
+		close(tty_fd);
+	}
+	g_signal_number = 0;
+	//return ();
+}
+
 int main_loop(char *envp[])
 {
 	t_str_dict *env_dict;
@@ -163,26 +181,14 @@ int main_loop(char *envp[])
 		prompt_str = prompt(exit_status);
 		input = readline(prompt_str);
 		free(prompt_str);
-		if (g_signal_number == SIGINT)
+		if (g_signal_number == SIGINT) // 同じ処理　TODO :リファクタリングが必要
 		{
 			free(input);
-			if (exit_status == 0)
-				write(STDOUT_FILENO, &"\n", 1);
-			exit_status = 130;
-			// ttyデバイスにstdinを再接続する
-			int tty_fd = open("/dev/tty", O_RDONLY);
-			if (tty_fd != -1)
-			{
-				dup2(tty_fd, STDIN_FILENO);
-				close(tty_fd);
-			}
-			g_signal_number = 0;
+			reconnect_stdin(&exit_status);
 			continue;
 		}
 		else if (input == NULL)
-		{
 			break; // EOFが送られたら終了
-		}
 		if (*input)
 			add_history(input);
 		exit_status = exec_shell_cmd(input, &env_dict);
@@ -191,17 +197,7 @@ int main_loop(char *envp[])
 		free(input);
 		if (g_signal_number == SIGINT) // 同じ処理　TODO :リファクタリングが必要
 		{
-			if (exit_status == 0)
-				write(STDOUT_FILENO, &"\n", 1);
-			exit_status = 130;
-			// ttyデバイスにstdinを再接続する
-			int tty_fd = open("/dev/tty", O_RDONLY);
-			if (tty_fd != -1)
-			{
-				dup2(tty_fd, STDIN_FILENO);
-				close(tty_fd);
-			}
-			g_signal_number = 0;
+			reconnect_stdin(&exit_status);
 			continue;
 		}
 	}
