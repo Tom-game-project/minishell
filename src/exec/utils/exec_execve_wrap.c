@@ -10,6 +10,26 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+/// TODO あとで関数の名前を変更する
+static
+int print_error_msg(char *cmd)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	exit(127);
+}
+
+static
+int print_error_msg2(char *cmd)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+	exit(126);
+}
+
+
 /// 実行に必要なコマンド列を、生成する
 /// 全く新しい領域が確保されるので、返り値は解放が必要
 
@@ -26,41 +46,24 @@ int execve_wrap(t_exec_args *args)
 	char **envp;
 	t_str_dict *env_path_node;
 
-	cmd = ft_strdup(str_list_get_elem(args->ast->arg, 0)); // 0番目の要素を取り出す
+	cmd = ft_strdup(str_list_get_elem(args->ast->arg, 0));
 	argv = str_list_to_array(args->ast->arg);
-	/// test 用のprint
-	//str_list_dprint(STDERR_FILENO, args->ast->arg);
 	env_path_node = get_str_dict_by_key(*args->envp_dict, "PATH");
 	if (env_path_node == NULL) // 環境変数に`PATH`が見つからない
 	{
-		free(cmd);
-		free(argv);
-		// TODO
-		// あとで実装する必要がある
-		exit(127);
+		print_error_msg(cmd);
 	}
 	// PATH環境変数を解析して実行可能なフルパスを検索
 	fullpath = get_full_path(cmd, env_path_node->value);
 	if (fullpath == NULL)
 	{
-		// TODO errorメッセージを出力できるようにする
-		exit(127); // 実行できるコマンドが見つからない
-			   // または実行権限がない
-			   // だが、
-			   // ここは後で細分化する
-			   // ここの処理が終われば、
-			   // プロセスが終了し、リソースがすべて開放されるため
-			   // ここでは、あえてfreeをしない
+		print_error_msg(cmd);
 	}
-	if (access(fullpath, X_OK) == -1) // ファイルの存在が確かめられたら、実行のチェックをする
+	if (access(fullpath, X_OK) == -1)
 	{
-		exit(126);
+		print_error_msg2(cmd);
 	}
-	// TODO: 実行すべきpathはこれだけではないはずなので、
-	// get_full_pathはあとから更に機能追加が必要
-	// TODO WARN
-	// fullpathはNULLになって返る可能性がある
-	envp = str_dict_to_envp(*args->envp_dict); // 環境変数をexecveに渡せる形に固定する
+	envp = str_dict_to_envp(*args->envp_dict);
 	dprintf(STDERR_FILENO, "cmd %s running on pid(%d) ppid(%d)\n", fullpath, getpid(), getppid());
 	execve(fullpath, argv, envp);
 	return (1);// ここに到達した場合は不正

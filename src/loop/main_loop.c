@@ -115,7 +115,6 @@ void handle_sigquit(int sig) {
 	g_signal_number = sig;
 	if (sig == SIGINT)
 	{
-		//write(STDOUT_FILENO, &"\n", 1);
 		rl_on_new_line();      // 新しい行を準備
 		rl_replace_line("", 0);// 入力行をクリア
 		int devnull = open("/dev/null", O_RDONLY);
@@ -124,6 +123,7 @@ void handle_sigquit(int sig) {
 	}
 }
 
+/// `ctrl-\`を無効化する関数
 void disable_ctrl_backslash() 
 {
 	struct termios orig_termios;
@@ -156,7 +156,6 @@ int main_loop(char *envp[])
 {
 	t_str_dict *env_dict;
 	int exit_status;
-	//struct sigaction sa_sigint;
 	struct sigaction sa_sigquit;
 
 	///シグナルハンドラの設定
@@ -188,7 +187,7 @@ int main_loop(char *envp[])
 		}
 		else if (input == NULL)
 			break; // EOFが送られたら終了
-		if (*input)
+		else
 			add_history(input);
 		exit_status = exec_shell_cmd(input, &env_dict);
 	       	// exit_statusを更新する
