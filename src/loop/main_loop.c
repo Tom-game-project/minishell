@@ -21,6 +21,11 @@
 #include <stdio.h>
 #include "../tests/tom_parser_tools/tools.h"
 
+/// グローバル変数
+int g_signal_number = 0;
+
+#include <fcntl.h>
+
 /// 与えられた、shell cmdを解釈する関数
 static t_ast *
 parser_wrap(char *input)
@@ -103,10 +108,6 @@ char *prompt(int exit_status)
 	return (rstr);
 }
 
-/// グローバル変数
-int g_signal_number = 0;
-
-#include <fcntl.h>
 
 /// back slashに限らないシグナルの受信
 void handle_sigquit(int sig) {
@@ -149,13 +150,11 @@ reconnect_stdin(int *exit_status)
 		close(tty_fd);
 	}
 	g_signal_number = 0;
-	//return ();
 }
 
 int main_loop(char *envp[])
 {
 	t_str_dict *env_dict;
-	char *input;
 	int exit_status;
 	//struct sigaction sa_sigint;
 	struct sigaction sa_sigquit;
@@ -167,16 +166,16 @@ int main_loop(char *envp[])
 	sa_sigquit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_sigquit, NULL);
 	sigaction(SIGINT, &sa_sigquit, NULL);
-
 	/// `Ctrl-\`が標準出力されてしまうのを防ぐ
 	disable_ctrl_backslash();
 
 	env_dict = NULL;
-	envp_to_str_dict(&env_dict, envp);
+	envp_to_str_dict(&env_dict, envp); // 環境変数をセット
 	exit_status = 0;
 	while (1)
 	{
 		char *prompt_str;
+		char *input;
 
 		prompt_str = prompt(exit_status);
 		input = readline(prompt_str);
@@ -196,10 +195,7 @@ int main_loop(char *envp[])
 		update_exit_status(exit_status, &env_dict);
 		free(input);
 		if (g_signal_number == SIGINT) // 同じ処理　TODO :リファクタリングが必要
-		{
-			reconnect_stdin(&exit_status);
-			continue;
-		}
+			reconnect_stdin(&exit_status); // この行以降にプログラムを書かない
 	}
 	str_dict_clear(&env_dict, free, free);
 	return (0);

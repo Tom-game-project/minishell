@@ -47,7 +47,7 @@ int read_heredocline(
 		}
 	}
 	str_list_clear(&lst, free);
-	free(str);
+	// free(str);
 	return (0);
 }
 
