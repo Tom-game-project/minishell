@@ -165,6 +165,7 @@ int main_loop(char *envp[])
 		free(prompt_str);
 		if (g_signal_number == SIGINT)
 		{
+			free(input);
 			if (exit_status == 0)
 				write(STDOUT_FILENO, &"\n", 1);
 			exit_status = 130;
@@ -188,6 +189,21 @@ int main_loop(char *envp[])
 	       	// exit_statusを更新する
 		update_exit_status(exit_status, &env_dict);
 		free(input);
+		if (g_signal_number == SIGINT) // 同じ処理　TODO :リファクタリングが必要
+		{
+			if (exit_status == 0)
+				write(STDOUT_FILENO, &"\n", 1);
+			exit_status = 130;
+			// ttyデバイスにstdinを再接続する
+			int tty_fd = open("/dev/tty", O_RDONLY);
+			if (tty_fd != -1)
+			{
+				dup2(tty_fd, STDIN_FILENO);
+				close(tty_fd);
+			}
+			g_signal_number = 0;
+			continue;
+		}
 	}
 	str_dict_clear(&env_dict, free, free);
 	return (0);
