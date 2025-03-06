@@ -20,7 +20,7 @@ int before_exec(t_ast   **ast, char *input)
 int minishell(void)
 {
     int exit_status;
-    char *input = ft_strdup("cat < infile | cat < infile2 -e");
+    char *input = ft_strdup("cat < infile | cat < infile2 -e || (echo hello | outfile)");
     t_ast *ast;
     ast = NULL;
 

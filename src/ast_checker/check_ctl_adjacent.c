@@ -1,5 +1,6 @@
 #include "ast_checker.h"
 #include "parser.h"
+#include <unistd.h>
 
 t_syntax_result check_ctl_no_element(t_ast *ast)
 {
