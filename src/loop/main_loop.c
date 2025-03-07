@@ -5,6 +5,7 @@
 #include "exec.h"
 #include "libft.h"
 #include "envtools.h"
+#include "sig.h"
 
 #include <linux/limits.h>
 #include <stdlib.h>
@@ -21,7 +22,6 @@
 #include <stdio.h>
 #include "../tests/tom_parser_tools/tools.h"
 
-/// グローバル変数
 int g_signal_number = 0;
 
 #include <fcntl.h>
@@ -107,65 +107,12 @@ char *prompt(int exit_status)
 	return (rstr);
 }
 
-
-/// back slashに限らないシグナルの受信
-void handle_sigquit(int sig) {
-	(void) sig;
-	g_signal_number = sig;
-	if (sig == SIGINT)
-	{
-		rl_on_new_line();      // 新しい行を準備
-		rl_replace_line("", 0);// 入力行をクリア
-		int devnull = open("/dev/null", O_RDONLY);
-		dup2(devnull, STDIN_FILENO);  // 標準入力を /dev/null にリダイレクト
-		close(devnull); // stdinを閉じて、EOFを送る
-	}
-}
-
-/// `ctrl-\`を無効化する関数
-void disable_ctrl_backslash() 
-{
-	struct termios orig_termios;
-	struct termios new_termios;
-
-	tcgetattr(STDIN_FILENO, &orig_termios); // 現在の端末設定を取得
-	new_termios = orig_termios;
-	new_termios.c_cc[VQUIT] = _POSIX_VDISABLE; // `Ctrl-\` を無効化
-	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
-}
-
-/// シグナル発生で切断された標準入力を復元させる
-void
-reconnect_stdin(int *exit_status)
-{
-	if (*exit_status == 0)
-		write(STDOUT_FILENO, &"\n", 1);
-	*exit_status = 130;
-	// ttyデバイスにstdinを再接続する
-	int tty_fd = open("/dev/tty", O_RDONLY);
-	if (tty_fd != -1)
-	{
-		dup2(tty_fd, STDIN_FILENO);
-		close(tty_fd);
-	}
-	g_signal_number = 0;
-}
-
 int main_loop(char *envp[])
 {
 	t_str_dict *env_dict;
 	int exit_status;
-	struct sigaction sa_sigquit;
 
-	///シグナルハンドラの設定
-	// Ctrl-\ (SIGQUIT) のための sigaction を設定
-	sa_sigquit.sa_handler = handle_sigquit;
-	sigemptyset(&sa_sigquit.sa_mask);
-	sa_sigquit.sa_flags = 0;
-	sigaction(SIGQUIT, &sa_sigquit, NULL);
-	sigaction(SIGINT, &sa_sigquit, NULL);
-	disable_ctrl_backslash();
-
+	sig_settig();
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp); // 環境変数をセット
 	exit_status = 0;
@@ -181,6 +128,7 @@ int main_loop(char *envp[])
 		{
 			free(input);
 			reconnect_stdin(&exit_status);
+			g_signal_number = 0;
 			continue;
 		}
 		else if (input == NULL)
@@ -191,8 +139,11 @@ int main_loop(char *envp[])
 	       	// exit_statusを更新する
 		update_exit_status(exit_status, &env_dict);
 		free(input);
-		if (g_signal_number == SIGINT) // 同じ処理　TODO :リファクタリングが必要
+		if (g_signal_number == SIGINT){ // 同じ処理　TODO :リファクタリングが必要
 			reconnect_stdin(&exit_status); // この行以降にプログラムを書かない
+
+			g_signal_number = 0;
+		}
 	}
 	str_dict_clear(&env_dict, free, free);
 	return (0);

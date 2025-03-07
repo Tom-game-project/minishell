@@ -21,7 +21,6 @@ TEST_FLAGS = -g
 
 BUILD_IN_SRC = \
       src/built-in/cd.c\
-      src/built-in/dummy.c\
       src/built-in/echo.c\
       src/built-in/env.c\
       src/built-in/exit.c\
@@ -206,6 +205,14 @@ STRTOOLS_SRC = \
 LOOP_SRC = \
      src/loop/main_loop.c
 
+SIG_SRC = \
+     src/sig/disable_ctrl_backslash.c\
+     src/sig/disconnect2stdin.c\
+     src/sig/reconnect2stdin.c\
+     src/sig/handler.c\
+     src/sig/sig_setting.c\
+
+
 # 成果物には含めない
 # TODO: testのときのみ含まれるようなruleを追加する
 FOR_TEST_SRC=\
@@ -226,6 +233,7 @@ SRC = \
 	$(STRTOOLS_SRC)\
 	$(ENVTOOLS_SRC)\
 	$(LOOP_SRC)\
+	$(SIG_SRC)\
 
 
 MAIN = \
