@@ -1,5 +1,6 @@
 
 # include "ast_checker.h"
+# include <unistd.h>
 
 t_syntax_result check_pipe_no_arg(t_ast *ast)
 {

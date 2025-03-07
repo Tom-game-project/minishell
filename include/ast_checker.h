@@ -14,6 +14,7 @@ typedef enum e_syntax_result t_syntax_result;
 enum e_syntax_result
 {
 	e_syntax_ok,
+	e_no_input,
 	e_syntax_near_unexpected_token_string,
 	e_ctl_near_unexpected_token_and,
 	e_ctl_near_unexpected_token_or,
@@ -30,6 +31,8 @@ enum e_syntax_result
 	e_rdt_no_element_left_and_left,
 };
 
+bool ast_checker_wrap2(t_ast **ast);
+
 //ast_checker.c
 t_syntax_result ast_checker(t_ast	*ast);
 
@@ -37,11 +40,13 @@ t_syntax_result ast_checker(t_ast	*ast);
 bool is_enum_rdtope(t_operator ope);
 
 //check_case
+t_syntax_result check_no_input(t_ast *ast);
 t_syntax_result check_ctl_no_element(t_ast *ast);
 t_syntax_result check_pipe_no_arg(t_ast *ast);
 t_syntax_result check_rdt_no_arg(t_ast *ast);
 t_syntax_result check_rdt_no_element(t_ast *ast);
 t_syntax_result check_element(t_ast *ast);
+t_syntax_result	check_adjacent_strings(t_ast *ast);
 
 //print
 bool    print_checker_result(t_syntax_result result);

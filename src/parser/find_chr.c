@@ -3,6 +3,7 @@
 # include "libft.h"
 # include <limits.h>
 #include <unistd.h>
+#include <stdio.h>
 
 static int	find_chr(char *input, char find);
 
@@ -39,6 +40,8 @@ static int	find_chr(char *input, char find)
 				count++;
 			i++;
 		}
+		if (count % 2 == 0)
+			return (INT_MIN);
 	}
 	if (find == '\'')
 	{
@@ -48,6 +51,8 @@ static int	find_chr(char *input, char find)
 				count++;
 			i++;
 		}
+		if (count % 2 == 0)
+			return (INT_MIN);
 	}
 	i = 0;
 	while (input[i] != '\0')

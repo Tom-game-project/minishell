@@ -1,11 +1,12 @@
 #include "ast_checker.h"
-#include "libft.h"
-#include "list.h"
 #include "parser.h"
+#include "list.h"
+#include <unistd.h>
 
 t_syntax_result check_element(t_ast *ast)
 {
     int             i;
+    int             tmp;
     t_str_list      *head;
     t_syntax_result result;
 
@@ -18,11 +19,14 @@ t_syntax_result check_element(t_ast *ast)
         {
             if (*(head->ptr.str + i) == '(')
                 result = e_syntax_near_unexpected_token_string;
-            i++;
+            tmp = find_syntax(head->ptr.str + i);
+		    if (tmp > 0)
+			    i += tmp;
+		    else
+			    i++;
         }
         head = head->next;
     }
     return (result);
 }
 
-//

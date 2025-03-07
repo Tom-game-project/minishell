@@ -36,6 +36,8 @@ parser_wrap(char *input)
     if (e_result_paren_not_closed_err == parser(&ast, input))
     {
         dprintf(STDERR_FILENO, "minishell : not close syntax\n");
+		clear_ast(&ast);
+		return (NULL);
     }
     else
     {
@@ -71,18 +73,26 @@ int exec_shell_cmd(char *str, t_str_dict **env_dict)
 {
 	t_ast *ast;
 	int exit_status;
+	t_syntax_result result;
 
 	dprintf(STDERR_FILENO, "ORIGIN PID (%d)\n", getpid());
 	ast = parser_wrap(str);
-	if (!ast_checker_wrap(ast))
+
+	if (ast == NULL)
+		return (1);
+	result = ast_checker(ast);
+	print_checker_result(result);
+	if (result == e_no_input)
 	{
 		clear_ast(&ast);
 		return (1); // syntax error occured
 	}
+	else{
 	exit_status = exec(ast, env_dict);
 	//dprintf(STDERR_FILENO, "exit_status %d\n", exit_status);
 	clear_ast(&ast);
 	return (exit_status);
+	}
 }
 
 /// exit statusと、今いるディレクトリを表示するプロンプト

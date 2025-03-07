@@ -120,6 +120,7 @@ EXPAND_STRING_SRC = \
 
 PARSER_SRC = \
       src/parser/parser.c\
+      src/parser/parser_wrap.c\
       src/parser/allocation_ast.c\
       src/parser/checker_is.c\
       src/parser/checker_str.c\
@@ -136,6 +137,7 @@ PARSER_SRC = \
 
 AST_CHECKER_SRC = \
       src/ast_checker/ast_checker.c\
+      src/ast_checker/ast_checker_wrap.c\
       src/ast_checker/ast_checker_u.c\
       src/ast_checker/check_ctl_adjacent.c\
       src/ast_checker/check_rdt_no_arg.c\
@@ -143,7 +145,8 @@ AST_CHECKER_SRC = \
       src/ast_checker/print_checker_result.c\
       src/ast_checker/check_rdt_adjacent.c\
       src/ast_checker/check_element.c\
-
+      src/ast_checker/check_adjacent_strings.c\
+      src/ast_checker/check_no_input.c\
 
 
 DICT_SRC = \
