@@ -129,7 +129,6 @@ PARSER_SRC = \
       src/parser/trim_isspc.c\
       src/parser/clear_ast.c\
       src/parser/syntax_checker.c\
-      src/parser/check_no_input.c\
 
 
 AST_CHECKER_SRC = \
@@ -143,6 +142,7 @@ AST_CHECKER_SRC = \
       src/ast_checker/check_rdt_adjacent.c\
       src/ast_checker/check_element.c\
       src/ast_checker/check_adjacent_strings.c\
+      src/ast_checker/check_no_input.c\
 
 
 DICT_SRC = \
