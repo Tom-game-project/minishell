@@ -221,6 +221,12 @@ t_void_list *void_list_filter(
 	bool (*f)(t_anytype)
 );
 
+t_void_list *void_list_filter2(
+	t_void_list **node,
+	bool (*f)(t_anytype, t_anytype),
+	t_anytype arg
+);
+
 // TODO for test
 // 以下の関数は、成果物に含めない
 //
