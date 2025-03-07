@@ -17,14 +17,14 @@
 #include <termios.h>
 // シグナル
 #include <signal.h>
+#include <fcntl.h>
 
 // for test 
 #include <stdio.h>
+
 #include "../tests/tom_parser_tools/tools.h"
 
 int g_signal_number = 0;
-
-#include <fcntl.h>
 
 /// 与えられた、shell cmdを解釈する関数
 static t_ast *
@@ -36,7 +36,6 @@ parser_wrap(char *input)
     if (e_result_paren_not_closed_err == parser(&ast, input))
     {
         dprintf(STDERR_FILENO, "minishell : not close syntax\n");
-		clear_ast(&ast);
 		return (NULL);
     }
     else
@@ -68,30 +67,29 @@ bool	ast_checker_wrap(t_ast	*ast)
 	}
 }
 
-// 返り値はexit status
-int exec_shell_cmd(char *str, t_str_dict **env_dict)
+/// exit statuswを更新します
+///
+void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 {
 	t_ast *ast;
-	int exit_status;
 	t_syntax_result result;
 
 	dprintf(STDERR_FILENO, "ORIGIN PID (%d)\n", getpid());
 	ast = parser_wrap(str);
-
 	if (ast == NULL)
-		return (1);
+	{
+		*exit_status = 1;
+		return ;
+	}
 	result = ast_checker(ast);
 	print_checker_result(result);
 	if (result == e_no_input)
-	{
 		clear_ast(&ast);
-		return (1); // syntax error occured
-	}
-	else{
-	exit_status = exec(ast, env_dict);
-	//dprintf(STDERR_FILENO, "exit_status %d\n", exit_status);
-	clear_ast(&ast);
-	return (exit_status);
+	else if (print_checker_result(result))
+	{
+		print_ast(ast, 0);
+		*exit_status = exec(ast, env_dict);
+		clear_ast(&ast);
 	}
 }
 
@@ -144,7 +142,7 @@ t_loop_cntl loop_unit(int *exit_status, t_str_dict **env_dict)
 		return (e_break);
 	else
 		add_history(input);
-	*exit_status = exec_shell_cmd(input, env_dict);
+	exec_shell_cmd(input, env_dict, exit_status);
 	update_exit_status(*exit_status, env_dict);
 	free(input);
 	if (g_signal_number == SIGINT)
