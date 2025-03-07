@@ -107,43 +107,67 @@ char *prompt(int exit_status)
 	return (rstr);
 }
 
+typedef enum e_loop_cntl t_loop_cntl;
+enum e_loop_cntl
+{
+	e_continue,
+	e_break,
+};
+
+/// 一回のloop
+t_loop_cntl loop_unit(int *exit_status, t_str_dict **env_dict)
+{
+	char *prompt_str;
+	char *input;
+
+	prompt_str = prompt(*exit_status);
+	input = readline(prompt_str);
+	free(prompt_str);
+	if (g_signal_number == SIGINT)
+	{
+		free(input);
+		reconnect_stdin(exit_status);
+		g_signal_number = 0;
+		return (e_continue);
+	}
+	else if (input == NULL)
+		return (e_break);
+	else
+		add_history(input);
+	*exit_status = exec_shell_cmd(input, env_dict);
+	update_exit_status(*exit_status, env_dict);
+	free(input);
+	if (g_signal_number == SIGINT)
+	{
+		reconnect_stdin(exit_status);
+		g_signal_number = 0;
+	}
+	return (e_continue);
+}
+
 int main_loop(char *envp[])
 {
 	t_str_dict *env_dict;
 	int exit_status;
+	t_loop_cntl lctl;
 
 	sig_settig();
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp); // 環境変数をセット
 	exit_status = 0;
+	str_dict_add(
+                &env_dict,
+                ft_strdup("?"),
+                ft_itoa(exit_status),
+                free
+        );
 	while (1)
 	{
-		char *prompt_str;
-		char *input;
-
-		prompt_str = prompt(exit_status);
-		input = readline(prompt_str);
-		free(prompt_str);
-		if (g_signal_number == SIGINT) // 同じ処理　TODO :リファクタリングが必要
-		{
-			free(input);
-			reconnect_stdin(&exit_status);
-			g_signal_number = 0;
+		lctl = loop_unit(&exit_status, &env_dict);
+		if (lctl == e_break)
+			break;
+		else if (lctl == e_continue)
 			continue;
-		}
-		else if (input == NULL)
-			break; // EOFが送られたら終了
-		else
-			add_history(input);
-		exit_status = exec_shell_cmd(input, &env_dict);
-	       	// exit_statusを更新する
-		update_exit_status(exit_status, &env_dict);
-		free(input);
-		if (g_signal_number == SIGINT){ // 同じ処理　TODO :リファクタリングが必要
-			reconnect_stdin(&exit_status); // この行以降にプログラムを書かない
-
-			g_signal_number = 0;
-		}
 	}
 	str_dict_clear(&env_dict, free, free);
 	return (0);

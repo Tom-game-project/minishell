@@ -13,6 +13,7 @@ bool is_valid_env_char(char c);
 
 bool is_valid_identifier(char *str);
 
+/// env_dictに保存される環境変数をアップデートする
 int update_exit_status(int exit_status, t_str_dict **env_dict);
 
 #endif
