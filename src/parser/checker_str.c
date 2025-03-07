@@ -2,7 +2,7 @@
 #include "libft.h"
 #include <stdbool.h>
 
-static int update_idx(char *str, int len);
+int update_idx(char *str, int len);
 
 bool    checker_str_ctl(char *str)
 {
@@ -106,7 +106,7 @@ int    str_rdt_len(char *str)
     return (0);
 }
 
-static int update_idx(char *str, int len)
+int update_idx(char *str, int len)
 {
     int tmp;
 
