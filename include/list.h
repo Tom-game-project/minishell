@@ -209,6 +209,12 @@ int void_list_search2_index(
 
 int merge_sort(t_void_list **node, bool (*cmp)(t_anytype, t_anytype));
 
+int void_list_insert_list(
+	t_void_list **target,
+	t_void_list *lst,
+       	int index
+);
+
 // TODO for test
 // 以下の関数は、成果物に含めない
 //
