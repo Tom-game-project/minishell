@@ -215,6 +215,12 @@ int void_list_insert_list(
        	int index
 );
 
+
+t_void_list *void_list_filter(
+	t_void_list **node,
+	bool (*f)(t_anytype)
+);
+
 // TODO for test
 // 以下の関数は、成果物に含めない
 //

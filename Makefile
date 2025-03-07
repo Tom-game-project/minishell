@@ -99,6 +99,7 @@ VOID_LIST = \
       src/list/void_list_cut.c\
       src/list/void_list_sort.c\
       src/list/void_list_insert_list.c\
+      src/list/void_list_filter.c\
 
 
 LIST_SRC = \
