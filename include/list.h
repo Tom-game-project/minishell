@@ -207,6 +207,8 @@ int void_list_search2_index(
 	void *str
 );
 
+int merge_sort(t_void_list **node, bool (*cmp)(t_anytype, t_anytype));
+
 // TODO for test
 // 以下の関数は、成果物に含めない
 //

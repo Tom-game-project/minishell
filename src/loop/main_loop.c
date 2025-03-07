@@ -40,7 +40,6 @@ parser_wrap(char *input)
     else
     {
         dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
-        // print_ast(ast, 0); // ast を表示する
     }
     return (ast);
 }
@@ -165,7 +164,6 @@ int main_loop(char *envp[])
 	sa_sigquit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_sigquit, NULL);
 	sigaction(SIGINT, &sa_sigquit, NULL);
-	/// `Ctrl-\`が標準出力されてしまうのを防ぐ
 	disable_ctrl_backslash();
 
 	env_dict = NULL;
