@@ -8,6 +8,8 @@
 #include <string.h>
 #include <signal.h>
 
+#include <stdio.h>
+
 #include "sig.h"
 
 
@@ -37,7 +39,14 @@ t_private read_heredocline_helper(
 
 	ft_memset(buf, '\0', BUF_SIZE);
 	if (read(STDIN_FILENO, buf, BUF_SIZE) == 0)
-		return (e_break);
+	{
+		//dprintf(STDERR_FILENO,"len %d\n", str_list_len(*lst));
+
+		if (str_list_len(*lst) == 0 || g_signal_number == SIGINT)
+		{
+			return (e_break);
+		}
+	}
 	str_list_push(lst, ft_strdup(buf));
 	index = str_list_search_index(*lst, includes_newline);
 	if (index != -1)
@@ -69,7 +78,6 @@ int read_heredocline(
 {
 	t_str_list *lst;
 	t_private p;
-
 
 	lst = NULL;
 	ft_putstr_fd(HEREDOC_PROMPT, STDOUT_FILENO);
