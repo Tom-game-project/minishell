@@ -1,15 +1,12 @@
-#include "expand_string.h"
+#include "asterisk.h"
 #include "list.h"
-#include "parser.h"
-#include "path.h"
 #include "libft.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
-bool	is_asterisk(char *input);
-t_str_list *recursive_process(t_str_list *head, int depth);
+t_str_list  *recursive_process(t_str_list *head, int depth);
 t_str_list  *join_to_cmd(t_str_list	*after_expand, t_str_list	*arg_cpy);
-bool	ft_strncmp_wrap(t_anytype	s1, t_anytype	s2);
+bool        ft_strncmp_wrap(t_anytype	s1, t_anytype	s2);
 
 t_str_list  *expand_asterisk(t_str_list *arg)
 {
@@ -30,9 +27,10 @@ t_str_list *recursive_process(t_str_list *head, int depth)
 
 	if (head == NULL)
 		return (NULL);
+    after_expand = NULL;
 	if (is_asterisk(head->ptr.str))
 	{
-		after_expand = expand(head->ptr.str);
+		after_expand = parse_and_expand(head->ptr.str);
 		after_expand_head = after_expand;
 		while(after_expand_head != NULL)
 			after_expand_head = after_expand_head->next;
@@ -41,29 +39,6 @@ t_str_list *recursive_process(t_str_list *head, int depth)
 		str_list_push(&after_expand_head, head->ptr.str);
 	after_expand_head = recursive_process(head->next, depth + 1);
 	return (after_expand);
-}
-
-bool	is_asterisk(char *input)
-{
-	int idx;
-
-	idx = 0;
-	while (*(input + idx) != '\0')
-	{
-		if (*(input + idx) == '*')
-			return (true);
-		update_idx(input + idx, idx);
-	}
-	return (false);
-}
-
-t_str_list  *expand(char *input)
-{
-	char		*dir_path;
-	t_str_list	*dir_list;
-
-	dir_list = get_dir_list(dir_path);
-
 }
 
 t_str_list  *join_to_cmd(t_str_list	*after_expand, t_str_list	*arg_cpy)
