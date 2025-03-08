@@ -17,15 +17,9 @@ int cmd_test(int argc, char *argv[], char *envp[], char *str)
 	return (exit_status);
 }
 
-/// # unit_test00
-///
-///
-/// ```bash
-/// make vtest TEST_FILE=tests/unit_test00.c
-/// ```
-int main(int argc, char *argv[], char *envp[])
+/// パイプ関係のテスト
+int test00(int argc, char *argv[], char *envp[])
 {
-	// heredocを除くredirectのテスト
 	cmd_test(argc, argv, envp, "< infile");
 	cmd_test(argc, argv, envp, "< infile cat | head");
 	cmd_test(argc, argv, envp, "echo hello | < infile cat");
@@ -34,7 +28,50 @@ int main(int argc, char *argv[], char *envp[])
 	cmd_test(argc, argv, envp, "echo hello world | < infile cat && cat < infile");
 	cmd_test(argc, argv, envp, "echo hello world | < infile cat || cat < infile");
 	cmd_test(argc, argv, envp, "sed -ne < infile '$='");
+	return (0);
+}
 
+/// アンド演算子関係のテスト
+int test01(int argc, char *argv[], char *envp[])
+{
+	cmd_test(argc, argv, envp, "< infile");
+	cmd_test(argc, argv, envp, "< infile cat & head");
+	cmd_test(argc, argv, envp, "echo hello && < infile cat");
+	cmd_test(argc, argv, envp, "echo hello && < infile cat | head");
+	cmd_test(argc, argv, envp, "< infile cat && cat & cat | cat");
+	cmd_test(argc, argv, envp, "echo hello world && < infile cat && cat < infile");
+	cmd_test(argc, argv, envp, "echo hello world && < infile cat || cat < infile");
+	cmd_test(argc, argv, envp, "sed -ne < infile '$='");
+	cmd_test(argc, argv, envp, "< minishell cat  | sha256sum  | awk '{print $1}' >> outfile");
+	return (0);
+}
+
+/// or演算子関係のテスト
+
+
+/// 追記リダイレクト関係のテスト
+int test02(int argc, char *argv[], char *envp[])
+{
+	// バイナリを正しくパイプできているかを確かめている
+	cmd_test(argc, argv, envp, "< minishell cat  | sha256sum  | awk '{print $1}' > outfile1");
+	cmd_test(argc, argv, envp, "sha256sum minishell | awk '{print $1}' > outfile2");
+	cmd_test(argc, argv, envp, "diff outfile1 outfile2"); // diff が何も出さない
+	return (0);
+}
+
+
+/// # unit_test00
+///
+///
+/// ```bash
+/// make vtest TEST_FILE=tests/unit_test00.c
+/// ```
+int main(int argc, char *argv[], char *envp[])
+{
+	test00(argc, argv, envp);
+	test01(argc, argv, envp);
+
+	// heredocを除くredirectのテスト
 	// heredocは、fdはvalgrindを通すと、fdを閉じていないみたいなエラーが出るけど多分問題ない
 	// 親で開いたfdがfork時にも複製されるおそらくそれを閉じれていないだけ
 	// 余裕があれば閉じたいが、exitで勝手に閉じる+ 実行中にリソースを食いつぶすタイプの疾患ではない
