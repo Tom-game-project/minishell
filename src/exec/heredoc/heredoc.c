@@ -6,10 +6,59 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <signal.h>
+
+#include "sig.h"
+
 
 #ifndef BUF_SIZE
 # define BUF_SIZE 1
 #endif
+
+#define HEREDOC_PROMPT "> "
+
+typedef enum e_private t_private;
+enum e_private
+{
+	e_continue,
+	e_break,
+	e_return_error
+};
+
+
+t_private read_heredocline_helper(
+	char *eof,
+       	int fd,
+	t_str_list **lst
+)
+{
+	char buf[BUF_SIZE];
+	int index;
+
+	ft_memset(buf, '\0', BUF_SIZE);
+	if (read(STDIN_FILENO, buf, BUF_SIZE) == 0)
+		return (e_break);
+	str_list_push(lst, ft_strdup(buf));
+	index = str_list_search_index(*lst, includes_newline);
+	if (index != -1)
+	{
+		char *str;
+		str = NULL;
+		str = candy_cutter(lst, index);
+		if (ft_streq(str, eof))
+			return (e_break);
+		ft_putstr_fd(HEREDOC_PROMPT, STDOUT_FILENO);
+		if (write(fd, str, ft_strlen(str)) == -1)
+		{
+			str_list_clear(lst, free);
+			free(str);
+			return (e_break);
+		}
+		free(str);
+	}
+	return (e_continue);
+}
+
 
 /// here docのインターフェイス
 /// ユーザの入力を受け取る関数
@@ -19,35 +68,20 @@ int read_heredocline(
 )
 {
 	t_str_list *lst;
-	char buf[BUF_SIZE];
-	int index;
-	char *str;
+	t_private p;
+
 
 	lst = NULL;
-	str = NULL;
+	ft_putstr_fd(HEREDOC_PROMPT, STDOUT_FILENO);
 	while (1)
 	{
-		ft_memset(buf, '\0', BUF_SIZE);
-		if (read(STDIN_FILENO, buf, BUF_SIZE) == 0)
-			break;
-		str_list_push(&lst, ft_strdup(buf));
-		index = str_list_search_index(lst, includes_newline);
-		if (index != -1)
-		{
-			str = candy_cutter(&lst, index);
-			if (ft_streq(str, eof))
-				break;
-			if (write(fd, str, ft_strlen(str)) == -1)
-			{
-				str_list_clear(&lst, free);
-				free(str);
-				return (-1);
-			}
-			free(str);
-		}
+		p = read_heredocline_helper(eof, fd, &lst);
+		if (p == e_break || p == e_return_error)
+			break ;
 	}
 	str_list_clear(&lst, free);
-	// free(str);
+	if (g_signal_number == SIGINT)
+		return (130);
 	return (0);
 }
 

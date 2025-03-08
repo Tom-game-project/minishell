@@ -112,9 +112,12 @@ int exec(t_ast *ast, t_str_dict **envp_dict)
 	t_int_list *heredoc_fd_list;
 
 	heredoc_fd_list = NULL;
-	heredoc_proc(ast, &heredoc_fd_list); // もしここにエラーが出た場合
-	//int_list_print(heredoc_fd_list);
-							      // 返り値を設定してそれを処理するのはアリ
+	if (heredoc_proc(ast, &heredoc_fd_list)== 130)
+	{
+		close_all_heredoc_fd(&heredoc_fd_list);
+		write(STDOUT_FILENO, &"\n", 1);
+		return (130);
+	}
 	exit_status = exec2(
 		&(t_exec_args){
 			ast, 

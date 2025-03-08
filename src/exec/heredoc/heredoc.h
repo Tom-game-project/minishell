@@ -6,7 +6,7 @@
 #include "parser.h"
 
 
-t_str_list *read_heredocline(char *eof, int fd);
+int read_heredocline(char *eof, int fd);
 
 int heredoc_proc(t_ast *ast, t_int_list **heredoc_fd_list);
 
