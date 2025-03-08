@@ -1,6 +1,7 @@
 #include "expand_string.h"
 #include "list.h"
 #include "parser.h"
+#include "path.h"
 #include "libft.h"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -8,6 +9,7 @@
 bool	is_asterisk(char *input);
 t_str_list *recursive_process(t_str_list *head, int depth);
 t_str_list  *join_to_cmd(t_str_list	*after_expand, t_str_list	*arg_cpy);
+bool	ft_strncmp_wrap(t_anytype	s1, t_anytype	s2);
 
 t_str_list  *expand_asterisk(t_str_list *arg)
 {
@@ -32,13 +34,13 @@ t_str_list *recursive_process(t_str_list *head, int depth)
 	{
 		after_expand = expand(head->ptr.str);
 		after_expand_head = after_expand;
-		free(str_list_pop(&head, 0));
 		while(after_expand_head != NULL)
 			after_expand_head = after_expand_head->next;
-		after_expand->next = head->next;
 	}
-	head->next = recursive_process(head->next, depth + 1);
-	return (head);
+	else
+		str_list_push(&after_expand_head, head->ptr.str);
+	after_expand_head = recursive_process(head->next, depth + 1);
+	return (after_expand);
 }
 
 bool	is_asterisk(char *input)
@@ -57,6 +59,10 @@ bool	is_asterisk(char *input)
 
 t_str_list  *expand(char *input)
 {
+	char		*dir_path;
+	t_str_list	*dir_list;
+
+	dir_list = get_dir_list(dir_path);
 
 }
 
@@ -67,8 +73,12 @@ t_str_list  *join_to_cmd(t_str_list	*after_expand, t_str_list	*arg_cpy)
 	return (after_expand);
 }
 
-bool	ft_strncmp_wrap(t_str_list	*s1, t_str_list	*s2)
+bool	ft_strncmp_wrap(t_anytype	s1, t_anytype	s2)
 {
+	int result;
 
+	result = ft_strncmp(s1.str, s2.str, 1);
+	if (result == 0)
+		return (true);
 	return (false);
 }
