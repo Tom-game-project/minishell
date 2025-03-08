@@ -27,9 +27,9 @@ int return_one_func();
 // src/built-in/cd.c
 int built_in_cd(t_str_list *args);
 
-int built_in_env(t_str_dict *envp_dict);
+int built_in_env(t_str_dict *envp_dict, int fd);
 
-int built_in_pwd();
+int built_in_pwd(int fd);
 
 int built_in_export(
 	t_str_list *args,
@@ -45,6 +45,6 @@ int built_in_unset(
 
 t_built_in get_built_in_enum(char *cmd);
 
-int built_in_echo(t_str_list *args);
+int built_in_echo(t_str_list *args, int fd);
 
 #endif

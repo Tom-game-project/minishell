@@ -44,9 +44,9 @@ int run_cmd_proc(t_exec_args *args)
 		else 
 			return (none_proc(args));
 	else if (tbi == e_built_in_pwd)
-		return (built_in_pwd());
+		return (built_in_pwd(args->output_fd));
 	else if (tbi == e_built_in_env)
-		return (built_in_env(*(args->envp_dict)));
+		return (built_in_env(*(args->envp_dict), args->output_fd));
 	else if (tbi == e_built_in_cd)
 		return (built_in_cd(args->ast->arg));
 	else if (tbi == e_built_in_export)
@@ -56,7 +56,7 @@ int run_cmd_proc(t_exec_args *args)
 	else if (tbi == e_built_in_exit)
 		return (built_in_exit(args->ast->arg));
 	else if (tbi == e_built_in_echo)
-		return (built_in_echo(args->ast->arg));
+		return (built_in_echo(args->ast->arg, args->output_fd));
 	else
 		// unreachable
 		return (1);

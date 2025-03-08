@@ -18,7 +18,7 @@
 /// ```bash
 /// echo -nnn hello world
 /// ```
-int built_in_echo(t_str_list *args)
+int built_in_echo(t_str_list *args, int fd)
 {
 	int exit_status;
 	bool newline_flag;
@@ -35,12 +35,12 @@ int built_in_echo(t_str_list *args)
 	}
 	while (args != NULL)
 	{
-		write(STDOUT_FILENO, args->ptr.str, ft_strlen(args->ptr.str));
+		write(fd, args->ptr.str, ft_strlen(args->ptr.str));
 		if (args->next != NULL)
-			write(STDOUT_FILENO, &" ", 1);
+			write(fd, &" ", 1);
 		args = args->next;
 	}
 	if (newline_flag)
-		write(STDOUT_FILENO, &"\n", 1);
+		write(fd, &"\n", 1);
 	return (exit_status);
 }

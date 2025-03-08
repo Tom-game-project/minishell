@@ -9,7 +9,7 @@
 /// envに渡されたオプション、引数については、すべて無視する
 ///
 /// minishellにおけるenvコマンドは、プロセスが保持する環境変数を返す
-int built_in_env(t_str_dict *envp_dict)
+int built_in_env(t_str_dict *envp_dict, int fd)
 {
     int exit_status;
     char **envp;
@@ -20,8 +20,8 @@ int built_in_env(t_str_dict *envp_dict)
     i = 0;
     while (envp[i] != NULL)
     {
-	    ft_putstr_fd(envp[i], STDOUT_FILENO);
-	    ft_putstr_fd("\n", STDOUT_FILENO);
+	    ft_putstr_fd(envp[i], fd);
+	    ft_putstr_fd("\n", fd);
 	    i += 1;
     }
     i = 0;

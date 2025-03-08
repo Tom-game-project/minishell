@@ -27,7 +27,7 @@ int main(int argc, char *argv[], char *envp[])
 {
 	// heredocを除くredirectのテスト
 	cmd_test(argc, argv, envp, "< infile");
-	cmd_test(argc, argv, envp, "< infile cat| head");
+	cmd_test(argc, argv, envp, "< infile cat | head");
 	cmd_test(argc, argv, envp, "echo hello | < infile cat");
 	cmd_test(argc, argv, envp, "echo hello | < infile cat | head");
 	cmd_test(argc, argv, envp, "< infile cat | cat | cat | cat");

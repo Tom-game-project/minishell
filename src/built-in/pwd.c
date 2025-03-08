@@ -11,7 +11,7 @@
 /// 
 /// 返り値exit_status
 ///
-int built_in_pwd()
+int built_in_pwd(int fd)
 {
 	char buf[PATH_MAX];
 
@@ -20,7 +20,7 @@ int built_in_pwd()
 		perror("minishell");
 		return (1);
 	}
-	ft_putstr_fd(buf, STDOUT_FILENO);
-	ft_putstr_fd("\n", STDOUT_FILENO);
+	ft_putstr_fd(buf, fd);
+	ft_putstr_fd("\n", fd);
 	return (0);
 }
