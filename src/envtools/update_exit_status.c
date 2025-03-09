@@ -10,6 +10,8 @@
 ///
 int update_exit_status(int exit_status, t_str_dict **env_dict)
 {
+	//(void) exit_status;
+	//(void) env_dict;
 	char *str_tmp;
 
 	str_tmp = ft_strdup("?");

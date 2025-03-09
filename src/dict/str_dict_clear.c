@@ -1,5 +1,7 @@
 #include "dict.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /// すべてをclearします
 /// 第二第三引数に渡された関数によって、それぞれ、stringを解放しつつ

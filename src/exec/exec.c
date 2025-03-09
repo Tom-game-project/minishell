@@ -36,7 +36,7 @@ int run_cmd_proc(t_exec_args *args)
 	str_list_map_arg1(
 		&(args->ast->arg),
 		(t_sd2sfunc) expand_string_wrap_str_free,
-		*args->envp_dict);
+		*(args->envp_dict));
 	tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
 	if (tbi == e_not_built_in) 
 		if (args->ppid == 0)
@@ -73,7 +73,6 @@ int run_cmd_proc(t_exec_args *args)
 /// ```
 int exec2(t_exec_args *args)
 {
-	// str_list_dprint(STDERR_FILENO, args->ast->arg);
 	if (args->ast->ope == e_ope_pipe) // |
 		return (pipe_proc(args));
 	else if (args->ast->ope == e_ope_and) // &&

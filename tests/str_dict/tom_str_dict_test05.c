@@ -6,7 +6,7 @@
 /// str_dict_clearのテスト
 ///
 /// ```bash
-/// make vtest TEST_FILE=tests/tom_str_dict_test05.c
+/// make vtest TEST_FILE=tests/str_dict/tom_str_dict_test05.c
 /// ```
 int main()
 {

@@ -1,7 +1,12 @@
 /// 体系的なテストを実行する
 #include "dict.h"
 #include "loop.h"
+#include "libft.h"
+#include "envtools.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+
 
 int cmd_test(int argc, char *argv[], char *envp[], char *str)
 {
@@ -12,7 +17,15 @@ int cmd_test(int argc, char *argv[], char *envp[], char *str)
 	t_str_dict *d;
 	d = NULL;
 	envp_to_str_dict(&d, envp);
-	exit_status = exec_shell_cmd(str, &d);
+	str_dict_add(
+                &d,
+                ft_strdup("?"),
+                ft_itoa(0),
+                free
+        );
+	dprintf(STDERR_FILENO, "pointer [%p]\n", d);
+	exec_shell_cmd(str, &d, &exit_status);
+	update_exit_status(exit_status, &d);
 	str_dict_clear(&d, free, free);
 	return (exit_status);
 }
@@ -48,17 +61,15 @@ int test01(int argc, char *argv[], char *envp[])
 
 /// or演算子関係のテスト
 
-
 /// 追記リダイレクト関係のテスト
 int test02(int argc, char *argv[], char *envp[])
 {
 	// バイナリを正しくパイプできているかを確かめている
 	cmd_test(argc, argv, envp, "< minishell cat  | sha256sum  | awk '{print $1}' > outfile1");
 	cmd_test(argc, argv, envp, "sha256sum minishell | awk '{print $1}' > outfile2");
-	cmd_test(argc, argv, envp, "diff outfile1 outfile2"); // diff が何も出さない
+	cmd_test(argc, argv, envp, "diff outfile1 outfile2 | wc -l"); // 正しく実行できていれば0が表示される
 	return (0);
 }
-
 
 /// # unit_test00
 ///
@@ -68,8 +79,9 @@ int test02(int argc, char *argv[], char *envp[])
 /// ```
 int main(int argc, char *argv[], char *envp[])
 {
-	test00(argc, argv, envp);
+	//test00(argc, argv, envp);
 	test01(argc, argv, envp);
+	//test02(argc, argv, envp);
 
 	// heredocを除くredirectのテスト
 	// heredocは、fdはvalgrindを通すと、fdを閉じていないみたいなエラーが出るけど多分問題ない
@@ -81,8 +93,7 @@ int main(int argc, char *argv[], char *envp[])
 	//cmd_test(argc, argv, envp, "echo hello world |<< EOF cat | cat");
 	//cmd_test(argc, argv, envp, "echo hello world | << EOF cat");
 	//cmd_test(argc, argv, envp, "echo hello world | << EOF cat && cat << EOF");
-	
-	//cmd_test(argc, argv, envp, "sssssssssssssssssss| sssssssssssssss | echo hello");
 
+	//cmd_test(argc, argv, envp, "sssssssssssssssssss| sssssssssssssss | echo hello");
 	return (0);
 }

@@ -4,7 +4,7 @@
 #include "private.h"
 #include "envtools.h"
 
-
+/// シングルクォーテーション中の処理
 static t_anchor single_quotation_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
 	(void) c;
@@ -13,6 +13,7 @@ static t_anchor single_quotation_proc(char c, t_list_args *group_args, t_str_dic
 	return (e_anchor_q);
 }
 
+/// ダブルクォーテーション中の処理
 static t_anchor double_quotation_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
 	(void) c;
@@ -38,6 +39,7 @@ t_anchor dollar_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 	return (e_anchor_out);
 }
 
+/// クォーテーションの中における処理
 t_anchor question_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
 		if (char_list_len(*group_args->path_group) == 1)

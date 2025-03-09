@@ -87,7 +87,6 @@ void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 		clear_ast(&ast);
 	else if (print_checker_result(result))
 	{
-		print_ast(ast, 0);
 		*exit_status = exec(ast, env_dict);
 		clear_ast(&ast);
 	}
@@ -123,17 +122,10 @@ enum e_loop_cntl
 };
 
 /// 一回のloop
-t_loop_cntl loop_unit(int *exit_status, t_str_dict **env_dict)
+t_loop_cntl device_loop_unit(char *input,int *exit_status, t_str_dict **env_dict)
 {
-	char *prompt_str;
-	char *input;
-
-	prompt_str = prompt(*exit_status);
-	input = readline(prompt_str);
-	free(prompt_str);
 	if (g_signal_number == SIGINT)
 	{
-		free(input);
 		reconnect_stdin(exit_status);
 		g_signal_number = 0;
 		return (e_continue);
@@ -144,7 +136,6 @@ t_loop_cntl loop_unit(int *exit_status, t_str_dict **env_dict)
 		add_history(input);
 	exec_shell_cmd(input, env_dict, exit_status);
 	update_exit_status(*exit_status, env_dict);
-	free(input);
 	if (g_signal_number == SIGINT)
 	{
 		reconnect_stdin(exit_status);
@@ -171,7 +162,14 @@ int main_loop(char *envp[])
         );
 	while (1)
 	{
-		lctl = loop_unit(&exit_status, &env_dict);
+		char *input;
+		char *prompt_str;
+
+		prompt_str = prompt(exit_status);
+		input = readline(prompt_str);
+		free(prompt_str);
+		lctl = device_loop_unit(input, &exit_status, &env_dict);
+		free(input);
 		if (lctl == e_break)
 			break;
 		else if (lctl == e_continue)

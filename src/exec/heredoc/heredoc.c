@@ -56,7 +56,7 @@ t_private read_heredocline_helper(
 		str = candy_cutter(lst, index);
 		if (ft_streq(str, eof))
 			return (e_break);
-		ft_putstr_fd(HEREDOC_PROMPT, STDOUT_FILENO);
+		ft_putstr_fd(HEREDOC_PROMPT, STDERR_FILENO);// TODO stdinがデバイス出ない場合は、入らないようにする
 		if (write(fd, str, ft_strlen(str)) == -1)
 		{
 			str_list_clear(lst, free);
@@ -80,7 +80,7 @@ int read_heredocline(
 	t_private p;
 
 	lst = NULL;
-	ft_putstr_fd(HEREDOC_PROMPT, STDOUT_FILENO);
+	ft_putstr_fd(HEREDOC_PROMPT, STDERR_FILENO); // TODO stdinがデバイス出ない場合は、入らないようにする
 	while (1)
 	{
 		p = read_heredocline_helper(eof, fd, &lst);
