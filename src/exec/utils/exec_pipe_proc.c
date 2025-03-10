@@ -18,13 +18,12 @@ int consume_fd(int heredoc_c, t_int_list **heredoc_fd_list)
 	{
 		int fd;
 		fd = int_list_pop(heredoc_fd_list, 0);
-		dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, getpid());
+		//dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, getpid());
 		close(fd);
 		i += 1;
 	}
 	return (0);
 }
-
 
 /// 子プロセス
 static int child_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)

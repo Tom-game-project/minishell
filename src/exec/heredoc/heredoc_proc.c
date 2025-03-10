@@ -20,7 +20,7 @@ static int heredoc_unit_proc(t_ast *ast, t_int_list **heredoc_fd_list, int rw_fd
 	free(strl);
 	if (create_shadow_file(rw_fd) == -1)
 		return (1);
-	exit_status = read_heredocline(strl2, rw_fd[1]);
+	exit_status = read_heredocline2(strl2, rw_fd[1]);
 	free(strl2);
 	close(rw_fd[1]);
 	int_list_push(heredoc_fd_list, rw_fd[0]);

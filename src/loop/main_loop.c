@@ -45,28 +45,6 @@ parser_wrap(char *input)
     return (ast);
 }
 
-/// 与えられたastに文法上のエラーが存在しないことを確かめる関数
-/// - true
-/// 実行可能
-/// - false
-/// 実行しない（引数が不正）
-bool	ast_checker_wrap(t_ast	*ast)
-{
-	t_syntax_result	result;
-
-	result = ast_checker(ast);
-	if (print_checker_result(result))
-	{
-		print_ast(ast, 0);
-		return (true);
-	}
-	else
-	{
-		// 実行が続行できないとき
-		return (false);
-	}
-}
-
 /// exit statuswを更新します
 ///
 void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
@@ -84,9 +62,13 @@ void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 	result = ast_checker(ast);
 	print_checker_result(result);
 	if (result == e_no_input)
+	{
+		dprintf(STDERR_FILENO, "no_input\n");
 		clear_ast(&ast);
+	}
 	else if (print_checker_result(result))
 	{
+		print_ast(ast, 0);
 		*exit_status = exec(ast, env_dict);
 		clear_ast(&ast);
 	}
@@ -124,6 +106,10 @@ enum e_loop_cntl
 /// 一回のloop
 t_loop_cntl device_loop_unit(char *input,int *exit_status, t_str_dict **env_dict)
 {
+	struct termios orig_termios;
+
+	tcgetattr(STDIN_FILENO, &orig_termios);
+
 	if (g_signal_number == SIGINT)
 	{
 		reconnect_stdin(exit_status);
@@ -139,6 +125,7 @@ t_loop_cntl device_loop_unit(char *input,int *exit_status, t_str_dict **env_dict
 	if (g_signal_number == SIGINT)
 	{
 		reconnect_stdin(exit_status);
+		tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
 		g_signal_number = 0;
 	}
 	return (e_continue);
