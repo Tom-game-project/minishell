@@ -153,12 +153,13 @@ t_private read_heredocline_helper2(
 		char_list_clear(lst);
 		return (e_continue);
 	}
-	else
+	else if (ft_isprint(c))
 	{
 		char_list_push(lst, c);
 		ft_putchar_fd(c, STDOUT_FILENO);
 		return (e_continue);
 	}
+	return (e_continue);
 }
 
 //// 修正バージョン
