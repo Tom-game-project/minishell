@@ -12,9 +12,9 @@ t_parse_result	parser(t_ast **ast, char *input)
 	t_str_list		*head;
 	t_parse_result	result;
 
-	next_input = NULL;
-	if (input == NULL)
+	if (input == NULL || *input == '\0')
 		return (e_result_ok);
+	next_input = NULL;
 	if (syntax_checker(input) == false)
 		return (e_result_paren_not_closed_err);
 	str = ft_strdup(input);

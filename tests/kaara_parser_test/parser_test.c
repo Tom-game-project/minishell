@@ -11,16 +11,22 @@
 int before_exec(t_ast   **ast, char *input)
 {
     if (parser_wrap2(ast, input) == false)
+    {
+        printf("aaaa\n");
         return (2);
+    }
     if (ast_checker_wrap2(ast) == false)
+    {
+        printf("aaaaqwqqq\n");
         return (2);
+    }
     return (0);
 }
 
 int minishell(void)
 {
     int exit_status;
-    char *input = ft_strdup("cat < infile | cat < infile2 -e || (echo hello | outfile)");
+    char *input = ft_strdup("< infile | echo hello");
     t_ast *ast;
     ast = NULL;
 
@@ -39,7 +45,19 @@ int minishell(void)
 
 int main(void)
 {
-    minishell();
+    t_syntax_result result;
+    char *input = ft_strdup("< infile | echo hello");
+    t_ast *ast;
+    ast = NULL;
+
+    parser(&ast, input);
+    print_ast(ast, 0);
+    result = ast_checker(ast);
+    if (result == e_no_input)
+        printf("aaaaaaaaa\n");
+    clear_ast(&ast);
+    free(input);
+//    minishell();
     return (0);
 }
 
