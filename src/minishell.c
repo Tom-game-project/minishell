@@ -50,7 +50,13 @@ int main(int argc, char *argv[], char *envp[])
 	(void) argv;
 
 	if (isatty(STDIN_FILENO))
+	{
 		header();
-	main_loop(envp);
+		main_loop(envp);
+	}
+	else
+	{
+		none_device_main_loop(envp);
+	}
 	return (0); 
 }

@@ -166,3 +166,60 @@ int main_loop(char *envp[])
 	return (0);
 }
 
+char *
+none_device_readline()
+{
+	char c;
+	t_char_list *lst;
+	char *str;
+
+	lst = NULL;
+	while (1)
+	{
+		c = '\0';
+		if (read(STDIN_FILENO, &c, 1) == 0)
+			break ;
+		char_list_push(&lst, c);
+		if (c == '\0' || c == '\n')
+			break ;
+	}
+	str = char_list_to_str(lst);
+	char_list_clear(&lst);
+	return (str);
+}
+
+/// stdin がデバイスでないとき
+int none_device_main_loop(char *envp[])
+{
+	t_str_dict *env_dict;
+	int exit_status;
+	t_loop_cntl lctl;
+
+	sig_settig();
+	env_dict = NULL;
+	envp_to_str_dict(&env_dict, envp); // 環境変数をセット
+	exit_status = 0;
+	str_dict_add(
+                &env_dict,
+                ft_strdup("?"),
+                ft_itoa(exit_status),
+                free
+        );
+	while (1)
+	{
+		char *input;
+
+		input = none_device_readline();
+		if (ft_strlen(input) == 0)
+			break;
+
+		lctl = device_loop_unit(input, &exit_status, &env_dict);
+		free(input);
+		if (lctl == e_break)
+			break;
+		else if (lctl == e_continue)
+			continue;
+	}
+	str_dict_clear(&env_dict, free, free);
+	return (0);
+}

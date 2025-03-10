@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-
 int cmd_test(int argc, char *argv[], char *envp[], char *str)
 {
 	(void) argc;
