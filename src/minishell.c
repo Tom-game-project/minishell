@@ -67,6 +67,7 @@ STRINGER(BUILD_TIMESTAMP)")"
 int main(int argc, char *argv[], char *envp[])
 {
 	int fd;
+	int exit_status;
 
 	fd = -1;
 	if (1 < argc)
@@ -82,11 +83,12 @@ int main(int argc, char *argv[], char *envp[])
 	if (isatty(STDIN_FILENO))
 	{
 		header();
-		main_loop(envp);
+		exit_status = main_loop(envp);
 	}
 	else
-		none_device_main_loop(envp);
+		exit_status = none_device_main_loop(envp);
 	if (fd != -1)
 		close(fd);
-	return (0); 
+	dprintf(STDERR_FILENO,"exit status %d\n", exit_status);
+	return (exit_status);
 }

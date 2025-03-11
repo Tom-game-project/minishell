@@ -163,7 +163,7 @@ int main_loop(char *envp[])
 			continue;
 	}
 	str_dict_clear(&env_dict, free, free);
-	return (0);
+	return (exit_status);
 }
 
 char *
@@ -221,5 +221,5 @@ int none_device_main_loop(char *envp[])
 			continue;
 	}
 	str_dict_clear(&env_dict, free, free);
-	return (0);
+	return (exit_status);
 }
