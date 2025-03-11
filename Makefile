@@ -259,21 +259,28 @@ LIBFT_HEADER = $(LIBFT_DIR)/libft.h
 #########
 
 OBJ = $(SRC:.c=.o)
-# MAIN_OBJ = $(MAIN:.c=.o)
 TEST_OBJ = $(TEST_FILE:.c=.o)
 
 NAME = minishell
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(MAIN_OBJ) $(LIBFT_NAME)
-	$(CC) $(CFLAGS) \
-		-DCOMMIT_HASH="$(shell git show --format='%h' --no-patch)" \
-		-DBUILD_TIMESTAMP='$(shell date "+%Y/%m/%d-%H:%M:%S")'\
-		-DCC_VERSION="$(shell $(CC) --version | head -n1)"\
+# headerに含めるデバッグ情報
+COMMIT_HASH = $(shell git show --format='%h' --no-patch)
+BUILD_TIMESTAMP = $(shell date "+%Y\/%m\/%d-%H:%M:%S")
+CC_VERSION = $(shell $(CC) --version | head -n1)
+
+$(NAME): $(OBJ) $(LIBFT_NAME) $(MAIN)
+	cat $(MAIN) \
+		| sed -e 's/^#define DEBUG_INFO$$/#define DEBUG_INFO "hello"/' \
+		| sed -e 's/^#define COMMIT_HASH$$/#define COMMIT_HASH ''"'$(COMMIT_HASH)'"''/' \
+		| sed -e 's/^#define CC_VERSION$$/#define CC_VERSION "$(CC_VERSION)"/' \
+		| sed -e 's/^#define BUILD_TIMESTAMP$$/#define BUILD_TIMESTAMP "$(BUILD_TIMESTAMP)"/' \
+		| $(CC) $(CFLAGS) \
 		-Iinclude \
 		-o $(NAME) \
-		$(OBJ) $(MAIN) $(LIBFT_NAME) \
+		$(OBJ) $(LIBFT_NAME) \
+		-x c -\
 		-lreadline
 
 $(LIBFT_NAME): $(LIBFT_HEADER)
