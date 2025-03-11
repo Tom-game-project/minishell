@@ -1,4 +1,5 @@
 #include "loop.h"
+#include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -44,19 +45,48 @@ STRINGER(BUILD_TIMESTAMP)")"
 	return (0);
 }
 
+/// # ノンデバイスモード
+///
+/// ```bash
+/// < bash.sh cat | ./minishell
+/// ```
+///
+/// ```bash
+/// ./minishell bash.sh
+/// ```
+///
+/// ```bash
+/// < bash.sh cat | ./minishell bash2.sh
+/// ```
+/// 
+/// # デバイスモード(プロンプトを表示して、ユーザの入力を待機する)
+///
+/// ```bash
+/// ./minishell
+/// ```
 int main(int argc, char *argv[], char *envp[])
 {
-	(void) argc;
-	(void) argv;
+	int fd;
 
+	fd = -1;
+	if (1 < argc)
+	{
+		fd = open(argv[1], O_RDONLY, 0644);
+		if (fd == -1)
+		{
+			perror("minishell");
+			return (1);
+		}
+		dup2(fd, STDIN_FILENO);
+	}
 	if (isatty(STDIN_FILENO))
 	{
 		header();
 		main_loop(envp);
 	}
 	else
-	{
 		none_device_main_loop(envp);
-	}
+	if (fd != -1)
+		close(fd);
 	return (0); 
 }
