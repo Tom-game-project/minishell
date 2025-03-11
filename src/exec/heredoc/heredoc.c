@@ -29,81 +29,66 @@ enum e_private
 	e_return_error
 };
 
-t_private read_heredocline_helper(
-	char *eof,
-       	int fd,
-	t_str_list **lst
+int 
+put_switcher(char *str, int fd)
+{
+	if (isatty(STDIN_FILENO))
+		ft_putstr_fd(str, fd);
+	return (0);
+}
+
+t_private read_heredocline_helper2_eot(
+	t_char_list **lst
 )
 {
-	char buf[BUF_SIZE];
-	int index;
-
-	ft_memset(buf, '\0', BUF_SIZE);
-	//dprintf(STDERR_FILENO, "\n");
-	//str_list_print(*lst);
-	if (read(STDIN_FILENO, buf, BUF_SIZE) == 0)
+	if (char_list_len(*lst) == 0)
 	{
-		//dprintf(STDERR_FILENO,"len %d\n", str_list_len(*lst));
-		//dprintf(STDERR_FILENO, "EOF 送出 %d", g_signal_number);
-
-		if (str_list_len(*lst) == 0 || g_signal_number == SIGINT)
-		{
-			return (e_break);
-		}
-		else if (g_signal_number == 0)
-		{
-			int exit_status;
-			exit_status = 1;
-			reconnect_stdin(&exit_status);
-			return (e_continue);
-		}
+		put_switcher("\n", STDOUT_FILENO);
+		return (e_break);
 	}
-	if (ft_strlen(buf) != 0)
-		str_list_push(lst, ft_strdup(buf));
-	index = str_list_search_index(*lst, includes_newline);
-	if (index != -1)
+	else
+		return (e_continue);
+}
+
+t_private read_heredocline_helper2_baskspace(
+	t_char_list **lst
+)
+{
+	if (0 < char_list_len(*lst))
 	{
-		char *str;
-		str = NULL;
-		str = candy_cutter(lst, index);
-		if (ft_streq(str, eof))
-			return (e_break);
-		if (write(fd, str, ft_strlen(str)) == -1)
-		{
-			str_list_clear(lst, free);
-			free(str);
-			return (e_break);
-		}
-		free(str);
+		char_list_pop(lst, char_list_len(*lst) - 1);
+		put_switcher("\b \b", STDOUT_FILENO);
 	}
 	return (e_continue);
 }
 
 
-/// here docのインターフェイス
-/// ユーザの入力を受け取る関数
-int read_heredocline(
+t_private read_heredocline_helper2_newline(
 	char *eof,
-       	int fd
-)
-{
-	t_str_list *lst;
-	t_private p;
+       	int fd,
+	t_char_list **lst
+){
+	char *str;
 
-	lst = NULL;
-	while (1)
+	char_list_push(lst, '\n');
+	str = char_list_to_str(*lst);
+	if (ft_streq(eof, str))
 	{
-		p = read_heredocline_helper(eof, fd, &lst);
-		if (p == e_break || p == e_return_error)
-			break ;
+		free(str);
+		put_switcher("\n", STDOUT_FILENO);
+		return (e_break);
 	}
-	str_list_clear(&lst, free);
-	if (g_signal_number == SIGINT)
-		return (130);
-	return (0);
+	if (write(fd, str, ft_strlen(str)) == -1)
+	{
+		free(str);
+		return (e_break);
+	}
+	free(str);
+	put_switcher("\n", STDOUT_FILENO);
+	put_switcher(HEREDOC_PROMPT, STDERR_FILENO);
+	char_list_clear(lst);
+	return (e_continue);
 }
-
-
 
 t_private read_heredocline_helper2(
 	char *eof,
@@ -116,44 +101,15 @@ t_private read_heredocline_helper2(
 	if (read(STDIN_FILENO, &c, BUF_SIZE) <= 0)
 		return (e_break);
 	if (c == 4) // EOT
-		if (char_list_len(*lst) == 0)
-			return (e_break);
-		else
-			return (e_continue);
+		return (read_heredocline_helper2_eot(lst));
 	else if (c == 127 || c == '\b') // Back Space 及びDelの処理
-	{
-		if (0 < char_list_len(*lst)){
-			char_list_pop(lst, char_list_len(*lst) - 1);
-			ft_putstr_fd("\b \b", STDOUT_FILENO);
-		}
-		return (e_continue);
-	}
+		return (read_heredocline_helper2_baskspace(lst));
 	else if (c == '\n')
-	{
-		char *str;
-
-		char_list_push(lst, c);
-		str = char_list_to_str(*lst);
-		if (ft_streq(eof, str))
-		{
-			free(str);
-			return (e_break);
-		}
-		if (write(fd, str, ft_strlen(str)) == -1)
-		{
-			free(str);
-			return (e_break);
-		}
-		free(str);
-		ft_putchar_fd(c, STDOUT_FILENO);
-		ft_putstr_fd(HEREDOC_PROMPT, STDERR_FILENO);
-		char_list_clear(lst);
-		return (e_continue);
-	}
+		return (read_heredocline_helper2_newline(eof, fd, lst));
 	else if (ft_isprint(c))
 	{
 		char_list_push(lst, c);
-		ft_putchar_fd(c, STDOUT_FILENO);
+		put_switcher(&c, STDOUT_FILENO);
 		return (e_continue);
 	}
 	return (e_continue);
@@ -185,13 +141,13 @@ int read_heredocline2(
 	enable_raw_mode(&orig_termios);
 	lst = NULL;
 	exit_status = 0;
-	ft_putstr_fd(HEREDOC_PROMPT, STDERR_FILENO); // TODO stdinがデバイス出ない場合は、入らないようにする
+	put_switcher(HEREDOC_PROMPT, STDERR_FILENO); // TODO stdinがデバイス出ない場合は、入らないようにする
 	while (1)
 	{
 		p = read_heredocline_helper2(eof, fd, &lst);
 		if (g_signal_number == SIGINT)
 		{
-			ft_putstr_fd("^C", STDOUT_FILENO);
+			put_switcher("^C", STDOUT_FILENO);
 			exit_status = 130;
 			break ;
 		}

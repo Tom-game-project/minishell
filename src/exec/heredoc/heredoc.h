@@ -6,7 +6,7 @@
 #include "parser.h"
 
 
-int read_heredocline(char *eof, int fd);
+//int read_heredocline(char *eof, int fd);
 
 int read_heredocline2(
 	char *eof,
