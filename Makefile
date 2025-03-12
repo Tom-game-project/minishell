@@ -15,7 +15,8 @@ VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q
 
 RMFLAGS = -rf
 
-CFLAGS = -Wextra -Werror -Wall -g
+CFLAGS = -Wextra -Werror -Wall
+DEBUGFLAGS = -g -DDEBUG
 TEST_FLAGS = -g
 
 
@@ -219,10 +220,15 @@ SIG_SRC = \
      src/sig/sig_setting.c\
 
 
+TEST_TOOLS = \
+     src/test_tools/print.c \
+     src/test_tools/print_ast.c \
+     src/list/str_list_dprint.c\
+
+
 # 成果物には含めない
 # TODO: testのときのみ含まれるようなruleを追加する
 FOR_TEST_SRC=\
-      src/list/str_list_dprint.c\
       tests/tom_parser_tools/print_ast.c\
 
 
@@ -233,13 +239,13 @@ SRC = \
 	$(DICT_SRC)\
 	$(PATH_SRC)\
 	$(EXEC_SRC)\
-	$(FOR_TEST_SRC)\
 	$(PARSER_SRC)\
 	$(AST_CHECKER_SRC)\
 	$(STRTOOLS_SRC)\
 	$(ENVTOOLS_SRC)\
 	$(LOOP_SRC)\
 	$(SIG_SRC)\
+	$(TEST_TOOLS)\
 
 
 MAIN = \
@@ -267,6 +273,9 @@ NAME = minishell
 all: $(NAME)
 
 bonus: all
+
+debug: CFLAGS+=$(DEBUGFLAGS)
+debug: $(NAME)
 
 # headerに含めるデバッグ情報
 COMMIT_HASH = $(shell git show --format='%h' --no-patch)
@@ -318,4 +327,4 @@ fclean: clean
 	$(RM) $(RMFLAGS) $(NAME)
 re: fclean all
 
-.PHONY: all test vtest clean fclean re example cleantest
+.PHONY: all test vtest clean fclean re example cleantest debug

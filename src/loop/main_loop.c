@@ -22,7 +22,8 @@
 // for test 
 #include <stdio.h>
 
-#include "../tests/tom_parser_tools/tools.h"
+//#include "../tests/tom_parser_tools/tools.h"
+#include "test_tools.h"
 
 int g_signal_number = 0;
 
