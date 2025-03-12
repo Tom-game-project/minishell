@@ -3,6 +3,7 @@
 #include "exec.h"
 #include "utils.h"
 #include "expand_string.h"
+#include "test_tools.h"
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -87,7 +88,7 @@ int exec_rdt_proc_heredoc(
 		// 環境変数展開の処理をはさみfdをすり替える
 		new_fd = heredoc_expand_string_via_fd(fd, *args->envp_dict);
 		// dprintf(STDERR_FILENO,"new_fd %d\n", new_fd);
-		dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, getpid());
+		debug_dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, debug_getpid());
 		close(fd);
 		fd = new_fd;
 	}
@@ -97,7 +98,7 @@ int exec_rdt_proc_heredoc(
 		return (1);
 	}
 	inner_exec(args, fd);
-	dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, getpid());
+	debug_dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, debug_getpid());
 	close(fd);
 	return (0);
 }

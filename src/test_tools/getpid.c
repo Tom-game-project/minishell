@@ -1,5 +1,4 @@
 #ifdef DEBUG
-
 #include <unistd.h>
 int debug_getpid()
 {

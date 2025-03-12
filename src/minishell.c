@@ -1,3 +1,4 @@
+#include "libft.h"
 #include "loop.h"
 #include <fcntl.h>
 #include <stdio.h>
@@ -12,7 +13,7 @@
 
 int header()
 {
-	printf(
+	ft_putstr_fd(
 		""
 		"        :::   :::   ::::::::::: ::::    ::: :::::::::::\n"
 		"      :+:+: :+:+:      :+:     :+:+:   :+:     :+:     \n"
@@ -32,7 +33,7 @@ int header()
 		"minishell("COMMIT_HASH", "
 		BUILD_TIMESTAMP")"
 		"["CC_VERSION"]\n"
-		);
+		, STDOUT_FILENO);
 	return (0);
 }
 

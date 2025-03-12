@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include <stdio.h>
 #include <stdarg.h>
 
 // __attribute__((format(printf, 1, 2))) の意味:
