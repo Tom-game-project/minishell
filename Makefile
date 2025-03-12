@@ -171,6 +171,7 @@ PATH_SRC =\
       src/path/get_full_path.c\
       src/path/get_dir_list.c\
       src/path/gen_nondup_name.c\
+      src/path/is_executable_file.c\
 
 
 EXEC_SRC=\
@@ -265,14 +266,15 @@ NAME = minishell
 
 all: $(NAME)
 
+bonus: all
+
 # headerに含めるデバッグ情報
 COMMIT_HASH = $(shell git show --format='%h' --no-patch)
 BUILD_TIMESTAMP = $(shell date "+%Y\/%m\/%d-%H:%M:%S")
 CC_VERSION = $(shell $(CC) --version | head -n1)
 
 $(NAME): $(OBJ) $(LIBFT_NAME) $(MAIN)
-	cat $(MAIN) \
-		| sed -e 's/^#define DEBUG_INFO$$/#define DEBUG_INFO "hello"/' \
+	@cat $(MAIN) \
 		| sed -e 's/^#define COMMIT_HASH$$/#define COMMIT_HASH ''"'$(COMMIT_HASH)'"''/' \
 		| sed -e 's/^#define CC_VERSION$$/#define CC_VERSION "$(CC_VERSION)"/' \
 		| sed -e 's/^#define BUILD_TIMESTAMP$$/#define BUILD_TIMESTAMP "$(BUILD_TIMESTAMP)"/' \

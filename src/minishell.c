@@ -5,17 +5,10 @@
 
 //#include "minishell.h"
 
-// 文字列展開用
-//
-//
-//
-
-#define DEBUG_INFO
-
+// ビルド情報の取得
 #define COMMIT_HASH
 #define BUILD_TIMESTAMP
 #define CC_VERSION
-// ビルド情報の取得
 
 int header()
 {
@@ -39,7 +32,6 @@ int header()
 		"minishell("COMMIT_HASH", "
 		BUILD_TIMESTAMP")"
 		"["CC_VERSION"]\n"
-		DEBUG_INFO
 		);
 	return (0);
 }
@@ -88,6 +80,5 @@ int main(int argc, char *argv[], char *envp[])
 		exit_status = none_device_main_loop(envp);
 	if (fd != -1)
 		close(fd);
-	dprintf(STDERR_FILENO,"exit status %d\n", exit_status);
 	return (exit_status);
 }
