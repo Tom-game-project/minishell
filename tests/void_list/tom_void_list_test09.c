@@ -12,6 +12,8 @@ bool starts_with_hello(
 	return (
 		ft_strncmp(a.str, b.str, ft_strlen(b.str)) == 0
 	);
+
+
 }
 
 

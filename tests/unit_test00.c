@@ -22,7 +22,7 @@ int cmd_test(int argc, char *argv[], char *envp[], char *str)
                 ft_itoa(0),
                 free
         );
-	dprintf(STDERR_FILENO, "pointer [%p]\n", d);
+	exit_status = 0;
 	exec_shell_cmd(str, &d, &exit_status);
 	update_exit_status(exit_status, &d);
 	str_dict_clear(&d, free, free);
@@ -79,8 +79,8 @@ int test02(int argc, char *argv[], char *envp[])
 int main(int argc, char *argv[], char *envp[])
 {
 	//test00(argc, argv, envp);
-	test01(argc, argv, envp);
-	//test02(argc, argv, envp);
+	//test01(argc, argv, envp);
+	test02(argc, argv, envp);
 
 	// heredocを除くredirectのテスト
 	// heredocは、fdはvalgrindを通すと、fdを閉じていないみたいなエラーが出るけど多分問題ない
