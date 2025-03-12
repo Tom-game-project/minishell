@@ -9,7 +9,7 @@
 
 #ifdef DEBUG
 
-int my_dprintf(int fd, const char *format, ...)
+int debug_dprintf(int fd, const char *format, ...)
 {
 	va_list args;
 	int rv;
@@ -21,7 +21,7 @@ int my_dprintf(int fd, const char *format, ...)
 }
 #else
 
-int my_dprintf(int fd,const char *format, ...)
+int debug_dprintf(int fd,const char *format, ...)
 {
 	(void) fd;
 	(void) format;

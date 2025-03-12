@@ -223,6 +223,8 @@ SIG_SRC = \
 TEST_TOOLS = \
      src/test_tools/print.c \
      src/test_tools/print_ast.c \
+     src/test_tools/getpid.c\
+     src/test_tools/getppid.c\
      src/list/str_list_dprint.c\
 
 

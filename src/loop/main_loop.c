@@ -36,12 +36,12 @@ parser_wrap(char *input)
     ast = NULL;
     if (e_result_paren_not_closed_err == parser(&ast, input))
     {
-        dprintf(STDERR_FILENO, "minishell : not close syntax\n");
+        debug_dprintf(STDERR_FILENO, "minishell : not close syntax\n");
 		return (NULL);
     }
     else
     {
-        dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
+        debug_dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
     }
     return (ast);
 }
@@ -53,7 +53,7 @@ void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 	t_ast *ast;
 	t_syntax_result result;
 
-	dprintf(STDERR_FILENO, "ORIGIN PID (%d)\n", getpid());
+	debug_dprintf(STDERR_FILENO, "ORIGIN PID (%d)\n", debug_getpid());
 	ast = parser_wrap(str);
 	if (ast == NULL)
 	{
@@ -64,7 +64,7 @@ void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 	print_checker_result(result);
 	if (result == e_no_input)
 	{
-		dprintf(STDERR_FILENO, "no_input\n");
+		debug_dprintf(STDERR_FILENO, "no_input\n");
 		clear_ast(&ast);
 	}
 	else if (print_checker_result(result))

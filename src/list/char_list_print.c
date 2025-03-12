@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 #include "list.h"
-#include <stdio.h>
+#include "test_tools.h"
+#include <unistd.h>
 
 int	print_char(int index, t_anytype elem)
 {
-	printf("[%d] [%c]\n", index, elem.c);
+	debug_dprintf(STDERR_FILENO , "[%d] [%c]\n", index, elem.c);
 	return (0);
 }
 

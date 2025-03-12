@@ -2,11 +2,12 @@
 #include "parser.h"
 #include "exec.h"
 #include "../heredoc/heredoc.h"
-
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+#include "test_tools.h"
 
 /// 子プロセスで使用されたであろう子プロセスを親側で閉じる関数
 int consume_fd(int heredoc_c, t_int_list **heredoc_fd_list)
@@ -18,7 +19,6 @@ int consume_fd(int heredoc_c, t_int_list **heredoc_fd_list)
 	{
 		int fd;
 		fd = int_list_pop(heredoc_fd_list, 0);
-		//dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, getpid());
 		close(fd);
 		i += 1;
 	}
@@ -94,7 +94,7 @@ int pipe_proc(t_exec_args *args)
 	// 親
 	int heredoc_c;
 	heredoc_c = count_heredoc(args->ast->left_ast);
-	dprintf(STDERR_FILENO,"deleted fd (left_ast)%d \n", heredoc_c);
+	debug_dprintf(STDERR_FILENO,"deleted fd (left_ast)%d \n", heredoc_c);
 	consume_fd(
 		heredoc_c,
 	       	args->heredoc_fd_list
