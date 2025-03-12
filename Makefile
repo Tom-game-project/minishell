@@ -193,6 +193,7 @@ EXEC_SRC=\
       src/exec/heredoc/heredoc.c\
       src/exec/heredoc/heredoc_proc.c\
       src/exec/heredoc/close_all_heredoc_fd.c\
+      # src/exec/asterisk/expand.c\
 
 
 ENVTOOLS_SRC = \
