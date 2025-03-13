@@ -110,7 +110,6 @@ t_loop_cntl device_loop_unit(char *input,int *exit_status, t_str_dict **env_dict
 	struct termios orig_termios;
 
 	tcgetattr(STDIN_FILENO, &orig_termios);
-
 	if (g_signal_number == SIGINT)
 	{
 		reconnect_stdin(exit_status);
@@ -213,7 +212,6 @@ int none_device_main_loop(char *envp[])
 		input = none_device_readline();
 		if (ft_strlen(input) == 0)
 			break;
-
 		lctl = device_loop_unit(input, &exit_status, &env_dict);
 		free(input);
 		if (lctl == e_break)

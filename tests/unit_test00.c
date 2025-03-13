@@ -80,7 +80,7 @@ int main(int argc, char *argv[], char *envp[])
 {
 	//test00(argc, argv, envp);
 	//test01(argc, argv, envp);
-	test02(argc, argv, envp);
+	//test02(argc, argv, envp);
 
 	// heredocを除くredirectのテスト
 	// heredocは、fdはvalgrindを通すと、fdを閉じていないみたいなエラーが出るけど多分問題ない
@@ -88,7 +88,7 @@ int main(int argc, char *argv[], char *envp[])
 	// 余裕があれば閉じたいが、exitで勝手に閉じる+ 実行中にリソースを食いつぶすタイプの疾患ではない
 	//
 	//cmd_test(argc, argv, envp, "<< EOF cat | head");
-	//cmd_test(argc, argv, envp, "echo hello world | cat | << EOF cat ");
+	cmd_test(argc, argv, envp, "echo hello world | cat | << EOF cat ");
 	//cmd_test(argc, argv, envp, "echo hello world |<< EOF cat | cat");
 	//cmd_test(argc, argv, envp, "echo hello world | << EOF cat");
 	//cmd_test(argc, argv, envp, "echo hello world | << EOF cat && cat << EOF");

@@ -48,7 +48,7 @@ int run_cmd_proc(t_exec_args *args)
 	else if (tbi == e_built_in_env)
 		return (built_in_env(*(args->envp_dict), args->output_fd));
 	else if (tbi == e_built_in_cd)
-		return (built_in_cd(args->ast->arg));
+		return (built_in_cd(args->ast->arg, args->envp_dict));
 	else if (tbi == e_built_in_export)
 		return (built_in_export(args->ast->arg,  args->envp_dict));
 	else if (tbi == e_built_in_unset)

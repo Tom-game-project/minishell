@@ -10,7 +10,6 @@ int close_all_heredoc_fd(t_int_list **node)
 	
 	while (void_list_pop(node , 0, &rvalue) != -1)
 	{
-		//dprintf(STDERR_FILENO, "aaaaaaaaaaaaaaaaaaaaaaaaa\n");
 		close(rvalue.i32);
 	}
 	int_list_clear(node);

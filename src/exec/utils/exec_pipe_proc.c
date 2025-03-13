@@ -94,7 +94,7 @@ int pipe_proc(t_exec_args *args)
 	// 親
 	int heredoc_c;
 	heredoc_c = count_heredoc(args->ast->left_ast);
-	debug_dprintf(STDERR_FILENO,"deleted fd (left_ast)%d \n", heredoc_c);
+	//debug_dprintf(STDERR_FILENO,"closed fd (left_ast)%d \n", heredoc_c);
 	consume_fd(
 		heredoc_c,
 	       	args->heredoc_fd_list

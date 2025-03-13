@@ -2,7 +2,9 @@
 #include "list.h"
 #include "parser.h"
 #include "../heredoc/heredoc.h"
+#include "test_tools.h"
 
+#include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -17,23 +19,9 @@ int paren_proc(t_exec_args *args)
 
 	heredoc_c = count_heredoc(args->ast);
 	pid = fork();
-	/// 子プロセス
-	///
-	/// heredocの外からは何もできない
-	/// heredocがある場合になんとかしないといけない
-	/// カッコ内にあるheredocをカウントしたい
-	/// 
-	/// fd = [1, 2, 3, 4, 5, 6];
-	///
-	/// ```
-	/// shell cmd    fd_sub   fd_list 
-	///  << 1        .-1      [1, 2, 3, 4, 5, 6];
-	/// (<< 2 << 3)  .-2      [2, 3, 4, 5, 6]; // 親プロセスでは消してしまってok
-	///  << 4        .-1      [4, 5, 6];
-	/// (<< 5 << 6)  .-2      [5, 6];
-	/// ```
 	if (pid == 0)
 	{
+		dup2(args->input_fd, STDIN_FILENO);
 		exec2(&(t_exec_args)
 		{
 			args->ast->left_ast,
@@ -43,10 +31,8 @@ int paren_proc(t_exec_args *args)
 			args->output_fd,
 			pid
 		});
-	       	// カッコの場合は子プロセス
 		exit(0);
 	}
-
 	/// 子プロセスで読まれたheredocをskipする
 	int i = 0;
 	while (i < heredoc_c){

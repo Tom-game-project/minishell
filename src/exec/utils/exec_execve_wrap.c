@@ -4,6 +4,7 @@
 #include "parser.h"
 #include "path.h"
 #include "libft.h"
+#include "test_tools.h"
 
 #include <stdio.h>
 #include <sys/wait.h>
@@ -106,6 +107,8 @@ int execve_wrap(t_exec_args *args)
 		print_error_msg2(cmd);
 	check_executable_file(fullpath);
 	envp = str_dict_to_envp(*args->envp_dict);
+	debug_dprintf(STDERR_FILENO, "cmd %s running on pid(%d).ppid(%d)\n", 
+			fullpath, debug_getpid(), debug_getppid());
 	execve(fullpath, argv, envp);
 	return (1);
 }
