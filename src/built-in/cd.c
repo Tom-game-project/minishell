@@ -62,7 +62,11 @@ int built_in_cd(t_str_list *args, t_str_dict **envp_list)
 	    free(key_str);
     debug_dprintf(STDERR_FILENO, "cd \"%s\"\n", path);
     if (chdir(path) == -1)
+    {
 	    perror("minishell");
+	    free(path);
+	    return (1);
+    }
     free(path);
     return (0);
 }
