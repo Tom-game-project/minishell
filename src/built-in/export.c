@@ -2,7 +2,9 @@
 #include "list.h"
 #include "libft.h"
 #include "envtools.h"
+#include "test_tools.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 /// exportは子プロセスを読んでいるようにみえて、親で実行する
 ///
@@ -46,6 +48,9 @@ int set_envp(
 	}
 	if (is_valid_identifier(key))
 	{
+		debug_dprintf(STDERR_FILENO, "new env added key: \"%s\", value: \"%s\"\n", key, value);
+		if (value == NULL)
+			return (0);
 		str_dict_add(envp_dict, key, value, free);
 		return (0);
 	}
