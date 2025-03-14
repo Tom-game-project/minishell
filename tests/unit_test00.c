@@ -70,6 +70,21 @@ int test02(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
+
+int test03(int argc, char *argv[], char *envp[])
+{
+
+	cmd_test(argc, argv, envp, "(< minishell cat  | sha256sum  | awk '{print $1}' > outfile1) && (sha256sum minishell | awk '{print $1}' > outfile2) && diff outfile1 outfile2 | wc -l");
+	return (0);
+}
+
+
+int test04(int argc, char *argv[], char *envp[])
+{
+	cmd_test(argc, argv, envp, "(ls -la) | (grep src)");
+	return (0);
+}
+
 /// # unit_test00
 ///
 ///
@@ -81,6 +96,8 @@ int main(int argc, char *argv[], char *envp[])
 	//test00(argc, argv, envp);
 	//test01(argc, argv, envp);
 	//test02(argc, argv, envp);
+	//test03(argc, argv, envp);
+	test04(argc, argv, envp);
 
 	// heredocを除くredirectのテスト
 	// heredocは、fdはvalgrindを通すと、fdを閉じていないみたいなエラーが出るけど多分問題ない
@@ -88,7 +105,7 @@ int main(int argc, char *argv[], char *envp[])
 	// 余裕があれば閉じたいが、exitで勝手に閉じる+ 実行中にリソースを食いつぶすタイプの疾患ではない
 	//
 	//cmd_test(argc, argv, envp, "<< EOF cat | head");
-	cmd_test(argc, argv, envp, "echo hello world | cat | << EOF cat ");
+	//cmd_test(argc, argv, envp, "echo hello world | cat | << EOF cat ");
 	//cmd_test(argc, argv, envp, "echo hello world |<< EOF cat | cat");
 	//cmd_test(argc, argv, envp, "echo hello world | << EOF cat");
 	//cmd_test(argc, argv, envp, "echo hello world | << EOF cat && cat << EOF");

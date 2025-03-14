@@ -2,6 +2,8 @@
 #include "list.h"
 #include "parser.h"
 #include <stdlib.h>
+#include <unistd.h>
+#include "test_tools.h"
 
 t_parse_result get_next_input(t_ast **ast, t_str_list	**next_input, char **str);
 
@@ -15,8 +17,11 @@ t_parse_result	parser(t_ast **ast, char *input)
 	if (input == NULL || *input == '\0')
 		return (e_result_ok);
 	next_input = NULL;
-	if (syntax_checker(input) == false)
+	if (!syntax_checker2(input)) // TODO ここが不正
+	{
+		//debug_dprintf(STDERR_FILENO, "hello world\n");
 		return (e_result_paren_not_closed_err);
+	}
 	str = ft_strdup(input);
 	*ast = allocation_ast();
 	result = get_next_input(ast, &next_input, &str);

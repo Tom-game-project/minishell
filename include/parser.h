@@ -77,7 +77,11 @@ int    	str_rdt_len(char *str);
 
 void clear_ast(t_ast **ast);
 
+/// TODO VVVV
 bool syntax_checker(char *input);
+
+bool syntax_checker2(char *input);
+/// TODO ^^^^
 
 bool    checker_str_pipe(char *str);
 

@@ -36,7 +36,7 @@ parser_wrap(char *input)
     ast = NULL;
     if (e_result_paren_not_closed_err == parser(&ast, input))
     {
-        debug_dprintf(STDERR_FILENO, "minishell : not close syntax\n");
+        debug_dprintf(STDERR_FILENO, "minishell : not close syntax\n"); // TODO 書き換える
 		return (NULL);
     }
     else
@@ -46,15 +46,11 @@ parser_wrap(char *input)
     return (ast);
 }
 
-/// exit statuswを更新します
-///
-void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
+void exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
 {
-	t_ast *ast;
 	t_syntax_result result;
 
 	debug_dprintf(STDERR_FILENO, "ORIGIN PID (%d)\n", debug_getpid());
-	ast = parser_wrap(str);
 	if (ast == NULL)
 	{
 		*exit_status = 1;
@@ -74,6 +70,37 @@ void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 		clear_ast(&ast);
 	}
 }
+
+/// exit statuswを更新します
+///
+void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
+{
+	t_ast *ast;
+
+	//ast = parser_wrap(str);
+	//if (ast == NULL)
+	//{
+	//	*exit_status = 1;
+	//	return ;
+	//}
+	//result = ast_checker(ast);
+	//print_checker_result(result);
+	//if (result == e_no_input)
+	//{
+	//	debug_dprintf(STDERR_FILENO, "no_input\n");
+	//	clear_ast(&ast);
+	//}
+	//else if (print_checker_result(result))
+	//{
+	//	print_ast(ast, 0);
+	//	*exit_status = exec(ast, env_dict);
+	//	clear_ast(&ast);
+	//}
+	ast = parser_wrap(str);
+	exec_ast(ast, env_dict, exit_status);
+}
+
+
 
 /// exit statusと、今いるディレクトリを表示するプロンプト
 char *prompt(int exit_status)
