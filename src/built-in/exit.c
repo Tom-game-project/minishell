@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 19:25:12 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 19:25:12 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include "libft.h"
 #include <stdlib.h>
@@ -7,10 +19,9 @@
 // for test
 // #include <stdio.h>
 
-
-static bool is_num(char *str)
+static bool	is_num(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '+' || str[i] == '-')
@@ -26,27 +37,21 @@ static bool is_num(char *str)
 	return (true);
 }
 
-int built_in_exit(t_str_list *args)
+int	built_in_exit(t_str_list *args)
 {
-	char *str;
+	char	*str;
 
 	if (str_list_len(args) == 1)
-	{
-		// exit直前のリソースの解放はOSの仕事
-		// リークではない
 		exit(0);
-	}
 	else
 	{
 		str = str_list_get_elem(args, 1);
 		if (is_num(str))
 		{
-			//dprintf(STDERR_FILENO, "%d\n", ft_atoi(str) % 256);
 			exit(ft_atoi(str) % 256);
 		}
 		else
 		{
-			// numeric argument required
 			exit(2);
 		}
 	}

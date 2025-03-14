@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 19:26:08 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 19:27:29 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dict.h"
 #include "list.h"
 #include "libft.h"
@@ -32,16 +44,14 @@
 /// ```
 
 static
-int set_envp(
+int	set_envp(
 	t_str_dict **envp_dict,
 	char *key,
-       	char *value
+	char *value
 )
 {
 	if (ft_strlen(key) == 0)
 	{
-		// errorを吐く
-		// not a valid identifier
 		return (1);
 	}
 	if (is_valid_identifier(key))
@@ -51,20 +61,18 @@ int set_envp(
 	}
 	else
 	{
-		// errorを吐く
-		// not a valid identifier
 		return (1);
 	}
 }
 
-int built_in_export(
+int	built_in_export(
 	t_str_list *args,
 	t_str_dict **envp_dict
 )
 {
-	(void) envp_dict;
-	char *line;
+	char	*line;
 
+	(void) envp_dict;
 	args = args->next;
 	while (args != NULL)
 	{
@@ -72,8 +80,7 @@ int built_in_export(
 		set_envp(
 			envp_dict,
 			get_key_from_envp_ptr(line),
-			get_value_from_envp_ptr(line)
-		);
+			get_value_from_envp_ptr(line));
 		args = args->next;
 	}
 	return (0);

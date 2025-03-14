@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_dict_add.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 19:28:39 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 19:28:51 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dict.h"
 #include <stdlib.h>
 
@@ -13,9 +25,9 @@
 /// 追加した場合は1
 ///
 /// 更新した場合は0を返却する
-int str_dict_add(t_str_dict **node, char *key, char *value, void (*f)(void *))
+int	str_dict_add(t_str_dict **node, char *key, char *value, void (*f)(void *))
 {
-	t_str_dict *sd;
+	t_str_dict	*sd;
 
 	sd = get_str_dict_by_key(*node, key);
 	if (sd == NULL)

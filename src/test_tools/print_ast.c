@@ -1,14 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_ast.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 20:02:31 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 20:08:19 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include <unistd.h>
 #include "test_tools.h"
+#include <stdlib.h>
+#include "list.h"
+#include <stdio.h>
 
 #define INDENT 4
 
 #ifdef DEBUG
-#include <stdlib.h>
-#include "list.h"
-#include <stdio.h>
-static int print_str_list_for_test(t_str_list *lst)
+
+static int	print_str_list_for_test(t_str_list *lst)
 {
 	debug_dprintf(STDERR_FILENO, "[");
 	while (lst != NULL)
@@ -20,9 +33,9 @@ static int print_str_list_for_test(t_str_list *lst)
 	return (0);
 }
 
-static int indent_print(char *str,  int depth)
+static int	indent_print(char *str, int depth)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < depth * INDENT)
@@ -34,40 +47,30 @@ static int indent_print(char *str,  int depth)
 	return (0);
 }
 
-static int print_ope(t_operator ope)
+static int	print_ope(t_operator ope)
 {
-	switch (ope) {
-		case e_ope_none:
-			debug_dprintf(STDERR_FILENO, "\"none\"");
-		break;
-		case e_ope_and: // &&
-			debug_dprintf(STDERR_FILENO, "\"&&\"");
-		break;
-		case e_ope_or: // ||
-			debug_dprintf(STDERR_FILENO, "\"||\"");
-		break;
-		case e_ope_redirect_i: // <
-			debug_dprintf(STDERR_FILENO, "\"<\"");
-		break;
-		case e_ope_redirect_o:// >
-			debug_dprintf(STDERR_FILENO, "\">\"");
-		break;
-		case e_ope_heredoc_i:// <<
-			debug_dprintf(STDERR_FILENO, "\"<<\"");
-		break;
-		case e_ope_heredoc_o:// >>
-			debug_dprintf(STDERR_FILENO, "\">>\"");
-		break;
-		case e_ope_pipe:// |
-			debug_dprintf(STDERR_FILENO, "\"|\"");
-		break;
-		case e_ope_paren:// )
-			debug_dprintf(STDERR_FILENO, "\"paren\"");
-		break;
-	}
+	if (ope == e_ope_none)
+		debug_dprintf(STDERR_FILENO, "\"none\"");
+	else if (ope == e_ope_and)
+		debug_dprintf(STDERR_FILENO, "\"&&\"");
+	else if (ope == e_ope_or)
+		debug_dprintf(STDERR_FILENO, "\"||\"");
+	else if (ope == e_ope_redirect_i)
+		debug_dprintf(STDERR_FILENO, "\"<\"");
+	else if (ope == e_ope_redirect_o)
+		debug_dprintf(STDERR_FILENO, "\">\"");
+	else if (ope == e_ope_heredoc_i)
+		debug_dprintf(STDERR_FILENO, "\"<<\"");
+	else if (ope == e_ope_heredoc_o)
+		debug_dprintf(STDERR_FILENO, "\">>\"");
+	else if (ope == e_ope_pipe)
+		debug_dprintf(STDERR_FILENO, "\"|\"");
+	else if (ope == e_ope_paren)
+		debug_dprintf(STDERR_FILENO, "\"paren\"");
 	return (0);
 }
-int print_ast(t_ast *ast, int depth)
+
+int	print_ast(t_ast *ast, int depth)
 {
 	indent_print("&(t_ast) {\n", depth);
 	indent_print(".arg=", depth + 1);
@@ -95,7 +98,7 @@ int print_ast(t_ast *ast, int depth)
 }
 #else
 
-int print_ast(t_ast *ast, int depth)
+int	print_ast(t_ast *ast, int depth)
 {
 	(void) ast;
 	(void) depth;

@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   in_double_quotation.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 20:23:48 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 20:25:15 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "list.h"
 #include "dict.h"
 #include "envtools.h"
 #include "private.h"
 
-
-t_anchor anchor_dq_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
+t_anchor	anchor_dq_proc(\
+	char c, \
+	t_list_args *group_args, \
+	t_str_dict *env_dicts)
 {
-	if (c == '"')// double quotation open
+	if (c == '"')
 	{
 		push_expand_env(group_args, env_dicts);
 		push_str_group(group_args);

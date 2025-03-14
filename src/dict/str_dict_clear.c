@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_dict_clear.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 19:28:57 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 19:29:23 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dict.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,13 +18,13 @@
 /// すべてをclearします
 /// 第二第三引数に渡された関数によって、それぞれ、stringを解放しつつ
 /// 自分自身を解放します
-int str_dict_clear(t_str_dict **node, \
-		void (*key_free)(void *),\
-		void (*value_free)(void *)
-		)
+int	str_dict_clear(t_str_dict **node, \
+	void (*key_free)(void *), \
+	void (*value_free)(void *)
+)
 {
-	t_str_dict *p;
-	t_str_dict *pn;
+	t_str_dict	*p;
+	t_str_dict	*pn;
 
 	p = *node;
 	while (p != NULL)

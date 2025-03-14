@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_dict_to_env.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 19:36:57 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 19:38:13 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /// 環境変数のフォーマットにする
 
 #include "dict.h"
@@ -5,28 +17,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 /// 渡された t_str_dictのnodeを
 /// "key=value\n"で表現したときの文字列の長さをかえす
-size_t str_dict_key_value_len(t_str_dict *node)
+size_t	str_dict_key_value_len(t_str_dict *node)
 {
-	size_t rlen;
+	size_t	rlen;
 
 	rlen = 0;
 	rlen += ft_strlen(node->key);
-	rlen += 1; // "="
+	rlen += 1;
 	rlen += ft_strlen(node->value);
-	rlen += 1; // "\n"
+	rlen += 1;
 	return (rlen);
 }
 
 /// 渡された t_str_dictのnodeを
 /// "key=value"で表現した文字列にして返す
-char *str_dict_node_to_str(t_str_dict *node)
+char	*str_dict_node_to_str(t_str_dict *node)
 {
-	char *str;
-	char *str_tmp;
-	char *p;
+	char	*str;
+	char	*str_tmp;
+	char	*p;
 
 	str = (char *) malloc(sizeof(char) * (str_dict_key_value_len(node) + 1));
 	str_tmp = str;
@@ -63,9 +74,9 @@ char *str_dict_node_to_str(t_str_dict *node)
 /// )
 /// ```
 ///
-int str_dict_key_value_env_len(t_str_dict *node)
+int	str_dict_key_value_env_len(t_str_dict *node)
 {
-	int rlen;
+	int	rlen;
 
 	rlen = 0;
 	while (node != NULL)
@@ -82,7 +93,8 @@ int str_dict_key_value_env_len(t_str_dict *node)
 //	char *str;
 //	char *str_tmp;
 //
-//	str = (char *) malloc(sizeof(char) * (str_dict_key_value_env_len(node) + 1));
+//	str = (char *) malloc(sizeof(char) * 
+// (str_dict_key_value_env_len(node) + 1));
 //		;
 //	str_tmp = str;
 //	while ()
@@ -116,16 +128,16 @@ int str_dict_key_value_env_len(t_str_dict *node)
 /// ...
 /// )
 /// ```
-char **str_dict_to_envp(t_str_dict *node)
+char	**str_dict_to_envp(t_str_dict *node)
 {
-	char **rarr;
-	char **rarr_tmp;
+	char	**rarr;
+	char	**rarr_tmp;
 
 	rarr = (char **)malloc(sizeof(char *) * (str_dict_len(node) + 1));
 	rarr_tmp = rarr;
 	while (node != NULL)
 	{
-		*rarr = str_dict_node_to_str(node); // TODO
+		*rarr = str_dict_node_to_str(node);
 		node = node->next;
 		rarr++;
 	}

@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_value_from_envp_ptr.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 20:13:11 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 20:13:30 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 /// valueを取得する関数を作る
-char *get_value_from_envp_ptr(char *str)
+char	*get_value_from_envp_ptr(char *str)
 {
-	unsigned int s;
-	char *str_tmp;
+	unsigned int	s;
+	char			*str_tmp;
 
 	s = 0;
 	str_tmp = str;
