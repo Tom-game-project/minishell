@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 19:22:33 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 19:22:33 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include "strtools.h"
 #include "libft.h"
@@ -18,10 +30,10 @@
 /// ```bash
 /// echo -nnn hello world
 /// ```
-int built_in_echo(t_str_list *args, int fd)
+int	built_in_echo(t_str_list *args, int fd)
 {
-	int exit_status;
-	bool newline_flag;
+	int		exit_status;
+	bool	newline_flag;
 
 	exit_status = 0;
 	newline_flag = true;
