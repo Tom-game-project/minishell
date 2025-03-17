@@ -1,4 +1,5 @@
 #include "parser.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
@@ -71,7 +72,8 @@ t_ast *init_ast()
 {
 	t_ast *ast;
 
-	ast = malloc(sizeof(t_ast));
+	ast = (t_ast *)malloc(sizeof(t_ast));
+	//debug_dprintf(STDERR_FILENO, "allocation %p\n", ast);
 	ast->arg = NULL;
 	ast->left_ast = NULL;
 	ast->right_ast = NULL;
@@ -111,7 +113,6 @@ bool is_ope_string(char *str)
 	);
 }
 
-
 t_operator str2ope(char *str)
 {
 	if (ft_streq(str, "<<"))
@@ -132,11 +133,10 @@ t_operator str2ope(char *str)
 		return (e_ope_none);
 }
 
+
 t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 {
 	// TODO とりあえずエラー文が出力されないようにvoidつけとく
-	(void) ast;
-	(void) input;
 	int index;
 	t_ast *orig;
 
@@ -154,14 +154,11 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 		//debug_dprintf(STDERR_FILENO,"str \"%s\"\n", ope_str);
 		left_input = str_list_cut(&input, index - 1);
 		right_input = input;
-		debug_dprintf(STDERR_FILENO, "left input\n");
-		str_list_print(left_input);
-		debug_dprintf(STDERR_FILENO, "right input\n");
-		str_list_print(right_input);
 		orig->left_ast = init_ast();
 		tom_parser_lexed(&orig->left_ast, left_input);
 		orig->right_ast = init_ast();
 		orig->ope = str2ope(ope_str);
+		free(ope_str);
 		tom_parser_lexed(&orig->right_ast, right_input);
 		return (e_result_ok);
 	}
@@ -176,10 +173,6 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 		ope_str = str_list_pop(&input, index);
 		left_input = str_list_cut(&input, index - 1);
 		right_input = input;
-		//debug_dprintf(STDERR_FILENO, "left input\n");
-		//str_list_print(left_input);
-		//debug_dprintf(STDERR_FILENO, "right input\n");
-		//str_list_print(right_input);
 		remove_ifs(&right_input);
 		orig->arg = str_list_cut(&right_input ,0);
 		orig->left_ast = NULL;
@@ -187,6 +180,7 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 		str_list_concat(&left_input, right_input);
 		tom_parser_lexed(&orig->right_ast, left_input);
 		orig->ope = str2ope(ope_str);
+		free(ope_str);
 		return (e_result_ok);
 	}
 	if (
@@ -196,10 +190,9 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 	{
 		char *str;
 		char *cutstr;
-
-		str = str_list_get_elem(input, 0);
+		str = str_list_pop(&input, 0);
 		cutstr = ft_substr(str, 1, ft_strlen(str) - 2);
-		orig->left_ast = init_ast();
+		free(str);
 		orig->ope = e_ope_paren;
 		tom_parser(cutstr, &orig->left_ast);
 		free(cutstr);
@@ -218,6 +211,7 @@ t_parse_result	tom_parser(char *input, t_ast **ast)
 	*ast = init_ast();
 	lexed = lexer(input);
 	tom_parser_lexed(ast, lexed);
+	//str_list_clear(&lexed, free);
 	return (e_result_ok);
 }
 

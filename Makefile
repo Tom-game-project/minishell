@@ -9,7 +9,7 @@ RM = rm
 
 CC_VERSION = $(CC) --version
 VALGRIND = valgrind
-VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes -q 
+VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes --show-leak-kinds=all
 
 #--show-leak-kinds=all
 
@@ -312,11 +312,11 @@ $(LIBFT_HEADER):
 	git submodule update
 
 # ここにはあえてフラグをつけていない
-test: cleantest $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+test: cleantest debug $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME) -lreadline
 	./test_
 
-vtest: cleantest $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
+vtest: cleantest debug $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME) -lreadline
 	$(VALGRIND) $(VALGRINDFLAGS) ./test_
 
