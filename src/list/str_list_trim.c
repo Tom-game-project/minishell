@@ -30,3 +30,4 @@ int str_list_trim(t_str_list **lst, t_str_list *set, void(*f)(void *))
 	str_list_clear(&tmp, f);
 	return (point_index);
 }
+

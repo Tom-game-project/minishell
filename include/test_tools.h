@@ -1,6 +1,7 @@
 #ifndef TEST_TOOLS_H
 #define TEST_TOOLS_H
 
+//#include "tom_parser.h"
 #include "parser.h"
 
 /// this file is for debug mode
