@@ -1,14 +1,14 @@
-#include <tom_parser.h>
+#include "parser.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
 
-#include "private.h"
 #include "list.h"
 #include "libft.h"
 #include "strtools.h"
 #include "test_tools.h"
 
+#include "tom_parser.h"
 
 static
 void nop (void *a)
@@ -67,21 +67,19 @@ bool is_parsable()
 }
 
 /// 
-t_tom_ast *init_ast()
+t_ast *init_ast()
 {
-	t_tom_ast *ast;
+	t_ast *ast;
 
-	ast = malloc(sizeof(t_tom_ast));
+	ast = malloc(sizeof(t_ast));
 	ast->arg = NULL;
 	ast->left_ast = NULL;
 	ast->right_ast = NULL;
-	ast->ope = e_tom_ope_none;
+	ast->ope = e_ope_none;
 	return (ast);
 }
 
-int 
-remove_ifs
-(t_str_list **lst) // 確保された領域なので、freeしてok
+int remove_ifs(t_str_list **lst) // 確保された領域なので、freeしてok
 {
 	t_str_list *ifs_lst;
 
@@ -114,58 +112,46 @@ bool is_ope_string(char *str)
 }
 
 
-t_tom_operator
-str2ope(char *str)
+t_operator str2ope(char *str)
 {
 	if (ft_streq(str, "<<"))
-		return (e_tom_ope_heredoc_i);
+		return (e_ope_heredoc_i);
 	else if (ft_streq(str, ">>"))
-		return (e_tom_ope_heredoc_o);
+		return (e_ope_heredoc_o);
 	else if (ft_streq(str, "|"))
-		return (e_tom_ope_pipe);
+		return (e_ope_pipe);
 	else if (ft_streq(str, "||"))
-		return (e_tom_ope_or);
+		return (e_ope_or);
 	else if (ft_streq(str, "&&"))
-		return (e_tom_ope_and);
+		return (e_ope_and);
 	else if (ft_streq(str, "<"))
-		return (e_tom_ope_redirect_i);
+		return (e_ope_redirect_i);
 	else if (ft_streq(str, ">"))
-		return (e_tom_ope_redirect_o);
+		return (e_ope_redirect_o);
 	else
-		return (e_tom_ope_none);
+		return (e_ope_none);
 }
 
-t_tom_parse_result	tom_parser(t_tom_ast **ast, char *input)
-{
-	(void) ast;
-	(void) input;
-
-	return (e_tom_result_ok);
-}
-
-t_tom_parse_result	tom_parser_lexed(t_tom_ast **ast, t_str_list *input)
+t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 {
 	// TODO とりあえずエラー文が出力されないようにvoidつけとく
 	(void) ast;
 	(void) input;
 	int index;
-	t_str_list *left_input;
-	t_str_list *right_input;
-
-	(void) left_input;
-	(void) right_input;
-	t_tom_ast *orig;
+	t_ast *orig;
 
 	orig = *ast;
 	remove_ifs(&input);
 	index = str_list_search_index(input, is_ope_string);
-	debug_dprintf(STDERR_FILENO, "hello world %d \n", index);
+	//debug_dprintf(STDERR_FILENO, "hello world %d \n", index);
 	if (index != -1) // 何かしら見つけた
 	{
+		t_str_list *left_input;
+		t_str_list *right_input;
 		// L ope R
 		char *ope_str;
 		ope_str = str_list_pop(&input, index);
-		debug_dprintf(STDERR_FILENO,"str \"%s\"\n", ope_str);
+		//debug_dprintf(STDERR_FILENO,"str \"%s\"\n", ope_str);
 		left_input = str_list_cut(&input, index - 1);
 		right_input = input;
 		debug_dprintf(STDERR_FILENO, "left input\n");
@@ -173,17 +159,65 @@ t_tom_parse_result	tom_parser_lexed(t_tom_ast **ast, t_str_list *input)
 		debug_dprintf(STDERR_FILENO, "right input\n");
 		str_list_print(right_input);
 		orig->left_ast = init_ast();
-		//tom_parser_lexed(&orig->left_ast, left_input);
+		tom_parser_lexed(&orig->left_ast, left_input);
 		orig->right_ast = init_ast();
 		orig->ope = str2ope(ope_str);
-		//tom_parser_lexed(ast, right_input);
-		return (e_tom_result_ok);
+		tom_parser_lexed(&orig->right_ast, right_input);
+		return (e_result_ok);
 	}
 	index = str_list_search_index(input, is_rdt_string);
 	if (index != -1) // 何かしら見つけた
 	{
+		t_str_list *left_input;
+		t_str_list *right_input;
 		// L ope R
 		// ope LR
+		char *ope_str;
+		ope_str = str_list_pop(&input, index);
+		left_input = str_list_cut(&input, index - 1);
+		right_input = input;
+		//debug_dprintf(STDERR_FILENO, "left input\n");
+		//str_list_print(left_input);
+		//debug_dprintf(STDERR_FILENO, "right input\n");
+		//str_list_print(right_input);
+		remove_ifs(&right_input);
+		orig->arg = str_list_cut(&right_input ,0);
+		orig->left_ast = NULL;
+		orig->right_ast = init_ast();
+		str_list_concat(&left_input, right_input);
+		tom_parser_lexed(&orig->right_ast, left_input);
+		orig->ope = str2ope(ope_str);
+		return (e_result_ok);
 	}
-	return (e_tom_result_ok);
+	if (
+		str_list_len(input) == 1 && \
+		startswith_open_paren(str_list_get_elem(input, 0))
+	)
+	{
+		char *str;
+		char *cutstr;
+
+		str = str_list_get_elem(input, 0);
+		cutstr = ft_substr(str, 1, ft_strlen(str) - 2);
+		orig->left_ast = init_ast();
+		orig->ope = e_ope_paren;
+		tom_parser(cutstr, &orig->left_ast);
+		free(cutstr);
+		return (e_result_ok);
+	}
+	/// すべての条件式に入らなかった場合
+	orig->arg = input;
+	orig->ope = e_ope_none;
+	return (e_result_ok);
 }
+
+t_parse_result	tom_parser(char *input, t_ast **ast)
+{
+	t_str_list *lexed;
+
+	*ast = init_ast();
+	lexed = lexer(input);
+	tom_parser_lexed(ast, lexed);
+	return (e_result_ok);
+}
+
