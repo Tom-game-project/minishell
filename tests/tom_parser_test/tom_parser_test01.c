@@ -20,12 +20,13 @@ int main()
 	//tom_parser("ls < infile -la || cat", &ast);
 	//tom_parser("(ls < infile -la) || (cat)", &ast);
 	//tom_parser("(cat) < infile", &ast);
-	tom_parser("(< minishell cat  | sha256sum  | awk '{print $1}' > outfile1) && (sha256sum minishell | awk '{print $1}' > outfile2) && diff outfile1 outfile2 | wc -l", &ast);
+	//tom_parser("(< minishell cat  | sha256sum  | awk '{print $1}' > outfile1) && (sha256sum minishell | awk '{print $1}' > outfile2) && diff outfile1 outfile2 | wc -l", &ast);
 	//tom_parser("A | B | C | D", &ast);
 	//tom_parser("< infile cat | cat | cat", &ast);
 	//tom_parser("(((cat)))", &ast);
 
 	//tom_parser("ls < infile -la || (cat)", &ast);
+	tom_parser("", &ast);
 
 	//tom_parser("< infile " , &ast);
 	//tom_parser("ls -la" , &ast);

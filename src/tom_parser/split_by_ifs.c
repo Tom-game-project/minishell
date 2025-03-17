@@ -27,6 +27,8 @@ int split_by_ifs(t_str_list **lst, void (*f)(void *))
 	t_str_list *new_lst;
 
 	new_lst = NULL;
+	if (str_list_len(*lst) == 0)
+		return (0);
 	while (1)
 	{
 		int index;
@@ -34,7 +36,6 @@ int split_by_ifs(t_str_list **lst, void (*f)(void *))
 		index = str_list_search_index(*lst , is_ifs);
 		if (index == -1)
 		{ 
-			// 見つからなかった場合
 			str_list_push(&new_lst, str_list_to_str(*lst));
 			str_list_clear(lst, f);
 			break;
@@ -42,7 +43,6 @@ int split_by_ifs(t_str_list **lst, void (*f)(void *))
 		else
 		{
 			t_str_list *tmp;
-			// 見つかった場合
 			tmp = str_list_cut(lst, index - 1);
 			f(str_list_pop(lst, 0));
 			str_list_push(&new_lst, str_list_to_str(tmp));
