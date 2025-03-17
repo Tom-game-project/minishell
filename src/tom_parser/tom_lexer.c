@@ -1,4 +1,5 @@
 #include "list.h"
+#include "tom_parser.h"
 //#include "test_tools.h"
 #include <stdbool.h>
 #include <unistd.h>
@@ -19,7 +20,6 @@ bool is_ifs(char c)
 		c == ' '
 	);
 }
-
 
 bool is_ope_char(char c)
 {
@@ -113,3 +113,26 @@ t_char_list *pre_lexer(t_char_list **clst)
 	return (char_list_cut(clst, idx));
 }
 
+/// 意味ごとの分類
+t_str_list *lexer(char *str)
+{
+	t_char_list *lst;
+	char *s;
+	t_char_list *head;
+
+	lst = NULL;
+	char_list_push_str(&lst, str);
+	t_str_list *lexed;
+	lexed = NULL;
+	while (1)
+	{
+		head  = pre_lexer(&lst);
+		if (head == NULL)
+			break;
+		s = char_list_to_str(head);
+		char_list_clear(&head);
+		str_list_push(&lexed, s);
+	}
+	ope_collector(&lexed);
+	return (lexed);
+}
