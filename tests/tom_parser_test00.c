@@ -18,7 +18,7 @@ int main(void)
     // char *input = ft_strdup("ls -la | < infile (cat) | cat");
     //char *input = ft_strdup("< infile cat -e | grep 5");
     //char *input = ft_strdup("< infile cat | grep 5");
-    char *input = ft_strdup("< infile cat");
+    char *input = ft_strdup("   && ls -la");
     t_ast *ast;
 
     ast = NULL;

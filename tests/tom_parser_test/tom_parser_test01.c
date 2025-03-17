@@ -27,7 +27,8 @@ int main()
 
 	//tom_parser("ls < infile -la || (cat)", &ast);
 
-	tom_parser("< infile " , &ast);
+	//tom_parser("< infile " , &ast);
+	tom_parser("   && ls -la" , &ast);
 	print_ast(ast, 0);
 	clear_ast(&ast);
 	return (0);

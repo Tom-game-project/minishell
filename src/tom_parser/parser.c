@@ -154,12 +154,19 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 		//debug_dprintf(STDERR_FILENO,"str \"%s\"\n", ope_str);
 		left_input = str_list_cut(&input, index - 1);
 		right_input = input;
-		orig->left_ast = init_ast();
-		tom_parser_lexed(&orig->left_ast, left_input);
-		orig->right_ast = init_ast();
+
+		if (str_list_len(left_input) != 0)
+		{
+			orig->left_ast = init_ast();
+			tom_parser_lexed(&orig->left_ast, left_input);
+		}
+		if (str_list_len(right_input) != 0)
+		{
+			orig->right_ast = init_ast();
+			tom_parser_lexed(&orig->right_ast, right_input);
+		}
 		orig->ope = str2ope(ope_str);
 		free(ope_str);
-		tom_parser_lexed(&orig->right_ast, right_input);
 		return (e_result_ok);
 	}
 	index = str_list_search_index(input, is_rdt_string);
