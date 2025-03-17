@@ -1,7 +1,6 @@
 #include "tom_parser.h"
 #include "list.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <assert.h>
 
 /// ```bash
@@ -15,8 +14,8 @@ int main()
 	char *str = "(\")\")||\"'\"'\"'";
 	//char *str = "(\")\")||hello>>";
 	//char *str = "(\")\")|| hello >> ||";
+
 	t_str_list *lexed;
-	lexed = NULL;
 	lexed  = lexer(str);
 	str_list_print(lexed);
 	str_list_clear(&lexed, free);

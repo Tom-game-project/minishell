@@ -117,6 +117,7 @@ t_str_list *str_list_cut(t_str_list **node, int index);
 
 bool str_list_in(char *str, t_str_list *lst);
 
+int str_list_trim(t_str_list **lst, t_str_list *set, void(*f)(void *));
 /// ================ int_list functions ================
 
 t_int_list *init_int_list(int i);

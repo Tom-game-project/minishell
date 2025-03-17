@@ -61,6 +61,7 @@ STR_LIST = \
       src/list/str_list_clear.c\
       src/list/str_list_to_str.c\
       src/list/str_list_to_array.c\
+      src/list/str_list_trim.c\
       src/list/str_list_len_sum.c\
       src/list/str_list_join.c\
       src/list/str_list_split.c\
