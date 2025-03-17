@@ -7,7 +7,6 @@
 #include "list.h"
 #include "libft.h"
 #include "strtools.h"
-#include "test_tools.h"
 
 #include "tom_parser.h"
 
@@ -85,6 +84,8 @@ int remove_ifs(t_str_list **lst) // 確保された領域なので、freeしてo
 {
 	t_str_list *ifs_lst;
 
+	if (str_list_len(*lst) == 0)
+		return (1);
 	ifs_lst = NULL;
 	str_list_push(&ifs_lst, " ");
 	str_list_push(&ifs_lst, "\t");
@@ -133,7 +134,6 @@ t_operator str2ope(char *str)
 		return (e_ope_none);
 }
 
-
 t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 {
 	// TODO とりあえずエラー文が出力されないようにvoidつけとく
@@ -175,10 +175,13 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 		right_input = input;
 		remove_ifs(&right_input);
 		orig->arg = str_list_cut(&right_input ,0);
-		orig->left_ast = NULL;
-		orig->right_ast = init_ast();
+		orig->right_ast = NULL;
 		str_list_concat(&left_input, right_input);
-		tom_parser_lexed(&orig->right_ast, left_input);
+		if (str_list_len(left_input) != 0)
+		{
+			orig->left_ast = init_ast();
+			tom_parser_lexed(&orig->left_ast, left_input);
+		}
 		orig->ope = str2ope(ope_str);
 		free(ope_str);
 		return (e_result_ok);
