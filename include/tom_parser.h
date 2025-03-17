@@ -19,4 +19,6 @@ t_ast *init_ast();
 
 t_parse_result	tom_parser(char *input, t_ast **ast);
 
+int split_by_ifs(t_str_list **lst, void (*f)(void *));
+
 #endif

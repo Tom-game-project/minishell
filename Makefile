@@ -141,7 +141,9 @@ PARSER_SRC = \
 TOM_PARSER_SRC = \
 		src/tom_parser/parser.c \
 		src/tom_parser/tom_lexer.c\
-		src/tom_parser/ope_collector.c
+		src/tom_parser/ope_collector.c\
+		src/tom_parser/split_by_ifs.c
+
 
 
 AST_CHECKER_SRC = \

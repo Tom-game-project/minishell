@@ -2,6 +2,7 @@
 #include "dict.h"
 #include "list.h"
 #include "parser.h"
+#include "tom_parser.h"
 #include "exec.h"
 #include "libft.h"
 #include "envtools.h"
@@ -34,7 +35,7 @@ parser_wrap(char *input)
     t_ast *ast;
 
     ast = NULL;
-    if (e_result_paren_not_closed_err == parser(&ast, input))
+    if (e_result_paren_not_closed_err == tom_parser(input, &ast ))
     {
         debug_dprintf(STDERR_FILENO, "minishell : not close syntax\n"); // TODO 書き換える
 		return (NULL);
