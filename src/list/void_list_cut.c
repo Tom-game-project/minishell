@@ -37,6 +37,8 @@ t_void_list	*void_list_cut(t_void_list **node, int index)
 	t_void_list	*tmp;
 
 	i = 0;
+	if (void_list_len(*node) <= index)
+		index = void_list_len(*node) - 1;
 	if (index < 0)
 		return (NULL);
 	p = *node;

@@ -137,6 +137,11 @@ PARSER_SRC = \
       src/parser/clear_ast.c\
       src/parser/syntax_checker.c\
 
+TOM_PARSER_SRC = \
+		src/tom_parser/parser.c \
+		src/tom_parser/tom_lexer.c\
+		src/tom_parser/ope_collector.c
+
 
 AST_CHECKER_SRC = \
       src/ast_checker/ast_checker.c\
@@ -249,6 +254,7 @@ SRC = \
 	$(LOOP_SRC)\
 	$(SIG_SRC)\
 	$(TEST_TOOLS)\
+	$(TOM_PARSER_SRC)
 
 
 MAIN = \
