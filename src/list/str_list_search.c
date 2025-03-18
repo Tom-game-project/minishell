@@ -73,3 +73,14 @@ int	str_list_search_index(t_str_list *node, bool (*f)(char *))
 		)
 	);
 }
+
+int	str_list_search_index_r(t_str_list *node, bool (*f)(char *))
+{
+	return (
+		void_list_search_index_r(
+			node, \
+			strip_string, \
+			(t_v2bfunc) f \
+		)
+	);
+}

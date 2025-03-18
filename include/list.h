@@ -103,6 +103,8 @@ char *str_list_search(t_str_list *node, bool (*f)(char *));
 
 int str_list_search_index(t_str_list *node, bool (*f)(char *));
 
+int str_list_search_index_r(t_str_list *node, bool (*f)(char *));
+
 t_str_list *str_list_search_node(t_str_list *node, bool (*f)(char *, char *), char *str);
 
 int str_list_map_arg1(t_str_list **node, char *(*f)(char *, void *), void *arg);
@@ -196,6 +198,14 @@ int void_list_search_index(
 		t_anytype,
 		bool (*g)(void *)),
        	bool (*f)(void *)
+);
+
+int	void_list_search_index_r(
+	t_void_list *node, \
+	bool (*func)(
+		t_anytype,
+		bool (*g)(void *)), \
+	bool (*f)(void *)
 );
 
 int void_list_search2_index(

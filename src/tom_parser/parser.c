@@ -96,7 +96,7 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 
 	orig = *ast;
 	remove_ifs(&input);
-	index = str_list_search_index(input, is_ope_string);
+	index = str_list_search_index_r(input, is_ope_string); // 後ろから見つけるようにしてみる
 	//debug_dprintf(STDERR_FILENO, "hello world %d \n", index);
 	if (index != -1) // 何かしら見つけた
 	{

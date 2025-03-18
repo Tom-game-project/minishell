@@ -41,9 +41,11 @@ int	void_list_search(
 	return (-1);
 }
 
+
 /// 条件に当てはまった、リストの中の文字列、を探し返す。条件に当てはまる.
 /// 探すべき条件に当てはまるものが見当たらない場合は-1を返却する
-///
+/// 
+/// 最初に見つかったもの
 /// 返り値
 /// - not found (-1)
 /// - index(n >= 0)
@@ -66,6 +68,37 @@ int	void_list_search_index(
 		i += 1;
 	}
 	return (-1);
+}
+
+
+/// 条件に当てはまった、リストの中の文字列、を探し返す。条件に当てはまる.
+/// 探すべき条件に当てはまるものが見当たらない場合は-1を返却する
+///
+/// 最後に見つかったもの
+/// 返り値
+/// - not found (-1)
+/// - index(n >= 0)
+int	void_list_search_index_r(
+	t_void_list *node, \
+	bool (*func)(
+		t_anytype,
+		bool (*g)(void *)), \
+	bool (*f)(void *)
+)
+{
+	int	i;
+	int rindex;
+
+	i = 0;
+	rindex = -1;
+	while (node != NULL)
+	{
+		if (func(node->ptr, f))
+			rindex = i;
+		node = node->next;
+		i += 1;
+	}
+	return (rindex);
 }
 
 /// 第３引数に渡された引数が、第二引数で渡された関数の第２引数に渡される
