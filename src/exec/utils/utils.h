@@ -41,4 +41,5 @@ int exec_rdt_proc_heredoc(
 			// args        , fd
 );
 
+int consume_fd(int heredoc_c, t_int_list **heredoc_fd_list);
 #endif

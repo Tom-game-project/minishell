@@ -1,10 +1,7 @@
 #include "exec.h"
-#include "list.h"
 #include "parser.h"
 #include "../heredoc/heredoc.h"
-#include "test_tools.h"
-
-#include <stdio.h>
+#include "utils.h"
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -17,7 +14,6 @@ int paren_proc(t_exec_args *args)
 	int status;
 	int heredoc_c;
 
-	heredoc_c = count_heredoc(args->ast);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -34,13 +30,8 @@ int paren_proc(t_exec_args *args)
 		exit(0);
 	}
 	/// 子プロセスで読まれたheredocをskipする
-	int i = 0;
-	while (i < heredoc_c){
-		int fd;
-		fd = int_list_pop(args->heredoc_fd_list, 0);
-		close(fd);
-		i += 1;
-	}
+	heredoc_c = count_heredoc(args->ast);
+	consume_fd(heredoc_c, args->heredoc_fd_list);
 	// 親プロセス
 	waitpid(pid, &status, WUNTRACED);
 	return (WEXITSTATUS(status));

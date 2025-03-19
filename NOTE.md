@@ -25,3 +25,10 @@ echo '$PATH'" Tom""'""s home Party "'"'"$PATH"'"'
 echo """'''"'"""'
 ```
 
+## 入力補完lsp他設定
+
+`-I`オプションを使ってコンパイルしているため、開発中にlspがパスを考慮してくれないかもしれないその場合はbearを使って`compile_commands.json`を生成する
+
+```
+bear -- make
+```

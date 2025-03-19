@@ -7,7 +7,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "test_tools.h"
 
 /// 子プロセスで使用されたであろう子プロセスを親側で閉じる関数
 int consume_fd(int heredoc_c, t_int_list **heredoc_fd_list)
@@ -80,9 +79,9 @@ int pipe_proc(t_exec_args *args)
 {
 	int pid;
 	int pipe_fd[2];
-//	int heredoc_c;
+	int heredoc_c;
+
 	if (pipe(pipe_fd) == -1)
-		// パイプの生成に失敗 , TODO: perrorを出力するように
 		return (1);
 	
 	pid = fork();
@@ -90,14 +89,8 @@ int pipe_proc(t_exec_args *args)
 		// 子
 		return (child_proc_pipe(pipe_fd, args, pid));
 	// 子プロセスで読まれたheredocをskipする
-	// TODO:consume関数みたいなものを作成する
 	// 親
-	int heredoc_c;
 	heredoc_c = count_heredoc(args->ast->left_ast);
-	//debug_dprintf(STDERR_FILENO,"closed fd (left_ast)%d \n", heredoc_c);
-	consume_fd(
-		heredoc_c,
-	       	args->heredoc_fd_list
-	);
+	consume_fd(heredoc_c, args->heredoc_fd_list);
 	return (parent_proc_pipe(pipe_fd, args, pid));
 }

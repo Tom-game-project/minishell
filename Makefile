@@ -145,7 +145,6 @@ TOM_PARSER_SRC = \
 		src/tom_parser/split_by_ifs.c
 
 
-
 AST_CHECKER_SRC = \
       src/ast_checker/ast_checker.c\
       src/ast_checker/ast_checker_wrap.c\

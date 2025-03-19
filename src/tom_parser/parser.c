@@ -88,6 +88,7 @@ t_operator str2ope(char *str)
 		return (e_ope_none);
 }
 
+/// 字句解析処理後のリストを引数に取る
 t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 {
 	// TODO とりあえずエラー文が出力されないようにvoidつけとく
@@ -169,6 +170,7 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 	return (e_result_ok);
 }
 
+/// 字句解析前のコマンドライン文字列を引数に取る
 t_parse_result	tom_parser(char *input, t_ast **ast)
 {
 	t_str_list *lexed;
@@ -176,7 +178,6 @@ t_parse_result	tom_parser(char *input, t_ast **ast)
 	*ast = init_ast();
 	lexed = lexer(input);
 	tom_parser_lexed(ast, lexed);
-	//str_list_clear(&lexed, free);
 	return (e_result_ok);
 }
 

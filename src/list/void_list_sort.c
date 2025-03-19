@@ -102,8 +102,6 @@ int merge_sort(
 	node2 = *node;
 	merge_sort(&node1, cmp);
 	merge_sort(&node2, cmp); 
-	merge_lists(
-		node, node1, node2, cmp
-	);
+	merge_lists(node, node1, node2, cmp);
 	return (0);
 }
