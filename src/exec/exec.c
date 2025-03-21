@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 19:07:07 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 19:07:08 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "built_in.h"
 #include "dict.h"
 #include "list.h"
@@ -12,12 +24,12 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-typedef char *(*t_sd2sfunc)(char *, void *);
+typedef char	*(*t_sd2sfunc)(char *, void *);
 
 /// もとの文字列を、環境変数に基づいて展開する関数
-static char *expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
+static char	*expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
 {
-	char *rstr;
+	char	*rstr;
 
 	rstr = expand_string(str, env_dict);
 	free(str);
@@ -26,22 +38,21 @@ static char *expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
 
 /// コマンドが実際に実行される場所
 /// 
-int run_cmd_proc(t_exec_args *args)
+int	run_cmd_proc(t_exec_args *args)
 {
-	t_built_in tbi;
+	t_built_in	tbi;
 
 	if (str_list_len(args->ast->arg) == 0)
-		return (0); // TODO とりあえずsegvを防いでいる
-	/// 環境変数を展開、展開後のリストをastにもう一度格納
+		return (0);
 	str_list_map_arg1(
 		&(args->ast->arg),
 		(t_sd2sfunc) expand_string_wrap_str_free,
 		*(args->envp_dict));
 	tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
-	if (tbi == e_not_built_in) 
+	if (tbi == e_not_built_in)
 		if (args->ppid == 0)
 			return (execve_wrap(args));
-		else 
+		else
 			return (none_proc(args));
 	else if (tbi == e_built_in_pwd)
 		return (built_in_pwd(args->output_fd));
@@ -50,15 +61,14 @@ int run_cmd_proc(t_exec_args *args)
 	else if (tbi == e_built_in_cd)
 		return (built_in_cd(args->ast->arg, args->envp_dict));
 	else if (tbi == e_built_in_export)
-		return (built_in_export(args->ast->arg,  args->envp_dict));
+		return (built_in_export(args->ast->arg, args->envp_dict));
 	else if (tbi == e_built_in_unset)
-		return (built_in_unset(args->ast->arg,  args->envp_dict));
+		return (built_in_unset(args->ast->arg, args->envp_dict));
 	else if (tbi == e_built_in_exit)
 		return (built_in_exit(args->ast->arg));
 	else if (tbi == e_built_in_echo)
 		return (built_in_echo(args->ast->arg, args->output_fd));
 	else
-		// unreachable
 		return (1);
 }
 
@@ -71,29 +81,27 @@ int run_cmd_proc(t_exec_args *args)
 /// ```c
 ///
 /// ```
-int exec2(t_exec_args *args)
+int	exec2(t_exec_args *args)
 {
-	if (args->ast->ope == e_ope_pipe) // |
+	if (args->ast->ope == e_ope_pipe)
 		return (pipe_proc(args));
-	else if (args->ast->ope == e_ope_and) // &&
+	else if (args->ast->ope == e_ope_and)
 		return (and_proc(args));
-	else if (args->ast->ope == e_ope_or) // ||
+	else if (args->ast->ope == e_ope_or)
 		return (or_proc(args));
-	else if (args->ast->ope == e_ope_redirect_i) // <
+	else if (args->ast->ope == e_ope_redirect_i)
 		return (exec_redirect_i_proc(args));
-	else if (args->ast->ope == e_ope_redirect_o) // >
+	else if (args->ast->ope == e_ope_redirect_o)
 		return (exec_redirect_o_proc(args));
-	else if (args->ast->ope == e_ope_heredoc_o) // >>
+	else if (args->ast->ope == e_ope_heredoc_o)
 		return (exec_heredoc_o_proc(args));
-	else if (args->ast->ope == e_ope_heredoc_i) // <<
+	else if (args->ast->ope == e_ope_heredoc_i)
 		return (exec_heredoc_i_proc(args));
-	else if (args->ast->ope == e_ope_paren)     // ()
+	else if (args->ast->ope == e_ope_paren)
 		return (paren_proc(args));
-	else if (args->ast->ope == e_ope_none) // 普通のコマンド
+	else if (args->ast->ope == e_ope_none)
 		return (run_cmd_proc(args));
-	// dprintf(STDERR_FILENO, "unexpected ope!\n");
-	return (1); // exit status を返すように変更
-		    // unreachable
+	return (1);
 }
 
 /// この処理に入る時点で、junkなケースが弾かれていることを期待する
@@ -105,28 +113,27 @@ int exec2(t_exec_args *args)
 /// ```
 /// これは文法のエラーになる
 /// 
-int exec(t_ast *ast, t_str_dict **envp_dict)
+int	exec(t_ast *ast, t_str_dict **envp_dict)
 {
-	int exit_status;
-	t_int_list *heredoc_fd_list;
+	int			exit_status;
+	t_int_list	*heredoc_fd_list;
 
 	heredoc_fd_list = NULL;
-	if (heredoc_proc(ast, &heredoc_fd_list)== 130)
+	if (heredoc_proc(ast, &heredoc_fd_list) == 130)
 	{
 		close_all_heredoc_fd(&heredoc_fd_list);
 		write(STDOUT_FILENO, &"\n", 1);
 		return (130);
 	}
-	exit_status = exec2(
+	exit_status = exec2(\
 		&(t_exec_args){
-			ast, 
-			envp_dict,
-			&heredoc_fd_list,
-			STDIN_FILENO,
-			STDOUT_FILENO,
+			ast, \
+			envp_dict, \
+			&heredoc_fd_list, \
+			STDIN_FILENO, \
+			STDOUT_FILENO, \
 			-1
-		}
-	);
+		});
 	close_all_heredoc_fd(&heredoc_fd_list);
 	return (exit_status);
 }

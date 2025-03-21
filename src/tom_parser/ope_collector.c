@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ope_collector.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:36:48 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:38:06 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include "strtools.h"
 #include <stdlib.h>
 #include <stdbool.h>
 
-static 
-void nop(void *a)
+static void	nop(void *a)
 {
 	(void) a;
 }
@@ -19,8 +30,7 @@ void nop(void *a)
 /// lst1 = [1];
 /// lst2 = [1, 2];
 /// -> false
-bool
-str_list_cmp(t_str_list *lst1, t_str_list *lst2)
+bool	str_list_cmp(t_str_list *lst1, t_str_list *lst2)
 {
 	while (lst1 != NULL && lst2 != NULL)
 	{
@@ -44,10 +54,11 @@ str_list_cmp(t_str_list *lst1, t_str_list *lst2)
 ///
 /// patternを探す関数
 /// search_string_pattern_replace
-int search_string_pattern_replace(t_str_list **lst, t_str_list *pattern)
+int	search_string_pattern_replace(\
+	t_str_list **lst, t_str_list *pattern)
 {
-	t_str_list *i;
-	int index;
+	t_str_list	*i;
+	int			index;
 
 	i = *lst;
 	index = 0;
@@ -77,21 +88,21 @@ int search_string_pattern_replace(t_str_list **lst, t_str_list *pattern)
 }
 
 /// 演算子をまとめる
-int ope_collector(t_str_list **lexed)
+int	ope_collector(t_str_list **lexed)
 {
-	t_str_list *ptn[4];
-	char *table[4];
-	int i;
+	t_str_list	*ptn[4];
+	char		*table[4];
+	int			i;
 
-	table[0] = "|"; // ||
-	table[1] = ">"; // >>
-	table[2] = "<"; // <<
-	table[3] = "&"; // &&
+	table[0] = "|";
+	table[1] = ">";
+	table[2] = "<";
+	table[3] = "&";
 	i = 0;
 	while (i < 4) 
 	{
 		ptn[i] = NULL;
-		str_list_push(&ptn[i], table[i]); 
+		str_list_push(&ptn[i], table[i]);
 		str_list_push(&ptn[i], table[i]);
 		while (search_string_pattern_replace(lexed, ptn[i]) != 0);
 		str_list_clear(&ptn[i], nop);

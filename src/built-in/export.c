@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:26:08 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/12 19:27:29 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:07:52 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	set_envp(
 	}
 	if (is_valid_identifier(key))
 	{
-		debug_dprintf(STDERR_FILENO, "new env added key: \"%s\", value: \"%s\"\n", key, value);
+		debug_dprintf(\
+			STDERR_FILENO, "new env added key: \"%s\", value: \"%s\"\n", key, value);
 		if (value == NULL)
 			return (0);
 		str_dict_add(envp_dict, key, value, free);

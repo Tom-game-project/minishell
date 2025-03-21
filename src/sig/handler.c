@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handler.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:34:26 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:34:39 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <signal.h>
 #include <sig.h>
 #include <readline/readline.h>
@@ -7,13 +19,13 @@
 
 #include "sig.h"
 
-void handle_sig(int sig)
+void	handle_sig(int sig)
 {
 	g_signal_number = sig;
 	if (sig == SIGINT)
 	{
-		rl_on_new_line();      // 新しい行を準備
-		rl_replace_line("", 0);// 入力行をクリア
+		rl_on_new_line();
+		rl_replace_line("", 0);
 		disconnect2stdin();
 	}
 }

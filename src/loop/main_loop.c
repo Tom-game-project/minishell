@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_loop.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:23:17 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:27:39 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast_checker.h"
 #include "dict.h"
 #include "list.h"
@@ -29,28 +41,26 @@
 int g_signal_number = 0;
 
 /// 与えられた、shell cmdを解釈する関数
-static t_ast *
-parser_wrap(char *input)
+static t_ast	*parser_wrap(char *input)
 {
-    t_ast *ast;
+	t_ast	*ast;
 
-    ast = NULL;
-    if (e_result_paren_not_closed_err == tom_parser(input, &ast ))
-    {
-        //debug_dprintf(STDERR_FILENO, "minishell : not close syntax\n"); // TODO 書き換える
-												    ft_putstr_fd("minishell : not close syntax\n", STDERR_FILENO);
+	ast = NULL;
+	if (e_result_paren_not_closed_err == tom_parser(input, &ast ))
+	{
+		ft_putstr_fd("minishell : not close syntax\n", STDERR_FILENO);
 		return (NULL);
-    }
-    else
-    {
-        debug_dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
-    }
-    return (ast);
+	}
+	else
+	{
+		debug_dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
+	}
+	return (ast);
 }
 
-void exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
+void	exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
 {
-	t_syntax_result result;
+	t_syntax_result	result;
 
 	debug_dprintf(STDERR_FILENO, "ORIGIN PID (%d)\n", debug_getpid());
 	if (ast == NULL)
@@ -75,29 +85,10 @@ void exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
 
 /// exit statuswを更新します
 ///
-void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
+void	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 {
-	t_ast *ast;
+	t_ast	*ast;
 
-	//ast = parser_wrap(str);
-	//if (ast == NULL)
-	//{
-	//	*exit_status = 1;
-	//	return ;
-	//}
-	//result = ast_checker(ast);
-	//print_checker_result(result);
-	//if (result == e_no_input)
-	//{
-	//	debug_dprintf(STDERR_FILENO, "no_input\n");
-	//	clear_ast(&ast);
-	//}
-	//else if (print_checker_result(result))
-	//{
-	//	print_ast(ast, 0);
-	//	*exit_status = exec(ast, env_dict);
-	//	clear_ast(&ast);
-	//}
 	ast = parser_wrap(str);
 	exec_ast(ast, env_dict, exit_status);
 }
@@ -105,12 +96,12 @@ void exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 
 
 /// exit statusと、今いるディレクトリを表示するプロンプト
-char *prompt(int exit_status)
+char	*prompt(int exit_status)
 {
-	char buf[PATH_MAX];
-	char *exit_str;
-	t_char_list *rstr_list;
-	char *rstr;
+	char		buf[PATH_MAX];
+	char		*exit_str;
+	t_char_list	*rstr_list;
+	char		*rstr;
 
 	exit_str = ft_itoa(exit_status);
 	rstr_list = NULL;
@@ -126,7 +117,7 @@ char *prompt(int exit_status)
 	return (rstr);
 }
 
-typedef enum e_loop_cntl t_loop_cntl;
+typedef enum e_loop_cntl	t_loop_cntl;
 enum e_loop_cntl
 {
 	e_continue,
@@ -134,9 +125,10 @@ enum e_loop_cntl
 };
 
 /// 一回のloop
-t_loop_cntl device_loop_unit(char *input,int *exit_status, t_str_dict **env_dict)
+t_loop_cntl	device_loop_unit(\
+	char *input, int *exit_status, t_str_dict **env_dict)
 {
-	struct termios orig_termios;
+	struct termios	orig_termios;
 
 	tcgetattr(STDIN_FILENO, &orig_termios);
 	if (g_signal_number == SIGINT)
@@ -160,22 +152,21 @@ t_loop_cntl device_loop_unit(char *input,int *exit_status, t_str_dict **env_dict
 	return (e_continue);
 }
 
-int main_loop(char *envp[])
+int	main_loop(char *envp[])
 {
-	t_str_dict *env_dict;
-	int exit_status;
-	t_loop_cntl lctl;
+	t_str_dict	*env_dict;
+	int			exit_status;
+	t_loop_cntl	lctl;
 
 	sig_settig();
 	env_dict = NULL;
-	envp_to_str_dict(&env_dict, envp); // 環境変数をセット
+	envp_to_str_dict(&env_dict, envp);
 	exit_status = 0;
-	str_dict_add(
-                &env_dict,
-                ft_strdup("?"),
-                ft_itoa(exit_status),
-                free
-        );
+	str_dict_add(\
+			&env_dict, \
+			ft_strdup("?"), \
+			ft_itoa(exit_status), \
+			free);
 	while (1)
 	{
 		char *input;
@@ -195,12 +186,11 @@ int main_loop(char *envp[])
 	return (exit_status);
 }
 
-char *
-none_device_readline()
+char	*none_device_readline()
 {
-	char c;
-	t_char_list *lst;
-	char *str;
+	char		c;
+	t_char_list	*lst;
+	char		*str;
 
 	lst = NULL;
 	while (1)
@@ -218,22 +208,21 @@ none_device_readline()
 }
 
 /// stdin がデバイスでないとき
-int none_device_main_loop(char *envp[])
+int	none_device_main_loop(char *envp[])
 {
-	t_str_dict *env_dict;
-	int exit_status;
-	t_loop_cntl lctl;
+	t_str_dict	*env_dict;
+	int			exit_status;
+	t_loop_cntl	lctl;
 
 	sig_settig();
 	env_dict = NULL;
-	envp_to_str_dict(&env_dict, envp); // 環境変数をセット
+	envp_to_str_dict(&env_dict, envp);
 	exit_status = 0;
-	str_dict_add(
-                &env_dict,
-                ft_strdup("?"),
-                ft_itoa(exit_status),
-                free
-        );
+	str_dict_add(\
+		&env_dict, \
+		ft_strdup("?"), \
+		ft_itoa(exit_status), \
+		free);
 	while (1)
 	{
 		char *input;

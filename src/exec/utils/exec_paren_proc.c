@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_paren_proc.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:53:18 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:53:35 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
 #include "parser.h"
 #include "../heredoc/heredoc.h"
@@ -8,11 +20,11 @@
 
 /// parenは特別なデータ形式
 /// right_astを持たない
-int paren_proc(t_exec_args *args)
+int	paren_proc(t_exec_args *args)
 {
-	int pid;
-	int status;
-	int heredoc_c;
+	int	pid;
+	int	status;
+	int	heredoc_c;
 
 	pid = fork();
 	if (pid == 0)
@@ -32,10 +44,8 @@ int paren_proc(t_exec_args *args)
 		close(args->output_fd);
 		exit(0);
 	}
-	/// 子プロセスで読まれたheredocをskipする
 	heredoc_c = count_heredoc(args->ast);
 	consume_fd(heredoc_c, args->heredoc_fd_list);
-	// 親プロセス
 	waitpid(pid, &status, WUNTRACED);
 	return (WEXITSTATUS(status));
 }

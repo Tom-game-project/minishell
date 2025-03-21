@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_shadow_file.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:27:57 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:28:31 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include "path.h"
 #include "libft.h"
@@ -6,19 +18,19 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
- 
+
 #ifndef SHADOW_FILEPATH
-#define SHADOW_FILEPATH "ms-"
+# define SHADOW_FILEPATH "ms-"
 #endif
 
 #define TMP_PATH "./"
 
 /// 隠しファイルを作りそのfdを返却する
-int create_shadow_file(int rw_fd[2])
+int	create_shadow_file(int rw_fd[2])
 {
-	char *pathname;
-	t_str_list* dlst;
-	char *fullpath;
+	char		*pathname;
+	t_str_list	*dlst;
+	char		*fullpath;
 
 	dlst = get_dir_list(TMP_PATH);
 	pathname = gen_nondup_name(SHADOW_FILEPATH, dlst);
