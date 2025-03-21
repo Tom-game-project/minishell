@@ -1,14 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sig_setting.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:35:26 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:35:42 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sig.h"
 #include "signal.h"
 #include <stdlib.h>
 
 /// イベントハンドラの設定
-int sig_settig()
+int	sig_settig(void)
 {
-	struct sigaction sa_sigact;
+	struct sigaction	sa_sigact;
 
-	///シグナルハンドラの設定
-	// Ctrl-\ (SIGQUIT) のための sigaction を設定
 	sa_sigact.sa_handler = handle_sig;
 	sigemptyset(&sa_sigact.sa_mask);
 	sa_sigact.sa_flags = 0;

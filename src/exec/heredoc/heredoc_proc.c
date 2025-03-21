@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_proc.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:08:54 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:09:49 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "list.h"
 #include "libft.h"
@@ -7,15 +19,16 @@
 
 #include <stdlib.h>
 
-static int heredoc_unit_proc(t_ast *ast, t_int_list **heredoc_fd_list, int rw_fd[2])
+static int	heredoc_unit_proc(\
+	t_ast *ast, t_int_list **heredoc_fd_list, int rw_fd[2])
 {
-	char *str;
-	char *strl;
-	char *strl2;
-	int exit_status;
+	char	*str;
+	char	*strl;
+	char	*strl2;
+	int		exit_status;
 
 	str = str_list_get_elem(ast->arg, 0);
-	strl = ft_strjoin(str, "\n"); 
+	strl = ft_strjoin(str, "\n");
 	strl2 = remove_quotations(strl);
 	free(strl);
 	if (create_shadow_file(rw_fd) == -1)
@@ -27,16 +40,15 @@ static int heredoc_unit_proc(t_ast *ast, t_int_list **heredoc_fd_list, int rw_fd
 	return (exit_status);
 }
 
-
 /// まず最初にheredocの入力だけを処理する,
 ///
 /// heredoc内では部分的な環境変数展開が行われているようだ。
 ///
 /// 再帰の構造と同じように処理する
-int heredoc_proc(t_ast *ast, t_int_list **heredoc_fd_list)
+int	heredoc_proc(t_ast *ast, t_int_list **heredoc_fd_list)
 {
-	int rw_fd[2];
-	int exit_status;
+	int	rw_fd[2];
+	int	exit_status;
 
 	exit_status = 0;
 	if (ast->ope == e_ope_heredoc_i)
