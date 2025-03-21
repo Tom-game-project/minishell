@@ -50,8 +50,8 @@ static int	child_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 		args->ast->left_ast,
 		args->envp_dict,
 		args->heredoc_fd_list,
-		args->input_fd,
-		args->output_fd,
+		STDIN_FILENO,
+		STDOUT_FILENO,
 		pid});
 	exit(1);
 	return (0);
@@ -74,7 +74,7 @@ static int	parent_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 			STDOUT_FILENO,
 			pid
 		});
-	close(pipe_fd[PIPE_READ]);
+	//close(pipe_fd[PIPE_READ]);
 	waitpid(pid, NULL, WUNTRACED);
 	return (exit_status);
 }
