@@ -18,6 +18,7 @@ int paren_proc(t_exec_args *args)
 	if (pid == 0)
 	{
 		dup2(args->input_fd, STDIN_FILENO);
+		dup2(args->output_fd, STDOUT_FILENO);
 		exec2(&(t_exec_args)
 		{
 			args->ast->left_ast,
@@ -27,6 +28,8 @@ int paren_proc(t_exec_args *args)
 			args->output_fd,
 			pid
 		});
+		close(args->input_fd);
+		close(args->output_fd);
 		exit(0);
 	}
 	/// 子プロセスで読まれたheredocをskipする

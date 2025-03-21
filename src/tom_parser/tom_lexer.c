@@ -34,7 +34,7 @@ bool is_ope_char(char c)
 /// ```bash
 /// ls -la &&(cat ) | "hello world"
 /// ```
-/// -> 
+/// -ls -la &&(cat ) | "hello world"> 
 /// ```
 /// 'ls' '-la' '&&' '(cat )' '|' '"hello world"'
 /// ```
