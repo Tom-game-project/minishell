@@ -112,6 +112,8 @@ t_parse_result	tom_parser(char *input, t_ast **ast)
 	t_str_list *lexed;
 
 	*ast = init_ast();
+	if (!tom_syntax_checker(input))
+		return (e_result_paren_not_closed_err);
 	lexed = lexer(input);
 	tom_parser_lexed(ast, lexed);
 	return (e_result_ok);

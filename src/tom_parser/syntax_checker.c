@@ -1,28 +1,6 @@
-#include "parser.h"
 #include "list.h"
 #include <stdbool.h>
 #include <stdlib.h>
-
-bool syntax_checker(char *input)
-{
-    int            tmp;
-    int            idx;
-
-    idx = 0;
-    while (*(input + idx) != '\0')
-    {
-        if (*(input + idx) == ')')
-            return (false);
-        tmp = find_syntax(input + idx);
-        if (tmp < 0)
-            return (false);
-        else if (tmp > 0)
-            idx += tmp;
-        else
-            idx++;
-    }
-    return (true);
-}
 
 typedef enum e_anchor t_anchor;
 enum e_anchor
@@ -32,13 +10,7 @@ enum e_anchor
 	e_outof_q
 };
 
-/// ```bash
-/// "("
-/// '('
-/// 
-/// ```
-/// おそらくsyntax checker関数は、閉じられていないカッコを検出したい
-bool syntax_checker2(char *input)
+bool tom_syntax_checker(char *input)
 {
 	t_char_list *lst;
 	t_anchor p;
@@ -79,5 +51,5 @@ bool syntax_checker2(char *input)
 		else {} // unreachable
 	}
 	char_list_clear(&lst);
-	return (depth == 0);
+	return (depth == 0 && p == e_outof_q);
 }

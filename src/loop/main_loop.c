@@ -37,7 +37,8 @@ parser_wrap(char *input)
     ast = NULL;
     if (e_result_paren_not_closed_err == tom_parser(input, &ast ))
     {
-        debug_dprintf(STDERR_FILENO, "minishell : not close syntax\n"); // TODO 書き換える
+        //debug_dprintf(STDERR_FILENO, "minishell : not close syntax\n"); // TODO 書き換える
+												    ft_putstr_fd("minishell : not close syntax\n", STDERR_FILENO);
 		return (NULL);
     }
     else

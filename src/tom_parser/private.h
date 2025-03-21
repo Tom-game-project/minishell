@@ -16,4 +16,6 @@ bool is_ope_string(char *str);
 
 int remove_ifs(t_str_list **lst);
 
+bool tom_syntax_checker(char *input);
+
 #endif
