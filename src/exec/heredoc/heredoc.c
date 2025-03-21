@@ -37,6 +37,14 @@ put_switcher(char *str, int fd)
 	return (0);
 }
 
+int 
+putchar_switcher(char c, int fd)
+{
+	if (isatty(STDIN_FILENO))
+		ft_putchar_fd(c, fd);
+	return (0);
+}
+
 t_private read_heredocline_helper2_eot(
 	t_char_list **lst
 )
@@ -109,7 +117,7 @@ t_private read_heredocline_helper2(
 	else if (ft_isprint(c))
 	{
 		char_list_push(lst, c);
-		put_switcher(&c, STDOUT_FILENO);
+		putchar_switcher(c, STDOUT_FILENO);
 		return (e_continue);
 	}
 	return (e_continue);
@@ -141,7 +149,7 @@ int read_heredocline2(
 	enable_raw_mode(&orig_termios);
 	lst = NULL;
 	exit_status = 0;
-	put_switcher(HEREDOC_PROMPT, STDERR_FILENO); // TODO stdinがデバイス出ない場合は、入らないようにする
+	put_switcher(HEREDOC_PROMPT, STDOUT_FILENO); // TODO stdinがデバイス出ない場合は、入らないようにする
 	while (1)
 	{
 		p = read_heredocline_helper2(eof, fd, &lst);
