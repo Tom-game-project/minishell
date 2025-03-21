@@ -10,7 +10,7 @@
 #include "private.h"
 
 /// L ope R
-t_parse_result parse_ope_string(t_ast *orig, t_str_list *input, int index)
+static t_parse_result parse_ope_string(t_ast *orig, t_str_list *input, int index)
 {
 	t_str_list *left_input;
 	t_str_list *right_input;
@@ -41,7 +41,7 @@ t_parse_result parse_ope_string(t_ast *orig, t_str_list *input, int index)
 
 /// L ope R
 /// ope LR
-t_parse_result parse_rdt_string(t_ast *orig, t_str_list *input, int index)
+static t_parse_result parse_rdt_string(t_ast *orig, t_str_list *input, int index)
 {
 	t_str_list *left_input;
 	t_str_list *right_input;
@@ -67,7 +67,7 @@ t_parse_result parse_rdt_string(t_ast *orig, t_str_list *input, int index)
 	return (e_result_ok);
 }
 
-t_parse_result parse_paren_string(t_ast *orig, t_str_list *input)
+static t_parse_result parse_paren_string(t_ast *orig, t_str_list *input)
 {
 	char *str;
 	char *cutstr;
@@ -84,24 +84,22 @@ t_parse_result parse_paren_string(t_ast *orig, t_str_list *input)
 /// 字句解析処理後のリストを引数に取る
 t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 {
-	// TODO とりあえずエラー文が出力されないようにvoidつけとく
 	int index;
 	t_ast *orig;
 
 	orig = *ast;
 	remove_ifs(&input);
-	index = str_list_search_index_r(input, is_ope_string); // 後ろから見つけるようにしてみる
-	if (index != -1) // 何かしら見つけた
+	index = str_list_search_index_r(input, is_ope_string);
+	if (index != -1)
 		return  (parse_ope_string(orig, input, index));
 	index = str_list_search_index(input, is_rdt_string);
-	if (index != -1) // 何かしら見つけた
+	if (index != -1)
 		 return (parse_rdt_string(orig, input, index));
 	if (
 		str_list_len(input) == 1 && \
 		startswith_open_paren(str_list_get_elem(input, 0))
 	)
 		return (parse_paren_string(orig, input));
-	/// すべての条件式に入らなかった場合
 	split_by_ifs(&input, free);
 	orig->arg = input;
 	orig->ope = e_ope_none;
