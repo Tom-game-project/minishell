@@ -1,3 +1,1 @@
-echo "$(<< EOF cat)" | python3
-print("hello world")
-EOF
+< infile cat | cat > outfile
