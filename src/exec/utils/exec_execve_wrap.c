@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_execve_wrap.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:47:11 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:48:17 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dict.h"
 #include "exec.h"
 #include "list.h"
@@ -13,8 +25,7 @@
 #include <stdlib.h>
 
 /// TODO あとで関数の名前を変更する
-static
-int print_error_msg(char *cmd)
+static int	print_error_msg(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
@@ -25,8 +36,7 @@ int print_error_msg(char *cmd)
 /// TODO あとで関数の名前を変更する
 ///
 /// exit_status が、126だったときに
-static
-int print_error_msg2(char *cmd)
+static int	print_error_msg2(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
@@ -35,8 +45,7 @@ int print_error_msg2(char *cmd)
 }
 
 /// TODO
-static int
-print_error_msg3(char *cmd)
+static int	print_error_msg3(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
@@ -45,8 +54,7 @@ print_error_msg3(char *cmd)
 }
 
 /// TODO
-static int
-print_error_msg4(char *cmd)
+static int	print_error_msg4(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
@@ -58,9 +66,9 @@ print_error_msg4(char *cmd)
 /// またはシンボリックリンクのファイルであるかどうかを確かめる
 /// 
 /// pathが通常のファイルでなければエラーメッセージを出力してexitする
-void check_executable_file(char *path)
+void	check_executable_file(char *path)
 {
-	struct stat f_stat;
+	struct stat	f_stat;
 
 	set_stat(&f_stat, path);
 	if (S_ISREG(f_stat.st_mode))
@@ -72,7 +80,7 @@ void check_executable_file(char *path)
 		print_error_msg3(path);
 		exit(126);
 	}
-	else 
+	else
 	{
 		print_error_msg4(path);
 		exit(126);
@@ -87,13 +95,13 @@ void check_executable_file(char *path)
 /// - 環境変数の展開
 /// - $()展開 (この関数が更に子プロセスを生じさせる可能性がある)
 /// - もし、args -> argsが空でなければ今のコマンドとくっつけて実行する
-int execve_wrap(t_exec_args *args)
+int	execve_wrap(t_exec_args *args)
 {
-	char *fullpath;
-	char *cmd;
-	char **argv;
-	char **envp;
-	t_str_dict *env_path_node;
+	char		*fullpath;
+	char		*cmd;
+	char		**argv;
+	char		**envp;
+	t_str_dict	*env_path_node;
 
 	cmd = ft_strdup(str_list_get_elem(args->ast->arg, 0));
 	argv = str_list_to_array(args->ast->arg);
@@ -107,7 +115,7 @@ int execve_wrap(t_exec_args *args)
 		print_error_msg2(cmd);
 	check_executable_file(fullpath);
 	envp = str_dict_to_envp(*args->envp_dict);
-	debug_dprintf(STDERR_FILENO, "cmd %s running on pid(%d).ppid(%d)\n", 
+	debug_dprintf(STDERR_FILENO, "cmd %s running on pid(%d).ppid(%d)\n", \
 			fullpath, debug_getpid(), debug_getppid());
 	execve(fullpath, argv, envp);
 	return (1);

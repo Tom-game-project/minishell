@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_rdt.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:56:04 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:58:16 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include "parser.h"
 #include "exec.h"
@@ -11,29 +23,25 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int exec_rdt_proc(
+int	exec_rdt_proc(
 	t_exec_args *args,
-	void (*close_fd)(t_exec_args *), // close
-	int (*open_func)(char *),// open
-	int (*inner_exec)(t_exec_args *, int) //
-			// args        , fd
+	void (*close_fd)(t_exec_args *),
+	int (*open_func)(char *),
+	int (*inner_exec)(t_exec_args *, int)
 )
 {
-	char *str;
-	int fd;
+	char	*str;
+	int		fd;
 
 	close_fd(args);
 	str = str_list_get_elem(args->ast->arg, 0);
-	if (str == NULL) // NULL
+	if (str == NULL)
 	{
-		// TODO:もし見つからなければ
-		// ここで見つからないのはありえない
-		// Error
 	}
 	fd = open_func(str);
 	if (fd == -1)
 	{
-		perror("minishell"); // TODO
+		perror("minishell");
 		return (1);
 	}
 	inner_exec(args, fd);
@@ -46,8 +54,7 @@ int exec_rdt_proc(
 /// ```
 /// 
 /// ```
-static
-bool includes_quotation(char *str)
+static bool	includes_quotation(char *str)
 {
 	while (*str != '\0')
 	{
@@ -60,41 +67,32 @@ bool includes_quotation(char *str)
 	return (false);
 }
 
-
 /// 環境変数展開が必要なheredocについては、
 /// 環境変数展開後の文字列を格納した隠しファイルのfdをリストに差し替えて
 /// 他の関数は,展開関係なく普通にfdを読んでいるようになる
 ///
-int exec_rdt_proc_heredoc(
+int	exec_rdt_proc_heredoc(
 	t_exec_args *args,
-	void (*close_fd)(t_exec_args *), // close
-	int (*inner_exec)(t_exec_args *, int) //
-			// args        , fd
+	void (*close_fd)(t_exec_args *),
+	int (*inner_exec)(t_exec_args *, int)
 )
 {
-	int fd;
-	int new_fd;
+	int	fd;
+	int	new_fd;
 
 	close_fd(args);
-	//int_list_print(*args->heredoc_fd_list);
 	fd = int_list_pop(args->heredoc_fd_list, 0);
-	// TODO:ここに環境変数を展開した
-	// 隠しファイルのfdを返す関数を追加する
 	if (!includes_quotation(str_list_get_elem(args->ast->arg, 0)))
 	{
-		// もし、一切クォーテーション、
-		// ダブルクォーテーションが
-		// ふくまれていなかったら、
-		// 環境変数展開の処理をはさみfdをすり替える
 		new_fd = heredoc_expand_string_via_fd(fd, *args->envp_dict);
-		// dprintf(STDERR_FILENO,"new_fd %d\n", new_fd);
-		debug_dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, debug_getpid());
+		debug_dprintf(STDERR_FILENO, \
+			"close [%d] fd pid [%d]\n", fd, debug_getpid());
 		close(fd);
 		fd = new_fd;
 	}
 	if (fd == -1)
 	{
-		perror("minishell"); // TODO
+		perror("minishell");
 		return (1);
 	}
 	inner_exec(args, fd);
