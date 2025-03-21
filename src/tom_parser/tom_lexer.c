@@ -1,5 +1,6 @@
 #include "list.h"
 #include "tom_parser.h"
+#include "private.h"
 //#include "test_tools.h"
 #include <stdbool.h>
 #include <unistd.h>
@@ -12,23 +13,97 @@ enum e_anchor
 	e_outof_q
 };
 
-bool is_ifs(char c)
+
+typedef struct s_cur_anchor t_cur_anchor;
+/// TODO: rename 必須
+struct s_cur_anchor
 {
-	return (
-		c == '\t' || \
-		c == '\n' || \
-		c == ' '
-	);
+	char c;
+	t_anchor *anchor;
+	int *depth;
+	int idx;
+	t_char_list **clst;
+	t_char_list **cut_list; // NULLで渡す
+};
+
+/// 
+/// 妥協案
+///
+/// bool
+/// - true -> returnする
+/// - false -> returnしない
+static bool cur_out_of_quotation(t_cur_anchor *s)
+{
+	// 何もないところにおける文字の区切り
+	if (s->c == '\'')
+		*s -> anchor = e_in_q;
+	else if (s->c == '"')
+		*s->anchor = e_in_dq;
+	else if (s->c == '(')
+		*s->depth += 1;
+	else if (s->c == ')')
+	{
+		*s->depth -= 1;
+		if (*s->depth == 0)
+		{
+			*s->cut_list=char_list_cut(s->clst, s->idx);
+			return (true);
+		}
+	}
+	else if (*s->depth == 0) // クォーテーションに入っていない
+			     // かつ、カッコの内ではない
+	{
+		if (is_ifs(s->c) || is_ope_char(s->c))
+		{
+			if (s->idx == 0)
+				*s->cut_list = char_list_cut(s->clst, s->idx);
+			else
+				*s->cut_list = char_list_cut(s->clst, s->idx - 1);
+			return (true);
+		}
+	}
+	return (false);
 }
 
-bool is_ope_char(char c)
+static bool cur_loop(t_cur_anchor *s)
 {
-	return (
-		c == '<' || \
-		c == '>' || \
-		c == '|' || \
-		c == '&'
-	);
+	if (*s->anchor == e_outof_q)
+	{
+		if (cur_out_of_quotation(s))
+			return (true);
+	}
+	else if (*s->anchor == e_in_dq)
+	{
+		if (s->c == '"')
+		{
+			*s->anchor = e_outof_q;
+			if (*s->depth == 0)
+			{
+				*s->cut_list = char_list_cut(s->clst, s->idx);
+				return (true);
+			}
+		}
+	}
+	else if (*s->anchor == e_in_q)
+	{
+		if (s->c == '\'')
+		{
+			*s->anchor = e_outof_q;
+			if (*s->depth == 0)
+			{
+				*s->cut_list = char_list_cut(s->clst, s->idx);
+				return (true);
+			}
+		}
+	}
+	return (false);
+}
+
+
+static bool char_iter(t_char_list **clst, int idx, char *c)
+{
+	*c = char_list_get_elem(*clst, idx);
+	return (*c != '\0');
 }
 
 /// ```bash
@@ -43,71 +118,30 @@ bool is_ope_char(char c)
 /// ```
 /// `<`, `>`, `|`, `||`, `&&`, `<<`, `>>`
 /// ```
+static
 t_char_list *pre_lexer(t_char_list **clst)
 {
-	char c;
 	t_anchor p;
 	int depth;
 	int idx;
+	t_char_list *cut_list;
+	char c;
 
 	depth = 0;
 	idx = 0;
 	p = e_outof_q;
-	while (1)
+	cut_list = NULL;
+	while (char_iter(clst, idx, &c))
 	{
-		c = char_list_get_elem(*clst, idx);
-		if (c == '\0')
-			break;
-		if (p == e_outof_q) // シングルクォーテーション中
-		{
-			// 何もないところにおける文字の区切り
-			if (c == '\''){
-				p = e_in_q;
-			}
-			else if (c == '"')
-				p = e_in_dq;
-			else if (c == '(')
-			{
-				depth += 1;
-			}
-			else if (c == ')')
-			{
-				depth -= 1;
-				if (depth == 0)
-				{
-					return (char_list_cut(clst, idx));
-				}
-			}
-			else if (depth == 0) // クォーテーションに入っていない
-					     // かつ、カッコの内ではない
-			{
-				if (is_ifs(c) || is_ope_char(c))
-				{
-					if (idx == 0)
-						return (char_list_cut(clst, idx));
-					else 
-						return (char_list_cut(clst, idx - 1));
-				}
-			}
-		}
-		else if (p == e_in_dq) // ダブルクォーテーション中
-		{
-			if (c == '"')
-			{
-				p = e_outof_q;
-				if (depth == 0)
-					return (char_list_cut(clst, idx));
-			}
-		}
-		else if (p == e_in_q) // クォーテーション外
-		{
-			if (c == '\'')
-			{
-				p = e_outof_q;
-				if (depth == 0)
-					return (char_list_cut(clst, idx));
-			}
-		}
+		if (cur_loop(&(t_cur_anchor){
+			c,
+			&p,
+			&depth,
+			idx,
+			clst,
+			&cut_list
+		}))
+			return (cut_list);
 		idx += 1;
 	}
 	return (char_list_cut(clst, idx));

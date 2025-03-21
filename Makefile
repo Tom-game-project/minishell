@@ -151,6 +151,8 @@ TOM_PARSER_SRC = \
       src/tom_parser/is_ope_string.c\
       src/tom_parser/remove_ifs.c\
       src/tom_parser/syntax_checker.c\
+      src/tom_parser/is_ifs.c\
+      src/tom_parser/is_ope_char.c\
 
 
 AST_CHECKER_SRC = \

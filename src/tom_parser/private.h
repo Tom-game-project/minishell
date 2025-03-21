@@ -30,4 +30,8 @@ int			remove_ifs(t_str_list **lst);
 
 bool		tom_syntax_checker(char *input);
 
+bool is_ifs(char c);
+
+bool is_ope_char(char c);
+
 #endif

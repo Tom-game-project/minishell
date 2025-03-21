@@ -74,7 +74,6 @@ static int	parent_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 			STDOUT_FILENO,
 			pid
 		});
-	//close(pipe_fd[PIPE_READ]);
 	waitpid(pid, NULL, WUNTRACED);
 	return (exit_status);
 }
