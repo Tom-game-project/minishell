@@ -21,6 +21,7 @@ int exec_rdt_proc(
 {
 	char *str;
 	int fd;
+	int exit_status;
 
 	close_fd(args);
 	str = str_list_get_elem(args->ast->arg, 0);
@@ -36,9 +37,9 @@ int exec_rdt_proc(
 		perror("minishell"); // TODO
 		return (1);
 	}
-	inner_exec(args, fd);
+	exit_status = inner_exec(args, fd);
 	close(fd);
-	return (0);
+	return (exit_status);
 }
 
 /// 文字列がシングルクォーテーション及び、
@@ -74,6 +75,7 @@ int exec_rdt_proc_heredoc(
 {
 	int fd;
 	int new_fd;
+	int exit_status;
 
 	close_fd(args);
 	//int_list_print(*args->heredoc_fd_list);
@@ -97,8 +99,8 @@ int exec_rdt_proc_heredoc(
 		perror("minishell"); // TODO
 		return (1);
 	}
-	inner_exec(args, fd);
+	exit_status = inner_exec(args, fd);
 	debug_dprintf(STDERR_FILENO, "close [%d] fd pid [%d]\n", fd, debug_getpid());
 	close(fd);
-	return (0);
+	return (exit_status);
 }

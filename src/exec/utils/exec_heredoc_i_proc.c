@@ -18,7 +18,7 @@ static int inner_exec(t_exec_args *args, int input_fd)
 {
 	if (args->ast->right_ast != NULL)
 	{
-		exec2(&(t_exec_args)
+		return (exec2(&(t_exec_args)
 		{
 		    args->ast->right_ast,
 		    args->envp_dict,
@@ -26,11 +26,11 @@ static int inner_exec(t_exec_args *args, int input_fd)
 		    input_fd, 
 		    args->output_fd,
 		    -1 // 子プロセスを生み出すため
-		});
+		}));
 	}
 	else if (args->ast->left_ast != NULL)
 	{
-		exec2(&(t_exec_args)
+		return (exec2(&(t_exec_args)
 		{
 		    args->ast->left_ast,
 		    args->envp_dict,
@@ -38,7 +38,7 @@ static int inner_exec(t_exec_args *args, int input_fd)
 		    input_fd,
 		    args->output_fd,
 		    -1 // 子プロセスを生み出すため
-		});
+		}));
 	}
 	return (0);
 }
