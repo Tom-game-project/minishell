@@ -138,11 +138,18 @@ PARSER_SRC = \
       src/parser/clear_ast.c\
       src/parser/syntax_checker.c\
 
+
 TOM_PARSER_SRC = \
-		src/tom_parser/parser.c \
-		src/tom_parser/tom_lexer.c\
-		src/tom_parser/ope_collector.c\
-		src/tom_parser/split_by_ifs.c
+      src/tom_parser/parser.c \
+      src/tom_parser/tom_lexer.c\
+      src/tom_parser/ope_collector.c\
+      src/tom_parser/split_by_ifs.c\
+      src/tom_parser/str2ope.c\
+      src/tom_parser/init_ast.c\
+      src/tom_parser/startswith_open_paren.c\
+      src/tom_parser/is_rdt_string.c\
+      src/tom_parser/is_ope_string.c\
+      src/tom_parser/remove_ifs.c\
 
 
 AST_CHECKER_SRC = \
@@ -220,6 +227,7 @@ STRTOOLS_SRC = \
 LOOP_SRC = \
      src/loop/main_loop.c
 
+
 SIG_SRC = \
      src/sig/disable_ctrl_backslash.c\
      src/sig/disconnect2stdin.c\
@@ -262,36 +270,47 @@ SRC = \
 MAIN = \
 	src/minishell.c
 
+
 # test rule
 TEST_FILE := tests/dummy_test.c
 TEST_NAME = test_
+
 
 # example rule
 EXAMPLE_FILE := examples/dummy_example00.c
 EXAMPLE_NAME = example_
 
+
 LIBFT_DIR = src/libft
 LIBFT_NAME = $(LIBFT_DIR)/libft.a
 LIBFT_HEADER = $(LIBFT_DIR)/libft.h
 
+
 #########
+
 
 OBJ = $(SRC:.c=.o)
 TEST_OBJ = $(TEST_FILE:.c=.o)
 
+
 NAME = minishell
+
 
 all: $(NAME)
 
+
 bonus: all
+
 
 debug: CFLAGS+=$(DEBUGFLAGS)
 debug: $(NAME)
+
 
 # headerに含めるデバッグ情報
 COMMIT_HASH = $(shell git show --format='%h' --no-patch)
 BUILD_TIMESTAMP = $(shell date "+%Y\/%m\/%d-%H:%M:%S")
 CC_VERSION = $(shell $(CC) --version | head -n1)
+
 
 $(NAME): $(OBJ) $(LIBFT_NAME) $(MAIN)
 	@cat $(MAIN) \
@@ -305,37 +324,49 @@ $(NAME): $(OBJ) $(LIBFT_NAME) $(MAIN)
 		-x c -\
 		-lreadline
 
+
 $(LIBFT_NAME): $(LIBFT_HEADER)
 	make -C $(LIBFT_DIR)
+
 
 $(LIBFT_HEADER):
 	git submodule init
 	git submodule update
+
 
 # ここにはあえてフラグをつけていない
 test: cleantest debug $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME) -lreadline
 	./test_
 
+
 vtest: cleantest debug $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME) -lreadline
 	$(VALGRIND) $(VALGRINDFLAGS) ./test_
 
+
 example:
 	$(CC) $(TEST_FLAGS) -o $(EXAMPLE_NAME) $(EXAMPLE_FILE) -lreadline
+
 
 %.o: %.c 
 	$(CC) $(CFLAGS) -Iinclude -c $< -o $@
 
+
 cleantest: 
 	$(RM) $(RMFLAGS) $(TEST_OBJ)
+
 
 clean:
 	$(RM) $(RMFLAGS) $(OBJ)
 
+
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
 	$(RM) $(RMFLAGS) $(NAME)
+
+
 re: fclean all
+
 
 .PHONY: all test vtest clean fclean re example cleantest debug
