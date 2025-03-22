@@ -24,6 +24,38 @@ char *get_cd()
 	return (ft_strdup(buf));
 }
 
+/// $OLDPWDを変更する
+static
+int update_oldpwd(t_str_dict **envp_list)
+{
+	char *key_str;
+	// 移動する前にOLDPWDを更新する
+	key_str = ft_strdup(OLDPWD);
+	if (str_dict_add(envp_list, key_str, get_cd(), free) == 0)
+		free(key_str);
+	return (1);
+}
+
+static
+char *get_cd_path(t_str_list *args, t_str_dict **envp_list)
+{
+	char *path;
+	t_str_dict *d;
+	path = str_list_get_elem(args, 1);
+	if (ft_streq(path, "-"))
+	{
+		d = get_str_dict_by_key(*envp_list, OLDPWD);
+		if (d == NULL)
+		{
+			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
+			return (NULL);
+		}
+		return (ft_strdup(d->value));
+	}
+	else
+		return (ft_strdup(path));
+}
+
 /// カレントディレクトリを変更する関数
 /// ```bash
 /// cd 
@@ -38,28 +70,14 @@ char *get_cd()
 int built_in_cd(t_str_list *args, t_str_dict **envp_list)
 {
     char *path;
-    char *key_str;
-    t_str_dict *d;
 
     if (str_list_len(args) < 2)
 	    return (1);
-    path = str_list_get_elem(args, 1);
-    if (ft_streq(path, "-"))
-    {
-	    d = get_str_dict_by_key(*envp_list, OLDPWD);
-	    if (d == NULL)
-	    {
-		    ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
-		    return (1);
-	    }
-	    path = ft_strdup(d->value);
-    }
-    else
-	    path = ft_strdup(path);
+    path = get_cd_path(args, envp_list);
+    if (path == NULL)
+	    return (1);
     // 移動する前にOLDPWDを更新する
-    key_str = ft_strdup(OLDPWD);
-    if (str_dict_add(envp_list, key_str, get_cd(), free) == 0)
-	    free(key_str);
+    update_oldpwd(envp_list);
     debug_dprintf(STDERR_FILENO, "cd \"%s\"\n", path);
     if (chdir(path) == -1)
     {
