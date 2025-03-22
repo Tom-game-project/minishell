@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:36:48 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 18:38:06 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/03/22 19:45:59 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	ope_collector(t_str_list **lexed)
 	table[2] = "<";
 	table[3] = "&";
 	i = 0;
-	while (i < 4) 
+	while (i < 4)
 	{
 		ptn[i] = NULL;
 		str_list_push(&ptn[i], table[i]);
