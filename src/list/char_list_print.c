@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:18:41 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/02/26 17:18:51 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:21:32 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	print_char(int index, t_anytype elem)
 {
-	debug_dprintf(STDERR_FILENO , "[%d] [%c]\n", index, elem.c);
+	debug_dprintf(STDERR_FILENO, "[%d] [%c]\n", index, elem.c);
 	return (0);
 }
 

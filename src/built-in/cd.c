@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/22 18:24:24 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/22 18:24:24 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <linux/limits.h>
 #include "dict.h"
 #include "list.h"
@@ -9,12 +21,11 @@
 
 #define OLDPWD "OLDPWD"
 
-
 /// カレントディレクトリを取得する関数
 static
-char *get_cd()
+char	*get_cd(void)
 {
-	char buf[PATH_MAX];
+	char	buf[PATH_MAX];
 
 	if (getcwd(buf, PATH_MAX) == NULL)
 	{
