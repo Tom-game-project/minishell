@@ -13,7 +13,6 @@ enum e_anchor
 	e_outof_q
 };
 
-
 typedef struct s_cur_anchor t_cur_anchor;
 /// TODO: rename 必須
 struct s_cur_anchor
@@ -26,7 +25,6 @@ struct s_cur_anchor
 	t_char_list **cut_list; // NULLで渡す
 };
 
-/// 
 /// 妥協案
 ///
 /// bool
@@ -99,7 +97,7 @@ static bool cur_loop(t_cur_anchor *s)
 	return (false);
 }
 
-
+/// 文字リストの先頭から一つ要素を取得
 static bool char_iter(t_char_list **clst, int idx, char *c)
 {
 	*c = char_list_get_elem(*clst, idx);
