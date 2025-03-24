@@ -37,10 +37,10 @@ char	*get_cd(void)
 
 /// $OLDPWDを変更する
 static
-int update_oldpwd(t_str_dict **envp_list)
+int	update_oldpwd(t_str_dict **envp_list)
 {
-	char *key_str;
-	// 移動する前にOLDPWDを更新する
+	char	*key_str;
+
 	key_str = ft_strdup(OLDPWD);
 	if (str_dict_add(envp_list, key_str, get_cd(), free) == 0)
 		free(key_str);
@@ -48,10 +48,11 @@ int update_oldpwd(t_str_dict **envp_list)
 }
 
 static
-char *get_cd_path(t_str_list *args, t_str_dict **envp_list)
+char	*get_cd_path(t_str_list *args, t_str_dict **envp_list)
 {
-	char *path;
-	t_str_dict *d;
+	char		*path;
+	t_str_dict	*d;
+
 	path = str_list_get_elem(args, 1);
 	if (ft_streq(path, "-"))
 	{
@@ -78,25 +79,23 @@ char *get_cd_path(t_str_list *args, t_str_dict **envp_list)
 ///
 /// `-` が来た際には環境変数のOLDPWDを参照する
 /// これは、ユーザーが意図的に設定することが可能だがそれは問題ない
-int built_in_cd(t_str_list *args, t_str_dict **envp_list)
+int	built_in_cd(t_str_list *args, t_str_dict **envp_list)
 {
-    char *path;
+	char	*path;
 
-    if (str_list_len(args) < 2)
-	    return (1);
-    path = get_cd_path(args, envp_list);
-    if (path == NULL)
-	    return (1);
-    // 移動する前にOLDPWDを更新する
-    update_oldpwd(envp_list);
-    debug_dprintf(STDERR_FILENO, "cd \"%s\"\n", path);
-    if (chdir(path) == -1)
-    {
-	    perror("minishell");
-	    free(path);
-	    return (1);
-    }
-    free(path);
-    return (0);
+	if (str_list_len(args) < 2)
+		return (1);
+	path = get_cd_path(args, envp_list);
+	if (path == NULL)
+		return (1);
+	update_oldpwd(envp_list);
+	debug_dprintf(STDERR_FILENO, "cd \"%s\"\n", path);
+	if (chdir(path) == -1)
+	{
+		perror("minishell");
+		free(path);
+		return (1);
+	}
+	free(path);
+	return (0);
 }
-

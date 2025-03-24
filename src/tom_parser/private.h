@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:11:11 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 18:12:11 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/03/22 19:46:25 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int			remove_ifs(t_str_list **lst);
 
 bool		tom_syntax_checker(char *input);
 
-bool is_ifs(char c);
+bool		is_ifs(char c);
 
-bool is_ope_char(char c);
+bool		is_ope_char(char c);
 
 #endif
