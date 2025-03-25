@@ -18,7 +18,7 @@ RMFLAGS = -rf
 CFLAGS = -Wextra -Werror -Wall
 # 既存のmallocのreplace
 ALLOC_SRC = src/alloc/my_malloc.c
-CFLAGS +=  -Wl,--wrap=malloc
+CFLAGS_MAIN =  -Wl,--wrap=malloc
 DEBUGFLAGS = -g -DDEBUG
 TEST_FLAGS = -g
 TEST_FLAGS +=  -Wl,--wrap=malloc
@@ -51,7 +51,6 @@ CHAR_LIST = \
       src/list/char_list_is_empty.c\
       src/list/char_list_cut.c\
       src/list/char_list_search.c\
-
 
 
 STR_LIST = \
@@ -324,7 +323,7 @@ $(NAME): $(OBJ) $(LIBFT_NAME) $(MAIN)
 		| sed -e 's/^#define COMMIT_HASH$$/#define COMMIT_HASH ''"'$(COMMIT_HASH)'"''/' \
 		| sed -e 's/^#define CC_VERSION$$/#define CC_VERSION "$(CC_VERSION)"/' \
 		| sed -e 's/^#define BUILD_TIMESTAMP$$/#define BUILD_TIMESTAMP "$(BUILD_TIMESTAMP)"/' \
-		| $(CC) $(CFLAGS) \
+		| $(CC) $(CFLAGS) $(CFLAGS_MAIN)\
 		-Iinclude \
 		-o $(NAME) \
 		$(OBJ) $(LIBFT_NAME) \
