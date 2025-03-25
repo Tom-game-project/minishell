@@ -16,12 +16,14 @@ VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes --show-l
 RMFLAGS = -rf
 
 CFLAGS = -Wextra -Werror -Wall
-# 既存のmallocのreplace
-ALLOC_SRC = src/alloc/my_malloc.c
 CFLAGS +=  -Wl,--wrap=malloc
 DEBUGFLAGS = -g -DDEBUG
 TEST_FLAGS = -g
 TEST_FLAGS +=  -Wl,--wrap=malloc
+
+
+# 既存のmallocのreplace
+ALLOC_SRC = src/alloc/my_malloc.c
 
 
 BUILD_IN_SRC = \
