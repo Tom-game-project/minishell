@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   my_malloc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/25 18:32:33 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/25 18:32:43 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"
-
 
 /// __real_malloc は、元の malloc へリンク時にマッピングされる
 void	*__real_malloc(size_t size);
@@ -10,7 +21,7 @@ void	*__real_malloc(size_t size);
 /// このmalloc関数は、allocationに失敗すると、直ちにexitをする。
 void	*__wrap_malloc(size_t size)
 {
-	void *ptr;
+	void	*ptr;
 
 	ptr = __real_malloc(size);
 	if (ptr == NULL)
