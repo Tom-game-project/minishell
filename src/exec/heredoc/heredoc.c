@@ -155,7 +155,7 @@ int read_heredocline2(
 		p = read_heredocline_helper2(eof, fd, &lst);
 		if (g_signal_number == SIGINT)
 		{
-			put_switcher("^C", STDOUT_FILENO);
+			ft_putstr_fd("^C", STDOUT_FILENO);
 			exit_status = 130;
 			break ;
 		}

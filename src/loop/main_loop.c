@@ -126,13 +126,18 @@ enum e_loop_cntl
 
 /// 一回のloop
 t_loop_cntl	device_loop_unit(\
-	char *input, int *exit_status, t_str_dict **env_dict)
+	char *input, int *exit_status, t_str_dict **env_dict, bool *newline_flag)
 {
 	struct termios	orig_termios;
 
 	tcgetattr(STDIN_FILENO, &orig_termios);
 	if (g_signal_number == SIGINT)
 	{
+		if (*exit_status != 130 || *newline_flag)
+		{
+			write(STDOUT_FILENO, &"\n", 1);
+			*newline_flag = false;
+		}
 		reconnect_stdin(exit_status);
 		g_signal_number = 0;
 		return (e_continue);
@@ -145,6 +150,8 @@ t_loop_cntl	device_loop_unit(\
 	update_exit_status(*exit_status, env_dict);
 	if (g_signal_number == SIGINT)
 	{
+		write(STDOUT_FILENO, &"\n", 1);
+		*newline_flag = true;
 		reconnect_stdin(exit_status);
 		tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
 		g_signal_number = 0;
@@ -167,6 +174,8 @@ int	main_loop(char *envp[])
 			ft_strdup("?"), \
 			ft_itoa(exit_status), \
 			free);
+	bool newline_flag;
+	newline_flag = false;
 	while (1)
 	{
 		char *input;
@@ -175,7 +184,7 @@ int	main_loop(char *envp[])
 		prompt_str = prompt(exit_status);
 		input = readline(prompt_str);
 		free(prompt_str);
-		lctl = device_loop_unit(input, &exit_status, &env_dict);
+		lctl = device_loop_unit(input, &exit_status, &env_dict, &newline_flag);
 		free(input);
 		if (lctl == e_break)
 			break;
@@ -223,6 +232,9 @@ int	none_device_main_loop(char *envp[])
 		ft_strdup("?"), \
 		ft_itoa(exit_status), \
 		free);
+
+	bool newline_flag;
+	newline_flag = false;
 	while (1)
 	{
 		char *input;
@@ -230,7 +242,7 @@ int	none_device_main_loop(char *envp[])
 		input = none_device_readline();
 		if (ft_strlen(input) == 0)
 			break;
-		lctl = device_loop_unit(input, &exit_status, &env_dict);
+		lctl = device_loop_unit(input, &exit_status, &env_dict, &newline_flag);
 		free(input);
 		if (lctl == e_break)
 			break;

@@ -20,8 +20,6 @@ void	reconnect_stdin(int *exit_status)
 {
 	int	tty_fd;
 
-	if (*exit_status == 0)
-		write(STDOUT_FILENO, &"\n", 1);
 	*exit_status = 130;
 	tty_fd = open("/dev/tty", O_RDONLY);
 	if (tty_fd != -1)
