@@ -16,8 +16,12 @@ VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes --show-l
 RMFLAGS = -rf
 
 CFLAGS = -Wextra -Werror -Wall
+# 既存のmallocのreplace
+ALLOC_SRC = src/alloc/my_malloc.c
+CFLAGS +=  -Wl,--wrap=malloc
 DEBUGFLAGS = -g -DDEBUG
 TEST_FLAGS = -g
+TEST_FLAGS +=  -Wl,--wrap=malloc
 
 
 BUILD_IN_SRC = \
@@ -268,6 +272,7 @@ SRC = \
 	$(TOM_PARSER_SRC)\
 	$(PARSER_SRC)\
 	$(AST_CHECKER_SRC)\
+	$(ALLOC_SRC)\
 
 
 MAIN = \
@@ -287,7 +292,6 @@ EXAMPLE_NAME = example_
 LIBFT_DIR = src/libft
 LIBFT_NAME = $(LIBFT_DIR)/libft.a
 LIBFT_HEADER = $(LIBFT_DIR)/libft.h
-
 
 #########
 
