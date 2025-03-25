@@ -1,6 +1,8 @@
 #include "list.h"
+#include "test_tools.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 typedef enum e_anchor t_anchor;
 enum e_anchor
@@ -23,21 +25,17 @@ int set_next_anchor_and_depth(char c, t_anchor *p, int *depth)
 			*depth += 1;
 		else if (c == ')')
 			*depth -= 1;
-		else{}
 	}
 	else if (*p == e_in_dq) // ダブルクォーテーション中
 	{
 		if (c == '"')
 			*p = e_outof_q;
-		else{}
 	}
-	else if (p == e_in_q) // クォーテーション外
+	else if (*p == e_in_q) // クォーテーション外
 	{
 		if (c == '\'')
 			*p = e_outof_q;
-		else{}
 	}
-	else {} // unreachable
 	return (0);
 }
 
