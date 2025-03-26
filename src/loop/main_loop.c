@@ -148,7 +148,7 @@ t_loop_cntl	device_loop_unit(\
 		return (e_break);
 	else
 		add_history(input);
-	sa.sa_handler = handle_sig2;
+	sa.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &sa, NULL);
 	exec_shell_cmd(input, env_dict, exit_status);
 	sa.sa_handler = handle_sig;
