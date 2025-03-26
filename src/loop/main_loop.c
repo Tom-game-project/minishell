@@ -160,7 +160,7 @@ t_loop_cntl	device_loop_unit(\
 		debug_dprintf(STDERR_FILENO, "==========================BBB %d\n", debug_getpid());
 		write(STDOUT_FILENO, &"\n", 1);
 		*newline_flag = true;
-		//reconnect_stdin(exit_status);
+		reconnect_stdin(exit_status);
 		g_signal_number = 0;
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);

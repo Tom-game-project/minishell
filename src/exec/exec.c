@@ -24,6 +24,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+
+#include <signal.h>
+#include "sig.h"
+
 typedef char	*(*t_sd2sfunc)(char *, void *);
 
 /// もとの文字列を、環境変数に基づいて展開する関数
@@ -117,7 +121,10 @@ int	exec(t_ast *ast, t_str_dict **envp_dict)
 {
 	int			exit_status;
 	t_int_list	*heredoc_fd_list;
+	struct sigaction sa_sigact;
 
+	sa_sigact.sa_handler = handle_sig;
+	sigaction(SIGINT, &sa_sigact, NULL);
 	heredoc_fd_list = NULL;
 	if (heredoc_proc(ast, &heredoc_fd_list) == 130)
 	{
@@ -125,6 +132,8 @@ int	exec(t_ast *ast, t_str_dict **envp_dict)
 		write(STDOUT_FILENO, &"\n", 1);
 		return (130);
 	}
+	sa_sigact.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &sa_sigact, NULL);
 	exit_status = exec2(\
 		&(t_exec_args){
 			ast, \
