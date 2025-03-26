@@ -12,6 +12,7 @@ void disconnect2stdin();
 void reconnect_stdin(int *exit_status);
 
 void handle_sig(int sig);
+void handle_sig2(int sig);
 
 int sig_settig();
 

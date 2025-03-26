@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "test_tools.h"
+#include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -19,13 +21,19 @@
 void	reconnect_stdin(int *exit_status)
 {
 	int	tty_fd;
+	//struct stat st;
 
-	*exit_status = 130;
-	tty_fd = open("/dev/tty", O_RDONLY);
-	if (tty_fd != -1)
+	if (!isatty(STDIN_FILENO))
 	{
-		dup2(tty_fd, STDIN_FILENO);
-		close(tty_fd);
+		debug_dprintf(STDERR_FILENO, "==========================CCC %d\n", debug_getpid());
+		*exit_status = 130;
+		tty_fd = open("/dev/tty", O_RDONLY);
+		if (tty_fd != -1)
+		{
+			dup2(tty_fd, STDIN_FILENO);
+			close(tty_fd);
+		}
 	}
 }
+
 
