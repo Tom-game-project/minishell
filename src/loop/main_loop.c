@@ -148,19 +148,16 @@ t_loop_cntl	device_loop_unit(\
 		return (e_break);
 	else
 		add_history(input);
-	sa.sa_handler = handle_sig2;
-	sigaction(SIGINT, &sa, NULL);
 	exec_shell_cmd(input, env_dict, exit_status);
 	sa.sa_handler = handle_sig;
 	sigaction(SIGINT, &sa, NULL);
-
 	update_exit_status(*exit_status, env_dict);
 	if (g_signal_number == SIGINT)
 	{
 		debug_dprintf(STDERR_FILENO, "==========================BBB %d\n", debug_getpid());
 		write(STDOUT_FILENO, &"\n", 1);
 		*newline_flag = true;
-		//reconnect_stdin(exit_status);
+		reconnect_stdin(exit_status);
 		g_signal_number = 0;
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
