@@ -44,6 +44,11 @@ int	parent_proc_none(t_exec_args *args, int pid)
 	}
 	waitpid(pid, &status, WUNTRACED);
 	exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			exit_status = 130;
+	}
 	return (exit_status);
 }
 

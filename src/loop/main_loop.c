@@ -129,7 +129,6 @@ t_loop_cntl	device_loop_unit(\
 	char *input, int *exit_status, t_str_dict **env_dict, bool *newline_flag)
 {
 	struct termios	orig_termios;
-	struct sigaction sa;
 
 	tcgetattr(STDIN_FILENO, &orig_termios);
 	if (g_signal_number == SIGINT)
@@ -148,14 +147,11 @@ t_loop_cntl	device_loop_unit(\
 		return (e_break);
 	else
 		add_history(input);
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGINT, &sa, NULL);
 	exec_shell_cmd(input, env_dict, exit_status);
-	sa.sa_handler = handle_sig;
-	sigaction(SIGINT, &sa, NULL);
+	set_sigint_handle_sig();
 
 	update_exit_status(*exit_status, env_dict);
-	if (g_signal_number == SIGINT)
+	if (g_signal_number == SIGINT || *exit_status == 130)
 	{
 		debug_dprintf(STDERR_FILENO, "==========================BBB %d\n", debug_getpid());
 		write(STDOUT_FILENO, &"\n", 1);

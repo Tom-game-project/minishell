@@ -16,4 +16,10 @@ void handle_sig2(int sig);
 
 int sig_settig();
 
+int set_sigint_default(void);
+
+int set_sigint_ignore(void);
+
+int set_sigint_handle_sig(void);
+
 #endif

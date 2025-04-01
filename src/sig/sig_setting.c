@@ -27,3 +27,39 @@ int	sig_settig(void)
 	disable_ctrl_backslash();
 	return (0);
 }
+
+
+int set_sigint_default(void)
+{
+	struct sigaction	sa_sigact;
+
+	sa_sigact.sa_handler = SIG_DFL;
+	sigemptyset(&sa_sigact.sa_mask);
+	sa_sigact.sa_flags = 0;
+	sigaction(SIGINT, &sa_sigact, NULL);
+	return (0);
+}
+
+int set_sigint_ignore(void)
+{
+
+
+	struct sigaction	sa_sigact;
+
+	sa_sigact.sa_handler = SIG_IGN;
+	sigemptyset(&sa_sigact.sa_mask);
+	sa_sigact.sa_flags = 0;
+	sigaction(SIGINT, &sa_sigact, NULL);
+	return (0);
+}
+
+int set_sigint_handle_sig(void)
+{
+	struct sigaction	sa_sigact;
+
+	sa_sigact.sa_handler = handle_sig;
+	sigemptyset(&sa_sigact.sa_mask);
+	sa_sigact.sa_flags = 0;
+	sigaction(SIGINT, &sa_sigact, NULL);
+	return (0);
+}

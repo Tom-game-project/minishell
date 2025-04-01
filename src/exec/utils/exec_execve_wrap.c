@@ -16,6 +16,7 @@
 #include "parser.h"
 #include "path.h"
 #include "libft.h"
+#include "sig.h"
 #include "test_tools.h"
 
 #include <stdio.h>
@@ -23,6 +24,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+#include <signal.h>
 
 /// TODO あとで関数の名前を変更する
 static int	print_error_msg(char *cmd)
@@ -103,6 +106,8 @@ int	execve_wrap(t_exec_args *args)
 	char		**envp;
 	t_str_dict	*env_path_node;
 
+
+	set_sigint_default();
 	cmd = ft_strdup(str_list_get_elem(args->ast->arg, 0));
 	argv = str_list_to_array(args->ast->arg);
 	env_path_node = get_str_dict_by_key(*args->envp_dict, "PATH");

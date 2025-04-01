@@ -16,6 +16,7 @@
 #include "parser.h"
 #include "exec.h"
 #include "expand_string.h"
+#include "test_tools.h"
 #include "utils/utils.h"
 #include "heredoc/heredoc.h"
 
@@ -121,10 +122,8 @@ int	exec(t_ast *ast, t_str_dict **envp_dict)
 {
 	int			exit_status;
 	t_int_list	*heredoc_fd_list;
-	struct sigaction sa_sigact;
 
-	sa_sigact.sa_handler = handle_sig;
-	sigaction(SIGINT, &sa_sigact, NULL);
+	set_sigint_handle_sig();
 	heredoc_fd_list = NULL;
 	if (heredoc_proc(ast, &heredoc_fd_list) == 130)
 	{
@@ -132,8 +131,7 @@ int	exec(t_ast *ast, t_str_dict **envp_dict)
 		write(STDOUT_FILENO, &"\n", 1);
 		return (130);
 	}
-	sa_sigact.sa_handler = SIG_IGN;
-	sigaction(SIGINT, &sa_sigact, NULL);
+	set_sigint_ignore();
 	exit_status = exec2(\
 		&(t_exec_args){
 			ast, \
