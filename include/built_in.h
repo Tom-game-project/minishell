@@ -37,7 +37,7 @@ int built_in_export(
 	t_str_dict **envp_dict
 );
 
-int built_in_exit(t_str_list *args);
+int built_in_exit(t_str_list *args, t_str_dict *env_dict);
 
 int built_in_unset(
 	t_str_list *args,

@@ -110,7 +110,7 @@ t_private read_heredocline_helper2(
 	if (read(STDIN_FILENO, &c, BUF_SIZE) <= 0)
 		return (e_break);
 
-	debug_dprintf(STDERR_FILENO, "binary %x\n", c);
+	//debug_dprintf(STDERR_FILENO, "binary %x\n", c);
 	if (c == 4) // EOT
 		return (read_heredocline_helper2_eot(lst));
 	else if (c == 127 || c == '\b') // Back Space 及びDelの処理
@@ -136,7 +136,6 @@ void enable_raw_mode(struct termios *orig_termios) {
     tcgetattr(STDIN_FILENO, orig_termios);
     raw = *orig_termios;
     raw.c_lflag &= ~(ECHO | ICANON); // カノニカルモードを無効化
-				     // ICANON | ECHO | ECHOE | ISIG
     tcsetattr(STDIN_FILENO, TCSANOW, &raw);
 }
 
