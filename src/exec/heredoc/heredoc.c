@@ -125,7 +125,6 @@ t_private read_heredocline_helper2(
 	}
 	else 
 	{
-		//if (c != 0x1b)
 		char_list_push(lst, c);
 	}
 	return (e_continue);
@@ -136,7 +135,7 @@ void enable_raw_mode(struct termios *orig_termios) {
     struct termios raw;
     tcgetattr(STDIN_FILENO, orig_termios);
     raw = *orig_termios;
-    raw.c_lflag &= ~(ECHO | ICANON | ECHOE | ISIG); // カノニカルモードを無効化
+    raw.c_lflag &= ~(ECHO | ICANON); // カノニカルモードを無効化
 				     // ICANON | ECHO | ECHOE | ISIG
     tcsetattr(STDIN_FILENO, TCSANOW, &raw);
 }
@@ -166,6 +165,7 @@ int read_heredocline2(
 		{
 			ft_putstr_fd("^C", STDOUT_FILENO);
 			exit_status = 130;
+			reconnect_stdin(&exit_status);
 			break ;
 		}
 		if (p == e_break || p == e_return_error)
