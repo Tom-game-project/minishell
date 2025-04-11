@@ -106,7 +106,6 @@ int	execve_wrap(t_exec_args *args)
 	char		**envp;
 	t_str_dict	*env_path_node;
 
-
 	set_sigint_default();
 	cmd = ft_strdup(str_list_get_elem(args->ast->arg, 0));
 	argv = str_list_to_array(args->ast->arg);

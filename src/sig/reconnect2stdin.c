@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_tools.h"
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -25,7 +24,7 @@ void	reconnect_stdin(int *exit_status)
 
 	if (!isatty(STDIN_FILENO))
 	{
-		debug_dprintf(STDERR_FILENO, "==========================CCC %d\n", debug_getpid());
+		//debug_dprintf(STDERR_FILENO, "==========================CCC %d\n", debug_getpid());
 		*exit_status = 130;
 		tty_fd = open("/dev/tty", O_RDONLY);
 		if (tty_fd != -1)

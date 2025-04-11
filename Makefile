@@ -231,7 +231,10 @@ STRTOOLS_SRC = \
 
 
 LOOP_SRC = \
-     src/loop/main_loop.c
+     src/loop/main_loop.c\
+     src/loop/prompt.c\
+     src/loop/exec_ast.c\
+     src/loop/exec_shell_cmd.c\
 
 
 SIG_SRC = \

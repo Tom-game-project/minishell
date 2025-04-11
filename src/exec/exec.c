@@ -16,7 +16,6 @@
 #include "parser.h"
 #include "exec.h"
 #include "expand_string.h"
-#include "test_tools.h"
 #include "utils/utils.h"
 #include "heredoc/heredoc.h"
 
@@ -25,8 +24,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
-#include <signal.h>
 #include "sig.h"
 
 typedef char	*(*t_sd2sfunc)(char *, void *);

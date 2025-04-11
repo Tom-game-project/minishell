@@ -10,12 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast_checker.h"
 #include "dict.h"
 #include "list.h"
-#include "parser.h"
-#include "tom_parser.h"
-#include "exec.h"
 #include "libft.h"
 #include "envtools.h"
 #include "sig.h"
@@ -32,91 +28,12 @@
 #include <signal.h>
 #include <fcntl.h>
 
-// for test 
-#include <stdio.h>
-
-//#include "../tests/tom_parser_tools/tools.h"
-#include "test_tools.h"
+// private functions
+#include "loop_private.h"
 
 int g_signal_number = 0;
 
-/// 与えられた、shell cmdを解釈する関数
-static t_ast	*parser_wrap(char *input)
-{
-	t_ast	*ast;
-
-	ast = NULL;
-	if (e_result_paren_not_closed_err == tom_parser(input, &ast ))
-	{
-		ft_putstr_fd("minishell : not close syntax\n", STDERR_FILENO);
-		return (NULL);
-	}
-	else
-	{
-		debug_dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
-	}
-	return (ast);
-}
-
-void	exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
-{
-	t_syntax_result	result;
-
-	debug_dprintf(STDERR_FILENO, "ORIGIN PID (%d)\n", debug_getpid());
-	if (ast == NULL)
-	{
-		*exit_status = 1;
-		return ;
-	}
-	result = ast_checker(ast);
-	print_checker_result(result);
-	if (result == e_no_input)
-	{
-		debug_dprintf(STDERR_FILENO, "no_input\n");
-		clear_ast(&ast);
-	}
-	else if (print_checker_result(result))
-	{
-		print_ast(ast, 0);
-		*exit_status = exec(ast, env_dict);
-		clear_ast(&ast);
-	}
-}
-
-/// exit statuswを更新します
-///
-void	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
-{
-	t_ast	*ast;
-
-	ast = parser_wrap(str);
-	exec_ast(ast, env_dict, exit_status);
-}
-
-
-
 /// exit statusと、今いるディレクトリを表示するプロンプト
-char	*prompt(int exit_status)
-{
-	char		buf[PATH_MAX];
-	char		*exit_str;
-	t_char_list	*rstr_list;
-	char		*rstr;
-
-	exit_str = ft_itoa(exit_status);
-	rstr_list = NULL;
-	if (getcwd(buf, PATH_MAX) != NULL)
-		char_list_push_str(&rstr_list, buf);
-	char_list_push_str(&rstr_list, " [");
-	char_list_push_str(&rstr_list, exit_str);
-	char_list_push(&rstr_list, ']');
-	char_list_push_str(&rstr_list, "> ");
-	rstr = char_list_to_str(rstr_list);
-	char_list_clear(&rstr_list);
-	free(exit_str);
-	return (rstr);
-}
-
 typedef enum e_loop_cntl	t_loop_cntl;
 enum e_loop_cntl
 {
@@ -128,12 +45,8 @@ enum e_loop_cntl
 t_loop_cntl	device_loop_unit(\
 	char *input, int *exit_status, t_str_dict **env_dict, bool *newline_flag)
 {
-	struct termios	orig_termios;
-
-	tcgetattr(STDIN_FILENO, &orig_termios);
 	if (g_signal_number == SIGINT)
 	{
-		debug_dprintf(STDERR_FILENO, "==========================AAA %d\n", debug_getpid());
 		if (*exit_status != 130 || *newline_flag)
 		{
 			write(STDOUT_FILENO, &"\n", 1);
@@ -145,21 +58,17 @@ t_loop_cntl	device_loop_unit(\
 	}
 	else if (input == NULL)
 		return (e_break);
-	else
-		add_history(input);
+	add_history(input);
 	exec_shell_cmd(input, env_dict, exit_status);
 	set_sigint_handle_sig();
-
 	update_exit_status(*exit_status, env_dict);
 	if (g_signal_number == SIGINT || *exit_status == 130)
 	{
-		debug_dprintf(STDERR_FILENO, "==========================BBB %d\n", debug_getpid());
 		write(STDOUT_FILENO, &"\n", 1);
 		*newline_flag = true;
 		reconnect_stdin(exit_status);
 		g_signal_number = 0;
 	}
-	tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
 	return (e_continue);
 }
 

@@ -4,18 +4,22 @@
 #include <stdio.h>
 #include <unistd.h>
 
-//#include "minishell.h"
-
 // ビルド情報の取得
 #define COMMIT_HASH
 #define BUILD_TIMESTAMP
 #define CC_VERSION
 
+#ifdef DEBUG
+#define MODE "mode: debug"
+#else
+#define MODE "mode: release"
+#endif
+
 int header()
 {
 	ft_putstr_fd(
-		""
-		"        :::   :::   ::::::::::: ::::    ::: :::::::::::\n"
+		"" // 14
+		"        :::   :::   ::::::::::: ::::    ::: :::::::::::\n" // 56
 		"      :+:+: :+:+:      :+:     :+:+:   :+:     :+:     \n"
 		"    +:+ +:+:+ +:+     +:+     :+:+:+  +:+     +:+      \n"
 		"   +#+  +:+  +#+     +#+     +#+ +:+ +#+     +#+       \n"
@@ -30,7 +34,7 @@ int header()
 		"#+#    #+# #+#    #+# #+#        #+#        #+#        \n"
 		"########  ###    ### ########## ########## ##########  \n"
 		"created by arakan && Tom in 2025                        \n"
-		"minishell("COMMIT_HASH", "
+		"minishell("COMMIT_HASH", "MODE", "
 		BUILD_TIMESTAMP")"
 		"["CC_VERSION"]\n"
 		, STDOUT_FILENO);
