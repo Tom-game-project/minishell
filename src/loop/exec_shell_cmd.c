@@ -29,7 +29,9 @@ static t_ast	*parser_wrap(char *input)
 ///
 /// 入力文字列が`INT_MAX`を超えたときは、内部のリストが扱い切れないので
 /// errorを吐く
-void	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
+///
+/// 関数内部でexec関数が実行されたら`1`を返却します
+int	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 {
 	t_ast	*ast;
 
@@ -37,8 +39,8 @@ void	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 	{
 		ft_putstr_fd("minishell : too long input\n", STDERR_FILENO);
 		*exit_status = 1;
-		return ;
+		return (0);
 	}
 	ast = parser_wrap(str);
-	exec_ast(ast, env_dict, exit_status);
+	return (exec_ast(ast, env_dict, exit_status));
 }

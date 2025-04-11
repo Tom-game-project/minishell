@@ -45,6 +45,8 @@ enum e_loop_cntl
 t_loop_cntl	device_loop_unit(\
 	char *input, int *exit_status, t_str_dict **env_dict, bool *newline_flag)
 {
+	int flag;
+
 	if (g_signal_number == SIGINT)
 	{
 		if (*exit_status != 130 || *newline_flag)
@@ -57,14 +59,18 @@ t_loop_cntl	device_loop_unit(\
 		return (e_continue);
 	}
 	else if (input == NULL)
+	{
+		ft_putstr_fd("exit\n" ,STDERR_FILENO);
 		return (e_break);
+	}
 	add_history(input);
-	exec_shell_cmd(input, env_dict, exit_status);
+	flag = exec_shell_cmd(input, env_dict, exit_status);
 	set_sigint_handle_sig();
 	update_exit_status(*exit_status, env_dict);
 	if (g_signal_number == SIGINT || *exit_status == 130)
 	{
-		write(STDOUT_FILENO, &"\n", 1);
+		if (flag)
+			write(STDOUT_FILENO, &"\n", 1);
 		*newline_flag = true;
 		reconnect_stdin(exit_status);
 		g_signal_number = 0;
@@ -129,12 +135,25 @@ char	*none_device_readline()
 	return (str);
 }
 
+t_loop_cntl
+none_device_once_loop(int *exit_status, bool *newline_flag, t_str_dict **env_dict)
+{
+	char *input;
+	t_loop_cntl	lctl;
+
+	input = none_device_readline();
+	if (ft_strlen(input) == 0)
+		return (e_break);
+	lctl = device_loop_unit(input, exit_status, env_dict, newline_flag);
+	free(input);
+	return (lctl);
+}
+
 /// stdin がデバイスでないとき
 int	none_device_main_loop(char *envp[])
 {
 	t_str_dict	*env_dict;
 	int			exit_status;
-	t_loop_cntl	lctl;
 
 	sig_settig();
 	env_dict = NULL;
@@ -149,19 +168,10 @@ int	none_device_main_loop(char *envp[])
 	bool newline_flag;
 	newline_flag = false;
 	while (1)
-	{
-		char *input;
-
-		input = none_device_readline();
-		if (ft_strlen(input) == 0)
+		if (none_device_once_loop(&exit_status, &newline_flag, &env_dict) == e_break)
 			break;
-		lctl = device_loop_unit(input, &exit_status, &env_dict, &newline_flag);
-		free(input);
-		if (lctl == e_break)
-			break;
-		else if (lctl == e_continue)
+		else
 			continue;
-	}
 	str_dict_clear(&env_dict, free, free);
 	return (exit_status);
 }

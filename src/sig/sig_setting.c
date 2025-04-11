@@ -42,8 +42,6 @@ int set_sigint_default(void)
 
 int set_sigint_ignore(void)
 {
-
-
 	struct sigaction	sa_sigact;
 
 	sa_sigact.sa_handler = SIG_IGN;

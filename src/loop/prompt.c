@@ -5,6 +5,7 @@
 #include <limits.h>
 
 
+/// exit_statusに色をつける関数
 static void error_color(t_char_list *lst, int exit_status)
 {
 	char *exit_str;
@@ -19,9 +20,7 @@ static void error_color(t_char_list *lst, int exit_status)
 	free(exit_str);
 }
 
-
 // prompt
-//
 char	*prompt(int exit_status)
 {
 	char		buf[PATH_MAX];

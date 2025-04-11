@@ -4,7 +4,8 @@
 #include "exec.h"
 #include "ast_checker.h"
 
-void	exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
+/// exec関数を読んだら1を返します
+int	exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
 {
 	t_syntax_result	result;
 
@@ -12,7 +13,7 @@ void	exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
 	if (ast == NULL)
 	{
 		*exit_status = 1;
-		return ;
+		return (0);
 	}
 	result = ast_checker(ast);
 	print_checker_result(result);
@@ -20,11 +21,14 @@ void	exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
 	{
 		debug_dprintf(STDERR_FILENO, "no_input\n");
 		clear_ast(&ast);
+		return (0);
 	}
 	else if (print_checker_result(result))
 	{
 		print_ast(ast, 0);
 		*exit_status = exec(ast, env_dict);
 		clear_ast(&ast);
+		return (1);
 	}
+	return (0);
 }
