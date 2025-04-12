@@ -4,7 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
+//char *cpy(char *ptr)
+//{
+//	return (ptr);
+//}
 
 /// 所有権の解決
 ///

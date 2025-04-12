@@ -47,4 +47,11 @@ int		exec2(t_exec_args *args);
 // bool	check_update_arg(t_ast *ast);
 
 int		fd_write(int from_fd, int to_fd);
+
+// for test 
+// アスタリスク
+
+t_str_list *split_path(char *path);
+
+bool is_same_string(char *str, char *rule_str);
 #endif
