@@ -70,5 +70,4 @@ t_void_list *void_list_filter2(
 	}
 	*node = f_list;
 	return (t_list);
-
 }

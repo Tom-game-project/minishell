@@ -54,4 +54,14 @@ int		fd_write(int from_fd, int to_fd);
 t_str_list *split_path(char *path);
 
 bool is_same_string(char *str, char *rule_str);
+
+t_str_list *
+get_all_file_and_path(t_str_list **node, char *rule_str);
+
+char *
+gen_formatted_asterisk_rule(char *raw_rule);
+
+
+t_str_list *
+get_all_path(char *root, t_str_list **splited_path);
 #endif

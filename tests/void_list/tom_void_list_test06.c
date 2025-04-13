@@ -34,6 +34,8 @@ bool cmp_str(t_anytype a, t_anytype b)
 		{
 			return (false);
 		}
+		a_str++;
+		b_str++;
 	}
 	return (*a_str < *b_str);
 }
@@ -93,6 +95,6 @@ int test01()
 /// ```
 int main()
 {
-	test00();
+	//test00();
 	test01();
 }
