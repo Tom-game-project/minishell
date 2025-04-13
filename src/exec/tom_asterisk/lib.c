@@ -106,6 +106,7 @@ bool is_same_string_wrap(t_anytype a, t_anytype b)
 	return (is_same_string(a.str, b.str));
 }
 
+
 t_str_list *
 get_all_file_and_path(t_str_list **node, char *rule_str)
 {
@@ -119,6 +120,11 @@ get_all_file_and_path(t_str_list **node, char *rule_str)
 	));
 }
 
+
+
+
+
+
 t_str_list *
 get_all_path(char *root, t_str_list **splited_path)
 {
@@ -126,12 +132,14 @@ get_all_path(char *root, t_str_list **splited_path)
 	t_str_list *current_files;
 	t_str_list *filtered;
 	char *fmted_str;
+	char *joined_path;
 
 	rlist = NULL;
 	if (str_list_len(*splited_path) == 0)
 		return (NULL);
 	fmted_str = gen_formatted_asterisk_rule(str_list_pop(splited_path, 0));
-	current_files = get_dir_list(root);
+	joined_path = ft_strjoin(root, fmted_str);
+	current_files = get_dir_list(joined_path);
 	debug_dprintf(STDERR_FILENO, "fmted_rule %s\n", fmted_str);
 	filtered = get_all_file_and_path(&current_files, fmted_str);
 	str_list_print(filtered);

@@ -71,6 +71,11 @@ int char_list_search_index(t_char_list *node, bool (*f)(char *));
 
 t_str_list *char_list_cut(t_char_list **node, int index);
 
+
+bool char_list_startswith(t_char_list *lst, char *str);
+
+bool char_list_endswith(t_char_list *lst, char *str);
+
 /// ================ str_list functions ================
 
 char *candy_cutter(t_str_list **lst, int index);

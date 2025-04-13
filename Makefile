@@ -51,6 +51,8 @@ CHAR_LIST = \
       src/list/char_list_is_empty.c\
       src/list/char_list_cut.c\
       src/list/char_list_search.c\
+      src/list/char_list_startswith.c\
+      src/list/char_list_endswith.c\
 
 
 STR_LIST = \
