@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-#include "asterisk.h"
 #include "list.h"
  //#include "test_tools.h"
 #include "path.h"
@@ -89,6 +88,7 @@ rule_to_lst(char *rule_str)
 	int index;
 
 	c_lst = NULL;
+	rlst = NULL;
 	char_list_push_str(&c_lst, rule_str);
 	index = char_list_search_index(c_lst, is_asterisk_char);
 	while (index != -1)
@@ -103,9 +103,9 @@ rule_to_lst(char *rule_str)
 	}
 	if (char_list_len(c_lst) != 0)
 		str_list_push(&rlst, char_list_to_str(c_lst));
+	char_list_clear(&c_lst);
 	return (rlst);
 }
-
 
 static bool slice_comb2_any(
 	t_char_list *lst,
@@ -176,37 +176,115 @@ bool comb2_any(
 /// hello*lll*world* ... 3
 /// *hello*lll*world* ... 4
 /// ```
-bool is_same_string(char *str, char *rule_str)
+bool is_same_string(t_char_list *target, t_str_list *rule_lst)
 {
-	t_char_list *target;
-	t_str_list *rule_lst;
-
-	target = NULL;
-	rule_lst = rule_to_lst(rule_str);
-	char_list_push_str(&target, str);
-	// ^^^ setting
-
 	char *head_rule;
 	char *tail_rule;
+
+	if (str_list_len(rule_lst) == 0)
+	{
+		return (false);
+	}
+	else if (str_list_len(rule_lst) == 1)
+	{
+		if (ft_streq(str_list_get_elem(rule_lst, 0), "*"))
+		{
+			return (true);
+		}
+		else
+		{
+			char *str;
+			bool r;
+
+			str = char_list_to_str(target);
+			r = ft_streq(str_list_get_elem(rule_lst, 0), str);
+			free(str);
+			return (r);
+		}
+	}
+
 	head_rule = str_list_get_elem(rule_lst, 0);
 	tail_rule = str_list_get_elem(rule_lst, str_list_len(rule_lst) - 1);
 	if (!ft_streq(head_rule,"*"))
 	{
+		t_char_list *tmp;
+		t_str_list *rule_tmp;
+		bool r;
 		// startswith head_rule
+		if (char_list_startswith(target, head_rule))
+		{
+			tmp = char_list_cut(&target, ft_strlen(head_rule) - 1); // tmpにheadが入る
+			rule_tmp = str_list_cut(&rule_lst, 0);
+			/// vvv ルールと,targetをそれぞれカットする
+			r = is_same_string(target, rule_lst);
+			/// ^^^
+			void_list_concat(&tmp, target);
+			void_list_concat(&rule_tmp, rule_lst);
+			rule_lst = rule_tmp;
+			target = tmp;
+			return (r);
+		}
+		else
+			return (false);
 	}
 	if (!ft_streq(tail_rule,"*"))
 	{
+		t_char_list *tmp;
+		t_str_list *rule_tmp;
+		bool r;
 		// endswith tail_rule
+		if (char_list_endswith(target, tail_rule))
+		{
+			tmp = char_list_cut(
+				&target,
+			       	char_list_len(target) - ft_strlen(tail_rule) - 1); // targetにtailが残る
+			// char_list_print(tmp);
+			rule_tmp = str_list_cut(&rule_lst, str_list_len(rule_lst) - 1 - 1); // 最後のindexの一個手前
+			//str_list_print(rule_tmp);
+			/// vvv ルールと,targetをそれぞれカットする
+			r = is_same_string(tmp, rule_tmp);
+			/// ^^^
+			void_list_concat(&tmp, target);
+			void_list_concat(&rule_tmp, rule_lst);
+			rule_lst = rule_tmp;
+			target = tmp;
+			return (r);
+		}
+		else
+			return (false);
 	}
 	if (ft_streq(head_rule,"*") && ft_streq(tail_rule,"*"))
 	{
+		t_str_list *head_rule_tmp;
+		t_str_list *middle_rule_tmp;
+		bool r;
+
+		head_rule_tmp = str_list_cut(&rule_lst, 0);
+		middle_rule_tmp = str_list_cut(&rule_lst, str_list_len(rule_lst) - 1);
+		
+		/// vvv ruleをカットする
+		r = comb2_any(target, middle_rule_tmp, is_same_string);
+		/// ^^^
+		void_list_concat(&head_rule_tmp, middle_rule_tmp);
+		void_list_concat(&head_rule_tmp, rule_lst);
+		return (r);
 	}
 	return (true);
 }
 
 bool is_same_string_wrap(t_anytype a, t_anytype b)
 {
-	return (is_same_string(a.str, b.str));
+	t_char_list *c_lst;
+	t_str_list *rule_lst;
+	bool r;
+
+	c_lst = NULL;
+	
+	char_list_push_str(&c_lst, a.str);
+	rule_lst = rule_to_lst(b.str);
+	r = is_same_string(c_lst, rule_lst);
+	char_list_clear(&c_lst);
+	return (r);
 }
 
 t_str_list *

@@ -1,5 +1,5 @@
 #include "list.h"
-#include <sched.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include "libft.h"
@@ -15,7 +15,10 @@ bool char_list_endswith(t_char_list *lst, char *str)
 	lst_str_len = ft_strlen(lst_str);
 	str_len = ft_strlen(str);
 	if (lst_str_len < str_len)
+	{
+		free(lst_str);
 		return (false);
+	}
 	r = ft_strncmp(lst_str + lst_str_len - str_len, str, str_len) == 0;
 	free(lst_str);
 	return (r);

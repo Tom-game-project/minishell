@@ -53,7 +53,7 @@ int		fd_write(int from_fd, int to_fd);
 
 t_str_list *split_path(char *path);
 
-bool is_same_string(char *str, char *rule_str);
+bool is_same_string(t_char_list *target, t_str_list *rule_lst);
 
 t_str_list *
 get_all_file_and_path(t_str_list **node, char *rule_str);
