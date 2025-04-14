@@ -216,6 +216,8 @@ EXEC_SRC=\
       src/exec/heredoc/heredoc_proc.c\
       src/exec/heredoc/close_all_heredoc_fd.c\
       src/exec/tom_asterisk/lib.c\
+      src/exec/tom_asterisk/check.c\
+      src/exec/tom_asterisk/comb2_any.c\
 
       # src/exec/asterisk/expand.c\
 

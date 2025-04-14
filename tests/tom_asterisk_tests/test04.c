@@ -14,8 +14,8 @@ int main()
 	t_str_list *lst;
 	//char *str;
 
-	lst = split_path("src/*");
-	get_all_path("", &lst);
+	lst = split_path("*.c");
+	get_all_path(".", &lst);
 	str_list_clear(&lst, free);
 	return (0);
 }

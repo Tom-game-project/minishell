@@ -3,11 +3,10 @@
 #include <unistd.h>
 
 #include "list.h"
- //#include "test_tools.h"
 #include "path.h"
 #include "libft.h"
 #include "test_tools.h"
-#include "strtools.h"
+#include "exec.h"
 
 static bool is_slash(char *c)
 {
@@ -42,13 +41,9 @@ gen_formatted_asterisk_rule(char *raw_rule)
 
 	len = ft_strlen(raw_rule);
 	if (endwith_srash(raw_rule))
-	{
 		rstr = ft_substr(raw_rule, 0, len - 1);
-	}
 	else
-	{
 		rstr = ft_strdup(raw_rule);
-	}
 	return (rstr);
 }
 
@@ -107,170 +102,6 @@ rule_to_lst(char *rule_str)
 	return (rlst);
 }
 
-static bool slice_comb2_any(
-	t_char_list *lst,
-
-       	t_str_list *rule_lst,
-       	bool (*f)(t_char_list *str_lst, t_str_list *rule_list),
-	int j
-)
-{
-	bool b;
-	t_str_list *tmp;
-
-	tmp =  char_list_cut(&lst, j);
-	b = f(tmp, rule_lst);
-	void_list_concat(&tmp, lst);
-	return (b);
-}
-
-bool comb2_any(
-	t_char_list *lst,
-       	t_str_list *rule_lst,
-       	bool (*f)(t_char_list *str_lst, t_str_list *rule_list)
-)
-{
-	int len;
-	int i;
-	int j;
-
-	len = char_list_len(lst);
-	i = 0;
-	while (i < len)
-	{
-		j = 0;
-		while (j < char_list_len(lst))
-		{
-			if (slice_comb2_any(lst, rule_lst, f, j))
-				return (true);
-			j += 1;
-		}
-		lst = lst->next;
-		i += 1;
-	}
-	return (false);
-}
-
-/// "a*b*c" === "aacgggfafdbddddc" -> true
-///              a---------b----c
-/// "*.c" === "hello.c.c" -> true
-///            -------.c
-///
-/// 気をつけるケース
-/// *helloworld*.c
-/// hellohelloworld123.c.c
-/// (hello)helloworld(123.c).c
-/// 
-/// *hello*world*
-///  -------------- ... A
-/// world hello -> false
-/// 
-///
-/// ```
-/// *.c
-/// (a.c).c
-/// ```
-/// ```
-/// hello*lll*world ... 1
-/// *hello*lll*world ... 2
-/// hello*lll*world* ... 3
-/// *hello*lll*world* ... 4
-/// ```
-bool is_same_string(t_char_list *target, t_str_list *rule_lst)
-{
-	char *head_rule;
-	char *tail_rule;
-
-	if (str_list_len(rule_lst) == 0)
-	{
-		return (false);
-	}
-	else if (str_list_len(rule_lst) == 1)
-	{
-		if (ft_streq(str_list_get_elem(rule_lst, 0), "*"))
-		{
-			return (true);
-		}
-		else
-		{
-			char *str;
-			bool r;
-
-			str = char_list_to_str(target);
-			r = ft_streq(str_list_get_elem(rule_lst, 0), str);
-			free(str);
-			return (r);
-		}
-	}
-
-	head_rule = str_list_get_elem(rule_lst, 0);
-	tail_rule = str_list_get_elem(rule_lst, str_list_len(rule_lst) - 1);
-	if (!ft_streq(head_rule,"*"))
-	{
-		t_char_list *tmp;
-		t_str_list *rule_tmp;
-		bool r;
-		// startswith head_rule
-		if (char_list_startswith(target, head_rule))
-		{
-			tmp = char_list_cut(&target, ft_strlen(head_rule) - 1); // tmpにheadが入る
-			rule_tmp = str_list_cut(&rule_lst, 0);
-			/// vvv ルールと,targetをそれぞれカットする
-			r = is_same_string(target, rule_lst);
-			/// ^^^
-			void_list_concat(&tmp, target);
-			void_list_concat(&rule_tmp, rule_lst);
-			rule_lst = rule_tmp;
-			target = tmp;
-			return (r);
-		}
-		else
-			return (false);
-	}
-	if (!ft_streq(tail_rule,"*"))
-	{
-		t_char_list *tmp;
-		t_str_list *rule_tmp;
-		bool r;
-		// endswith tail_rule
-		if (char_list_endswith(target, tail_rule))
-		{
-			tmp = char_list_cut(
-				&target,
-			       	char_list_len(target) - ft_strlen(tail_rule) - 1); // targetにtailが残る
-			// char_list_print(tmp);
-			rule_tmp = str_list_cut(&rule_lst, str_list_len(rule_lst) - 1 - 1); // 最後のindexの一個手前
-			//str_list_print(rule_tmp);
-			/// vvv ルールと,targetをそれぞれカットする
-			r = is_same_string(tmp, rule_tmp);
-			/// ^^^
-			void_list_concat(&tmp, target);
-			void_list_concat(&rule_tmp, rule_lst);
-			rule_lst = rule_tmp;
-			target = tmp;
-			return (r);
-		}
-		else
-			return (false);
-	}
-	if (ft_streq(head_rule,"*") && ft_streq(tail_rule,"*"))
-	{
-		t_str_list *head_rule_tmp;
-		t_str_list *middle_rule_tmp;
-		bool r;
-
-		head_rule_tmp = str_list_cut(&rule_lst, 0);
-		middle_rule_tmp = str_list_cut(&rule_lst, str_list_len(rule_lst) - 1);
-		
-		/// vvv ruleをカットする
-		r = comb2_any(target, middle_rule_tmp, is_same_string);
-		/// ^^^
-		void_list_concat(&head_rule_tmp, middle_rule_tmp);
-		void_list_concat(&head_rule_tmp, rule_lst);
-		return (r);
-	}
-	return (true);
-}
 
 bool is_same_string_wrap(t_anytype a, t_anytype b)
 {
@@ -279,11 +110,11 @@ bool is_same_string_wrap(t_anytype a, t_anytype b)
 	bool r;
 
 	c_lst = NULL;
-	
 	char_list_push_str(&c_lst, a.str);
 	rule_lst = rule_to_lst(b.str);
 	r = is_same_string(c_lst, rule_lst);
 	char_list_clear(&c_lst);
+	str_list_clear(&rule_lst, free);
 	return (r);
 }
 

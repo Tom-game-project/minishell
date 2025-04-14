@@ -27,6 +27,7 @@ static bool cmp_str(t_anytype a, t_anytype b)
 /// ```
 /// make test TEST_FILE=tests/tom_asterisk_tests/test02.c
 /// ```
+/// 
 int main()
 {
 	t_str_list *all_path;
@@ -37,8 +38,8 @@ int main()
 	all_path = get_dir_list(".");
 	//filtered = get_all_file_and_path(&all_path, "*.txt");
 	//filtered = get_all_file_and_path(&all_path, "*tfi*");
-	//filtered = get_all_file_and_path(&all_path, "infile*");
 	filtered = get_all_file_and_path(&all_path, "bash*.sh");
+	//filtered = get_all_file_and_path(&all_path, "*.c");
 	debug_dprintf(STDERR_FILENO, "--- A ---\n");
 	merge_sort(&filtered, cmp_str);
 	str_list_print(filtered);
