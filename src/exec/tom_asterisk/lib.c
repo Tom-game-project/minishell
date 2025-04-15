@@ -125,8 +125,7 @@ static bool func_wrap(t_anytype a, t_anytype b)
 	return (r);
 }
 
-t_str_list *
-get_all_file_and_path(t_str_list **node, char *rule_str)
+t_str_list *get_all_file_and_path(t_str_list **node, char *rule_str)
 {
 	t_anytype rule_str_anytype;
 
@@ -138,7 +137,7 @@ get_all_file_and_path(t_str_list **node, char *rule_str)
 	));
 }
 
-t_str_list *fileter_get_get_all_path_one_case(
+static t_str_list *fileter_get_get_all_path_one_case(
 	t_str_list **curr_lst, 
 	char *rule)
 {
@@ -151,8 +150,7 @@ t_str_list *fileter_get_get_all_path_one_case(
 	return (filtered);
 }
 
-
-t_str_list *get_all_path_one_case(
+static t_str_list *get_all_path_one_case(
 	t_str_list *path,
        	t_str_list *splited_path,
        	t_str_list **curr_lst)
@@ -180,7 +178,7 @@ t_str_list *get_all_path_one_case(
 	return (rlist);
 }
 
-t_str_list *get_all_path_more_than_one_case(
+static t_str_list *get_all_path_more_than_one_case(
 	t_str_list *path_ptr,
        	t_str_list *splited_path,
        	t_str_list **curr_lst)
@@ -206,8 +204,10 @@ t_str_list *get_all_path_more_than_one_case(
 	return (rlist);
 }
 
-t_str_list *
-get_all_path_helper_set_root_dir(t_str_list **path, t_str_list **curr_lst, t_str_list *splited_path)
+static t_str_list *get_all_path_helper_set_root_dir(
+	t_str_list **path,
+       	t_str_list **curr_lst,
+       	t_str_list *splited_path)
 {
 	char *str;
 
@@ -231,6 +231,7 @@ get_all_path_helper_set_root_dir(t_str_list **path, t_str_list **curr_lst, t_str
 	return (splited_path);
 }
 
+/// 再帰的にディレクトリを探索して、パターンに一致したファイルまたはディレクトリを返却する
 t_str_list *get_all_path(t_str_list **path, t_str_list *splited_path)
 {
 	t_char_list *rlist;

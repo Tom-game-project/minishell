@@ -4,6 +4,24 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+/// 文字列の辞書順比較用の関数
+static bool cmp_str(t_anytype a, t_anytype b)
+{
+	char *a_str;
+	char *b_str;
+
+	a_str = a.str;
+	b_str = b.str;
+	while (*a_str != '\0' && *b_str != '\0')
+	{
+		if (*a_str != *b_str)
+			return (*a_str < *b_str);
+		a_str++;
+		b_str++;
+	}
+	return (*a_str < *b_str);
+}
+
 /// ```
 /// make test TEST_FILE=tests/tom_asterisk_tests/test09.c
 /// ```
@@ -14,22 +32,13 @@ int test(char *str)
 
 	t_str_list *result_list;
 	path = NULL;
-	//splited_list = split_path("src/*.c");
-	//splited_list = split_path("src/ex*/");
-	//splited_list = split_path("./src/ex*/");
-	//splited_list = split_path("./src/ex*/*.c");
-	//splited_list = split_path("../minishell/src/list/*.c");
-	//splited_list = split_path("../mini*/*.sh");
-	//splited_list = split_path("/bin/x86*gcc*");
-	//splited_list = split_path("/bin/*linux*gcc*");
-	//splited_list = split_path("/bin/gcc*13");
 	splited_list = split_path(str);
-
 
 	debug_dprintf(STDERR_FILENO, "--- splited_list ---\n");
 	str_list_print(splited_list);
 	result_list = get_all_path(&path, splited_list);
 	debug_dprintf(STDERR_FILENO, "--- result_list ---\n");
+	merge_sort(&result_list, cmp_str);
 
 	str_list_print(result_list);
 	str_list_clear(&path, free);
@@ -40,11 +49,12 @@ int test(char *str)
 
 int main()
 {
-	char *test_case[9] = {
+	char *test_case[10] = {
 		"src/*.c",
 		"src/ex*/",
 		"./src/ex*/",
 		"./src/ex*/*.c",
+		"./src/ex*/ex*.c",
 		"../minishell/src/list/*.c",
 		"../mini*/*.sh",
 		"/bin/x86*gcc*",
@@ -55,7 +65,7 @@ int main()
 	int i;
 
 	i = 0;
-	while (i < 9)
+	while (i < 10)
 	{
 		test(test_case[i]);
 		i += 1;

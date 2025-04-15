@@ -9,13 +9,12 @@ bool is_same_string(t_char_list *target, t_str_list *rule_lst);
 static bool
 pattern_length_one(t_char_list *target, t_str_list *rule_lst)
 {
+	char *str;
+	bool r;
 	if (ft_streq(str_list_get_elem(rule_lst, 0), "*"))
 		return (true);
 	else
 	{
-		char *str;
-		bool r;
-
 		str = char_list_to_str(target);
 		r = ft_streq(str_list_get_elem(rule_lst, 0), str);
 		free(str);
@@ -107,6 +106,8 @@ static bool pattern_junk_middle_junk(t_char_list *target, t_str_list *rule_lst)
 /// hello*lll*world* ... 3
 /// *hello*lll*world* ... 4
 /// ```
+///
+/// 再帰的に探索する
 bool is_same_string(t_char_list *target, t_str_list *rule_lst)
 {
 	char *head_rule;
