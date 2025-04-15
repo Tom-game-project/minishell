@@ -61,10 +61,8 @@ get_all_file_and_path(t_str_list **node, char *rule_str);
 char *
 gen_formatted_asterisk_rule(char *raw_rule);
 
-
 t_str_list *
-get_all_path(t_str_list *path, t_str_list *splited_path);
-
+get_all_path(t_str_list **path, t_str_list *splited_path);
 
 t_str_list *
 rule_to_lst(char *rule_str);

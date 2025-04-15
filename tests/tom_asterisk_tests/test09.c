@@ -15,13 +15,14 @@ int main()
 	t_str_list *result_list;
 	path = NULL;
 	//splited_list = split_path("src/*.c");
+	splited_list = split_path("src/ex*/");
 	//splited_list = split_path("../minishell/src/list/*.c");
-	splited_list = split_path("../mini*/*.sh");
+	//splited_list = split_path("../mini*/*.sh");
 	//splited_list = split_path("/bin/x86*");
 
 	debug_dprintf(STDERR_FILENO, "--- splited_list ---\n");
 	str_list_print(splited_list);
-	result_list = get_all_path(path, splited_list);
+	result_list = get_all_path(&path, splited_list);
 	debug_dprintf(STDERR_FILENO, "--- result_list ---\n");
 
 	str_list_print(result_list);

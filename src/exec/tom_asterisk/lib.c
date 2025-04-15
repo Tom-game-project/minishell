@@ -22,7 +22,7 @@ static bool endwith_srash(char *str)
 	return (str[len - 1] == '/');
 }
 
-char *
+static char *
 remove_slash(char *str)
 {
 	if (endwith_srash(str))
@@ -112,8 +112,7 @@ rule_to_lst(char *rule_str)
 	return (rlst);
 }
 
-
-bool func_wrap(t_anytype a, t_anytype b) 
+static bool func_wrap(t_anytype a, t_anytype b) 
 {
 	t_char_list *c_lst;
 	t_str_list *rule_lst;
@@ -142,7 +141,7 @@ get_all_file_and_path(t_str_list **node, char *rule_str)
 }
 
 t_str_list *
-get_all_path(t_str_list *path, t_str_list *splited_path)
+get_all_path(t_str_list **path, t_str_list *splited_path)
 {
 	t_char_list *rlist;
 	t_str_list *curr_lst;
@@ -150,7 +149,7 @@ get_all_path(t_str_list *path, t_str_list *splited_path)
 	rlist = NULL;
 	if (str_list_len(splited_path) == 0)
 		return (NULL);
-	if (str_list_len(path) == 0)
+	if (str_list_len(*path) == 0)
 	{
 		if (ft_streq(splited_path->ptr.str, ".."))
 		{
@@ -159,11 +158,8 @@ get_all_path(t_str_list *path, t_str_list *splited_path)
 		}
 		else if (ft_streq(splited_path->ptr.str, "/"))
 		{
-			t_anytype elem;
-
 			curr_lst = get_dir_list("/");
-			elem.str = ft_strdup("/");
-			str_list_concat(&path, void_list_init(elem));
+			str_list_push(path, ft_strdup("/"));
 			splited_path = splited_path->next;
 		}
 		else if (ft_streq(splited_path->ptr.str, "."))
@@ -178,7 +174,7 @@ get_all_path(t_str_list *path, t_str_list *splited_path)
 	{
 		char *str;
 
-		str = str_list_join(path, "");
+		str = str_list_join(*path, "");
 		curr_lst = get_dir_list(str);
 		free(str);
 	}
@@ -195,10 +191,8 @@ get_all_path(t_str_list *path, t_str_list *splited_path)
 		t_str_list *filtered_ptr;
 		char *parent_path;
 
-		///スラッシュを除くパスを作る
-		/// ^^^
 		filtered_ptr = filtered;
-		parent_path = str_list_join(path, "");
+		parent_path = str_list_join(*path, "");
 		while (filtered_ptr != NULL)
 		{
 			str_list_push(
@@ -214,21 +208,22 @@ get_all_path(t_str_list *path, t_str_list *splited_path)
 	}else
 	{
 		t_str_list *filtered_ptr;
+		t_str_list *path_ptr;
 
 		filtered_ptr = filtered;
+		path_ptr = *path;
 		while (str_list_len(filtered_ptr) != 0)
 		{
 			t_str_list *filtered_head;
 			t_str_list *path_tmp;
 
 			filtered_head = str_list_cut(&filtered_ptr, 0);
-			str_list_concat(&path, filtered_head);
-			str_list_push(&path, ft_strdup("/"));
-			/// ここでパスにつなげて試す
-			str_list_concat(&rlist, get_all_path(path, splited_path->next));
-			path_tmp = str_list_cut(&path, str_list_len(path) - 3);
-			str_list_clear(&path, free);
-			path = path_tmp;
+			str_list_concat(&path_ptr, filtered_head);
+			str_list_push(&path_ptr, ft_strdup("/"));
+			str_list_concat(&rlist, get_all_path(&path_ptr, splited_path->next));
+			path_tmp = str_list_cut(&path_ptr, str_list_len(path_ptr) - 1 - 2);
+			str_list_clear(&path_ptr, free);
+			path_ptr = path_tmp;
 		}
 		return (rlist);
 	}
