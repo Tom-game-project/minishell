@@ -43,8 +43,7 @@ static bool is_asterisk_char(char *c)
 ///
 /// TODO: 重複した`**` などを`*`にしたりとか
 /// `/`を取り除いたりとか
-char *
-gen_formatted_asterisk_rule(char *raw_rule)
+char *gen_formatted_asterisk_rule(char *raw_rule)
 {
 	char *rstr;
 	size_t len;
@@ -84,8 +83,7 @@ t_str_list *split_path(char *path)
 	return (str_lst);
 }
 
-t_str_list *
-rule_to_lst(char *rule_str)
+t_str_list *rule_to_lst(char *rule_str)
 {
 	t_char_list *c_lst;
 	t_char_list *group;
@@ -140,91 +138,111 @@ get_all_file_and_path(t_str_list **node, char *rule_str)
 	));
 }
 
+t_str_list *fileter_get_get_all_path_one_case(
+	t_str_list **curr_lst, 
+	char *rule)
+{
+	t_str_list *filtered; 
+	char *slash_removed_str;
+
+	slash_removed_str = remove_slash(rule);
+	filtered = get_all_file_and_path(curr_lst, slash_removed_str);
+	free(slash_removed_str);
+	return (filtered);
+}
+
+
+t_str_list *get_all_path_one_case(
+	t_str_list *path,
+       	t_str_list *splited_path,
+       	t_str_list **curr_lst)
+{
+	t_str_list *filtered_ptr;
+	char *parent_path;
+	t_char_list *rlist;
+	t_str_list *filtered;
+
+	filtered = fileter_get_get_all_path_one_case(curr_lst,splited_path->ptr.str);
+	filtered_ptr = filtered;
+	parent_path = str_list_join(path, "");
+	rlist = NULL;
+	while (filtered_ptr != NULL)
+	{
+		str_list_push(
+			&rlist,
+			ft_strjoin(
+				parent_path,
+				filtered_ptr->ptr.str));
+		filtered_ptr = filtered_ptr->next;
+	}
+	free(parent_path);
+	str_list_clear(&filtered, free);
+	return (rlist);
+}
+
+t_str_list *get_all_path_more_than_one_case(
+	t_str_list *path_ptr,
+       	t_str_list *splited_path,
+       	t_str_list **curr_lst)
+{		
+	t_str_list *filtered_ptr;
+	t_char_list *rlist;
+	t_str_list *filtered_head;
+	t_str_list *path_tmp;
+
+
+	filtered_ptr = fileter_get_get_all_path_one_case(curr_lst, splited_path->ptr.str);;
+	rlist = NULL;
+	while (str_list_len(filtered_ptr) != 0)
+	{
+		filtered_head = str_list_cut(&filtered_ptr, 0);
+		str_list_concat(&path_ptr, filtered_head);
+		str_list_push(&path_ptr, ft_strdup("/"));
+		str_list_concat(&rlist, get_all_path(&path_ptr, splited_path->next));
+		path_tmp = str_list_cut(&path_ptr, str_list_len(path_ptr) - 1 - 2);
+		str_list_clear(&path_ptr, free);
+		path_ptr = path_tmp;
+	}
+	return (rlist);
+}
+
 t_str_list *
-get_all_path(t_str_list **path, t_str_list *splited_path)
+get_all_path_helper_set_root_dir(t_str_list **path, t_str_list **curr_lst, t_str_list *splited_path)
+{
+	char *str;
+
+	if (str_list_len(*path) == 0)
+		if (ft_streq(splited_path->ptr.str, "..") || 
+		ft_streq(splited_path->ptr.str, ".") || ft_streq(splited_path->ptr.str, "/"))
+		{
+			*curr_lst = get_dir_list(splited_path->ptr.str);
+			if (ft_streq(splited_path->ptr.str, "/"))
+				str_list_push(path, ft_strdup("/"));
+			splited_path = splited_path->next;
+		}
+		else
+			*curr_lst = get_dir_list(".");
+	else
+	{
+		str = str_list_join(*path, "");
+		*curr_lst = get_dir_list(str);
+		free(str);
+	}
+	return (splited_path);
+}
+
+t_str_list *get_all_path(t_str_list **path, t_str_list *splited_path)
 {
 	t_char_list *rlist;
 	t_str_list *curr_lst;
 
-	rlist = NULL;
 	if (str_list_len(splited_path) == 0)
 		return (NULL);
-	if (str_list_len(*path) == 0)
-	{
-		if (ft_streq(splited_path->ptr.str, ".."))
-		{
-			curr_lst = get_dir_list("..");
-			splited_path = splited_path->next;
-		}
-		else if (ft_streq(splited_path->ptr.str, "/"))
-		{
-			curr_lst = get_dir_list("/");
-			str_list_push(path, ft_strdup("/"));
-			splited_path = splited_path->next;
-		}
-		else if (ft_streq(splited_path->ptr.str, "."))
-		{
-			curr_lst = get_dir_list(".");
-			splited_path = splited_path->next;
-		}
-		else
-			curr_lst = get_dir_list(".");
-	}
-	else
-	{
-		char *str;
-
-		str = str_list_join(*path, "");
-		curr_lst = get_dir_list(str);
-		free(str);
-	}
-
-	t_str_list *filtered;
-	char *slash_removed_str;
-
-	slash_removed_str = remove_slash(splited_path->ptr.str);
-	filtered = get_all_file_and_path(&curr_lst, slash_removed_str);
-	free(slash_removed_str);
-	str_list_clear(&curr_lst, free);
+	splited_path = get_all_path_helper_set_root_dir(path, &curr_lst, splited_path);
 	if (str_list_len(splited_path) == 1) 
-	{
-		t_str_list *filtered_ptr;
-		char *parent_path;
-
-		filtered_ptr = filtered;
-		parent_path = str_list_join(*path, "");
-		while (filtered_ptr != NULL)
-		{
-			str_list_push(
-				&rlist,
-				ft_strjoin(
-					parent_path,
-					filtered_ptr->ptr.str));
-			filtered_ptr = filtered_ptr->next;
-		}
-		free(parent_path);
-		str_list_clear(&filtered, free);
-		return (rlist);
-	}else
-	{
-		t_str_list *filtered_ptr;
-		t_str_list *path_ptr;
-
-		filtered_ptr = filtered;
-		path_ptr = *path;
-		while (str_list_len(filtered_ptr) != 0)
-		{
-			t_str_list *filtered_head;
-			t_str_list *path_tmp;
-
-			filtered_head = str_list_cut(&filtered_ptr, 0);
-			str_list_concat(&path_ptr, filtered_head);
-			str_list_push(&path_ptr, ft_strdup("/"));
-			str_list_concat(&rlist, get_all_path(&path_ptr, splited_path->next));
-			path_tmp = str_list_cut(&path_ptr, str_list_len(path_ptr) - 1 - 2);
-			str_list_clear(&path_ptr, free);
-			path_ptr = path_tmp;
-		}
-		return (rlist);
-	}
+		rlist = get_all_path_one_case(*path, splited_path, &curr_lst);
+	else
+		rlist = get_all_path_more_than_one_case(*path, splited_path, &curr_lst);
+	str_list_clear(&curr_lst, free);
+	return (rlist);
 }

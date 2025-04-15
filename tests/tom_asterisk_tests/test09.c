@@ -7,7 +7,7 @@
 /// ```
 /// make test TEST_FILE=tests/tom_asterisk_tests/test09.c
 /// ```
-int main()
+int test(char *str)
 {
 	t_str_list *path;
 	t_str_list *splited_list;
@@ -15,10 +15,16 @@ int main()
 	t_str_list *result_list;
 	path = NULL;
 	//splited_list = split_path("src/*.c");
-	splited_list = split_path("src/ex*/");
+	//splited_list = split_path("src/ex*/");
+	//splited_list = split_path("./src/ex*/");
+	//splited_list = split_path("./src/ex*/*.c");
 	//splited_list = split_path("../minishell/src/list/*.c");
 	//splited_list = split_path("../mini*/*.sh");
-	//splited_list = split_path("/bin/x86*");
+	//splited_list = split_path("/bin/x86*gcc*");
+	//splited_list = split_path("/bin/*linux*gcc*");
+	//splited_list = split_path("/bin/gcc*13");
+	splited_list = split_path(str);
+
 
 	debug_dprintf(STDERR_FILENO, "--- splited_list ---\n");
 	str_list_print(splited_list);
@@ -29,5 +35,30 @@ int main()
 	str_list_clear(&path, free);
 	str_list_clear(&splited_list, free);
 	str_list_clear(&result_list, free);
+	return (0);
+}
+
+int main()
+{
+	char *test_case[9] = {
+		"src/*.c",
+		"src/ex*/",
+		"./src/ex*/",
+		"./src/ex*/*.c",
+		"../minishell/src/list/*.c",
+		"../mini*/*.sh",
+		"/bin/x86*gcc*",
+		"/bin/*linux*gcc*",
+		"/bin/gcc*13"
+	};
+
+	int i;
+
+	i = 0;
+	while (i < 9)
+	{
+		test(test_case[i]);
+		i += 1;
+	}
 	return (0);
 }
