@@ -213,18 +213,22 @@ get_all_path(t_str_list *path, t_str_list *splited_path)
 		return (rlist);
 	}else
 	{
-		while (str_list_len(filtered) != 0)
+		t_str_list *filtered_ptr;
+
+		filtered_ptr = filtered;
+		while (str_list_len(filtered_ptr) != 0)
 		{
 			t_str_list *filtered_head;
+			t_str_list *path_tmp;
 
-			filtered_head = str_list_cut(&filtered, 0);
+			filtered_head = str_list_cut(&filtered_ptr, 0);
 			str_list_concat(&path, filtered_head);
 			str_list_push(&path, ft_strdup("/"));
 			/// ここでパスにつなげて試す
 			str_list_concat(&rlist, get_all_path(path, splited_path->next));
-			filtered_head = str_list_cut(&filtered, str_list_len(path) - 2);
-			str_list_clear(&filtered, free);
-			filtered = filtered_head;
+			path_tmp = str_list_cut(&path, str_list_len(path) - 3);
+			str_list_clear(&path, free);
+			path = path_tmp;
 		}
 		return (rlist);
 	}
