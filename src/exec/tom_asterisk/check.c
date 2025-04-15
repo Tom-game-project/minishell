@@ -6,8 +6,7 @@
 
 bool is_same_string(t_char_list *target, t_str_list *rule_lst);
 
-static
-bool
+static bool
 pattern_length_one(t_char_list *target, t_str_list *rule_lst)
 {
 	if (ft_streq(str_list_get_elem(rule_lst, 0), "*"))
@@ -24,7 +23,7 @@ pattern_length_one(t_char_list *target, t_str_list *rule_lst)
 	}
 }
 
-bool
+static bool
 pattern_head_junk(t_char_list *target, t_str_list *rule_lst, char *head_rule)
 {
 	t_char_list *tmp;
@@ -46,13 +45,12 @@ pattern_head_junk(t_char_list *target, t_str_list *rule_lst, char *head_rule)
 		return (false);
 }
 
-bool 
-pattern_junk_tail(t_char_list *target, t_str_list *rule_lst, char *tail_rule)
+static bool pattern_junk_tail(t_char_list *target, t_str_list *rule_lst, char *tail_rule)
 {	
 	t_char_list *tmp;
 	t_str_list *rule_tmp;
 	bool r;
-	// endswith tail_rule
+
 	if (char_list_endswith(target, tail_rule))
 	{
 		tmp = char_list_cut(
@@ -70,8 +68,7 @@ pattern_junk_tail(t_char_list *target, t_str_list *rule_lst, char *tail_rule)
 		return (false);
 }
 
-bool 
-pattern_junk_middle_junk(t_char_list *target, t_str_list *rule_lst)
+static bool pattern_junk_middle_junk(t_char_list *target, t_str_list *rule_lst)
 {	
 	t_str_list *head_rule_tmp;
 	t_str_list *middle_rule_tmp;
@@ -125,7 +122,5 @@ bool is_same_string(t_char_list *target, t_str_list *rule_lst)
 		return (pattern_head_junk(target, rule_lst, head_rule));
 	if (!ft_streq(tail_rule, "*"))
 		return (pattern_junk_tail(target, rule_lst, tail_rule));
-	if (ft_streq(head_rule, "*") && ft_streq(tail_rule,"*"))
-		pattern_junk_middle_junk(target, rule_lst);
-	return (true); // TODO:ここに到達する場合についてまだ考えていない
+	return (pattern_junk_middle_junk(target, rule_lst));
 }

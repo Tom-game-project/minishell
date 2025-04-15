@@ -63,11 +63,12 @@ gen_formatted_asterisk_rule(char *raw_rule);
 
 
 t_str_list *
-get_all_path(char *root, t_str_list **splited_path);
+get_all_path(t_str_list *path, t_str_list *splited_path);
 
 
 t_str_list *
 rule_to_lst(char *rule_str);
 
 bool comb2_any(t_char_list *lst, t_str_list *rule_lst, bool (*f)(t_char_list *str_lst, t_str_list *rule_list));
+
 #endif

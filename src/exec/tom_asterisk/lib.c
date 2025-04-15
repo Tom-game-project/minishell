@@ -7,6 +7,7 @@
 #include "libft.h"
 #include "test_tools.h"
 #include "exec.h"
+#include "strtools.h"
 
 static bool is_slash(char *c)
 {
@@ -19,6 +20,15 @@ static bool endwith_srash(char *str)
 
 	len = ft_strlen(str);
 	return (str[len - 1] == '/');
+}
+
+char *
+remove_slash(char *str)
+{
+	if (endwith_srash(str))
+		return (ft_substr(str, 0, ft_strlen(str) - 1));
+	else
+		return (ft_strdup(str));
 }
 
 static bool is_asterisk_char(char *c)
@@ -103,7 +113,7 @@ rule_to_lst(char *rule_str)
 }
 
 
-bool is_same_string_wrap(t_anytype a, t_anytype b)
+bool func_wrap(t_anytype a, t_anytype b) 
 {
 	t_char_list *c_lst;
 	t_str_list *rule_lst;
@@ -126,31 +136,96 @@ get_all_file_and_path(t_str_list **node, char *rule_str)
 	rule_str_anytype.str = rule_str;
 	return (void_list_filter2(
 		node,
-	       	is_same_string_wrap,
+	       	func_wrap,
 	       	rule_str_anytype
 	));
 }
 
 t_str_list *
-get_all_path(char *root, t_str_list **splited_path)
+get_all_path(t_str_list *path, t_str_list *splited_path)
 {
-	t_str_list *rlist;
-	t_str_list *current_files;
-	t_str_list *filtered;
-	char *fmted_str;
-	char *joined_path;
+	t_char_list *rlist;
+	t_str_list *curr_lst;
 
 	rlist = NULL;
-	if (str_list_len(*splited_path) == 0)
+	if (str_list_len(splited_path) == 0)
 		return (NULL);
-	fmted_str = gen_formatted_asterisk_rule(str_list_pop(splited_path, 0));
-	joined_path = ft_strjoin(root, fmted_str);
-	current_files = get_dir_list(joined_path);
-	debug_dprintf(STDERR_FILENO, "fmted_rule %s\n", fmted_str);
-	filtered = get_all_file_and_path(&current_files, fmted_str);
-	str_list_print(filtered);
-	free(fmted_str);
-	// リストの要素が無いなら返る
-	// ディレクトリであり、
-	return (rlist);
+	if (str_list_len(path) == 0)
+	{
+		if (ft_streq(splited_path->ptr.str, ".."))
+		{
+			curr_lst = get_dir_list("..");
+			splited_path = splited_path->next;
+		}
+		else if (ft_streq(splited_path->ptr.str, "/"))
+		{
+			t_anytype elem;
+
+			curr_lst = get_dir_list("/");
+			elem.str = ft_strdup("/");
+			str_list_concat(&path, void_list_init(elem));
+			splited_path = splited_path->next;
+		}
+		else if (ft_streq(splited_path->ptr.str, "."))
+		{
+			curr_lst = get_dir_list(".");
+			splited_path = splited_path->next;
+		}
+		else
+			curr_lst = get_dir_list(".");
+	}
+	else
+	{
+		char *str;
+
+		str = str_list_join(path, "");
+		curr_lst = get_dir_list(str);
+		free(str);
+	}
+
+	t_str_list *filtered;
+	char *slash_removed_str;
+
+	slash_removed_str = remove_slash(splited_path->ptr.str);
+	filtered = get_all_file_and_path(&curr_lst, slash_removed_str);
+	free(slash_removed_str);
+	str_list_clear(&curr_lst, free);
+	if (str_list_len(splited_path) == 1) 
+	{
+		t_str_list *filtered_ptr;
+		char *parent_path;
+
+		///スラッシュを除くパスを作る
+		/// ^^^
+		filtered_ptr = filtered;
+		parent_path = str_list_join(path, "");
+		while (filtered_ptr != NULL)
+		{
+			str_list_push(
+				&rlist,
+				ft_strjoin(
+					parent_path,
+					filtered_ptr->ptr.str));
+			filtered_ptr = filtered_ptr->next;
+		}
+		free(parent_path);
+		str_list_clear(&filtered, free);
+		return (rlist);
+	}else
+	{
+		while (str_list_len(filtered) != 0)
+		{
+			t_str_list *filtered_head;
+
+			filtered_head = str_list_cut(&filtered, 0);
+			str_list_concat(&path, filtered_head);
+			str_list_push(&path, ft_strdup("/"));
+			/// ここでパスにつなげて試す
+			str_list_concat(&rlist, get_all_path(path, splited_path->next));
+			filtered_head = str_list_cut(&filtered, str_list_len(path) - 2);
+			str_list_clear(&filtered, free);
+			filtered = filtered_head;
+		}
+		return (rlist);
+	}
 }
