@@ -51,22 +51,27 @@ int		fd_write(int from_fd, int to_fd);
 // for test 
 // アスタリスク
 
-t_str_list *split_path(char *path);
+t_str_list *split_path_by_slash(char *path);
 
 bool is_same_string(t_char_list *target, t_str_list *rule_lst);
 
-t_str_list *
-get_all_file_and_path(t_str_list **node, char *rule_str);
+//t_str_list *filter_paths_by_rule(t_str_list **node, char *rule_str);
 
-char *
-gen_formatted_asterisk_rule(char *raw_rule);
+t_str_list *filter_paths_by_rule_wrap(
+	t_str_list **curr_lst, 
+	char *rule);
 
-t_str_list *
-get_all_path(t_str_list **path, t_str_list *splited_path);
+//char *gen_formatted_asterisk_rule(char *raw_rule);
 
-t_str_list *
-rule_to_lst(char *rule_str);
+t_str_list *dir_walker(t_str_list **path, t_str_list *splited_path);
 
-bool comb2_any(t_char_list *lst, t_str_list *rule_lst, bool (*f)(t_char_list *str_lst, t_str_list *rule_list));
+t_str_list *rule_to_lst(char *rule_str);
+
+bool comb2_any(
+	t_char_list *lst,
+       	t_str_list *rule_lst,
+       	bool (*f)(
+		t_char_list *str_lst,
+	       	t_str_list *rule_list));
 
 #endif

@@ -22,9 +22,6 @@ static bool cmp_str(t_anytype a, t_anytype b)
 	return (*a_str < *b_str);
 }
 
-/// ```
-/// make test TEST_FILE=tests/tom_asterisk_tests/test09.c
-/// ```
 int test(char *str)
 {
 	t_str_list *path;
@@ -32,11 +29,11 @@ int test(char *str)
 
 	t_str_list *result_list;
 	path = NULL;
-	splited_list = split_path(str);
+	splited_list = split_path_by_slash(str);
 
 	debug_dprintf(STDERR_FILENO, "--- splited_list ---\n");
 	str_list_print(splited_list);
-	result_list = get_all_path(&path, splited_list);
+	result_list = dir_walker(&path, splited_list);
 	debug_dprintf(STDERR_FILENO, "--- result_list ---\n");
 	merge_sort(&result_list, cmp_str);
 
@@ -47,6 +44,9 @@ int test(char *str)
 	return (0);
 }
 
+/// ```
+/// make vtest TEST_FILE=tests/tom_asterisk_tests/test09.c
+/// ```
 int main()
 {
 	char *test_case[10] = {

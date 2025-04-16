@@ -218,6 +218,9 @@ EXEC_SRC=\
       src/exec/tom_asterisk/lib.c\
       src/exec/tom_asterisk/check.c\
       src/exec/tom_asterisk/comb2_any.c\
+      src/exec/tom_asterisk/set.c\
+      src/exec/tom_asterisk/split.c\
+      src/exec/tom_asterisk/filter.c\
 
       # src/exec/asterisk/expand.c\
 
