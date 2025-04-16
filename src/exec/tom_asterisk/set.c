@@ -7,6 +7,10 @@ static bool is_asterisk_char(char *c)
 	return (*c == '*');
 }
 
+/// rule_strの中にアスタリスクが含まれているかどうかを検証する
+/// その際、環境変数の展開なども十分に考慮する
+///
+/// アスタリスクを含めたディレクトリのパスは**作れる**
 t_str_list *rule_to_lst(char *rule_str)
 {
 	t_char_list *c_lst;

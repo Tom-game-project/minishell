@@ -47,5 +47,3 @@ t_anchor	anchor_dq_proc(\
 	return (e_anchor_dq);
 }
 
-
-

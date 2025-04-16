@@ -19,6 +19,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <unistd.h>
+#include "test_tools.h"
 #include "utils/private.h"
 
 /// 文字列の展開
@@ -79,6 +81,8 @@ char	*expand_string(char *str, t_str_dict *env_dicts)
 	char		*rstr;
 
 	lst = expand_string2list(str, env_dicts);
+	debug_dprintf(STDERR_FILENO, "--- expand lst --- \n");
+	str_list_print(lst);
 	rstr = str_list_join(lst, "");
 	str_list_clear(&lst, free);
 	return (rstr);

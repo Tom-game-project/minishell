@@ -28,7 +28,7 @@
 #include <signal.h>
 
 /// TODO あとで関数の名前を変更する
-static int	print_error_msg(char *cmd)
+static int	report_command_not_found(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
@@ -39,7 +39,7 @@ static int	print_error_msg(char *cmd)
 /// TODO あとで関数の名前を変更する
 ///
 /// exit_status が、126だったときに
-static int	print_error_msg2(char *cmd)
+static int	report_permission_denied(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
@@ -48,7 +48,7 @@ static int	print_error_msg2(char *cmd)
 }
 
 /// TODO
-static int	print_error_msg3(char *cmd)
+static int	report_is_a_directory(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
@@ -57,7 +57,7 @@ static int	print_error_msg3(char *cmd)
 }
 
 /// TODO
-static int	print_error_msg4(char *cmd)
+static int	report_no_such_file_or_directory(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
@@ -80,12 +80,12 @@ void	check_executable_file(char *path)
 	}
 	else if (S_ISDIR(f_stat.st_mode))
 	{
-		print_error_msg3(path);
+		report_is_a_directory(path);
 		exit(126);
 	}
 	else
 	{
-		print_error_msg4(path);
+		report_no_such_file_or_directory(path);
 		exit(126);
 	}
 }
@@ -111,12 +111,12 @@ int	execve_wrap(t_exec_args *args)
 	argv = str_list_to_array(args->ast->arg);
 	env_path_node = get_str_dict_by_key(*args->envp_dict, "PATH");
 	if (env_path_node == NULL)
-		print_error_msg(cmd);
+		report_command_not_found(cmd);
 	fullpath = get_full_path(cmd, env_path_node->value);
 	if (fullpath == NULL)
-		print_error_msg(cmd);
+		report_command_not_found(cmd);
 	if (access(fullpath, X_OK) == -1)
-		print_error_msg2(cmd);
+		report_permission_denied(cmd);
 	check_executable_file(fullpath);
 	envp = str_dict_to_envp(*args->envp_dict);
 	debug_dprintf(STDERR_FILENO, "cmd %s running on pid(%d).ppid(%d)\n", \
