@@ -49,7 +49,8 @@ int test(char *str)
 /// ```
 int main()
 {
-	char *test_case[10] = {
+	char *test_case[11] = {
+		"*.c",
 		"src/*.c",
 		"src/ex*/",
 		"./src/ex*/",
@@ -65,7 +66,7 @@ int main()
 	int i;
 
 	i = 0;
-	while (i < 10)
+	while (i < 11)
 	{
 		test(test_case[i]);
 		i += 1;

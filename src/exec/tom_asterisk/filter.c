@@ -34,6 +34,7 @@ static bool func_wrap(t_anytype a, t_anytype b)
 	str_list_clear(&rule_lst, free);
 	return (r);
 }
+
 /// 引数に与えられたリストから、ルールに従っているパターンのディレクトリ及びファイル名を取り出す関数
 t_str_list *filter_paths_by_rule(t_str_list **node, char *rule_str)
 {

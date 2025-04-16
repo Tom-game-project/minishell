@@ -199,7 +199,6 @@ PATH_SRC =\
 
 EXEC_SRC=\
       src/exec/exec.c\
-      src/exec/fd_write.c\
       src/exec/utils/exec_none_proc.c\
       src/exec/utils/exec_and_proc.c\
       src/exec/utils/exec_or_proc.c\

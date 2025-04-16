@@ -46,8 +46,6 @@ int		exec2(t_exec_args *args);
 
 // bool	check_update_arg(t_ast *ast);
 
-int		fd_write(int from_fd, int to_fd);
-
 // for test 
 // アスタリスク
 
