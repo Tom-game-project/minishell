@@ -22,6 +22,8 @@ t_operator	str2ope(char *str);
 
 bool		startswith_open_paren(char *str);
 
+bool	is_pipe_string(char *str);
+
 bool		is_rdt_string(char *str);
 
 bool		is_ope_string(char *str);

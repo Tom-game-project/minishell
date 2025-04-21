@@ -104,6 +104,10 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 
 	orig = *ast;
 	remove_ifs(&input);
+	// パイプのときは、str_list_search_index関数を使う
+	index = str_list_search_index(input, is_pipe_string);
+	if (index != -1)
+		return (parse_ope_string(orig, input, index));
 	index = str_list_search_index_r(input, is_ope_string);
 	if (index != -1)
 		return (parse_ope_string(orig, input, index));

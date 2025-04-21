@@ -152,6 +152,7 @@ TOM_PARSER_SRC = \
       src/tom_parser/str2ope.c\
       src/tom_parser/init_ast.c\
       src/tom_parser/startswith_open_paren.c\
+      src/tom_parser/is_pipe_string.c\
       src/tom_parser/is_rdt_string.c\
       src/tom_parser/is_ope_string.c\
       src/tom_parser/remove_ifs.c\
