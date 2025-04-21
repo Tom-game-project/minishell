@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   remove_ifs.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 21:29:38 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/21 21:30:09 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include <stdlib.h>
 
-static void nop (void *a)
+static void	nop(void *a)
 {
 	(void) a;
 }
 
-int remove_ifs(t_str_list **lst) // 確保された領域なので、freeしてok
+int	remove_ifs(t_str_list **lst)
 {
-	t_str_list *ifs_lst;
+	t_str_list	*ifs_lst;
 
 	if (str_list_len(*lst) == 0)
 		return (1);

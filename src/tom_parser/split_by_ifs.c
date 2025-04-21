@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_by_ifs.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 21:30:16 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/21 21:30:48 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -5,13 +17,11 @@
 #include "test_tools.h"
 #include "tom_parser.h"
 
-static
-bool
-is_ifs(char *c)
+static bool	is_ifs(char *c)
 {
 	return (
 		*c == ' ' || \
-		*c == '\t'|| \
+		*c == '\t' || \
 		*c == '\n'
 	);
 }
@@ -22,7 +32,7 @@ is_ifs(char *c)
 /// ```
 /// [] [" "] []
 /// ```
-int split_by_ifs(t_str_list **lst, void (*f)(void *))
+int	split_by_ifs(t_str_list **lst, void (*f)(void *))
 {
 	t_str_list *new_lst;
 

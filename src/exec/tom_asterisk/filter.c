@@ -1,18 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   filter.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 18:13:42 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/21 18:15:51 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include <stdlib.h>
 #include "exec.h"
 #include "libft.h"
 
-static bool endwith_srash(char *str)
+static bool	endwith_srash(char *str)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(str);
 	return (str[len - 1] == '/');
 }
 
-static char *
-remove_slash(char *str)
+static char	*remove_slash(char *str)
 {
 	if (endwith_srash(str))
 		return (ft_substr(str, 0, ft_strlen(str) - 1));
@@ -20,11 +31,11 @@ remove_slash(char *str)
 		return (ft_strdup(str));
 }
 
-static bool func_wrap(t_anytype a, t_anytype b) 
+static bool	func_wrap(t_anytype a, t_anytype b)
 {
-	t_char_list *c_lst;
-	t_str_list *rule_lst;
-	bool r;
+	t_char_list	*c_lst;
+	t_str_list	*rule_lst;
+	bool		r;
 
 	c_lst = NULL;
 	char_list_push_str(&c_lst, a.str);
@@ -36,24 +47,23 @@ static bool func_wrap(t_anytype a, t_anytype b)
 }
 
 /// 引数に与えられたリストから、ルールに従っているパターンのディレクトリ及びファイル名を取り出す関数
-t_str_list *filter_paths_by_rule(t_str_list **node, char *rule_str)
+t_str_list	*filter_paths_by_rule(t_str_list **node, char *rule_str)
 {
-	t_anytype rule_str_anytype;
+	t_anytype	rule_str_anytype;
 
 	rule_str_anytype.str = rule_str;
-	return (void_list_filter2(
-		node,
-	       	func_wrap,
-	       	rule_str_anytype
-	));
+	return (void_list_filter2(\
+		node, \
+		func_wrap, \
+		rule_str_anytype));
 }
 
-t_str_list *filter_paths_by_rule_wrap(
-	t_str_list **curr_lst, 
+t_str_list	*filter_paths_by_rule_wrap(
+	t_str_list **curr_lst,
 	char *rule)
 {
-	t_str_list *filtered; 
-	char *slash_removed_str;
+	t_str_list	*filtered;
+	char		*slash_removed_str;
 
 	slash_removed_str = remove_slash(rule);
 	filtered = filter_paths_by_rule(curr_lst, slash_removed_str);

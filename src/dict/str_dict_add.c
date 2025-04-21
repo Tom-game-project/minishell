@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:28:39 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/12 19:28:51 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:06:52 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ int	str_dict_add(t_str_dict **node, char *key, char *value, void (*f)(void *))
 	sd = get_str_dict_by_key(*node, key);
 	if (sd == NULL)
 	{
-		// 追加
 		str_dict_push(node, key, value);
 		return (1);
 	}
 	else
 	{
-		// 更新
 		f(sd->value);
 		sd->value = value;
 		return (0);

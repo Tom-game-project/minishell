@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 18:24:29 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/21 18:24:56 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include "libft.h"
 #include <stdlib.h>
 
-static bool is_asterisk_char(char *c)
+static bool	is_asterisk_char(char *c)
 {
 	return (*c == '*');
 }
 
-t_str_list *rule_to_lst(char *rule_str)
+t_str_list	*rule_to_lst(char *rule_str)
 {
-	t_char_list *c_lst;
-	t_char_list *group;
-	t_str_list *rlst;
-	int index;
+	t_char_list	*c_lst;
+	t_char_list	*group;
+	t_str_list	*rlst;
+	int			index;
 
 	c_lst = NULL;
 	rlst = NULL;

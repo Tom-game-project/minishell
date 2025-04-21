@@ -1,10 +1,10 @@
-# ifndef PARSER_H
-#define PARSER_H
-#include "list.h"
+#ifndef PARSER_H
+# define PARSER_H
+# include "list.h"
 
-typedef enum    e_operator t_operator;
+typedef enum e_operator		t_operator;
 
-enum    e_operator
+enum e_operator
 {
 	e_ope_none,
 	e_ope_and,// &&
@@ -17,17 +17,17 @@ enum    e_operator
 	e_ope_paren,// )
 };
 
-typedef struct s_ast t_ast;
+typedef struct s_ast		t_ast;
 
-struct  s_ast
+struct	s_ast
 {
-	t_ast   	    *left_ast;
-	t_ast   	    *right_ast;
-	t_operator 		ope;
+	t_ast			*left_ast;
+	t_ast			*right_ast;
+	t_operator		ope;
 	t_str_list		*arg;
 };
 
-typedef enum e_parse_result t_parse_result ;
+typedef enum e_parse_result	t_parse_result ;
 
 enum e_parse_result
 {
@@ -39,7 +39,7 @@ enum e_parse_result
 //parser.c
 t_parse_result	parser(t_ast **ast, char *input);
 
-bool parser_wrap2(t_ast **ast, char *input);
+bool			parser_wrap2(t_ast **ast, char *input);
 //allocation_ast.c
 t_ast  *allocation_ast(void);
 

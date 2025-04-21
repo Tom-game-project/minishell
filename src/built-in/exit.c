@@ -38,10 +38,10 @@ static bool	is_num(char *str)
 
 int	built_in_exit(t_str_list *args, t_str_dict *env_dict)
 {
-	char	*str;
-	t_str_dict *exit_status_tmp;
+	char		*str;
+	t_str_dict	*exit_status_tmp;
 
-	ft_putstr_fd("exit\n" ,STDERR_FILENO);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (str_list_len(args) == 1)
 	{
 		exit_status_tmp = get_str_dict_by_key(env_dict, "?");

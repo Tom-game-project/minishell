@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str2ope.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 21:31:15 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/21 21:31:26 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "strtools.h"
 
-t_operator str2ope(char *str)
+t_operator	str2ope(char *str)
 {
 	if (ft_streq(str, "<<"))
 		return (e_ope_heredoc_i);

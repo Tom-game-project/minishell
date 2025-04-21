@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lib.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 18:16:06 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/21 18:24:14 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
@@ -9,17 +21,17 @@
 #include "exec.h"
 #include "strtools.h"
 
-static t_str_list *get_all_path_one_case(
+static t_str_list	*get_all_path_one_case(
 	t_str_list *path,
-       	t_str_list *splited_path,
-       	t_str_list **curr_lst)
+	t_str_list *splited_path,
+	t_str_list **curr_lst)
 {
-	t_str_list *filtered_ptr;
-	char *parent_path;
-	t_char_list *rlist;
-	t_str_list *filtered;
+	t_str_list	*filtered_ptr;
+	char		*parent_path;
+	t_char_list	*rlist;
+	t_str_list	*filtered;
 
-	filtered = filter_paths_by_rule_wrap(curr_lst,splited_path->ptr.str);
+	filtered = filter_paths_by_rule_wrap(curr_lst, splited_path->ptr.str);
 	filtered_ptr = filtered;
 	parent_path = str_list_join(path, "");
 	rlist = NULL;
@@ -37,18 +49,17 @@ static t_str_list *get_all_path_one_case(
 	return (rlist);
 }
 
-static t_str_list *get_all_path_more_than_one_case(
+static t_str_list	*get_all_path_more_than_one_case(
 	t_str_list *path_ptr,
-       	t_str_list *splited_path,
-       	t_str_list **curr_lst)
-{		
-	t_str_list *filtered_ptr;
-	t_char_list *rlist;
-	t_str_list *filtered_head;
-	t_str_list *path_tmp;
+	t_str_list *splited_path,
+	t_str_list **curr_lst)
+{
+	t_str_list	*filtered_ptr;
+	t_char_list	*rlist;
+	t_str_list	*filtered_head;
+	t_str_list	*path_tmp;
 
-
-	filtered_ptr = filter_paths_by_rule_wrap(curr_lst, splited_path->ptr.str);;
+	filtered_ptr = filter_paths_by_rule_wrap(curr_lst, splited_path->ptr.str);
 	rlist = NULL;
 	while (str_list_len(filtered_ptr) != 0)
 	{
@@ -63,16 +74,18 @@ static t_str_list *get_all_path_more_than_one_case(
 	return (rlist);
 }
 
-static t_str_list *get_all_path_helper_set_root_dir(
+static t_str_list	*get_all_path_helper_set_root_dir(
 	t_str_list **path,
-       	t_str_list **curr_lst,
-       	t_str_list *splited_path)
+	t_str_list **curr_lst,
+	t_str_list *splited_path)
 {
-	char *str;
+	char	*str;
 
 	if (str_list_len(*path) == 0)
-		if (ft_streq(splited_path->ptr.str, "..") || 
-		ft_streq(splited_path->ptr.str, ".") || ft_streq(splited_path->ptr.str, "/"))
+	{
+		if (ft_streq(splited_path->ptr.str, "..") || \
+		ft_streq(splited_path->ptr.str, ".") || \
+		ft_streq(splited_path->ptr.str, "/"))
 		{
 			*curr_lst = get_dir_list(splited_path->ptr.str);
 			if (ft_streq(splited_path->ptr.str, "/"))
@@ -81,6 +94,7 @@ static t_str_list *get_all_path_helper_set_root_dir(
 		}
 		else
 			*curr_lst = get_dir_list(".");
+	}
 	else
 	{
 		str = str_list_join(*path, "");
@@ -91,15 +105,16 @@ static t_str_list *get_all_path_helper_set_root_dir(
 }
 
 /// 再帰的にディレクトリを探索して、パターンに一致したファイルまたはディレクトリを返却する
-t_str_list *dir_walker(t_str_list **path, t_str_list *splited_path)
+t_str_list	*dir_walker(t_str_list **path, t_str_list *splited_path)
 {
-	t_char_list *rlist;
-	t_str_list *curr_lst;
+	t_char_list	*rlist;
+	t_str_list	*curr_lst;
 
 	if (str_list_len(splited_path) == 0)
 		return (NULL);
-	splited_path = get_all_path_helper_set_root_dir(path, &curr_lst, splited_path);
-	if (str_list_len(splited_path) == 1) 
+	splited_path = get_all_path_helper_set_root_dir(\
+		path, &curr_lst, splited_path);
+	if (str_list_len(splited_path) == 1)
 		rlist = get_all_path_one_case(*path, splited_path, &curr_lst);
 	else
 		rlist = get_all_path_more_than_one_case(*path, splited_path, &curr_lst);
