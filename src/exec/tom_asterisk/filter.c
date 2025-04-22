@@ -61,3 +61,7 @@ t_str_list *filter_paths_by_rule_wrap(
 	return (filtered);
 }
 
+
+// この階層まで、アスタリスクの情報が必要
+
+

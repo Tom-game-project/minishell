@@ -108,12 +108,18 @@ VOID_LIST = \
       src/list/void_list_insert_list.c\
       src/list/void_list_filter.c\
 
+TOKEN_LIST = \
+	     src/list/alloc_ex_token.c\
+	     src/list/token_list_join.c
+
 
 LIST_SRC = \
      $(INT_LIST)\
      $(CHAR_LIST)\
      $(STR_LIST)\
      $(VOID_LIST)\
+     $(TOKEN_LIST)\
+
 
 
 EXPAND_STRING_SRC = \

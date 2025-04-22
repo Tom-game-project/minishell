@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "libft.h"
 
 #include "expand_string.h"
@@ -21,6 +22,16 @@ print_token_list_node(int index, t_anytype token)
 		return (debug_dprintf(STDERR_FILENO, "[e_asterisk] %s\n", token.ex_token->str));
 	}
 }
+
+void
+free_ex_token(t_anytype elem)
+{
+	free(elem.ex_token->str);
+	free(elem.ex_token);
+	return ;
+}
+
+
 ///
 ///
 /// ```
@@ -28,13 +39,13 @@ print_token_list_node(int index, t_anytype token)
 /// ```
 int main()
 {
-	t_str_list *s;
+	t_void_list *s;
 	t_str_dict *d;
 
 	//char *str = "aaa$HELLO'$WORLD'$HELLOaaa|aaa";
 	//char *str = "aaa'$WORLD'$HELLOaaa";
-	//char *str = "---\"\"\"'$HELLO*'\"\"\"---*/";
-	char *str = "\"*\"*'*'";
+	char *str = "---\"\"\"'$HELLO*'\"\"\"---*/";
+	//char *str = "\"*\"*'*'";
 	//char *str = "???$HELLO$$?$?HELLO$?$WO";
 	//char *str = "$$$";
 	d = NULL;
@@ -66,8 +77,17 @@ int main()
 	printf("test case [%s]\n", str);
 	//str_list_print(s);
 	void_list_print(s, print_token_list_node);
+	
+	char *str1;
+	str1= token_list_join(s);
+
+	debug_dprintf(STDERR_FILENO, "joined %s\n", str1);
+	free(str1);
+
 	//str_list_clear(&s, free);
+	
 	str_dict_clear(&d, free, free);
 	//printf("hello world\n");
+	void_list_clear(&s, free_ex_token);
 	return (0);
 }

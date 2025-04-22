@@ -160,6 +160,16 @@ int int_list_pop(t_int_list **node, int index);
 
 int int_list_insert(t_int_list **node, int index, int i);
 
+
+/// ================ token_list functions ================
+
+t_anytype
+alloc_ex_token(t_expand_token_type token_type, char *str);
+
+t_void_list *token_list_clone(t_void_list *lst, t_anytype (*f)(t_anytype));
+
+char *token_list_join(t_void_list *lst);
+
 /// ================ void_list functions ================
 ///
 /// 格納するデータのtypeによらないlistそのものの実装は以下の関数に定義されている.

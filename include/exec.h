@@ -13,6 +13,7 @@
 #ifndef EXEC_H
 # define EXEC_H
 
+#include "list.h"
 # include "parser.h"
 # include "dict.h"
 # include <unistd.h>
@@ -51,7 +52,7 @@ int		exec2(t_exec_args *args);
 
 t_str_list *split_path_by_slash(char *path);
 
-bool is_same_string(t_char_list *target, t_str_list *rule_lst);
+bool is_same_string(t_char_list *target, t_void_list *rule_lst);
 
 //t_str_list *filter_paths_by_rule(t_str_list **node, char *rule_str);
 

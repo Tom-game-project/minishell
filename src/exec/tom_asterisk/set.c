@@ -1,6 +1,8 @@
 #include "list.h"
 #include "libft.h"
+#include "test_tools.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 static bool is_asterisk_char(char *c)
 {
@@ -20,6 +22,7 @@ t_str_list *rule_to_lst(char *rule_str)
 
 	c_lst = NULL;
 	rlst = NULL;
+	//debug_dprintf(STDERR_FILENO, ">>> %s\n", rule_str);
 	char_list_push_str(&c_lst, rule_str);
 	index = char_list_search_index(c_lst, is_asterisk_char);
 	while (index != -1)
@@ -38,3 +41,41 @@ t_str_list *rule_to_lst(char *rule_str)
 	return (rlst);
 }
 
+// TODO: tokenリスト用にかきかえる
+
+
+//static bool is_asterisk_char2(t_anytype a, bool (*f)(void *))
+//{
+//	(void) f;
+//
+//	return (a.ex_token->token_type == e_asterisk);
+//}
+//
+//t_anytype
+//copy_token_list_node(t_anytype elem)
+//{
+//	return (alloc_ex_token(elem.ex_token->token_type, ft_strdup(elem.ex_token->str)));
+//}
+//
+//
+//// トークンを含んだ、リスト
+//// ```
+//// [aaaa*aaaa]
+//// ```
+//t_str_list *rule_to_lst2(t_void_list *rule_list)
+//{
+//	int index;
+//	t_void_list *group;
+//	t_void_list *cloned_rule;
+//
+//	cloned_rule = token_list_clone(rule_list, copy_token_list_node);
+//	index = void_list_search_index(rule_list, is_asterisk_char2, NULL);
+//	while(index != -1)
+//	{
+//		group = void_list_cut(&cloned_rule, index - 1);
+//		if (void_list_len(group) != 0)
+//		{
+//			void_list_push()
+//		}
+//	}
+//}

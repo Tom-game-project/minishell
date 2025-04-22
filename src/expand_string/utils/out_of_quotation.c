@@ -94,7 +94,7 @@ t_anchor anchor_out_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 			}
 		else
 		{
-			debug_dprintf(STDERR_FILENO, "[%c] \n" , c);
+			//debug_dprintf(STDERR_FILENO, "[%c] \n" , c);
 			char_list_push(group_args->str_group, c);
 		}
 	return (e_anchor_out);

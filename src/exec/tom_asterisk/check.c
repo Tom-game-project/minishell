@@ -4,35 +4,39 @@
 #include "strtools.h"
 #include "private.h"
 
-bool is_same_string(t_char_list *target, t_str_list *rule_lst);
+bool is_same_string(t_char_list *target, t_void_list *rule_lst);
 
 static bool
-pattern_length_one(t_char_list *target, t_str_list *rule_lst)
+pattern_length_one(t_char_list *target, t_void_list *rule_lst)
 {
 	char *str;
 	bool r;
-	if (ft_streq(str_list_get_elem(rule_lst, 0), "*"))
+	t_void_list *tmp_node;
+
+	tmp_node = void_list_get_elem(rule_lst, 0);
+
+	if (tmp_node->ptr.ex_token->token_type == e_asterisk)
 		return (true);
 	else
 	{
 		str = char_list_to_str(target);
-		r = ft_streq(str_list_get_elem(rule_lst, 0), str);
+		r = ft_streq(tmp_node->ptr.ex_token->str, str);
 		free(str);
 		return (r);
 	}
 }
 
 static bool
-pattern_head_junk(t_char_list *target, t_str_list *rule_lst, char *head_rule)
+pattern_head_junk(t_char_list *target, t_void_list *rule_lst, char *head_rule)
 {
 	t_char_list *tmp;
-	t_str_list *rule_tmp;
+	t_void_list *rule_tmp;
 	bool r;
 
 	if (char_list_startswith(target, head_rule))
 	{
 		tmp = char_list_cut(&target, ft_strlen(head_rule) - 1); // tmpにheadが入る
-		rule_tmp = str_list_cut(&rule_lst, 0);
+		rule_tmp = void_list_cut(&rule_lst, 0);
 		r = is_same_string(target, rule_lst);
 		void_list_concat(&tmp, target);
 		void_list_concat(&rule_tmp, rule_lst);
@@ -44,10 +48,10 @@ pattern_head_junk(t_char_list *target, t_str_list *rule_lst, char *head_rule)
 		return (false);
 }
 
-static bool pattern_junk_tail(t_char_list *target, t_str_list *rule_lst, char *tail_rule)
+static bool pattern_junk_tail(t_char_list *target, t_void_list *rule_lst, char *tail_rule)
 {	
 	t_char_list *tmp;
-	t_str_list *rule_tmp;
+	t_void_list *rule_tmp;
 	bool r;
 
 	if (char_list_endswith(target, tail_rule))
@@ -55,7 +59,7 @@ static bool pattern_junk_tail(t_char_list *target, t_str_list *rule_lst, char *t
 		tmp = char_list_cut(
 			&target,
 			char_list_len(target) - ft_strlen(tail_rule) - 1); // targetにtailが残る
-		rule_tmp = str_list_cut(&rule_lst, str_list_len(rule_lst) - 1 - 1); // 最後のindexの一個手前
+		rule_tmp = void_list_cut(&rule_lst, void_list_len(rule_lst) - 1 - 1); // 最後のindexの一個手前
 		r = is_same_string(tmp, rule_tmp);
 		void_list_concat(&tmp, target);
 		void_list_concat(&rule_tmp, rule_lst);
@@ -67,14 +71,14 @@ static bool pattern_junk_tail(t_char_list *target, t_str_list *rule_lst, char *t
 		return (false);
 }
 
-static bool pattern_junk_middle_junk(t_char_list *target, t_str_list *rule_lst)
+static bool pattern_junk_middle_junk(t_char_list *target, t_void_list *rule_lst)
 {	
-	t_str_list *head_rule_tmp;
-	t_str_list *middle_rule_tmp;
+	t_void_list *head_rule_tmp;
+	t_void_list *middle_rule_tmp;
 	bool r;
 
-	head_rule_tmp = str_list_cut(&rule_lst, 0);
-	middle_rule_tmp = str_list_cut(&rule_lst, str_list_len(rule_lst) - 1);
+	head_rule_tmp = void_list_cut(&rule_lst, 0);
+	middle_rule_tmp = void_list_cut(&rule_lst, void_list_len(rule_lst) - 1);
 	r = comb2_any(target, middle_rule_tmp, is_same_string);
 	void_list_concat(&head_rule_tmp, middle_rule_tmp);
 	void_list_concat(&head_rule_tmp, rule_lst);
@@ -108,20 +112,24 @@ static bool pattern_junk_middle_junk(t_char_list *target, t_str_list *rule_lst)
 /// ```
 ///
 /// 再帰的に探索する
-bool is_same_string(t_char_list *target, t_str_list *rule_lst)
+bool is_same_string(t_char_list *target, t_void_list *rule_lst)
 {
-	char *head_rule;
-	char *tail_rule;
+	t_void_list *head_node;
+	t_void_list *tail_node;
+	t_anytype head_rule;
+	t_anytype tail_rule;
 
-	if (str_list_len(rule_lst) == 0)
+	if (void_list_len(rule_lst) == 0)
 		return (false);
-	else if (str_list_len(rule_lst) == 1)
+	else if (void_list_len(rule_lst) == 1)
 		return (pattern_length_one(target, rule_lst));
-	head_rule = str_list_get_elem(rule_lst, 0);
-	tail_rule = str_list_get_elem(rule_lst, str_list_len(rule_lst) - 1);
-	if (!ft_streq(head_rule, "*"))
-		return (pattern_head_junk(target, rule_lst, head_rule));
-	if (!ft_streq(tail_rule, "*"))
-		return (pattern_junk_tail(target, rule_lst, tail_rule));
+	head_node = void_list_get_elem(rule_lst, 0);
+	tail_node = void_list_get_elem(rule_lst, void_list_len(rule_lst) - 1);
+	head_rule = head_node->ptr;
+	tail_rule = tail_node->ptr;
+	if (head_rule.ex_token->token_type != e_asterisk)
+		return (pattern_head_junk(target, rule_lst, head_rule.ex_token->str));
+	if (tail_rule.ex_token->token_type != e_asterisk)
+		return (pattern_junk_tail(target, rule_lst, tail_rule.ex_token->str));
 	return (pattern_junk_middle_junk(target, rule_lst));
 }
