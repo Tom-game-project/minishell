@@ -38,7 +38,9 @@ int push_expand_env(t_list_args *group_args, t_str_dict *dict)
 		}
 		else
 		{
-			str_list_push(group_args->rlist, ft_strdup(r->value));
+			//push_str_group2(group_args,  e_word);
+			void_list_push(group_args->rlist, alloc_ex_token(e_word, ft_strdup(r->value)));
+			//str_list_push(group_args->rlist, ft_strdup(r->value));
 		}
 		char_list_clear(group_args->path_group);
 	}

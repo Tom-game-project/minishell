@@ -6,7 +6,21 @@
 
 #include "list.h"
 #include "dict.h"
+#include "test_tools.h"
 
+int
+print_token_list_node(int index, t_anytype token)
+{
+	(void) index;
+	if (token.ex_token->token_type == e_word)
+	{
+		return (debug_dprintf(STDERR_FILENO, "[e_word] %s\n", token.ex_token->str));
+	}
+	else 
+	{
+		return (debug_dprintf(STDERR_FILENO, "[e_asterisk] %s\n", token.ex_token->str));
+	}
+}
 ///
 ///
 /// ```
@@ -19,7 +33,8 @@ int main()
 
 	//char *str = "aaa$HELLO'$WORLD'$HELLOaaa|aaa";
 	//char *str = "aaa'$WORLD'$HELLOaaa";
-	char *str = "---\"\"\"'$HELLO'\"\"\"---";
+	//char *str = "---\"\"\"'$HELLO*'\"\"\"---*/";
+	char *str = "\"*\"*'*'";
 	//char *str = "???$HELLO$$?$?HELLO$?$WO";
 	//char *str = "$$$";
 	d = NULL;
@@ -44,13 +59,14 @@ int main()
 	);
 	// str_dict_add();
 	//s = expand_string("\"  $PATH  \"\"   hello  \"" , NULL);
-	s = expand_string2list(
+	s = expand_string2list2(
 		str,
 		d
 	);
 	printf("test case [%s]\n", str);
-	str_list_print(s);
-	str_list_clear(&s, free);
+	//str_list_print(s);
+	void_list_print(s, print_token_list_node);
+	//str_list_clear(&s, free);
 	str_dict_clear(&d, free, free);
 	//printf("hello world\n");
 	return (0);

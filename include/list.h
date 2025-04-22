@@ -5,12 +5,31 @@
 
 typedef union u_anytype t_anytype;
 
+// expand string 専用
+typedef enum e_expand_token t_expand_token_type;
+
+enum e_expand_token
+{
+	e_word,
+	e_asterisk
+};
+
+typedef struct s_expand_token t_expand_token;
+
+struct s_expand_token
+{
+	t_expand_token_type token_type;
+	char *str;
+};
+
+
 // listで扱いたい型
 union  u_anytype
 {
 	int i32;
 	char c;
 	char *str;
+	t_expand_token *ex_token;
 };
 
 /// void ptrを格納するリスト

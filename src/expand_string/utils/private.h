@@ -35,7 +35,7 @@ enum e_anchor
 typedef struct s_list_args t_list_args;
 struct s_list_args
 {
-	t_str_list **rlist;
+	t_void_list **rlist;
 	t_char_list **path_group;
 	t_char_list **str_group;
 };
@@ -43,6 +43,8 @@ struct s_list_args
 // bool is_valid_env_char(char c);
 
 int			push_str_group(t_list_args *group_args);
+
+int push_str_group2(t_list_args *group_args, t_expand_token_type token_type);
 
 int			push_expand_env(t_list_args *group_args, t_str_dict *dict);
 
@@ -63,4 +65,6 @@ t_anchor	question_proc(\
 t_anchor	anchor_heredoc_proc(\
 	char c, t_list_args *group_args, t_str_dict *env_dicts);
 
+t_anytype
+alloc_ex_token(t_expand_token_type token_type, char *str);
 #endif

@@ -6,7 +6,7 @@ t_anchor anchor_q_proc(char c, t_list_args *group_args)
 {
 	if (c == '\'') // quotation close
 	{
-		push_str_group(group_args);
+		push_str_group2(group_args, e_word);
 		return (e_anchor_out);
 	}
 	else

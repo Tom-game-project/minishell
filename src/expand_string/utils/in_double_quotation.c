@@ -23,13 +23,13 @@ t_anchor	anchor_dq_proc(\
 	if (c == '"')
 	{
 		push_expand_env(group_args, env_dicts);
-		push_str_group(group_args);
+		push_str_group2(group_args, e_word);
 		return (e_anchor_out);
 	}
 	else if (c == '$')
 	{
 		push_expand_env(group_args, env_dicts);
-		push_str_group(group_args);
+		push_str_group2(group_args, e_word);
 		char_list_push(group_args->path_group, c);
 	}
 	else
@@ -39,7 +39,7 @@ t_anchor	anchor_dq_proc(\
 			else
 			{
 				push_expand_env(group_args, env_dicts);
-				push_str_group(group_args);
+				push_str_group2(group_args, e_word);
 				char_list_push(group_args->str_group, c);
 			}
 		else

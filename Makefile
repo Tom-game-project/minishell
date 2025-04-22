@@ -124,6 +124,7 @@ EXPAND_STRING_SRC = \
       src/expand_string/utils/push_expand_env.c\
       src/expand_string/utils/push_str_group.c\
       src/expand_string/expand_string.c\
+      src/expand_string/expand_string2.c\
       src/expand_string/heredoc_expand_string.c\
 
 

@@ -38,7 +38,6 @@ int main()
 	);
 	fd = open("infile", O_RDONLY, 0644);
 	new_fd = heredoc_expand_string_via_fd(fd, d);
-	fd_write(new_fd, STDOUT_FILENO);
 	close(fd);
 	close(new_fd);
 	str_dict_clear(&d, free, free);
