@@ -54,6 +54,8 @@ t_str_list *split_path_by_slash(char *path); // TODO:いずれ使わなくなる
 
 t_void_list *split_token_list_by_slash(t_void_list *lst);
 
+int clear_split_token_list(t_void_list **token_list);
+
 bool is_same_string(t_char_list *target, t_void_list *rule_lst);
 
 //t_str_list *filter_paths_by_rule(t_str_list **node, char *rule_str);

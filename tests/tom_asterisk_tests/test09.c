@@ -7,6 +7,14 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+
+static void free_ex_token(t_anytype elem)
+{
+	free(elem.ex_token->str);
+	free(elem.ex_token);
+	return ;
+}
+
 /// 文字列の辞書順比較用の関数
 static bool cmp_str(t_anytype a, t_anytype b)
 {
@@ -55,10 +63,9 @@ int test(char *str)
 		free
 	);
 
-
 	t_void_list *token_list;
 	token_list = expand_string2list2(str, d);
-	splited_list = split_token_list_by_slash(token_list);
+	splited_list = split_token_list_by_slash(token_list); // 二次元リスト
 
 	//debug_dprintf(STDERR_FILENO, "--- splited_list ---\n");
 	//str_list_print(splited_list);
@@ -68,8 +75,10 @@ int test(char *str)
 
 	str_list_print(result_list);
 	str_list_clear(&path, free);
-	str_list_clear(&splited_list, free);
+	clear_split_token_list(&splited_list);
+	void_list_clear(&token_list, free_ex_token);
 	str_list_clear(&result_list, free);
+	str_dict_clear(&d, free, free);
 	return (0);
 }
 
@@ -78,7 +87,8 @@ int test(char *str)
 /// ```
 int main()
 {
-	char *test_case[11] = {
+	char *test_case[13] = {
+		"*",
 		"*.c",
 		"src/*.c",
 		"src/ex*/",
@@ -89,14 +99,16 @@ int main()
 		"../mini*/*.sh",
 		"/bin/x86*gcc*",
 		"/bin/*linux*gcc*",
-		"/bin/gcc*13"
+		"/bin/gcc*13",
+		"/home/tom/*'*'*"
 	};
 
 	int i;
 
 	i = 0;
-	while (i < 11)
+	while (i < 13)
 	{
+		debug_dprintf(STDERR_FILENO, "test case: \"%s\"\n", test_case[i]);
 		test(test_case[i]);
 		i += 1;
 	}

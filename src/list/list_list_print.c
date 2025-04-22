@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-
 int list_list_print(t_void_list *list, int (*print)(int, t_anytype))
 {
 	int index;

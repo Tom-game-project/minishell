@@ -34,7 +34,6 @@ t_str_list *split_path_by_slash(char *path)
 	return (str_lst);
 }
 
-
 int
 push_list_to_list(t_void_list **vec_vec_extoken, t_void_list *vec_extoken)
 {
@@ -44,7 +43,6 @@ push_list_to_list(t_void_list **vec_vec_extoken, t_void_list *vec_extoken)
 	void_list_push(vec_vec_extoken, elem);
 	return (0);
 }
-
 
 /// 
 /// token_listを受け取って、スラッシュ区切りにする
@@ -78,7 +76,6 @@ t_void_list *split_token_list_by_slash(t_void_list *lst)
 				t_char_list *group_char_lst; // slashを一つ含む
 
 				group_char_lst = char_list_cut(&c_list, index);
-				// ここで追加
 				void_list_push(
 					&vec_extoken,
 				       	alloc_ex_token(e_word, char_list_to_str(group_char_lst)));
@@ -98,7 +95,7 @@ t_void_list *split_token_list_by_slash(t_void_list *lst)
 		}
 		else
 		{
-				void_list_push(&vec_extoken, alloc_ex_token(e_asterisk, ft_strdup("*")));
+			void_list_push(&vec_extoken, alloc_ex_token(e_asterisk, ft_strdup("*")));
 		}
 		lst = lst->next;
 	}
@@ -108,3 +105,24 @@ t_void_list *split_token_list_by_slash(t_void_list *lst)
 	}
 	return (vec_vec_extoken);
 }
+
+static void free_ex_token(t_anytype elem)
+{
+	free(elem.ex_token->str);
+	free(elem.ex_token);
+	return ;
+}
+
+// リストの中のリストをクリアにする
+void
+clear_token_list(t_anytype elem)
+{
+	void_list_clear(&elem.list, free_ex_token);
+}
+
+int clear_split_token_list(t_void_list **token_list)
+{
+	void_list_clear(token_list, clear_token_list);
+	return (0);
+}
+
