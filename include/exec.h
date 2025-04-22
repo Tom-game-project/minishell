@@ -50,15 +50,19 @@ int		exec2(t_exec_args *args);
 // for test 
 // アスタリスク
 
-t_str_list *split_path_by_slash(char *path);
+t_str_list *split_path_by_slash(char *path); // TODO:いずれ使わなくなる方
+
+t_void_list *split_token_list_by_slash(t_void_list *lst);
 
 bool is_same_string(t_char_list *target, t_void_list *rule_lst);
 
 //t_str_list *filter_paths_by_rule(t_str_list **node, char *rule_str);
 
-t_str_list *filter_paths_by_rule_wrap(
+t_str_list *filter_paths_by_rule_wrap
+(
 	t_str_list **curr_lst, 
-	char *rule);
+	t_void_list *rule_list // ルールを格納したリスト
+);
 
 //char *gen_formatted_asterisk_rule(char *raw_rule);
 

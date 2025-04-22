@@ -110,8 +110,12 @@ VOID_LIST = \
 
 TOKEN_LIST = \
 	     src/list/alloc_ex_token.c\
-	     src/list/token_list_join.c
+	     src/list/token_list_join.c\
+	     src/list/token_list_clone.c\
 
+
+LIST_LIST = \
+	    src/list/list_list_print.c
 
 LIST_SRC = \
      $(INT_LIST)\
@@ -119,6 +123,7 @@ LIST_SRC = \
      $(STR_LIST)\
      $(VOID_LIST)\
      $(TOKEN_LIST)\
+     $(LIST_LIST)
 
 
 

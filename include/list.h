@@ -24,19 +24,21 @@ struct s_expand_token
 
 
 // listで扱いたい型
+typedef struct s_void_list t_void_list;
+
 union  u_anytype
 {
 	int i32;
 	char c;
 	char *str;
 	t_expand_token *ex_token;
+	t_void_list *list; // 二次元リスト
 };
 
 /// void ptrを格納するリスト
 /// 拡張性,抽象度を上げるために定義した構造体
 ///
 /// この構造体はすべてのリストのベース
-typedef struct s_void_list t_void_list;
 struct s_void_list
 {
 	t_anytype ptr;
@@ -169,6 +171,10 @@ alloc_ex_token(t_expand_token_type token_type, char *str);
 t_void_list *token_list_clone(t_void_list *lst, t_anytype (*f)(t_anytype));
 
 char *token_list_join(t_void_list *lst);
+
+/// ================ void_list functions ================
+
+int list_list_print(t_void_list *list, int (*print)(int, t_anytype));
 
 /// ================ void_list functions ================
 ///

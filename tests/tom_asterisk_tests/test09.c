@@ -1,5 +1,8 @@
 #include "exec.h"
 #include "list.h"
+#include "expand_string.h"
+#include "dict.h"
+#include "libft.h"
 #include "test_tools.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -25,14 +28,40 @@ static bool cmp_str(t_anytype a, t_anytype b)
 int test(char *str)
 {
 	t_str_list *path;
-	t_str_list *splited_list;
+	t_void_list *splited_list;
+	t_str_dict *d;
 
 	t_str_list *result_list;
 	path = NULL;
-	splited_list = split_path_by_slash(str);
 
-	debug_dprintf(STDERR_FILENO, "--- splited_list ---\n");
-	str_list_print(splited_list);
+	d = NULL;
+	// 環境変数を模したもの
+	str_dict_add(
+		&d,
+		ft_strdup("HELLO"),
+		ft_strdup("HELLO_VALUE"), 
+		free
+	);
+	str_dict_add(
+		&d,
+		ft_strdup("$"),
+		ft_strdup("PID"), 
+		free
+	);
+	str_dict_add(
+		&d,
+		ft_strdup("?"),
+		ft_strdup("EXIT STATUS"), 
+		free
+	);
+
+
+	t_void_list *token_list;
+	token_list = expand_string2list2(str, d);
+	splited_list = split_token_list_by_slash(token_list);
+
+	//debug_dprintf(STDERR_FILENO, "--- splited_list ---\n");
+	//str_list_print(splited_list);
 	result_list = dir_walker(&path, splited_list);
 	debug_dprintf(STDERR_FILENO, "--- result_list ---\n");
 	merge_sort(&result_list, cmp_str);
