@@ -67,8 +67,6 @@ int test(char *str)
 	token_list = expand_string2list2(str, d);
 	splited_list = split_token_list_by_slash(token_list); // 二次元リスト
 
-	//debug_dprintf(STDERR_FILENO, "--- splited_list ---\n");
-	//str_list_print(splited_list);
 	result_list = dir_walker(&path, splited_list);
 	debug_dprintf(STDERR_FILENO, "--- result_list ---\n");
 	merge_sort(&result_list, cmp_str);
@@ -87,7 +85,7 @@ int test(char *str)
 /// ```
 int main()
 {
-	char *test_case[13] = {
+	char *test_case[14] = {
 		"*",
 		"*.c",
 		"src/*.c",
@@ -100,13 +98,14 @@ int main()
 		"/bin/x86*gcc*",
 		"/bin/*linux*gcc*",
 		"/bin/gcc*13",
-		"/home/tom/*'*'*"
+		"/home/tom/*'*'*",
+		"aaaaaaaaaaddddddd*"
 	};
 
 	int i;
 
 	i = 0;
-	while (i < 13)
+	while (i < 14)
 	{
 		debug_dprintf(STDERR_FILENO, "test case: \"%s\"\n", test_case[i]);
 		test(test_case[i]);

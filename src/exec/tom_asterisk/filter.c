@@ -81,7 +81,6 @@ static bool func_wrap(
 	rule_lst = b.list;
 	r = is_same_string(c_lst, rule_lst);
 	char_list_clear(&c_lst);
-	//void_list_clear(&rule_lst, free_ex_token);
 	return (r);
 }
 
@@ -112,7 +111,4 @@ t_str_list *filter_paths_by_rule_wrap
 	void_list_clear(&slash_removed_str, free_ex_token);
 	return (filtered);
 }
-
-// この階層まで、アスタリスクの情報が必要
-
 
