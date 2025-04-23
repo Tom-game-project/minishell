@@ -45,9 +45,4 @@ struct s_exec_args
 
 int		exec2(t_exec_args *args);
 
-//checker.c
-// bool    check_logical_operator(t_ast *ast, int exit_status);
-
-// bool	check_update_arg(t_ast *ast);
-
 #endif
