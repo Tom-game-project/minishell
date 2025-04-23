@@ -227,14 +227,15 @@ EXEC_SRC=\
       src/exec/heredoc/heredoc.c\
       src/exec/heredoc/heredoc_proc.c\
       src/exec/heredoc/close_all_heredoc_fd.c\
-      src/exec/tom_asterisk/lib.c\
-      src/exec/tom_asterisk/check.c\
-      src/exec/tom_asterisk/comb2_any.c\
-      src/exec/tom_asterisk/set.c\
-      src/exec/tom_asterisk/split.c\
-      src/exec/tom_asterisk/filter.c\
 
-      # src/exec/asterisk/expand.c\
+
+TOM_ASTERISK_SRC=\
+      src/tom_asterisk/lib.c\
+      src/tom_asterisk/check.c\
+      src/tom_asterisk/comb2_any.c\
+      src/tom_asterisk/set.c\
+      src/tom_asterisk/split.c\
+      src/tom_asterisk/filter.c\
 
 
 ENVTOOLS_SRC = \
@@ -296,6 +297,7 @@ SRC = \
 	$(PARSER_SRC)\
 	$(AST_CHECKER_SRC)\
 	$(ALLOC_SRC)\
+	$(TOM_ASTERISK_SRC)
 
 
 MAIN = \
