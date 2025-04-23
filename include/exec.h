@@ -26,6 +26,9 @@
 
 // src/exec/exec.c
 
+
+typedef char                                *(*t_sd2sfunc)(char *, void *);
+
 int		exec(t_ast *ast, t_str_dict **envp_dict);
 
 /// exec2 関数に引数を渡すためだけに使います

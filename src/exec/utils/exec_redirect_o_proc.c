@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 19:01:22 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 19:02:48 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:53:46 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,23 @@ static int	inner_exec(t_exec_args *args, int output_fd)
 {
 	if (args->ast->right_ast != NULL)
 	{
-		return (exec2(&(t_exec_args){
-			args->ast->right_ast,
-			args->envp_dict,
-			args->heredoc_fd_list,
-			args->input_fd,
-			output_fd,
-			-1
-		}));
+		return (exec2(&(t_exec_args){\
+			args->ast->right_ast, \
+			args->envp_dict, \
+			args->heredoc_fd_list, \
+			args->input_fd, \
+			output_fd, \
+			-1}));
 	}
 	else if (args->ast->left_ast != NULL)
 	{
-		return (exec2(&(t_exec_args){
-			args->ast->left_ast,
-			args->envp_dict,
-			args->heredoc_fd_list,
-			args->input_fd,
-			output_fd,
-			-1
-		}));
+		return (exec2(&(t_exec_args){\
+			args->ast->left_ast, \
+			args->envp_dict, \
+			args->heredoc_fd_list, \
+			args->input_fd, \
+			output_fd, \
+			-1}));
 	}
 	return (1);
 }

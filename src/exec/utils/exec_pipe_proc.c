@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:53:55 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 18:55:45 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:49:35 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 int	consume_fd(int heredoc_c, t_int_list **heredoc_fd_list)
 {
 	int	i;
+	int	fd;
 
 	i = 0;
 	while (i < heredoc_c)
 	{
-		int fd;
 		fd = int_list_pop(heredoc_fd_list, 0);
 		close(fd);
 		i += 1;

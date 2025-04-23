@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:11:11 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/22 19:46:25 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:41:18 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,27 @@
 
 # include "parser.h"
 # include <stdbool.h>
+
+typedef enum e_anchor	t_anchor;
+enum e_anchor
+{
+	e_in_q,
+	e_in_dq,
+	e_outof_q
+};
+
+typedef struct s_cur_anchor t_cur_anchor;
+/// TODO: rename 必須
+struct s_cur_anchor
+{
+	char c;
+	t_anchor *anchor;
+	int *depth;
+	int idx;
+	t_char_list **clst;
+	t_char_list **cut_list; // NULLで渡す
+};
+
 
 t_ast		*init_ast(void);
 

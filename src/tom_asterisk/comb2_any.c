@@ -1,33 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   comb2_any.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 18:12:46 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/21 18:13:35 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdbool.h>
 #include "list.h"
 
-static bool slice_comb2_any(
+static bool	slice_comb2_any(
 	t_char_list *lst,
-
-       	t_str_list *rule_lst,
-       	bool (*f)(t_char_list *str_lst, t_str_list *rule_list),
+	t_str_list *rule_lst,
+	bool (*f)(t_char_list *str_lst, t_str_list *rule_list),
 	int j
 )
 {
-	bool b;
-	t_str_list *tmp;
+	bool		b;
+	t_str_list	*tmp;
 
-	tmp =  char_list_cut(&lst, j);
+	tmp = char_list_cut(&lst, j);
 	b = f(tmp, rule_lst);
 	void_list_concat(&tmp, lst);
 	return (b);
 }
 
 /// コンビネーション(n,2)の順列を試す関数
-bool comb2_any(
+bool	comb2_any(
 	t_char_list *lst,
-       	t_str_list *rule_lst,
-       	bool (*f)(t_char_list *str_lst, t_str_list *rule_list)
+	t_str_list *rule_lst,
+	bool (*f)(t_char_list *str_lst, t_str_list *rule_list)
 )
 {
-	int len;
-	int i;
-	int j;
+	int	len;
+	int	i;
+	int	j;
 
 	len = char_list_len(lst);
 	i = 0;

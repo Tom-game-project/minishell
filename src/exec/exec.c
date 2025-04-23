@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 19:07:07 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 19:07:08 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:55:14 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 
 #include "sig.h"
 
-typedef char	*(*t_sd2sfunc)(char *, void *);
 
 /// もとの文字列を、環境変数に基づいて展開する関数
 static char	*expand_string_wrap_str_free(char *str, t_str_dict *env_dict)

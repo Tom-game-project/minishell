@@ -5,34 +5,13 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-typedef enum e_anchor t_anchor;
-enum e_anchor
-{
-	e_in_q,
-	e_in_dq,
-	e_outof_q
-};
-
-typedef struct s_cur_anchor t_cur_anchor;
-/// TODO: rename 必須
-struct s_cur_anchor
-{
-	char c;
-	t_anchor *anchor;
-	int *depth;
-	int idx;
-	t_char_list **clst;
-	t_char_list **cut_list; // NULLで渡す
-};
-
 /// 妥協案
 ///
 /// bool
 /// - true -> returnする
 /// - false -> returnしない
-static bool cur_out_of_quotation(t_cur_anchor *s)
+static bool	cur_out_of_quotation(t_cur_anchor *s)
 {
-	// 何もないところにおける文字の区切り
 	if (s->c == '\'')
 		*s -> anchor = e_in_q;
 	else if (s->c == '"')
@@ -44,12 +23,11 @@ static bool cur_out_of_quotation(t_cur_anchor *s)
 		*s->depth -= 1;
 		if (*s->depth == 0)
 		{
-			*s->cut_list=char_list_cut(s->clst, s->idx);
+			*s->cut_list = char_list_cut(s->clst, s->idx);
 			return (true);
 		}
 	}
-	else if (*s->depth == 0) // クォーテーションに入っていない
-			     // かつ、カッコの内ではない
+	else if (*s->depth == 0)
 	{
 		if (is_ifs(s->c) || is_ope_char(s->c))
 		{
@@ -63,7 +41,7 @@ static bool cur_out_of_quotation(t_cur_anchor *s)
 	return (false);
 }
 
-static bool cur_loop(t_cur_anchor *s)
+static bool	cur_loop(t_cur_anchor *s)
 {
 	if (*s->anchor == e_outof_q)
 	{
@@ -116,8 +94,7 @@ static bool char_iter(t_char_list **clst, int idx, char *c)
 /// ```
 /// `<`, `>`, `|`, `||`, `&&`, `<<`, `>>`
 /// ```
-static
-t_char_list *pre_lexer(t_char_list **clst)
+static t_char_list *pre_lexer(t_char_list **clst)
 {
 	t_anchor p;
 	int depth;
@@ -131,14 +108,8 @@ t_char_list *pre_lexer(t_char_list **clst)
 	cut_list = NULL;
 	while (char_iter(clst, idx, &c))
 	{
-		if (cur_loop(&(t_cur_anchor){
-			c,
-			&p,
-			&depth,
-			idx,
-			clst,
-			&cut_list
-		}))
+		if (cur_loop(&(t_cur_anchor){\
+			c, &p, &depth, idx, clst, &cut_list}))
 			return (cut_list);
 		idx += 1;
 	}
@@ -146,21 +117,21 @@ t_char_list *pre_lexer(t_char_list **clst)
 }
 
 /// 意味ごとの分類
-t_str_list *lexer(char *str)
+t_str_list	*lexer(char *str)
 {
-	t_char_list *lst;
-	char *s;
-	t_char_list *head;
+	t_char_list	*lst;
+	char		*s;
+	t_char_list	*head;
+	t_str_list	*lexed;
 
 	lst = NULL;
 	char_list_push_str(&lst, str);
-	t_str_list *lexed;
 	lexed = NULL;
 	while (1)
 	{
-		head  = pre_lexer(&lst);
+		head = pre_lexer(&lst);
 		if (head == NULL)
-			break;
+			break ;
 		s = char_list_to_str(head);
 		char_list_clear(&head);
 		str_list_push(&lexed, s);
