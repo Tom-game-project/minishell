@@ -1,8 +1,7 @@
 #include "list.h"
 #include <stdlib.h>
-#include "exec.h"
 #include "libft.h"
-#include "strtools.h"
+#include "tom_asterisk.h"
 
 t_anytype
 copy_token_list_node(t_anytype elem)

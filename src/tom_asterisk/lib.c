@@ -5,8 +5,7 @@
 #include "list.h"
 #include "path.h"
 #include "libft.h"
-#include "test_tools.h"
-#include "exec.h"
+#include "tom_asterisk.h"
 #include "strtools.h"
 
 static t_str_list *get_all_path_one_case(

@@ -140,20 +140,21 @@ EXPAND_STRING_SRC = \
 
 
 PARSER_SRC = \
-      src/parser/parser.c\
-      src/parser/parser_wrap.c\
-      src/parser/allocation_ast.c\
-      src/parser/checker_is.c\
-      src/parser/checker_str.c\
-      src/parser/find_chr.c\
-      src/parser/separate_and_store_cmd_args.c\
-      src/parser/separate_and_store_ctl_ope.c\
-      src/parser/separate_and_store_rdt_ope.c\
-      src/parser/separate_and_store_pipe_ope.c\
-      src/parser/update_input.c\
-      src/parser/trim_isspc.c\
       src/parser/clear_ast.c\
-      src/parser/syntax_checker.c\
+      src/parser/find_chr.c\
+      src/parser/checker_is.c\
+
+      #src/parser/parser.c\
+      #src/parser/parser_wrap.c\
+      #src/parser/allocation_ast.c\
+      #src/parser/checker_str.c\
+      #src/parser/separate_and_store_cmd_args.c\
+      #src/parser/separate_and_store_ctl_ope.c\
+      #src/parser/separate_and_store_rdt_ope.c\
+      #src/parser/separate_and_store_pipe_ope.c\
+      #src/parser/update_input.c\
+      #src/parser/trim_isspc.c\
+      #src/parser/syntax_checker.c\
 
 
 TOM_PARSER_SRC = \
@@ -294,11 +295,10 @@ SRC = \
 	$(SIG_SRC)\
 	$(TEST_TOOLS)\
 	$(TOM_PARSER_SRC)\
-	$(PARSER_SRC)\
 	$(AST_CHECKER_SRC)\
 	$(ALLOC_SRC)\
-	$(TOM_ASTERISK_SRC)
-
+	$(TOM_ASTERISK_SRC)\
+	$(PARSER_SRC)\
 
 MAIN = \
 	src/minishell.c
