@@ -36,59 +36,9 @@ enum e_parse_result
 };
 
 
-//parser.c
-//t_parse_result	parser(t_ast **ast, char *input);
-//
-//bool parser_wrap2(t_ast **ast, char *input);
-////allocation_ast.c
-//t_ast  *allocation_ast(void);
-//
-////checker_is.c
-//bool is_string(char *element);
-//bool is_control_operators(char *element);
 bool is_redirect_operators(char *element);
-//bool ft_isspace(char c);
-//
-////find_chr.c
+
 int find_syntax(char *input);
-//
-////separate_and_store_cmd_args.c
-//t_parse_result   separate_and_store_cmd_args(t_ast *ast, char	**input);
-//// char	*search_delimiter(char *input);
-//char *spc_extract_operands(char *input);
-//
-////separate_and_store_ctl_ope.c
-//t_str_list	*separate_and_store_control_operators(t_ast  *ast, char **input);
-//
-////separate_and_store_rdt_ope.c
-//t_str_list	*separate_and_store_redirect_operators(t_ast  *ast, char **input);
-//
-////update_input.c
-//void	update_input(char **input, char *head_element);
-//
-////trim_isspc.c
-//char *trim_isspc(char *str);
-//
-////checker_str.c
-//bool    checker_str_ctl(char *str);
-//bool    checker_str_rdt(char *str);
-//int   	str_ctl_len(char *str);
-//int    	str_rdt_len(char *str);
-//
+
 void clear_ast(t_ast **ast);
-//
-///// TODO VVVV
-//bool syntax_checker(char *input);
-//
-//bool syntax_checker2(char *input);
-///// TODO ^^^^
-//
-//bool    checker_str_pipe(char *str);
-//
-//t_str_list	*separate_and_store_pipe_operators(t_ast  *ast, char **input);
-//
-//int    str_pipe_len(char *str);
-//
-//int update_idx(char *str, int len);
-//
 # endif
