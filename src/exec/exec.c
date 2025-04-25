@@ -28,7 +28,7 @@
 
 
 /// もとの文字列を、環境変数に基づいて展開する関数
-static char	*expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
+char	*expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
 {
 	char	*rstr;
 
@@ -38,7 +38,7 @@ static char	*expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
 }
 
 /// ビルトインコマンドへ振り分ける関数
-static int run_cmd_proc_switcher(t_exec_args *args, t_built_in	tbi)
+int run_cmd_proc_switcher(t_exec_args *args, t_built_in	tbi)
 {
 	if (tbi == e_not_built_in)
 		if (args->ppid == 0)
@@ -99,17 +99,19 @@ int run_cmd_proc_switcher2(
 int	run_cmd_proc(t_exec_args *exec_args)
 {
 	t_built_in	tbi;
+	t_str_list	*args;
+	int exit_status;
 
 	if (str_list_len(exec_args->ast->arg) == 0)
 		return (0);
-	str_list_map_arg1(
-		&(exec_args->ast->arg),
-		(t_sd2sfunc) expand_string_wrap_str_free,
-		*(exec_args->envp_dict));
+	//str_list_map_arg1(
+	//	&(exec_args->ast->arg),
+	//	(t_sd2sfunc) expand_string_wrap_str_free,
+	//	*(exec_args->envp_dict));
+	args = expand_env_vars(exec_args->ast->arg, *exec_args->envp_dict);
 	tbi = get_built_in_enum(str_list_get_elem(exec_args->ast->arg, 0));
-	return (
-		run_cmd_proc_switcher(exec_args, tbi)
-	);
+	exit_status = run_cmd_proc_switcher2(exec_args, args, tbi);
+	return (exit_status);
 }
 
 /// exec2 関数に引数を渡すためだけに使います
