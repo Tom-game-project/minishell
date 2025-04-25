@@ -63,17 +63,3 @@ t_void_list	*expand_string2list2(char *str, t_str_dict *env_dicts)
 	return (rlist);
 }
 
-
-/// 環境変数展開済みの文字列が返却される
-char	*expand_string2(char *str, t_str_dict *env_dicts)
-{
-	t_str_list	*lst;
-	char		*rstr;
-
-	lst = expand_string2list2(str, env_dicts);
-	//debug_dprintf(STDERR_FILENO, "--- expand lst --- \n");
-	//void_list_print(lst, print_token_list_node);
-	rstr = str_list_join(lst, ""); // TODO :strjoinを作成
-	str_list_clear(&lst, free);
-	return (rstr);
-}

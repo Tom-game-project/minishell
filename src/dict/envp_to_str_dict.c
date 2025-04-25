@@ -25,13 +25,18 @@
 ///
 int	envp_to_str_dict(t_str_dict **node, char *envp[])
 {
+	char *str;
+
 	while (*envp != NULL)
 	{
-		str_dict_add(
+		str = get_key_from_envp_ptr(*envp);
+		if (
+			str_dict_add(
 			node,
-			get_key_from_envp_ptr(*envp),
+			str,
 			get_value_from_envp_ptr(*envp),
-			free);
+			free) == 0)
+			free(str);
 		envp++;
 	}
 	return (0);

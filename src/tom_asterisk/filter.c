@@ -96,6 +96,8 @@ t_str_list *filter_paths_by_rule(t_str_list **node, t_void_list *rule_list)
 	));
 }
 
+/// TODO 修正の必要あり
+/// リムーブした場合、ディレクトリを探している場合はディレクトリかどうかをチェックする
 t_str_list *filter_paths_by_rule_wrap
 (
 	t_str_list **curr_lst, 
