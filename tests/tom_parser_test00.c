@@ -1,6 +1,7 @@
 #include "tom_parser_tools/tools.h"
 #include "libft.h"
 #include "parser.h"
+#include "tom_parser.h"
 #include <stdio.h>
 
 
@@ -23,7 +24,7 @@ int main(void)
 
     ast = NULL;
     printf("test case \"%s\"\n", input);
-    parser(&ast, input);
+    tom_parser(input,&ast);
     print_ast(ast, 0);
     free(input);
     return 0;

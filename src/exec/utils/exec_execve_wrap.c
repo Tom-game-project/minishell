@@ -25,8 +25,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <signal.h>
-
 /// TODO あとで関数の名前を変更する
 static int	report_command_not_found(char *cmd)
 {
@@ -119,6 +117,33 @@ int	execve_wrap(t_exec_args *args)
 		report_permission_denied(cmd);
 	check_executable_file(fullpath);
 	envp = str_dict_to_envp(*args->envp_dict);
+	debug_dprintf(STDERR_FILENO, "cmd %s running on pid(%d).ppid(%d)\n", \
+			fullpath, debug_getpid(), debug_getppid());
+	execve(fullpath, argv, envp);
+	return (1);
+}
+
+int	execve_wrap2(t_str_list *args, t_str_dict *envp_dict)
+{
+	char		*fullpath;
+	char		*cmd;
+	char		**argv;
+	char		**envp;
+	t_str_dict	*env_path_node;
+
+	set_sigint_default();
+	cmd = ft_strdup(str_list_get_elem(args, 0));
+	argv = str_list_to_array(args);
+	env_path_node = get_str_dict_by_key(envp_dict, "PATH");
+	if (env_path_node == NULL)
+		report_command_not_found(cmd);
+	fullpath = get_full_path(cmd, env_path_node->value);
+	if (fullpath == NULL)
+		report_command_not_found(cmd);
+	if (access(fullpath, X_OK) == -1)
+		report_permission_denied(cmd);
+	check_executable_file(fullpath);
+	envp = str_dict_to_envp(envp_dict);
 	debug_dprintf(STDERR_FILENO, "cmd %s running on pid(%d).ppid(%d)\n", \
 			fullpath, debug_getpid(), debug_getppid());
 	execve(fullpath, argv, envp);

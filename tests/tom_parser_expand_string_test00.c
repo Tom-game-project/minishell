@@ -9,6 +9,7 @@
 #include "dict.h"
 #include "test_tools.h"
 
+static
 int
 print_token_list_node(int index, t_anytype token)
 {
@@ -44,7 +45,7 @@ int main()
 
 	//char *str = "aaa$HELLO'$WORLD'$HELLOaaa|aaa";
 	//char *str = "aaa'$WORLD'$HELLOaaa";
-	char *str = "---\"\"\"'$HELLO*'\"\"\"---*/";
+	char *str = "---\"\"\"'$HELLO*'\"*\"\"---*/";
 	//char *str = "\"*\"*'*'";
 	//char *str = "???$HELLO$$?$?HELLO$?$WO";
 	//char *str = "$$$";
@@ -74,12 +75,12 @@ int main()
 		str,
 		d
 	);
-	printf("test case [%s]\n", str);
+	debug_dprintf(STDERR_FILENO, "test case [%s]\n", str);
 	//str_list_print(s);
 	void_list_print(s, print_token_list_node);
 	
 	char *str1;
-	str1= token_list_join(s);
+	str1 = token_list_join(s);
 
 	debug_dprintf(STDERR_FILENO, "joined %s\n", str1);
 	free(str1);

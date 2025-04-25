@@ -14,7 +14,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "test_tools.h"
 #include "tom_parser.h"
 
 static bool	is_ifs(char *c)

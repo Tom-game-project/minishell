@@ -31,6 +31,8 @@
 /// return ("$展開済みPATH")
 /// ```
 /// return new_string
+///
+/// アスタリスクを特別に解釈する必要があるので、トークンリストを返す
 t_void_list	*expand_string2list2(char *str, t_str_dict *env_dicts)
 {
 	t_anchor	anc;

@@ -42,9 +42,9 @@ static int run_cmd_proc_switcher(t_exec_args *args, t_built_in	tbi)
 {
 	if (tbi == e_not_built_in)
 		if (args->ppid == 0)
-			return (execve_wrap(args));
+			return (execve_wrap2(args->ast->arg, *args->envp_dict));
 		else
-			return (none_proc(args));
+			return (none_proc2(args->input_fd, args->output_fd, args->ast->arg, *args->envp_dict));
 	else if (tbi == e_built_in_pwd)
 		return (built_in_pwd(args->output_fd));
 	else if (tbi == e_built_in_env)
@@ -63,21 +63,53 @@ static int run_cmd_proc_switcher(t_exec_args *args, t_built_in	tbi)
 		return (1);
 }
 
+int run_cmd_proc_switcher2(
+	t_exec_args *exec_args,
+       	t_str_list *args, // 環境変数展開後
+       	t_built_in	tbi
+)
+{
+	if (tbi == e_not_built_in)
+		if (exec_args->ppid == 0)
+			return (execve_wrap2(args, *exec_args->envp_dict));
+		else
+			return (none_proc2(exec_args->input_fd, exec_args->output_fd, args, *exec_args->envp_dict));
+	else if (tbi == e_built_in_pwd)
+		return (built_in_pwd(exec_args->output_fd));
+	else if (tbi == e_built_in_env)
+		return (built_in_env(*(exec_args->envp_dict), exec_args->output_fd));
+	else if (tbi == e_built_in_cd)
+		return (built_in_cd(args, exec_args->envp_dict));
+	else if (tbi == e_built_in_export)
+		return (built_in_export(args, exec_args->envp_dict));
+	else if (tbi == e_built_in_unset)
+		return (built_in_unset(args, exec_args->envp_dict));
+	else if (tbi == e_built_in_exit)
+		return (built_in_exit(args, *exec_args->envp_dict));
+	else if (tbi == e_built_in_echo)
+		return (built_in_echo(args, exec_args->output_fd));
+	else
+		return (1);
+}
+
+
 
 /// コマンドが実際に実行される場所
 /// 
-int	run_cmd_proc(t_exec_args *args)
+int	run_cmd_proc(t_exec_args *exec_args)
 {
 	t_built_in	tbi;
 
-	if (str_list_len(args->ast->arg) == 0)
+	if (str_list_len(exec_args->ast->arg) == 0)
 		return (0);
 	str_list_map_arg1(
-		&(args->ast->arg),
+		&(exec_args->ast->arg),
 		(t_sd2sfunc) expand_string_wrap_str_free,
-		*(args->envp_dict));
-	tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
-	return (run_cmd_proc_switcher(args, tbi));
+		*(exec_args->envp_dict));
+	tbi = get_built_in_enum(str_list_get_elem(exec_args->ast->arg, 0));
+	return (
+		run_cmd_proc_switcher(exec_args, tbi)
+	);
 }
 
 /// exec2 関数に引数を渡すためだけに使います

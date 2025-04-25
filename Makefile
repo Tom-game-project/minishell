@@ -115,7 +115,9 @@ TOKEN_LIST = \
 
 
 LIST_LIST = \
-	    src/list/list_list_print.c
+	    src/list/list_list_print.c\
+	    src/list/list_list_all_concat.c\
+	    
 
 LIST_SRC = \
      $(INT_LIST)\
@@ -201,6 +203,7 @@ PATH_SRC =\
 
 EXEC_SRC=\
       src/exec/exec.c\
+      src/exec/expand.c\
       src/exec/utils/exec_none_proc.c\
       src/exec/utils/exec_and_proc.c\
       src/exec/utils/exec_or_proc.c\

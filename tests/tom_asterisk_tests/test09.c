@@ -33,6 +33,21 @@ static bool cmp_str(t_anytype a, t_anytype b)
 	return (*a_str < *b_str);
 }
 
+static
+int
+print_token_list_node(int index, t_anytype token)
+{
+	(void) index;
+	if (token.ex_token->token_type == e_word)
+	{
+		return (debug_dprintf(STDERR_FILENO, "[e_word] %s\n", token.ex_token->str));
+	}
+	else 
+	{
+		return (debug_dprintf(STDERR_FILENO, "[e_asterisk] %s\n", token.ex_token->str));
+	}
+}
+
 int test(char *str)
 {
 	t_str_list *path;
@@ -47,7 +62,7 @@ int test(char *str)
 	str_dict_add(
 		&d,
 		ft_strdup("HELLO"),
-		ft_strdup("HELLO_VALUE"), 
+		ft_strdup("hello.c"), 
 		free
 	);
 	str_dict_add(
@@ -65,13 +80,15 @@ int test(char *str)
 
 	t_void_list *token_list;
 	token_list = expand_string2list2(str, d);
+	// token_list: Vec<token>
+	void_list_print(token_list, print_token_list_node);
 	splited_list = split_token_list_by_slash(token_list); // 二次元リスト
 
 	result_list = dir_walker(&path, splited_list);
 	debug_dprintf(STDERR_FILENO, "--- result_list ---\n");
 	merge_sort(&result_list, cmp_str);
-
-	str_list_print(result_list);
+	// result_list: Vec<str>
+	str_list_print(result_list); 
 	str_list_clear(&path, free);
 	clear_split_token_list(&splited_list);
 	void_list_clear(&token_list, free_ex_token);
@@ -85,7 +102,7 @@ int test(char *str)
 /// ```
 int main()
 {
-	char *test_case[14] = {
+	char *test_case[15] = {
 		"*",
 		"*.c",
 		"src/*.c",
@@ -99,13 +116,14 @@ int main()
 		"/bin/*linux*gcc*",
 		"/bin/gcc*13",
 		"/home/tom/*'*'*",
-		"aaaaaaaaaaddddddd*"
+		"aaaaaaaaaaddddddd*",
+		"$HELLO/*.c"
 	};
 
 	int i;
 
 	i = 0;
-	while (i < 14)
+	while (i < 15)
 	{
 		debug_dprintf(STDERR_FILENO, "test case: \"%s\"\n", test_case[i]);
 		test(test_case[i]);

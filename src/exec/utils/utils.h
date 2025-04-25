@@ -17,9 +17,13 @@
 
 int	execve_wrap(t_exec_args *args);
 
+int	execve_wrap2(t_str_list *args, t_str_dict *envp_dict);
+
 int	and_proc(t_exec_args *args);
 
 int	none_proc(t_exec_args *args);
+
+int	none_proc2(int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict);
 
 int	or_proc(t_exec_args *args);
 

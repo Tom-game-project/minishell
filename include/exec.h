@@ -45,4 +45,8 @@ struct s_exec_args
 
 int		exec2(t_exec_args *args);
 
+t_str_list *expand_env_var(char *str, t_str_dict *env);
+
+t_str_list *expand_env_vars(t_str_list *args, t_str_dict *env);
+
 #endif

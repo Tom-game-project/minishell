@@ -176,6 +176,9 @@ char *token_list_join(t_void_list *lst);
 
 int list_list_print(t_void_list *list, int (*print)(int, t_anytype));
 
+t_void_list *list_list_all_concat(
+	t_void_list *list // Vec<Vec<str>>
+);
 /// ================ void_list functions ================
 ///
 /// 格納するデータのtypeによらないlistそのものの実装は以下の関数に定義されている.
