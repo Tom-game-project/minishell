@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "test_tools.h"
 #include "utils/private.h"
 
 /// 文字列の展開
@@ -88,11 +87,17 @@ char	*expand_string(char *str, t_str_dict *env_dicts)
 	return (rstr);
 }
 
-t_str_list	*heredoc_expand_string2list(char *str, t_str_dict *env_dicts)
+static void free_token_list(t_anytype elem)
+{
+	free(elem.ex_token->str);
+	free(elem.ex_token);
+}
+
+t_void_list	*heredoc_expand_string2list(char *str, t_str_dict *env_dicts)
 {
 	t_char_list	*path_group;
 	t_char_list	*str_group;
-	t_str_list	*rlist;
+	t_void_list	*rlist;
 
 	str_group = NULL;
 	path_group = NULL;
@@ -110,8 +115,8 @@ t_str_list	*heredoc_expand_string2list(char *str, t_str_dict *env_dicts)
 	}
 	push_expand_env(&(t_list_args){
 		&rlist, &path_group, &str_group}, env_dicts);
-	push_str_group(&(t_list_args){
-		&rlist, &path_group, &str_group});
+	push_str_group2(&(t_list_args){
+		&rlist, &path_group, &str_group}, e_word);
 	return (rlist);
 }
 
@@ -121,8 +126,8 @@ char	*heredoc_expand_string(char *str, t_str_dict *env_dicts)
 	char		*rstr;
 
 	lst = heredoc_expand_string2list(str, env_dicts);
-	rstr = str_list_join(lst, "");
-	str_list_clear(&lst, free);
+	rstr = token_list_join(lst);
+	void_list_clear(&lst, free_token_list);
 	return (rstr);
 }
 

@@ -35,7 +35,7 @@ t_anchor	anchor_heredoc_proc(\
 			else
 			{
 				push_expand_env(group_args, env_dicts);
-				push_str_group(group_args);
+				push_str_group2(group_args, e_word);
 				char_list_push(group_args->str_group, c);
 			}
 		}

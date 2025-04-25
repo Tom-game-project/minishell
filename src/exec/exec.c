@@ -15,7 +15,6 @@
 #include "list.h"
 #include "parser.h"
 #include "exec.h"
-#include "expand_string.h"
 #include "utils/utils.h"
 #include "heredoc/heredoc.h"
 
@@ -26,43 +25,7 @@
 
 #include "sig.h"
 
-
-/// もとの文字列を、環境変数に基づいて展開する関数
-char	*expand_string_wrap_str_free(char *str, t_str_dict *env_dict)
-{
-	char	*rstr;
-
-	rstr = expand_string(str, env_dict);
-	free(str);
-	return (rstr);
-}
-
 /// ビルトインコマンドへ振り分ける関数
-int run_cmd_proc_switcher(t_exec_args *args, t_built_in	tbi)
-{
-	if (tbi == e_not_built_in)
-		if (args->ppid == 0)
-			return (execve_wrap2(args->ast->arg, *args->envp_dict));
-		else
-			return (none_proc2(args->input_fd, args->output_fd, args->ast->arg, *args->envp_dict));
-	else if (tbi == e_built_in_pwd)
-		return (built_in_pwd(args->output_fd));
-	else if (tbi == e_built_in_env)
-		return (built_in_env(*(args->envp_dict), args->output_fd));
-	else if (tbi == e_built_in_cd)
-		return (built_in_cd(args->ast->arg, args->envp_dict));
-	else if (tbi == e_built_in_export)
-		return (built_in_export(args->ast->arg, args->envp_dict));
-	else if (tbi == e_built_in_unset)
-		return (built_in_unset(args->ast->arg, args->envp_dict));
-	else if (tbi == e_built_in_exit)
-		return (built_in_exit(args->ast->arg, *args->envp_dict));
-	else if (tbi == e_built_in_echo)
-		return (built_in_echo(args->ast->arg, args->output_fd));
-	else
-		return (1);
-}
-
 int run_cmd_proc_switcher2(
 	t_exec_args *exec_args,
        	t_str_list *args, // 環境変数展開後
@@ -92,8 +55,6 @@ int run_cmd_proc_switcher2(
 		return (1);
 }
 
-
-
 /// コマンドが実際に実行される場所
 /// 
 int	run_cmd_proc(t_exec_args *exec_args)
@@ -104,13 +65,10 @@ int	run_cmd_proc(t_exec_args *exec_args)
 
 	if (str_list_len(exec_args->ast->arg) == 0)
 		return (0);
-	//str_list_map_arg1(
-	//	&(exec_args->ast->arg),
-	//	(t_sd2sfunc) expand_string_wrap_str_free,
-	//	*(exec_args->envp_dict));
 	args = expand_env_vars(exec_args->ast->arg, *exec_args->envp_dict);
 	tbi = get_built_in_enum(str_list_get_elem(exec_args->ast->arg, 0));
 	exit_status = run_cmd_proc_switcher2(exec_args, args, tbi);
+	str_list_clear(&args, free);
 	return (exit_status);
 }
 

@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "test_tools.h"
 #include "utils/private.h"
 
 /// 文字列の展開

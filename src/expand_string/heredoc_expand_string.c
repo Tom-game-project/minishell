@@ -111,7 +111,6 @@ int	heredoc_expand_string_via_fd(int fd, t_str_dict *env_dict)
 	t_str_list	*expanded;
 
 	lst = load_fd_as_char_list(fd);
-
 	expanded = char_list2str_list(&lst, env_dict);
 	char_list_clear(&lst);
 	rfd = str_list2shadowfile_fd(expanded);
