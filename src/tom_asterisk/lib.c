@@ -8,6 +8,11 @@
 #include "tom_asterisk.h"
 #include "strtools.h"
 
+static bool is_dot_or_dotdot(t_anytype elem)
+{
+	return (ft_streq("..", elem.str) || ft_streq(".", elem.str));
+}
+
 static t_str_list *get_all_path_one_case(
 	t_str_list *path,
        	t_void_list *splited_path,
@@ -17,10 +22,14 @@ static t_str_list *get_all_path_one_case(
 	char *parent_path;
 	t_char_list *rlist;
 	t_str_list *filtered;
+	t_str_list		*junk;
 
 	if (splited_path == NULL)
 		return (NULL);
 	filtered = filter_paths_by_rule_wrap(curr_lst, splited_path->ptr.list);
+
+	junk = void_list_filter(&filtered, is_dot_or_dotdot);
+	str_list_clear(&junk, free);
 	filtered_ptr = filtered;
 	parent_path = str_list_join(path, "");
 	rlist = NULL;
