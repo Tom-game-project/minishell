@@ -87,33 +87,3 @@ char	*heredoc_expand_string(char *str, t_str_dict *env_dicts)
 	return (rstr);
 }
 
-/// 文字列の展開
-/// 環境変数を展開する
-/// example
-/// ```
-/// ["\"  $PATH  \"\"   hello  \"", "'$PATH'", NULL]
-/// ["\"  $PATH  \"'   hello  '", "'$PATH'", NULL]
-/// ```
-///
-/// "$ENV"   '$ENV'
-/// 展開する  展開しない
-/// return ["展開済みstring", "展開済みstring", ... , NULL]
-//char **expand_args(char **cmd_args, t_str_dict *env_dicts)
-//{
-//	// get_str_dict_by_key();
-//	return ();
-//}
-
-
-/// minishellでは、$?を、環境変数として扱う
-/// env内に入る
-
-/// ```bash
-/// $()"$()"'$()'
-/// \---\----\----> 1. 展開される
-///      \ ---\---> 2. 展開される
-///            \--> 3. 展開されない
-///
-/// ```
-/// 外、シングル、を解釈しつつスキップ、外側、またはdq内であれば$()展開
-///

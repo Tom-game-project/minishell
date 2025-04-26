@@ -22,12 +22,11 @@ static t_str_list *get_all_path_one_case(
 	char *parent_path;
 	t_char_list *rlist;
 	t_str_list *filtered;
-	t_str_list		*junk;
+	t_str_list	*junk;
 
 	if (splited_path == NULL)
 		return (NULL);
 	filtered = filter_paths_by_rule_wrap(curr_lst, splited_path->ptr.list);
-
 	junk = void_list_filter(&filtered, is_dot_or_dotdot);
 	str_list_clear(&junk, free);
 	filtered_ptr = filtered;
@@ -35,11 +34,9 @@ static t_str_list *get_all_path_one_case(
 	rlist = NULL;
 	while (filtered_ptr != NULL)
 	{
-		str_list_push(
-			&rlist,
-			ft_strjoin(
-				parent_path,
-				filtered_ptr->ptr.str));
+		str_list_push(&rlist, ft_strjoin(
+			parent_path,
+			filtered_ptr->ptr.str));
 		filtered_ptr = filtered_ptr->next;
 	}
 	free(parent_path);
