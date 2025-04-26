@@ -12,15 +12,23 @@
 
 #include "list.h"
 #include "libft.h"
+#include "strtools.h"
 
 #include <dirent.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+static bool is_dot_or_dotdot(t_anytype elem)
+{
+	return (ft_streq("..", elem.str) || ft_streq(".", elem.str));
+}
 
 t_str_list	*get_dir_list(char *name)
 {
 	DIR				*dir;
 	struct dirent	*dp;
 	t_str_list		*dlst;
+	t_str_list		*junk;
 
 	dlst = NULL;
 	dir = opendir(name);
@@ -34,5 +42,7 @@ t_str_list	*get_dir_list(char *name)
 		str_list_push(&dlst, ft_strdup(dp->d_name));
 	}
 	closedir(dir);
+	junk = void_list_filter(&dlst, is_dot_or_dotdot);
+	str_list_clear(&junk, free);
 	return (dlst);
 }

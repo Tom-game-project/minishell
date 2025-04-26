@@ -18,6 +18,8 @@ static t_str_list *get_all_path_one_case(
 	t_char_list *rlist;
 	t_str_list *filtered;
 
+	if (splited_path == NULL)
+		return (NULL);
 	filtered = filter_paths_by_rule_wrap(curr_lst, splited_path->ptr.list);
 	filtered_ptr = filtered;
 	parent_path = str_list_join(path, "");
@@ -46,8 +48,9 @@ static t_str_list *get_all_path_more_than_one_case(
 	t_str_list *filtered_head;
 	t_str_list *path_tmp;
 
-
-	filtered_ptr = filter_paths_by_rule_wrap(curr_lst, splited_path->ptr.list);;
+	if (splited_path == NULL)
+		return (NULL);
+	filtered_ptr = filter_paths_by_rule_wrap(curr_lst, splited_path->ptr.list);
 	rlist = NULL;
 	while (str_list_len(filtered_ptr) != 0)
 	{
@@ -71,14 +74,12 @@ static t_str_list *get_all_path_helper_set_root_dir(
 	t_void_list *tmp_node;
 
 	tmp_node = void_list_get_elem(splited_path->ptr.list, 0);
-
 	if (str_list_len(*path) == 0)
-		if (ft_streq(tmp_node->ptr.ex_token->str, "..") || 
-		ft_streq(tmp_node->ptr.ex_token->str, ".") || ft_streq(tmp_node->ptr.ex_token->str, "/"))
+		if (ft_streq(tmp_node->ptr.ex_token->str, "../") || 
+		ft_streq(tmp_node->ptr.ex_token->str, "./") || ft_streq(tmp_node->ptr.ex_token->str, "/"))
 		{
 			*curr_lst = get_dir_list(tmp_node->ptr.ex_token->str);
-			if (ft_streq(tmp_node->ptr.ex_token->str, "/"))
-				str_list_push(path, ft_strdup("/"));
+			str_list_push(path, ft_strdup(tmp_node->ptr.ex_token->str));
 			splited_path = splited_path->next;
 		}
 		else

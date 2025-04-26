@@ -102,9 +102,10 @@ int test(char *str)
 /// ```
 int main()
 {
-	char *test_case[15] = {
+	char *test_case[16] = {
 		"*",
 		"*.c",
+		"./*.c",
 		"src/*.c",
 		"src/ex*/",
 		"./src/ex*/",
@@ -123,7 +124,7 @@ int main()
 	int i;
 
 	i = 0;
-	while (i < 15)
+	while (i < 16)
 	{
 		debug_dprintf(STDERR_FILENO, "test case: \"%s\"\n", test_case[i]);
 		test(test_case[i]);

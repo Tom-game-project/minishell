@@ -3,19 +3,17 @@
 #include "libft.h"
 #include "tom_asterisk.h"
 
-t_anytype
-copy_token_list_node(t_anytype elem)
+static t_anytype copy_token_list_node(t_anytype elem)
 {
-	return (alloc_ex_token(elem.ex_token->token_type, ft_strdup(elem.ex_token->str)));
+	return (
+		alloc_ex_token(
+			elem.ex_token->token_type,
+		       	ft_strdup(elem.ex_token->str)));
 }
-
 
 static bool endwith_srash(char *str)
 {
-	int len;
-
-	len = ft_strlen(str);
-	return (str[len - 1] == '/');
+	return (str[ft_strlen(str) - 1] == '/');
 }
 
 static char *
@@ -27,6 +25,13 @@ remove_slash(char *str)
 		return (ft_strdup(str));
 }
 
+static void free_ex_token(t_anytype elem)
+{
+	free(elem.ex_token->str);
+	free(elem.ex_token);
+	return ;
+}
+
 /// スラッシュを取り除いた新しいリストを返却する関数
 static t_void_list *remove_slash_from_rule_list(t_void_list *lst)
 {
@@ -36,7 +41,6 @@ static t_void_list *remove_slash_from_rule_list(t_void_list *lst)
 
 	rlist = token_list_clone(lst, copy_token_list_node);
 	last_elem = void_list_get_elem(rlist, void_list_len(lst) - 1);
-
 	if (endwith_srash(last_elem->ptr.ex_token->str))
 	{
 		void_list_pop(
@@ -44,27 +48,15 @@ static t_void_list *remove_slash_from_rule_list(t_void_list *lst)
 			void_list_len(lst) - 1,
 			&elem
 		);
-		void_list_push (
+		void_list_push(
 			&rlist,
-			 alloc_ex_token(e_word, remove_slash(elem.ex_token->str)));
-		free(elem.ex_token->str);
-		free(elem.ex_token);
-		return (rlist);
+			 alloc_ex_token(
+				 e_word,
+				 remove_slash(elem.ex_token->str)));
+		free_ex_token(elem);
 	}
-	else
-	{
-		return (rlist);
-	}
+	return (rlist);
 }
-
-
-static void free_ex_token(t_anytype elem)
-{
-	free(elem.ex_token->str);
-	free(elem.ex_token);
-	return ;
-}
-
 
 static bool func_wrap(
 	t_anytype a,
