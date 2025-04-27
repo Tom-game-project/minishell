@@ -5,8 +5,7 @@
 リダイレクトを使ってコマンドの標準入力で渡した場合と、コマンドの引数名としてファイルを渡した場合で生成されるバイナリが同じかどうかをチェックする
 
 ```bash
-export MINISHELL=minishell
-((< minishell cat  | sha256sum)  | awk '{print $1}' > outfile1) && ((sha256sum minishell | awk '{print $1}') > outfile2) && diff -u outfile1 outfile2 | wc -l
+export MINISHELL=minishell && ((< $MINISHELL cat  | sha256sum)  | awk '{print $1}' > outfile1) && ((sha256sum $MINISHELL | awk '{print $1}') > outfile2) && diff -u outfile1 outfile2 | wc -l
 ```
 
 

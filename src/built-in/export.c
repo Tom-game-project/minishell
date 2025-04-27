@@ -64,7 +64,7 @@ int	set_envp(
 			key, value);
 		if (value == NULL)
 			return (0);
-		str_dict_add(envp_dict, key, value, free);
+		str_dict_add2(envp_dict, key, value);
 		return (0);
 	}
 	else
@@ -79,16 +79,22 @@ int	built_in_export(
 )
 {
 	char	*line;
+	char *key;
+	char *value;
 
-	(void) envp_dict;
 	args = args->next;
 	while (args != NULL)
 	{
 		line = args->ptr.str;
+		key  = get_key_from_envp_ptr(line);
+		value = get_value_from_envp_ptr(line);
 		set_envp(
 			envp_dict,
-			get_key_from_envp_ptr(line),
-			get_value_from_envp_ptr(line));
+			key,
+			value
+		);
+		free(key);
+		free(value);
 		args = args->next;
 	}
 	return (0);

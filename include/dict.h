@@ -41,6 +41,8 @@ int			str_dict_add(\
 	char *value, \
 	void (*f)(void *));
 
+int	str_dict_add2(t_str_dict **node, char *key, char *value);
+
 int			str_dict_clear(t_str_dict **node, \
 	void (*key_free)(void *), \
 	void (*value_free)(void *));

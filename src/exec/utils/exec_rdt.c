@@ -47,7 +47,7 @@ static char *get_open_file_name_from_list(
 	args_length = str_list_len(args);
 	if (args_length != 1)
 	{
-		if (str_list_len(args) == 0)
+		if (args_length == 0)
 			ft_putstr_fd("minishell: File not set for redirect\n", STDERR_FILENO);
 		else
 			ft_putstr_fd("minishell: Multiple file are set\n", STDERR_FILENO);

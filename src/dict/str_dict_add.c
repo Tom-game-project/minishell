@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 
 #include "dict.h"
+#include "libft.h"
 #include <stdlib.h>
 
 // for test
 #include <stdio.h>
 
+/// TODO: 使いづらいかつ危ないので、設計を変更する
 /// もし、すでに同じkeyが存在するときは更新
 /// ない場合は新規作成
 ///
@@ -43,3 +45,25 @@ int	str_dict_add(t_str_dict **node, char *key, char *value, void (*f)(void *))
 	}
 }
 
+///
+int	str_dict_add2(t_str_dict **node, char *key, char *value)
+{
+	t_str_dict	*sd;
+
+	sd = get_str_dict_by_key(*node, key);
+	if (sd == NULL)
+	{
+		str_dict_push(
+			node, 
+			ft_strdup(key), 
+			ft_strdup(value)
+		);
+		return (1);
+	}
+	else
+	{
+		free(sd->value);
+		sd->value = ft_strdup(value);
+		return (0);
+	}
+}
