@@ -39,13 +39,18 @@ static char *get_open_file_name_from_list(
 	t_str_list	*args;
 	t_str_list *junk;
 	char	*str;
+	int args_length;
 
 	args = expand_env_vars(exec_args->ast->arg, *exec_args->envp_dict);
 	junk = void_list_filter(&args, is_junk);
 	str_list_clear(&junk, free);
-	if (str_list_len(args) != 1)
+	args_length = str_list_len(args);
+	if (args_length != 1)
 	{
-		ft_putstr_fd("minishell: Multiple redirects are set\n", STDERR_FILENO);
+		if (str_list_len(args) == 0)
+			ft_putstr_fd("minishell: File not set for redirect\n", STDERR_FILENO);
+		else
+			ft_putstr_fd("minishell: Multiple file are set\n", STDERR_FILENO);
 		str_list_clear(&args, free);
 		return (NULL);
 	}
@@ -77,6 +82,8 @@ int	exec_rdt_proc(
 		return (1);
 	}
 	exit_status = inner_exec(exec_args, fd);
+	//if (exit_status == 1)
+	//	debug_dprintf(STDERR_FILENO, "hello world\n");
 	free(str);
 	close(fd);
 	return (exit_status);

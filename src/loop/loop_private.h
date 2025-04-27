@@ -3,11 +3,12 @@
 
 #include "parser.h"
 #include "dict.h"
+#include "ast_checker.h"
 
 char	*prompt(int exit_status);
 
 /// 入力されたコマンドが文法的に正しいかどうかをチェックする関数
-int	exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status);
+int	exec_ast(t_ast *ast, t_str_dict **env_dict, t_syntax_result	result);
 
 int	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status);
 

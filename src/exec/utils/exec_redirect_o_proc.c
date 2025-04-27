@@ -56,7 +56,7 @@ static int	inner_exec(t_exec_args *args, int output_fd)
 			output_fd, \
 			-1}));
 	}
-	return (1);
+	return (0);
 }
 
 int	exec_redirect_o_proc(t_exec_args *args)
