@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "sig.h"
+#include "strtools.h"
 
 /// ビルトインコマンドへ振り分ける関数
 int run_cmd_proc_switcher2(
@@ -55,6 +56,12 @@ int run_cmd_proc_switcher2(
 		return (1);
 }
 
+static bool is_junk(t_anytype elem)
+{
+	return (ft_streq(elem.str, ""));
+}
+
+
 /// コマンドが実際に実行される場所
 /// 
 int	run_cmd_proc(t_exec_args *exec_args)
@@ -62,10 +69,13 @@ int	run_cmd_proc(t_exec_args *exec_args)
 	t_built_in	tbi;
 	t_str_list	*args;
 	int exit_status;
+	t_str_list *junk;
 
 	if (str_list_len(exec_args->ast->arg) == 0)
 		return (0);
 	args = expand_env_vars(exec_args->ast->arg, *exec_args->envp_dict);
+	junk = void_list_filter(&args, is_junk);
+	str_list_clear(&junk, free);
 	tbi = get_built_in_enum(str_list_get_elem(exec_args->ast->arg, 0));
 	exit_status = run_cmd_proc_switcher2(exec_args, args, tbi);
 	str_list_clear(&args, free);

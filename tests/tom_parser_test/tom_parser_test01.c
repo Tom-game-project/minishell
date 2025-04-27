@@ -28,7 +28,8 @@ int main()
 	//tom_parser("ls < infile -la || (cat)", &ast);
 	//tom_parser("", &ast);
 	//tom_parser("echo $(echo hello world)\"$(echo hello world)\"", &ast);
-	tom_parser("echo \"$(echo \"hello world\")\"", &ast);
+	//tom_parser("echo \"$(echo \"hello world\")\"", &ast);
+	tom_parser(">", &ast);
 	
 
 	//tom_parser("< infile " , &ast);
