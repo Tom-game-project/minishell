@@ -56,7 +56,6 @@ int	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 		return (0);
 	}
 	*exit_status = exec_ast(ast, env_dict, result);
-	//debug_dprintf(STDERR_FILENO, "hello world\n");
 	clear_ast(&ast);
 	return (1);
 }

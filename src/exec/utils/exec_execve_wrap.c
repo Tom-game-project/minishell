@@ -132,6 +132,8 @@ int	execve_wrap2(t_str_list *args, t_str_dict *envp_dict)
 	t_str_dict	*env_path_node;
 
 	set_sigint_default();
+	if (str_list_len(args) < 1)
+		exit(0);
 	cmd = ft_strdup(str_list_get_elem(args, 0));
 	argv = str_list_to_array(args);
 	env_path_node = get_str_dict_by_key(envp_dict, "PATH");

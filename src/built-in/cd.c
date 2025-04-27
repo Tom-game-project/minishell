@@ -22,22 +22,20 @@
 #define OLDPWD "OLDPWD"
 
 /// カレントディレクトリを取得する関数
-static
-char	*get_cd(void)
+static char	*get_cd(void)
 {
 	char	buf[PATH_MAX];
 
 	if (getcwd(buf, PATH_MAX) == NULL)
 	{
 		perror("minishell");
-		return (NULL);
+		return (ft_strdup(""));
 	}
 	return (ft_strdup(buf));
 }
 
 /// $OLDPWDを変更する
-static
-int	update_oldpwd(t_str_dict **envp_list)
+static int	update_oldpwd(t_str_dict **envp_list)
 {
 	char	*key_str;
 
@@ -47,8 +45,7 @@ int	update_oldpwd(t_str_dict **envp_list)
 	return (1);
 }
 
-static
-char	*get_cd_path(t_str_list *args, t_str_dict **envp_list)
+static char	*get_cd_path(t_str_list *args, t_str_dict **envp_list)
 {
 	char		*path;
 	t_str_dict	*d;
@@ -57,7 +54,7 @@ char	*get_cd_path(t_str_list *args, t_str_dict **envp_list)
 	if (ft_streq(path, "-"))
 	{
 		d = get_str_dict_by_key(*envp_list, OLDPWD);
-		if (d == NULL)
+		if (ft_streq(d->value, ""))
 		{
 			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
 			return (NULL);

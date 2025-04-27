@@ -76,6 +76,9 @@ int	print_ast(t_ast *ast, int depth)
 	indent_print(".arg=", depth + 1);
 	print_str_list_for_test(ast->arg);
 	debug_dprintf(STDERR_FILENO, "\n");
+	indent_print(".ope = ", depth + 1);
+	print_ope(ast->ope);
+	debug_dprintf(STDERR_FILENO, "\n");
 	indent_print(".left_ast = ", depth + 1);
 	debug_dprintf(STDERR_FILENO, "\n");
 	if (ast->left_ast != NULL)
@@ -89,9 +92,6 @@ int	print_ast(t_ast *ast, int depth)
 		print_ast(ast->right_ast, depth + 2);
 	else
 		indent_print("NULL", depth + 2);
-	debug_dprintf(STDERR_FILENO, "\n");
-	indent_print(".ope = ", depth + 1);
-	print_ope(ast->ope);
 	debug_dprintf(STDERR_FILENO, "\n");
 	indent_print("}\n", depth);
 	return (0);

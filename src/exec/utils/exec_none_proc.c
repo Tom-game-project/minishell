@@ -114,7 +114,3 @@ int	none_proc2(int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_d
 	return (parent_proc_none2(input_fd, pid));
 }
 
-
-
-
-

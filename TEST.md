@@ -16,3 +16,10 @@ export MINISHELL=minishell && ((< $MINISHELL cat  | sha256sum)  | awk '{print $1
 ```bash
 echo ./../minishell/src/ex*/ex*.c | awk '{for(i=1;i<=NF;i++) printf "%d:%s ", i, $i; print ""}' | tr ' ' '\n'
 ```
+
+
+## 自分のいる場所が消されるケース
+
+```bash
+mkdir dddd && cd dddd && rmdir ../dddd && pwd && cd ..
+```

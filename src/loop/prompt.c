@@ -6,17 +6,17 @@
 
 
 /// exit_statusに色をつける関数
-static void error_color(t_char_list *lst, int exit_status)
+static void error_color(t_char_list **lst, int exit_status)
 {
 	char *exit_str;
 
 	exit_str = ft_itoa(exit_status);
 	if (exit_status == 0)
-		char_list_push_str(&lst, "\e[32m [");
+		char_list_push_str(lst, "\e[32m [");
 	else 
-		char_list_push_str(&lst, "\e[31m [");
-	char_list_push_str(&lst, exit_str);
-	char_list_push_str(&lst, "]\e[m");
+		char_list_push_str(lst, "\e[31m [");
+	char_list_push_str(lst, exit_str);
+	char_list_push_str(lst, "]\e[m");
 	free(exit_str);
 }
 
@@ -30,7 +30,7 @@ char	*prompt(int exit_status)
 	rstr_list = NULL;
 	if (getcwd(buf, PATH_MAX) != NULL)
 		char_list_push_str(&rstr_list, buf);
-	error_color(rstr_list, exit_status);
+	error_color(&rstr_list, exit_status);
 	char_list_push_str(&rstr_list, "> ");
 	rstr = char_list_to_str(rstr_list);
 	char_list_clear(&rstr_list);

@@ -15,6 +15,7 @@
 #include "list.h"
 #include "parser.h"
 #include "exec.h"
+#include "test_tools.h"
 #include "utils/utils.h"
 #include "heredoc/heredoc.h"
 
@@ -37,7 +38,9 @@ int run_cmd_proc_switcher2(
 		if (exec_args->ppid == 0)
 			return (execve_wrap2(args, *exec_args->envp_dict));
 		else
+		{
 			return (none_proc2(exec_args->input_fd, exec_args->output_fd, args, *exec_args->envp_dict));
+		}
 	else if (tbi == e_built_in_pwd)
 		return (built_in_pwd(exec_args->output_fd));
 	else if (tbi == e_built_in_env)
