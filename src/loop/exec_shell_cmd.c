@@ -34,6 +34,7 @@ static t_ast	*parser_wrap(char *input)
 int	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 {
 	t_ast	*ast;
+	int err;
 
 	if (INT_MAX < ft_strlen(str))
 	{
@@ -42,5 +43,7 @@ int	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 		return (0);
 	}
 	ast = parser_wrap(str);
-	return (exec_ast(ast, env_dict, exit_status));
+	err = exec_ast(ast, env_dict, exit_status);
+	clear_ast(&ast);
+	return (err);
 }

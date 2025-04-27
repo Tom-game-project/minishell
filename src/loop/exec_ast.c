@@ -20,14 +20,12 @@ int	exec_ast(t_ast *ast, t_str_dict **env_dict, int *exit_status)
 	if (result == e_no_input)
 	{
 		debug_dprintf(STDERR_FILENO, "no_input\n");
-		clear_ast(&ast);
 		return (0);
 	}
 	else if (print_checker_result(result))
 	{
 		print_ast(ast, 0);
 		*exit_status = exec(ast, env_dict);
-		clear_ast(&ast);
 		return (1);
 	}
 	return (0);
