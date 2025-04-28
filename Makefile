@@ -108,6 +108,7 @@ VOID_LIST = \
       src/list/void_list_insert_list.c\
       src/list/void_list_filter.c\
 
+
 TOKEN_LIST = \
 	     src/list/alloc_ex_token.c\
 	     src/list/token_list_join.c\
@@ -290,6 +291,7 @@ SRC = \
 	$(ALLOC_SRC)\
 	$(TOM_ASTERISK_SRC)\
 	$(PARSER_SRC)\
+
 
 MAIN = \
 	src/minishell.c

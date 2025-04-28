@@ -20,6 +20,10 @@ echo ./../minishell/src/ex*/ex*.c | awk '{for(i=1;i<=NF;i++) printf "%d:%s ", i,
 
 ## 自分のいる場所が消されるケース
 
+`pwd`はminishellではinodeを全く追跡しない設計にした
+
 ```bash
-mkdir dddd && cd dddd && rmdir ../dddd && pwd && cd ..
+mkdir dddd && cd dddd && rmdir ../dddd &&
+pwd
+cd ..
 ```
