@@ -18,50 +18,13 @@
 #include "libft.h"
 #include "sig.h"
 #include "test_tools.h"
+#include "err_msg.h"
 
 #include <stdio.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
-
-/// TODO あとで関数の名前を変更する
-static int	report_command_not_found(char *cmd)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	exit(127);
-}
-
-/// TODO あとで関数の名前を変更する
-///
-/// exit_status が、126だったときに
-static int	report_permission_denied(char *cmd)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-	exit(126);
-}
-
-/// TODO
-static int	report_is_a_directory(char *cmd)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
-	exit(126);
-}
-
-/// TODO
-static int	report_no_such_file_or_directory(char *cmd)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": Is not a file or directory", STDERR_FILENO);
-	exit(126);
-}
 
 /// 実行可能な場合ヲレがファイルタイプが通常のファイル、
 /// またはシンボリックリンクのファイルであるかどうかを確かめる

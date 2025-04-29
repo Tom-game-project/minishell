@@ -202,6 +202,14 @@ PATH_SRC =\
       src/path/is_executable_file.c\
 
 
+ERR_MSG_SRC =\
+      src/err_msg/error_format_print.c\
+      src/err_msg/report_command_not_found.c\
+      src/err_msg/report_is_a_directory.c\
+      src/err_msg/report_no_such_file_or_directory.c\
+      src/err_msg/report_permission_denied.c
+
+
 EXEC_SRC=\
       src/exec/exec.c\
       src/exec/expand.c\
@@ -290,6 +298,7 @@ SRC = \
 	$(AST_CHECKER_SRC)\
 	$(ALLOC_SRC)\
 	$(TOM_ASTERISK_SRC)\
+	$(ERR_MSG_SRC)\
 	$(PARSER_SRC)\
 
 
