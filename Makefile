@@ -350,13 +350,8 @@ $(NAME): $(OBJ) $(LIBFT_NAME) $(MAIN)
 		-lreadline
 
 
-$(LIBFT_NAME): $(LIBFT_HEADER)
+$(LIBFT_NAME):
 	make -C $(LIBFT_DIR)
-
-
-$(LIBFT_HEADER):
-	git submodule init
-	git submodule update
 
 
 # ここにはあえてフラグをつけていない
