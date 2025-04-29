@@ -18,7 +18,35 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-/// この`echo`関数はbashのそれとは違います
+static void nop(void *ptr)
+{
+	(void) ptr;
+}
+
+static char *as_it_is(char *ptr)
+{
+	return (ptr);
+}
+
+static char *
+build_a_string(t_str_list *args, bool new_line_flag)
+{
+	t_str_list *str_list;
+	char *tstr;
+	char *rstr;
+
+	str_list = str_list_clone(args, as_it_is);
+	tstr = str_list_join(str_list, " ");
+	str_list_clear(&str_list, nop);
+	if (new_line_flag)
+		rstr = ft_strjoin(tstr, "\n");
+	else
+		rstr = ft_strdup(tstr);
+	free(tstr);
+	return (rstr);
+}
+
+/// この`echo`関数はbashのそれとは違う
 /// -nに重複した引数を許しません
 ///
 /// 良い例
@@ -26,6 +54,7 @@
 /// ```bash
 /// echo -n hello world
 /// ```
+///
 /// 良くない例
 /// ```bash
 /// echo -nnn hello world
@@ -34,6 +63,7 @@ int	built_in_echo(t_str_list *args, int fd)
 {
 	int		exit_status;
 	bool	newline_flag;
+	char *print_string;
 
 	exit_status = 0;
 	newline_flag = true;
@@ -45,14 +75,8 @@ int	built_in_echo(t_str_list *args, int fd)
 		newline_flag = false;
 		args = args->next;
 	}
-	while (args != NULL)
-	{
-		write(fd, args->ptr.str, ft_strlen(args->ptr.str));
-		if (args->next != NULL)
-			write(fd, &" ", 1);
-		args = args->next;
-	}
-	if (newline_flag)
-		write(fd, &"\n", 1);
+	print_string = build_a_string(args, newline_flag);
+	ft_putstr_fd(print_string, fd);
+	free(print_string);
 	return (exit_status);
 }
