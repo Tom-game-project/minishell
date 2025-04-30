@@ -8,7 +8,8 @@
 #include <unistd.h>
 
 /// シングルクォーテーション中の処理
-static t_anchor single_quotation_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
+static t_anchor	single_quotation_proc(
+	char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
 	(void) c;
 	push_expand_env(group_args, env_dicts);
@@ -17,7 +18,8 @@ static t_anchor single_quotation_proc(char c, t_list_args *group_args, t_str_dic
 }
 
 /// ダブルクォーテーション中の処理
-static t_anchor double_quotation_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
+static t_anchor	double_quotation_proc(
+	char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
 	(void) c;
 	push_expand_env(group_args, env_dicts);
@@ -25,8 +27,8 @@ static t_anchor double_quotation_proc(char c, t_list_args *group_args, t_str_dic
 	return (e_anchor_dq);
 }
 
-t_anchor dollar_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
-{	
+t_anchor	dollar_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
+{
 	if (char_list_len(*group_args->path_group) == 1)
 	{
 		char_list_push(group_args->path_group, c);
@@ -43,23 +45,24 @@ t_anchor dollar_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 }
 
 /// クェスチョンマークの処理
-t_anchor question_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
+t_anchor	question_proc(
+	char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
-		if (char_list_len(*group_args->path_group) == 1)
-		{
-			char_list_push(group_args->path_group, c);
-			push_expand_env(group_args, env_dicts);
-			push_str_group2(group_args, e_word);
-		}
-		else if (char_list_len(*group_args->path_group) == 0)
-		{
-			char_list_push(group_args->str_group, c);
-		}
-		else
-		{
-			push_expand_env(group_args, env_dicts);
-			char_list_push(group_args->str_group, c);
-		}
+	if (char_list_len(*group_args->path_group) == 1)
+	{
+		char_list_push(group_args->path_group, c);
+		push_expand_env(group_args, env_dicts);
+		push_str_group2(group_args, e_word);
+	}
+	else if (char_list_len(*group_args->path_group) == 0)
+	{
+		char_list_push(group_args->str_group, c);
+	}
+	else
+	{
+		push_expand_env(group_args, env_dicts);
+		char_list_push(group_args->str_group, c);
+	}
 	return (e_anchor_out);
 }
 

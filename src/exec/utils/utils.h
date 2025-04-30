@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 19:04:13 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 19:06:54 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:03:47 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	and_proc(t_exec_args *args);
 
 int	none_proc(t_exec_args *args);
 
-int	none_proc2(int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict);
+int	none_proc2(\
+int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict);
 
 int	or_proc(t_exec_args *args);
 

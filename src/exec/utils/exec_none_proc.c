@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:52:01 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 18:52:53 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:02:36 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	child_proc_none(t_exec_args *args)
 	return (1);
 }
 
-int	child_proc_none2(int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict)
+int	child_proc_none2(
+	int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict)
 {
 	if (input_fd != STDIN_FILENO)
 	{
@@ -102,7 +103,8 @@ int	none_proc(t_exec_args *args)
 	return (parent_proc_none2(args->input_fd, pid));
 }
 
-int	none_proc2(int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict)
+int	none_proc2(
+	int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict)
 {
 	int	pid;
 
