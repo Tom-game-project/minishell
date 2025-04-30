@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 21:23:32 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/04/21 21:24:28 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:48:41 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SIG_H
 
 /// シグナルを扱うグローバル変数
-extern int g_signal_number;
+extern int	g_signal_number;
 
 void	disable_ctrl_backslash(void);
 

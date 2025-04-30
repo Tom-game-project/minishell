@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:47:31 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/04/30 19:25:23 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:47:13 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # define PIPE_WRITE 1
 
 // src/exec/exec.c
-
 
 typedef char				*(*t_sd2sfunc)(char *, void *);
 

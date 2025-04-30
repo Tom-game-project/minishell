@@ -1,10 +1,22 @@
-# ifndef PARSER_H
-#define PARSER_H
-#include "list.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 19:41:59 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/30 19:44:09 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef enum    e_operator t_operator;
+#ifndef PARSER_H
+# define PARSER_H
+# include "list.h"
 
-enum    e_operator
+typedef enum e_operator			t_operator;
+
+enum e_operator
 {
 	e_ope_none,
 	e_ope_and,// &&
@@ -17,17 +29,17 @@ enum    e_operator
 	e_ope_paren,// )
 };
 
-typedef struct s_ast t_ast;
+typedef struct s_ast			t_ast;
 
-struct  s_ast
+struct s_ast
 {
-	t_ast   	    *left_ast;
-	t_ast   	    *right_ast;
-	t_operator 		ope;
-	t_str_list		*arg;
+	t_ast		*left_ast;
+	t_ast		*right_ast;
+	t_operator	ope;
+	t_str_list	*arg;
 };
 
-typedef enum e_parse_result t_parse_result ;
+typedef enum e_parse_result		t_parse_result ;
 
 enum e_parse_result
 {
@@ -35,10 +47,10 @@ enum e_parse_result
 	e_result_paren_not_closed_err,
 };
 
+bool	is_redirect_operators(char *element);
 
-bool is_redirect_operators(char *element);
+int		find_syntax(char *input);
 
-int find_syntax(char *input);
+void	clear_ast(t_ast **ast);
 
-void clear_ast(t_ast **ast);
-# endif
+#endif

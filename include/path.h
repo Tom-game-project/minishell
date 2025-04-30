@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 21:24:39 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/04/21 21:25:31 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:44:20 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int			create_shadow_file(int rw_fd[2]);
 
 int			set_stat(struct stat *path_stat, char *path);
 
-bool is_dir(char *path);
+bool		is_dir(char *path);
 
 #endif

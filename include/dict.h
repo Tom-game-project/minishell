@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:42:46 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/04/30 19:27:12 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:47:01 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_str_dict	*str_dict_set(char *key, char *value);
 
 int			str_dict_push(t_str_dict **node, char *key, char *value);
 
-
 t_str_dict	*get_str_dict_by_key(\
 		t_str_dict *node, char *key);
 
@@ -50,7 +49,6 @@ int			str_dict_clear(t_str_dict **node, \
 int			str_dict_len(t_str_dict *node);
 
 char		**str_dict_to_envp(t_str_dict *node);
-
 
 int			envp_to_str_dict(t_str_dict **node, char *envp[]);
 
