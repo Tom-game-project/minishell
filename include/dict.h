@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:42:46 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/12 19:45:50 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:27:12 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			str_dict_add(\
 	char *value, \
 	void (*f)(void *));
 
-int	str_dict_add2(t_str_dict **node, char *key, char *value);
+int			str_dict_add2(t_str_dict **node, char *key, char *value);
 
 int			str_dict_clear(t_str_dict **node, \
 	void (*key_free)(void *), \
