@@ -15,7 +15,6 @@
 #include "list.h"
 #include "parser.h"
 #include "exec.h"
-#include "test_tools.h"
 #include "utils/utils.h"
 #include "heredoc/heredoc.h"
 

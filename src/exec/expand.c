@@ -16,6 +16,30 @@ static void free_vec_vec_str(t_anytype elem)
 	(void) elem;
 }
 
+/// 文字列の辞書順比較用の関数
+static bool cmp_str(t_anytype a, t_anytype b)
+{
+	char *a_str;
+	char *b_str;
+
+	a_str = a.str;
+	b_str = b.str;
+	while (*a_str != '\0' && *b_str != '\0')
+	{
+		if (*a_str < *b_str)
+		{
+			return (true);
+		}
+		else if (*a_str > *b_str)
+		{
+			return (false);
+		}
+		a_str++;
+		b_str++;
+	}
+	return (*a_str < *b_str);
+}
+
 /// アスタリスク展開
 t_str_list *expand_env_var(char *str, t_str_dict *env)
 {
@@ -38,6 +62,7 @@ t_str_list *expand_env_var(char *str, t_str_dict *env)
 	str_list_clear(&path, free);
 	void_list_clear(&token_list, free_ex_token);
 	clear_split_token_list(&splited_list);
+	merge_sort(&result_list, cmp_str);
 	return (result_list);
 }
 
