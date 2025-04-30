@@ -1,8 +1,12 @@
 #include "dict.h"
 #include "expand_string.h"
 #include "list.h"
+#include "libft.h"
+#include "path.h"
+#include "test_tools.h"
 #include "tom_asterisk.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 static void free_ex_token(t_anytype elem)
 {
@@ -40,6 +44,56 @@ static bool cmp_str(t_anytype a, t_anytype b)
 	return (*a_str < *b_str);
 }
 
+// TODO あとで消す
+//static int print_vec_vec_str(int d, t_anytype elem)
+//{
+//	return (debug_dprintf(STDERR_FILENO, "[%d] %s\n", d, elem.ex_token->str));
+//	
+//}
+
+static bool endwith_slash(char *str)
+{
+	return (str[ft_strlen(str) - 1] == '/');
+}
+
+// 二次元リスト
+static bool
+rule_end_with_slash(
+	t_void_list *lst // Vec<Vec<ex_token>>
+)
+{
+	int len;
+	int str_lst_len;
+	t_str_list *str_lst;
+	t_void_list *node;
+
+	len = void_list_len(lst);
+	if (len == 0)
+		return (false);
+	str_lst = void_list_get_elem(lst, len - 1)->ptr.list;
+	str_lst_len = str_list_len(str_lst); 
+	node = void_list_get_elem(str_lst, str_lst_len - 1);
+	debug_dprintf(
+		STDERR_FILENO, 
+		"last element of token list \"%s\"\n", 
+		node->ptr.ex_token->str);
+	return (endwith_slash(node->ptr.ex_token->str));
+}
+
+static bool is_dir_wrap_for_anytype(t_anytype elem)
+{
+	return (is_dir(elem.str));
+}
+
+static char *append_slash(char *str)
+{
+	char *rstr;
+
+	rstr = ft_strjoin(str, "/");
+	free(str);
+	return (rstr);
+}
+
 /// アスタリスク展開
 t_str_list *expand_env_var(char *str, t_str_dict *env)
 {
@@ -49,9 +103,23 @@ t_str_list *expand_env_var(char *str, t_str_dict *env)
 	t_str_list *result_list;
 
 	token_list = expand_string2list2(str, env);
-	splited_list = split_token_list_by_slash(token_list); // 二次元リスト
+	splited_list = // Vec<Vec<ex_token>>
+	       	split_token_list_by_slash(token_list);
+
 	path = NULL;
 	result_list = dir_walker(&path, splited_list);
+	// 以下でディレクトリだけを検索の対象としていた場合の処理をする
+	if (rule_end_with_slash(splited_list))
+	{
+		t_str_list *result_tmp;
+
+		// ディレクトリだけを抽出する
+		// スラッシュを戻す
+		result_tmp = void_list_filter(&result_list, is_dir_wrap_for_anytype);
+		str_list_clear(&result_list, free);
+		result_list = result_tmp;
+		str_list_map(&result_list, append_slash);
+	}
 	if (str_list_len(result_list) == 0)
 	{
 		str_list_clear(&result_list, free);

@@ -11,7 +11,7 @@ static t_anytype copy_token_list_node(t_anytype elem)
 		       	ft_strdup(elem.ex_token->str)));
 }
 
-static bool endwith_srash(char *str)
+static bool endwith_slash(char *str)
 {
 	return (str[ft_strlen(str) - 1] == '/');
 }
@@ -19,7 +19,7 @@ static bool endwith_srash(char *str)
 static char *
 remove_slash(char *str)
 {
-	if (endwith_srash(str))
+	if (endwith_slash(str))
 		return (ft_substr(str, 0, ft_strlen(str) - 1));
 	else
 		return (ft_strdup(str));
@@ -41,7 +41,7 @@ static t_void_list *remove_slash_from_rule_list(t_void_list *lst)
 
 	rlist = token_list_clone(lst, copy_token_list_node);
 	last_elem = void_list_get_elem(rlist, void_list_len(lst) - 1);
-	if (endwith_srash(last_elem->ptr.ex_token->str))
+	if (endwith_slash(last_elem->ptr.ex_token->str))
 	{
 		void_list_pop(
 			&rlist,

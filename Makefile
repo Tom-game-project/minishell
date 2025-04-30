@@ -200,6 +200,7 @@ PATH_SRC =\
       src/path/get_dir_list.c\
       src/path/gen_nondup_name.c\
       src/path/is_executable_file.c\
+      src/path/is_dir.c\
 
 
 ERR_MSG_SRC =\
