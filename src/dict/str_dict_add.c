@@ -53,11 +53,7 @@ int	str_dict_add2(t_str_dict **node, char *key, char *value)
 	sd = get_str_dict_by_key(*node, key);
 	if (sd == NULL)
 	{
-		str_dict_push(
-			node, 
-			ft_strdup(key), 
-			ft_strdup(value)
-		);
+		str_dict_push(node, ft_strdup(key), ft_strdup(value));
 		return (1);
 	}
 	else

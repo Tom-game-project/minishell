@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:32:10 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/12 19:32:34 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:57:41 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,3 @@ int	str_dict_push(t_str_dict **node, char *key, char *value)
 	back_node_p->next = new_node_p;
 	return (0);
 }
-

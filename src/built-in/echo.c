@@ -10,30 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "list.h"
 #include "strtools.h"
-#include "libft.h"
-
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static void nop(void *ptr)
+static void	nop(void *ptr)
 {
-	(void) ptr;
+	(void)ptr;
 }
 
-static char *as_it_is(char *ptr)
+static char	*as_it_is(char *ptr)
 {
 	return (ptr);
 }
 
-static char *
-build_a_string(t_str_list *args, bool new_line_flag)
+static char	*build_a_string(t_str_list *args, bool new_line_flag)
 {
-	t_str_list *str_list;
-	char *tstr;
-	char *rstr;
+	t_str_list	*str_list;
+	char		*tstr;
+	char		*rstr;
 
 	str_list = str_list_clone(args, as_it_is);
 	tstr = str_list_join(str_list, " ");
@@ -63,7 +61,7 @@ int	built_in_echo(t_str_list *args, int fd)
 {
 	int		exit_status;
 	bool	newline_flag;
-	char *print_string;
+	char	*print_string;
 
 	exit_status = 0;
 	newline_flag = true;

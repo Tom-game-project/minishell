@@ -12,8 +12,8 @@
 
 #include "dict.h"
 #include "envtools.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 /// envpをstr_dictに変換する関数
 /// 第一引数に渡されたディクショナリに、解釈されたenvpが渡される
@@ -25,17 +25,12 @@
 ///
 int	envp_to_str_dict(t_str_dict **node, char *envp[])
 {
-	char *str;
+	char	*str;
 
 	while (*envp != NULL)
 	{
 		str = get_key_from_envp_ptr(*envp);
-		if (
-			str_dict_add(
-			node,
-			str,
-			get_value_from_envp_ptr(*envp),
-			free) == 0)
+		if (str_dict_add(node, str, get_value_from_envp_ptr(*envp), free) == 0)
 			free(str);
 		envp++;
 	}
