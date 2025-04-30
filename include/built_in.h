@@ -18,12 +18,6 @@ enum e_built_in
 	e_not_built_in,
 };
 
-/// TODO:
-/// この関数は最終的に削除する必要がある
-int say_hello();
-
-int return_one_func();
-
 // src/built-in/cd.c
 //int built_in_cd(t_str_list *args);
 int built_in_cd(t_str_list *args, t_str_dict **envp_list);
