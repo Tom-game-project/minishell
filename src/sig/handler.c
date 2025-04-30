@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:34:26 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 18:34:39 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:37:38 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ void	handle_sig2(int sig)
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		//disconnect2stdin();
 	}
 }

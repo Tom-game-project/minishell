@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:35:26 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 18:35:42 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:37:51 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	sig_settig(void)
 	disable_ctrl_backslash();
 	return (0);
 }
-
 
 int set_sigint_default(void)
 {

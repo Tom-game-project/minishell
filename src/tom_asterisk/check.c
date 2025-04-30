@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 20:47:53 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/30 20:47:54 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdbool.h>
 #include "list.h"
 #include "libft.h"
@@ -35,7 +47,7 @@ pattern_head_junk(t_char_list *target, t_void_list *rule_lst, char *head_rule)
 
 	if (char_list_startswith(target, head_rule))
 	{
-		tmp = char_list_cut(&target, ft_strlen(head_rule) - 1); // tmpにheadが入る
+		tmp = char_list_cut(&target, ft_strlen(head_rule) - 1);
 		rule_tmp = void_list_cut(&rule_lst, 0);
 		r = is_same_string(target, rule_lst);
 		void_list_concat(&tmp, target);
@@ -48,18 +60,19 @@ pattern_head_junk(t_char_list *target, t_void_list *rule_lst, char *head_rule)
 		return (false);
 }
 
-static bool pattern_junk_tail(t_char_list *target, t_void_list *rule_lst, char *tail_rule)
-{	
-	t_char_list *tmp;
-	t_void_list *rule_tmp;
+static bool	pattern_junk_tail(
+	t_char_list *target, t_void_list *rule_lst, char *tail_rule)
+{
+	t_char_list	*tmp;
+	t_void_list	*rule_tmp;
 	bool r;
 
 	if (char_list_endswith(target, tail_rule))
 	{
 		tmp = char_list_cut(
 			&target,
-			char_list_len(target) - ft_strlen(tail_rule) - 1); // targetにtailが残る
-		rule_tmp = void_list_cut(&rule_lst, void_list_len(rule_lst) - 1 - 1); // 最後のindexの一個手前
+			char_list_len(target) - ft_strlen(tail_rule) - 1);
+		rule_tmp = void_list_cut(&rule_lst, void_list_len(rule_lst) - 1 - 1);
 		r = is_same_string(tmp, rule_tmp);
 		void_list_concat(&tmp, target);
 		void_list_concat(&rule_tmp, rule_lst);

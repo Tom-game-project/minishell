@@ -56,7 +56,7 @@ push_list_to_list(t_void_list **vec_vec_extoken, t_void_list *vec_extoken)
 /// ```
 t_void_list *split_token_list_by_slash(t_void_list *lst)
 {
-	t_void_list *vec_vec_extoken; // Vec<Vec<ex_token>>
+	t_void_list *vec_vec_extoken;
 	t_void_list *vec_extoken;
 
 	vec_vec_extoken = NULL;
@@ -73,7 +73,7 @@ t_void_list *split_token_list_by_slash(t_void_list *lst)
 			index = char_list_search_index(c_list, is_slash);
 			while (index != -1)
 			{
-				t_char_list *group_char_lst; // slashを一つ含む
+				t_char_list *group_char_lst;
 
 				group_char_lst = char_list_cut(&c_list, index);
 				void_list_push(
