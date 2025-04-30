@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:18:59 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/02/26 17:19:28 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:26:41 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	char_list_push(t_char_list **node, char c)
 
 /// char *をstringとして追加する関数
 int	char_list_push_str(t_char_list **node, char *str)
-{	
+{
 	while (*str != '\0')
 	{
 		if (char_list_push(node, *str) == 1)

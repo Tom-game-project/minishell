@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   void_list_insert_list.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 20:17:58 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/30 20:18:24 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include <stdlib.h>
 
 /// リストの任意の位置に別のリストを挿入する関数
 ///
 /// アロケーションを発生させない
-int void_list_insert_list(
+int	void_list_insert_list(
 	t_void_list **target,
 	t_void_list *lst,
-       	int index
+	int index
 )
 {
-	t_void_list *head;
+	t_void_list	*head;
 
 	head = void_list_cut(target, index);
 	if (head == NULL)

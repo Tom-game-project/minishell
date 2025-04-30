@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:31:39 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/02/26 17:31:57 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:17:07 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int	print_string(int index, t_anytype elem)
 {
-	debug_dprintf(STDERR_FILENO,"[%d] \"%s\"\n", index, elem.str);
+	debug_dprintf(STDERR_FILENO, "[%d] \"%s\"\n", index, elem.str);
 	return (0);
 }
 
