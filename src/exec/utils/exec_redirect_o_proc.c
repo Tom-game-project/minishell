@@ -19,7 +19,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
 /// もし書き込み側にすでにfdが設定されていたら、閉じる
 static void	close_fd(t_exec_args *args)
 {
@@ -70,4 +69,3 @@ int	exec_redirect_o_proc(t_exec_args *args)
 		)
 	);
 }
-

@@ -71,4 +71,3 @@ int	heredoc_proc(t_ast *ast, t_int_list **heredoc_fd_list)
 	}
 	return (exit_status);
 }
-

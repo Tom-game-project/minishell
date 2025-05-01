@@ -53,4 +53,3 @@ int	sequential_proc(t_exec_args *args, bool (*f)(int))
 	}
 	return (exit_status);
 }
-

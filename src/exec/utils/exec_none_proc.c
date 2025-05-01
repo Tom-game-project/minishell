@@ -16,23 +16,6 @@
 #include <unistd.h>
 
 // TODO: ここでパイプは必要ない
-
-int	child_proc_none(t_exec_args *args)
-{
-	if (args->input_fd != STDIN_FILENO)
-	{
-		dup2(args->input_fd, STDIN_FILENO);
-		close(args->input_fd);
-	}
-	if (args->output_fd != STDOUT_FILENO)
-	{
-		dup2(args->output_fd, STDOUT_FILENO);
-		close(args->output_fd);
-	}
-	execve_wrap(args);
-	return (1);
-}
-
 int	child_proc_none2(
 	int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict)
 {
@@ -91,18 +74,6 @@ int	parent_proc_none2(int input_fd, int pid)
 
 /// 実行可能な状態であり、かつ、
 /// 自分自身が子プロセス中に入っていない場合(親プロセスから)実行される関数
-int	none_proc(t_exec_args *args)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		child_proc_none(args);
-	}
-	return (parent_proc_none2(args->input_fd, pid));
-}
-
 int	none_proc2(
 	int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict)
 {
@@ -115,4 +86,3 @@ int	none_proc2(
 	}
 	return (parent_proc_none2(input_fd, pid));
 }
-

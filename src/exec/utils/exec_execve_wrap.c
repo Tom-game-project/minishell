@@ -114,4 +114,3 @@ int	execve_wrap2(t_str_list *args, t_str_dict *envp_dict)
 	execve(fullpath, argv, envp);
 	return (1);
 }
-

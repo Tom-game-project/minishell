@@ -27,19 +27,21 @@
 #include "strtools.h"
 
 /// ビルトインコマンドへ振り分ける関数
+///
+/// argsは環境変数展開後のものである必要がある
 int run_cmd_proc_switcher2(
 	t_exec_args *exec_args,
-       	t_str_list *args, // 環境変数展開後
+       	t_str_list *args,
        	t_built_in	tbi
 )
 {
 	if (tbi == e_not_built_in)
+	{
 		if (exec_args->ppid == 0)
 			return (execve_wrap2(args, *exec_args->envp_dict));
 		else
-		{
 			return (none_proc2(exec_args->input_fd, exec_args->output_fd, args, *exec_args->envp_dict));
-		}
+	}
 	else if (tbi == e_built_in_pwd)
 		return (built_in_pwd(exec_args->output_fd));
 	else if (tbi == e_built_in_env)
