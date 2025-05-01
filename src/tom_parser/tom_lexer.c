@@ -27,16 +27,10 @@ static bool	cur_out_of_quotation(t_cur_anchor *s)
 			return (true);
 		}
 	}
-	else if (*s->depth == 0)
+	else if (*s->depth == 0 && (is_ifs(s->c) || is_ope_char(s->c)))
 	{
-		if (is_ifs(s->c) || is_ope_char(s->c))
-		{
-			if (s->idx == 0)
-				*s->cut_list = char_list_cut(s->clst, s->idx);
-			else
-				*s->cut_list = char_list_cut(s->clst, s->idx - 1);
-			return (true);
-		}
+		*s->cut_list = char_list_cut(s->clst, s->idx - (s->idx != 0));
+		return (true);
 	}
 	return (false);
 }
@@ -48,28 +42,13 @@ static bool	cur_loop(t_cur_anchor *s)
 		if (cur_out_of_quotation(s))
 			return (true);
 	}
-	else if (*s->anchor == e_in_dq)
+	else if ((*s->anchor == e_in_dq && s->c == '"') || (*s->anchor == e_in_q && s->c == '\''))
 	{
-		if (s->c == '"')
+		*s->anchor = e_outof_q;
+		if (*s->depth == 0)
 		{
-			*s->anchor = e_outof_q;
-			if (*s->depth == 0)
-			{
-				*s->cut_list = char_list_cut(s->clst, s->idx);
-				return (true);
-			}
-		}
-	}
-	else if (*s->anchor == e_in_q)
-	{
-		if (s->c == '\'')
-		{
-			*s->anchor = e_outof_q;
-			if (*s->depth == 0)
-			{
-				*s->cut_list = char_list_cut(s->clst, s->idx);
-				return (true);
-			}
+			*s->cut_list = char_list_cut(s->clst, s->idx);
+			return (true);
 		}
 	}
 	return (false);
