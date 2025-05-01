@@ -42,6 +42,25 @@ bool	str_list_cmp(t_str_list *lst1, t_str_list *lst2)
 	return (str_list_len(lst1) >= str_list_len(lst2));
 }
 
+static
+void search_string_pattern_replace_helper(
+	t_str_list **lst, t_str_list *pattern, int index)
+{
+	int incr;
+	t_anytype elem;
+	char *s;
+
+	incr = 0;
+	while (incr < str_list_len(pattern)) 
+	{
+		s = str_list_pop(lst, index);
+		free(s);
+		incr += 1;
+	}
+	elem.str = str_list_to_str(pattern);
+	void_list_insert(lst, index, elem);
+}
+
 /// ```
 /// [a] -> [b] -> [c]
 /// [a] -> [b]
@@ -66,19 +85,9 @@ int	search_string_pattern_replace(\
 	{
 		if (str_list_cmp(i, pattern))
 		{
-			int incr;
-			t_anytype elem;
-			char *s;
-
-			incr = 0;
-			while (incr < str_list_len(pattern)) 
-			{
-				s = str_list_pop(lst, index);
-				free(s);
-				incr += 1;
-			}
-			elem.str = str_list_to_str(pattern);
-			void_list_insert(lst, index, elem);
+			search_string_pattern_replace_helper(
+				lst, pattern, index
+			);
 			return (1);
 		}
 		i = i->next;
