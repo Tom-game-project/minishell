@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/01 19:38:36 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/01 19:38:59 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dict.h"
 #include "expand_string.h"
 #include "list.h"
@@ -128,7 +140,7 @@ t_str_list *expand_env_var(char *str, t_str_dict *env)
 /// 未展開の引数リストを受け取って、展開済みの新しい引数を返却する
 t_str_list *expand_env_vars(t_str_list *args, t_str_dict *env)
 {
-	t_void_list *vec_vec_str;// Vec<Vec<str>>
+	t_void_list *vec_vec_str;
 	t_str_list *rlist;
 
 	vec_vec_str = NULL;
