@@ -10,23 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
-#include "list.h"
 #include "libft.h"
-#include "strtools.h"
+#include "list.h"
 #include "private.h"
+#include "strtools.h"
+#include <stdbool.h>
 
-bool is_same_string(t_char_list *target, t_void_list *rule_lst);
+bool		is_same_string(t_char_list *target, t_void_list *rule_lst);
 
-static bool
-pattern_length_one(t_char_list *target, t_void_list *rule_lst)
+static bool	pattern_length_one(t_char_list *target, t_void_list *rule_lst)
 {
-	char *str;
-	bool r;
-	t_void_list *tmp_node;
+	char		*str;
+	bool		r;
+	t_void_list	*tmp_node;
 
 	tmp_node = void_list_get_elem(rule_lst, 0);
-
 	if (tmp_node->ptr.ex_token->token_type == e_asterisk)
 		return (true);
 	else
@@ -38,12 +36,12 @@ pattern_length_one(t_char_list *target, t_void_list *rule_lst)
 	}
 }
 
-static bool
-pattern_head_junk(t_char_list *target, t_void_list *rule_lst, char *head_rule)
+static bool	pattern_head_junk(t_char_list *target, t_void_list *rule_lst,
+		char *head_rule)
 {
-	t_char_list *tmp;
-	t_void_list *rule_tmp;
-	bool r;
+	t_char_list	*tmp;
+	t_void_list	*rule_tmp;
+	bool		r;
 
 	if (char_list_startswith(target, head_rule))
 	{
@@ -60,18 +58,17 @@ pattern_head_junk(t_char_list *target, t_void_list *rule_lst, char *head_rule)
 		return (false);
 }
 
-static bool	pattern_junk_tail(
-	t_char_list *target, t_void_list *rule_lst, char *tail_rule)
+static bool	pattern_junk_tail(t_char_list *target, t_void_list *rule_lst,
+		char *tail_rule)
 {
 	t_char_list	*tmp;
 	t_void_list	*rule_tmp;
-	bool r;
+	bool		r;
 
 	if (char_list_endswith(target, tail_rule))
 	{
-		tmp = char_list_cut(
-			&target,
-			char_list_len(target) - ft_strlen(tail_rule) - 1);
+		tmp = char_list_cut(&target, char_list_len(target)
+				- ft_strlen(tail_rule) - 1);
 		rule_tmp = void_list_cut(&rule_lst, void_list_len(rule_lst) - 1 - 1);
 		r = is_same_string(tmp, rule_tmp);
 		void_list_concat(&tmp, target);
@@ -84,11 +81,11 @@ static bool	pattern_junk_tail(
 		return (false);
 }
 
-static bool pattern_junk_middle_junk(t_char_list *target, t_void_list *rule_lst)
-{	
-	t_void_list *head_rule_tmp;
-	t_void_list *middle_rule_tmp;
-	bool r;
+static bool	pattern_junk_middle_junk(t_char_list *target, t_void_list *rule_lst)
+{
+	t_void_list	*head_rule_tmp;
+	t_void_list	*middle_rule_tmp;
+	bool		r;
 
 	head_rule_tmp = void_list_cut(&rule_lst, 0);
 	middle_rule_tmp = void_list_cut(&rule_lst, void_list_len(rule_lst) - 1);
@@ -107,11 +104,11 @@ static bool pattern_junk_middle_junk(t_char_list *target, t_void_list *rule_lst)
 /// *helloworld*.c
 /// hellohelloworld123.c.c
 /// (hello)helloworld(123.c).c
-/// 
+///
 /// *hello*world*
 ///  -------------- ... A
 /// world hello -> false
-/// 
+///
 ///
 /// ```
 /// *.c
@@ -125,12 +122,12 @@ static bool pattern_junk_middle_junk(t_char_list *target, t_void_list *rule_lst)
 /// ```
 ///
 /// 再帰的に探索する
-bool is_same_string(t_char_list *target, t_void_list *rule_lst)
+bool	is_same_string(t_char_list *target, t_void_list *rule_lst)
 {
-	t_void_list *head_node;
-	t_void_list *tail_node;
-	t_anytype head_rule;
-	t_anytype tail_rule;
+	t_void_list	*head_node;
+	t_void_list	*tail_node;
+	t_anytype	head_rule;
+	t_anytype	tail_rule;
 
 	if (void_list_len(rule_lst) == 0)
 		return (false);

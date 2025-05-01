@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/01 19:49:38 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/01 19:50:56 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "loop.h"
 #include <fcntl.h>
@@ -10,16 +22,15 @@
 #define CC_VERSION
 
 #ifdef DEBUG
-#define MODE "mode: debug"
+# define MODE "mode: debug"
 #else
-#define MODE "mode: release"
+# define MODE "mode: release"
 #endif
 
-int header()
+int	header(void)
 {
 	ft_putstr_fd(
-		"" // 14
-		"        :::   :::   ::::::::::: ::::    ::: :::::::::::\n" // 56
+		"        :::   :::   ::::::::::: ::::    ::: :::::::::::\n"
 		"      :+:+: :+:+:      :+:     :+:+:   :+:     :+:     \n"
 		"    +:+ +:+:+ +:+     +:+     :+:+:+  +:+     +:+      \n"
 		"   +#+  +:+  +#+     +#+     +#+ +:+ +#+     +#+       \n"
@@ -34,10 +45,9 @@ int header()
 		"#+#    #+# #+#    #+# #+#        #+#        #+#        \n"
 		"########  ###    ### ########## ########## ##########  \n"
 		"created by arakan && Tom in 2025                        \n"
-		"minishell("COMMIT_HASH", "MODE", "
-		BUILD_TIMESTAMP")"
-		"["CC_VERSION"]\n"
-		, STDOUT_FILENO);
+		"minishell(" COMMIT_HASH ", " MODE ", " BUILD_TIMESTAMP ")"
+		"[" CC_VERSION "]\n",
+		STDOUT_FILENO);
 	return (0);
 }
 
@@ -54,16 +64,16 @@ int header()
 /// ```bash
 /// < bash.sh cat | ./minishell bash2.sh
 /// ```
-/// 
+///
 /// # デバイスモード(プロンプトを表示して、ユーザの入力を待機する)
 ///
 /// ```bash
 /// ./minishell
 /// ```
-int main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
-	int fd;
-	int exit_status;
+	int	fd;
+	int	exit_status;
 
 	fd = -1;
 	if (1 < argc)

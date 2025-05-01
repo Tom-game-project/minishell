@@ -1,27 +1,36 @@
-#include <stdlib.h>
-#include <stdbool.h>
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lib.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/01 20:54:03 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/01 20:54:04 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "libft.h"
 #include "list.h"
 #include "path.h"
-#include "libft.h"
-#include "tom_asterisk.h"
 #include "strtools.h"
+#include "tom_asterisk.h"
+#include <stdbool.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-static bool is_dot_or_dotdot(t_anytype elem)
+static bool	is_dot_or_dotdot(t_anytype elem)
 {
 	return (ft_streq("..", elem.str) || ft_streq(".", elem.str));
 }
 
-static t_str_list *get_all_path_one_case(
-	t_str_list *path,
-       	t_void_list *splited_path,
-       	t_str_list **curr_lst)
+static t_str_list	*get_all_path_one_case(t_str_list *path,
+		t_void_list *splited_path, t_str_list **curr_lst)
 {
-	t_str_list *filtered_ptr;
-	char *parent_path;
-	t_char_list *rlist;
-	t_str_list *filtered;
+	t_str_list	*filtered_ptr;
+	char		*parent_path;
+	t_char_list	*rlist;
+	t_str_list	*filtered;
 	t_str_list	*junk;
 
 	if (splited_path == NULL)
@@ -34,9 +43,7 @@ static t_str_list *get_all_path_one_case(
 	rlist = NULL;
 	while (filtered_ptr != NULL)
 	{
-		str_list_push(&rlist, ft_strjoin(
-			parent_path,
-			filtered_ptr->ptr.str));
+		str_list_push(&rlist, ft_strjoin(parent_path, filtered_ptr->ptr.str));
 		filtered_ptr = filtered_ptr->next;
 	}
 	free(parent_path);
@@ -44,15 +51,13 @@ static t_str_list *get_all_path_one_case(
 	return (rlist);
 }
 
-static t_str_list *get_all_path_more_than_one_case(
-	t_str_list *path_ptr,
-       	t_void_list *splited_path,
-       	t_str_list **curr_lst)
-{		
-	t_str_list *filtered_ptr;
-	t_char_list *rlist;
-	t_str_list *filtered_head;
-	t_str_list *path_tmp;
+static t_str_list	*get_all_path_more_than_one_case(t_str_list *path_ptr,
+		t_void_list *splited_path, t_str_list **curr_lst)
+{
+	t_str_list	*filtered_ptr;
+	t_char_list	*rlist;
+	t_str_list	*filtered_head;
+	t_str_list	*path_tmp;
 
 	if (splited_path == NULL)
 		return (NULL);
@@ -71,18 +76,18 @@ static t_str_list *get_all_path_more_than_one_case(
 	return (rlist);
 }
 
-static t_str_list *get_all_path_helper_set_root_dir(
-	t_str_list **path,
-       	t_str_list **curr_lst,
-       	t_void_list *splited_path)
+static t_str_list	*get_all_path_helper_set_root_dir(t_str_list **path,
+		t_str_list **curr_lst, t_void_list *splited_path)
 {
-	char *str;
-	t_void_list *tmp_node;
+	char		*str;
+	t_void_list	*tmp_node;
 
 	tmp_node = void_list_get_elem(splited_path->ptr.list, 0);
 	if (str_list_len(*path) == 0)
-		if (ft_streq(tmp_node->ptr.ex_token->str, "../") || 
-		ft_streq(tmp_node->ptr.ex_token->str, "./") || ft_streq(tmp_node->ptr.ex_token->str, "/"))
+	{
+		if (ft_streq(tmp_node->ptr.ex_token->str, "../")
+			|| ft_streq(tmp_node->ptr.ex_token->str, "./")
+			|| ft_streq(tmp_node->ptr.ex_token->str, "/"))
 		{
 			*curr_lst = get_dir_list(tmp_node->ptr.ex_token->str);
 			str_list_push(path, ft_strdup(tmp_node->ptr.ex_token->str));
@@ -90,6 +95,7 @@ static t_str_list *get_all_path_helper_set_root_dir(
 		}
 		else
 			*curr_lst = get_dir_list(".");
+	}
 	else
 	{
 		str = str_list_join(*path, "");
@@ -100,17 +106,19 @@ static t_str_list *get_all_path_helper_set_root_dir(
 }
 
 /// 再帰的にディレクトリを探索して、パターンに一致したファイルまたはディレクトリを返却する
-t_str_list *dir_walker(t_str_list **path,
-	t_str_list *splited_path // ルールを格納する二次元リスト
+/// splited_path: ルールを格納する二次元リスト
+t_str_list	*dir_walker(t_str_list **path,
+						t_str_list *splited_path
 )
 {
-	t_char_list *rlist;
-	t_str_list *curr_lst;
+	t_char_list	*rlist;
+	t_str_list	*curr_lst;
 
 	if (str_list_len(splited_path) == 0)
 		return (NULL);
-	splited_path = get_all_path_helper_set_root_dir(path, &curr_lst, splited_path);
-	if (void_list_len(splited_path) == 1) 
+	splited_path = get_all_path_helper_set_root_dir(path, &curr_lst,
+			splited_path);
+	if (void_list_len(splited_path) == 1)
 		rlist = get_all_path_one_case(*path, splited_path, &curr_lst);
 	else
 		rlist = get_all_path_more_than_one_case(*path, splited_path, &curr_lst);
