@@ -72,6 +72,7 @@ STR_LIST = \
       src/list/str_list_split.c\
       src/list/str_list_map.c\
       src/list/str_list_search.c\
+      src/list/str_list_search2.c\
       src/list/str_list_get_elem.c\
       src/list/str_list_concat.c\
       src/list/str_list_clone.c\

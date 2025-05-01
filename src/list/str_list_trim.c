@@ -22,10 +22,7 @@ int	str_list_trim(t_str_list **lst, t_str_list *set, void (*f)(void *))
 	{
 		point_index -= 1;
 		if (point_index < 0)
-		{
-			str_list_clear(lst, f);
-			return (0);
-		}
+			return (str_list_clear(lst, f), 0);
 	}
 	tmp = *lst;
 	*lst = str_list_cut(&tmp, point_index);
