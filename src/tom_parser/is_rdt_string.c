@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:36:31 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 18:36:36 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:30:53 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,3 @@ bool	is_rdt_string(char *str)
 		ft_streq(str, "<")
 	);
 }
-

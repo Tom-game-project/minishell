@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 21:29:38 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/04/21 21:30:09 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:31:53 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,3 @@ int	remove_ifs(t_str_list **lst)
 	str_list_clear(&ifs_lst, nop);
 	return (0);
 }
-

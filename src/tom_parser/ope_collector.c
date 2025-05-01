@@ -12,12 +12,12 @@
 
 #include "list.h"
 #include "strtools.h"
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 static void	nop(void *a)
 {
-	(void) a;
+	(void)a;
 }
 
 /// lst1が残っていない場合にはtrue
@@ -42,16 +42,15 @@ bool	str_list_cmp(t_str_list *lst1, t_str_list *lst2)
 	return (str_list_len(lst1) >= str_list_len(lst2));
 }
 
-static
-void search_string_pattern_replace_helper(
-	t_str_list **lst, t_str_list *pattern, int index)
+static void	search_string_pattern_replace_helper(t_str_list **lst,
+		t_str_list *pattern, int index)
 {
-	int incr;
-	t_anytype elem;
-	char *s;
+	int			incr;
+	t_anytype	elem;
+	char		*s;
 
 	incr = 0;
-	while (incr < str_list_len(pattern)) 
+	while (incr < str_list_len(pattern))
 	{
 		s = str_list_pop(lst, index);
 		free(s);
@@ -73,8 +72,7 @@ void search_string_pattern_replace_helper(
 ///
 /// patternを探す関数
 /// search_string_pattern_replace
-int	search_string_pattern_replace(\
-	t_str_list **lst, t_str_list *pattern)
+int	search_string_pattern_replace(t_str_list **lst, t_str_list *pattern)
 {
 	t_str_list	*i;
 	int			index;
@@ -85,9 +83,7 @@ int	search_string_pattern_replace(\
 	{
 		if (str_list_cmp(i, pattern))
 		{
-			search_string_pattern_replace_helper(
-				lst, pattern, index
-			);
+			search_string_pattern_replace_helper(lst, pattern, index);
 			return (1);
 		}
 		i = i->next;
@@ -113,10 +109,10 @@ int	ope_collector(t_str_list **lexed)
 		ptn[i] = NULL;
 		str_list_push(&ptn[i], table[i]);
 		str_list_push(&ptn[i], table[i]);
-		while (search_string_pattern_replace(lexed, ptn[i]) != 0);
+		while (search_string_pattern_replace(lexed, ptn[i]) != 0)
+			;
 		str_list_clear(&ptn[i], nop);
 		i += 1;
 	}
 	return (0);
 }
-

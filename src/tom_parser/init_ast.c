@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:10:42 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 18:11:03 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:30:34 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,3 @@ t_ast	*init_ast(void)
 	ast->ope = e_ope_none;
 	return (ast);
 }
-

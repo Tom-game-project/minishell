@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "list.h"
-#include "tom_parser.h"
 #include "private.h"
+#include "tom_parser.h"
 //#include "test_tools.h"
 #include <stdbool.h>
 #include <unistd.h>
@@ -25,7 +25,7 @@
 static bool	cur_out_of_quotation(t_cur_anchor *s)
 {
 	if (s->c == '\'')
-		*s -> anchor = e_in_q;
+		*s->anchor = e_in_q;
 	else if (s->c == '"')
 		*s->anchor = e_in_dq;
 	else if (s->c == '(')
@@ -54,7 +54,8 @@ static bool	cur_loop(t_cur_anchor *s)
 		if (cur_out_of_quotation(s))
 			return (true);
 	}
-	else if ((*s->anchor == e_in_dq && s->c == '"') || (*s->anchor == e_in_q && s->c == '\''))
+	else if ((*s->anchor == e_in_dq && s->c == '"') || (*s->anchor == e_in_q
+			&& s->c == '\''))
 	{
 		*s->anchor = e_outof_q;
 		if (*s->depth == 0)
@@ -67,7 +68,7 @@ static bool	cur_loop(t_cur_anchor *s)
 }
 
 /// 文字リストの先頭から一つ要素を取得
-static bool char_iter(t_char_list **clst, int idx, char *c)
+static bool	char_iter(t_char_list **clst, int idx, char *c)
 {
 	*c = char_list_get_elem(*clst, idx);
 	return (*c != '\0');
@@ -76,7 +77,7 @@ static bool char_iter(t_char_list **clst, int idx, char *c)
 /// ```bash
 /// ls -la &&(cat ) | "hello world"
 /// ```
-/// -ls -la &&(cat ) | "hello world"> 
+/// -ls -la &&(cat ) | "hello world">
 /// ```
 /// 'ls' '-la' '&&' '(cat )' '|' '"hello world"'
 /// ```
@@ -85,13 +86,13 @@ static bool char_iter(t_char_list **clst, int idx, char *c)
 /// ```
 /// `<`, `>`, `|`, `||`, `&&`, `<<`, `>>`
 /// ```
-static t_char_list *pre_lexer(t_char_list **clst)
+static t_char_list	*pre_lexer(t_char_list **clst)
 {
-	t_anchor p;
-	int depth;
-	int idx;
-	t_char_list *cut_list;
-	char c;
+	t_anchor	p;
+	int			depth;
+	int			idx;
+	t_char_list	*cut_list;
+	char		c;
 
 	depth = 0;
 	idx = 0;
@@ -99,8 +100,7 @@ static t_char_list *pre_lexer(t_char_list **clst)
 	cut_list = NULL;
 	while (char_iter(clst, idx, &c))
 	{
-		if (cur_loop(&(t_cur_anchor){\
-			c, &p, &depth, idx, clst, &cut_list}))
+		if (cur_loop(&(t_cur_anchor){c, &p, &depth, idx, clst, &cut_list}))
 			return (cut_list);
 		idx += 1;
 	}

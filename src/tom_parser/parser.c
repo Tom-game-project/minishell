@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:38:27 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/05/01 19:09:41 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:31:26 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,4 +136,3 @@ t_parse_result	tom_parser(char *input, t_ast **ast)
 	tom_parser_lexed(ast, lexed);
 	return (e_result_ok);
 }
-
