@@ -6,42 +6,34 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 21:30:16 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/04/21 21:30:48 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:09:08 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list.h"
+#include "tom_parser.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "tom_parser.h"
 
 static bool	is_ifs(char *c)
 {
-	return (
-		*c == ' ' || \
-		*c == '\t' || \
-		*c == '\n'
-	);
+	return (*c == ' ' || *c == '\t' || *c == '\n');
 }
 
 /// true -> break
 /// false -> continue
-static bool update_new_list_split_by_ifs(
-	t_str_list **lst,
-	t_str_list **new_lst,
-	void (*f)(void *)
-)
+static bool	update_new_list_split_by_ifs(t_str_list **lst, t_str_list **new_lst,
+		void (*f)(void *))
 {
-	int index;
-	t_str_list *tmp;
+	int			index;
+	t_str_list	*tmp;
 
-	index = str_list_search_index(*lst , is_ifs);
+	index = str_list_search_index(*lst, is_ifs);
 	if (index == -1)
 	{
 		str_list_push(new_lst, str_list_to_str(*lst));
 		str_list_clear(lst, f);
-		//break;
 		return (true);
 	}
 	else
@@ -61,7 +53,7 @@ static bool update_new_list_split_by_ifs(
 /// ```
 int	split_by_ifs(t_str_list **lst, void (*f)(void *))
 {
-	t_str_list *new_lst;
+	t_str_list	*new_lst;
 
 	new_lst = NULL;
 	if (str_list_len(*lst) == 0)
@@ -69,7 +61,7 @@ int	split_by_ifs(t_str_list **lst, void (*f)(void *))
 	while (1)
 	{
 		if (update_new_list_split_by_ifs(lst, &new_lst, f))
-			break;
+			break ;
 	}
 	str_list_clear(lst, f);
 	*lst = new_lst;

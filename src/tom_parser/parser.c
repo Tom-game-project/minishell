@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:38:27 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/21 18:40:17 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:09:41 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 
 	orig = *ast;
 	remove_ifs(&input);
-	// パイプのときは、str_list_search_index関数を使う
 	index = str_list_search_index(input, is_pipe_string);
 	if (index != -1)
 		return (parse_ope_string(orig, input, index));
