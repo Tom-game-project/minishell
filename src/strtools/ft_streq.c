@@ -40,4 +40,3 @@ bool	ft_streq(char *a, char *b)
 	else
 		return (false);
 }
-

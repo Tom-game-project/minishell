@@ -22,4 +22,3 @@ bool	includes_newline(char *str)
 	}
 	return (false);
 }
-

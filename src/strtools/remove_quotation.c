@@ -36,4 +36,3 @@ char	*remove_quotations(char *str)
 	*new_str = '\0';
 	return (tmp);
 }
-
