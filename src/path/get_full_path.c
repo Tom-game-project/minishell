@@ -68,4 +68,3 @@ char	*get_full_path(char *cmd, char *env_path)
 	}
 	return (rstr);
 }
-

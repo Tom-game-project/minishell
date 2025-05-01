@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "strtools.h"
 #include "list.h"
 #include "libft.h"
 #include <stdbool.h>

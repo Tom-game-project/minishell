@@ -20,7 +20,7 @@
 /// シンボリックリンクだった場合なども考慮して設定される
 int	set_stat(struct stat *path_stat, char *path)
 {
-	if (lstat(path, path_stat) != 0) 
+	if (lstat(path, path_stat) != 0)
 	{
 		perror("lstat");
 		return (-1);
@@ -35,4 +35,3 @@ int	set_stat(struct stat *path_stat, char *path)
 	}
 	return (0);
 }
-

@@ -40,10 +40,7 @@ int	create_shadow_file(int rw_fd[2])
 	rw_fd[0] = open(fullpath, O_RDONLY, 0664);
 	str_list_clear(&dlst, free);
 	if (rw_fd[0] < 0 || rw_fd[1] < 0)
-	{
-		perror("minishell");
-		return (-1);
-	}
+		return (perror("minishell"), -1);
 	if (unlink(fullpath) < 0)
 	{
 		perror("minishell: unlink");
