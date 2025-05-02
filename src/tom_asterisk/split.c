@@ -1,26 +1,38 @@
-#include "list.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 18:55:22 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/02 18:55:23 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
+#include "list.h"
 #include <stdlib.h>
 
-static bool is_slash(char *c)
+static bool	is_slash(char *c)
 {
 	return (*c == '/');
 }
 
 /// pathを分解する関数
-t_str_list *split_path_by_slash(char *path)
+t_str_list	*split_path_by_slash(char *path)
 {
-	t_char_list *char_lst;
-	t_str_list *str_lst;
-	int index;
+	t_char_list	*char_lst;
+	t_str_list	*str_lst;
+	int			index;
+		t_char_list *group_char_lst;
 
 	char_lst = NULL;
 	str_lst = NULL;
 	char_list_push_str(&char_lst, path);
 	index = char_list_search_index(char_lst, is_slash);
-	while(index != -1)
+	while (index != -1)
 	{
-		t_char_list *group_char_lst;
 		group_char_lst = char_list_cut(&char_lst, index);
 		str_list_push(&str_lst, char_list_to_str(group_char_lst));
 		index = char_list_search_index(char_lst, is_slash);
@@ -34,24 +46,22 @@ t_str_list *split_path_by_slash(char *path)
 	return (str_lst);
 }
 
-static int push_list_to_list(t_void_list **vec_vec_extoken, t_void_list *vec_extoken)
+static int	push_list_to_list(t_void_list **vec_vec_extoken,
+		t_void_list *vec_extoken)
 {
-	t_anytype elem;
+	t_anytype	elem;
 
 	elem.list = vec_extoken;
 	void_list_push(vec_vec_extoken, elem);
 	return (0);
 }
 
-static void split_token_list_by_slash_helper(
-	t_void_list *lst,
-	t_void_list **vec_vec_extoken,
-	t_void_list **vec_extoken
-)
+static void	split_token_list_by_slash_helper(t_void_list *lst,
+		t_void_list **vec_vec_extoken, t_void_list **vec_extoken)
 {
-	t_char_list *c_list;
-	t_char_list *group_char_lst;
-	int index;
+	t_char_list	*c_list;
+	t_char_list	*group_char_lst;
+	int			index;
 
 	c_list = NULL;
 	char_list_push_str(&c_list, lst->ptr.ex_token->str);
@@ -59,8 +69,8 @@ static void split_token_list_by_slash_helper(
 	while (index != -1)
 	{
 		group_char_lst = char_list_cut(&c_list, index);
-		void_list_push(vec_extoken,
-			alloc_ex_token(e_word, char_list_to_str(group_char_lst)));
+		void_list_push(vec_extoken, alloc_ex_token(e_word,
+				char_list_to_str(group_char_lst)));
 		push_list_to_list(vec_vec_extoken, *vec_extoken);
 		*vec_extoken = NULL;
 		char_list_clear(&group_char_lst);
@@ -68,13 +78,13 @@ static void split_token_list_by_slash_helper(
 	}
 	if (char_list_len(c_list) != 0)
 	{
-		void_list_push(vec_extoken,
-			alloc_ex_token(e_word, char_list_to_str(c_list)));
+		void_list_push(vec_extoken, alloc_ex_token(e_word,
+				char_list_to_str(c_list)));
 		char_list_clear(&c_list);
 	}
 }
 
-/// 
+///
 /// token_listを受け取って、スラッシュ区切りにする
 ///
 /// 返り値は二次元リストList<List<ex_token>>
@@ -84,10 +94,10 @@ static void split_token_list_by_slash_helper(
 /// - [(ccccc/)]
 /// - [(fileA)]
 /// ```
-t_void_list *split_token_list_by_slash(t_void_list *lst)
+t_void_list	*split_token_list_by_slash(t_void_list *lst)
 {
-	t_void_list *vec_vec_extoken;
-	t_void_list *vec_extoken;
+	t_void_list	*vec_vec_extoken;
+	t_void_list	*vec_extoken;
 
 	vec_vec_extoken = NULL;
 	vec_extoken = NULL;
@@ -95,11 +105,13 @@ t_void_list *split_token_list_by_slash(t_void_list *lst)
 	{
 		if (lst->ptr.ex_token->token_type == e_word)
 		{
-			split_token_list_by_slash_helper(lst, &vec_vec_extoken, &vec_extoken);
+			split_token_list_by_slash_helper(lst, &vec_vec_extoken,
+				&vec_extoken);
 		}
 		else
 		{
-			void_list_push(&vec_extoken, alloc_ex_token(e_asterisk, ft_strdup("*")));
+			void_list_push(&vec_extoken, alloc_ex_token(e_asterisk,
+					ft_strdup("*")));
 		}
 		lst = lst->next;
 	}
