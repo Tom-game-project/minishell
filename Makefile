@@ -239,6 +239,7 @@ TOM_ASTERISK_SRC=\
       src/tom_asterisk/set.c\
       src/tom_asterisk/split.c\
       src/tom_asterisk/filter.c\
+      src/tom_asterisk/clear.c\
 
 
 ENVTOOLS_SRC = \

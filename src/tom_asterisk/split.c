@@ -34,14 +34,44 @@ t_str_list *split_path_by_slash(char *path)
 	return (str_lst);
 }
 
-int
-push_list_to_list(t_void_list **vec_vec_extoken, t_void_list *vec_extoken)
+static int push_list_to_list(t_void_list **vec_vec_extoken, t_void_list *vec_extoken)
 {
 	t_anytype elem;
 
 	elem.list = vec_extoken;
 	void_list_push(vec_vec_extoken, elem);
 	return (0);
+}
+
+static void split_token_list_by_slash_helper(
+	t_void_list *lst,
+	t_void_list **vec_vec_extoken,
+	t_void_list **vec_extoken
+)
+{
+	t_char_list *c_list;
+	t_char_list *group_char_lst;
+	int index;
+
+	c_list = NULL;
+	char_list_push_str(&c_list, lst->ptr.ex_token->str);
+	index = char_list_search_index(c_list, is_slash);
+	while (index != -1)
+	{
+		group_char_lst = char_list_cut(&c_list, index);
+		void_list_push(vec_extoken,
+			alloc_ex_token(e_word, char_list_to_str(group_char_lst)));
+		push_list_to_list(vec_vec_extoken, *vec_extoken);
+		*vec_extoken = NULL;
+		char_list_clear(&group_char_lst);
+		index = char_list_search_index(c_list, is_slash);
+	}
+	if (char_list_len(c_list) != 0)
+	{
+		void_list_push(vec_extoken,
+			alloc_ex_token(e_word, char_list_to_str(c_list)));
+		char_list_clear(&c_list);
+	}
 }
 
 /// 
@@ -65,33 +95,7 @@ t_void_list *split_token_list_by_slash(t_void_list *lst)
 	{
 		if (lst->ptr.ex_token->token_type == e_word)
 		{
-			t_char_list *c_list;
-			int index;
-
-			c_list = NULL;
-			char_list_push_str(&c_list, lst->ptr.ex_token->str);
-			index = char_list_search_index(c_list, is_slash);
-			while (index != -1)
-			{
-				t_char_list *group_char_lst;
-
-				group_char_lst = char_list_cut(&c_list, index);
-				void_list_push(
-					&vec_extoken,
-				       	alloc_ex_token(e_word, char_list_to_str(group_char_lst)));
-				push_list_to_list(&vec_vec_extoken, vec_extoken);
-				vec_extoken = NULL;
-
-				char_list_clear(&group_char_lst);
-				index = char_list_search_index(c_list, is_slash);
-			}
-			if (char_list_len(c_list) != 0)
-			{
-				void_list_push(
-					&vec_extoken,
-				       	alloc_ex_token(e_word, char_list_to_str(c_list)));
-				char_list_clear(&c_list);
-			}
+			split_token_list_by_slash_helper(lst, &vec_vec_extoken, &vec_extoken);
 		}
 		else
 		{
@@ -105,24 +109,3 @@ t_void_list *split_token_list_by_slash(t_void_list *lst)
 	}
 	return (vec_vec_extoken);
 }
-
-static void free_ex_token(t_anytype elem)
-{
-	free(elem.ex_token->str);
-	free(elem.ex_token);
-	return ;
-}
-
-// リストの中のリストをクリアにする
-void
-clear_token_list(t_anytype elem)
-{
-	void_list_clear(&elem.list, free_ex_token);
-}
-
-int clear_split_token_list(t_void_list **token_list)
-{
-	void_list_clear(token_list, clear_token_list);
-	return (0);
-}
-
