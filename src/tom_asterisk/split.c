@@ -25,7 +25,7 @@ t_str_list	*split_path_by_slash(char *path)
 	t_char_list	*char_lst;
 	t_str_list	*str_lst;
 	int			index;
-		t_char_list *group_char_lst;
+	t_char_list	*group_char_lst;
 
 	char_lst = NULL;
 	str_lst = NULL;
