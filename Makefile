@@ -213,6 +213,8 @@ ERR_MSG_SRC =\
       src/err_msg/report_cd_home_not_set.c\
       src/err_msg/report_cd_oldpwd_not_set.c\
       src/err_msg/report_cd_too_many_arguments.c\
+      src/err_msg/report_parser_syntax_error.c\
+      src/err_msg/report_too_long_input.c\
 
 
 

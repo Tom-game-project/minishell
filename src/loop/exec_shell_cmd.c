@@ -6,6 +6,7 @@
 #include "loop_private.h"
 #include <limits.h>
 #include <unistd.h>
+#include "err_msg.h"
 
 // for test
 #include "test_tools.h"
@@ -18,7 +19,7 @@ static t_ast	*parser_wrap(char *input, bool *syntax_err_flag)
 	ast = NULL;
 	*syntax_err_flag = e_result_paren_not_closed_err == tom_parser(input, &ast);
 	if (*syntax_err_flag)
-		ft_putstr_fd("minishell : syntax error\n", STDERR_FILENO);
+		report_parser_syntax_error();
 	else
 		debug_dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
 	return (ast);
@@ -38,7 +39,7 @@ int	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 
 	if (INT_MAX < ft_strlen(str))
 	{
-		ft_putstr_fd("minishell : too long input\n", STDERR_FILENO);
+		report_too_long_input();
 		*exit_status = 1;
 		return (0);
 	}
