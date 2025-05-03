@@ -66,6 +66,24 @@ t_anchor	question_proc(
 	return (e_anchor_out);
 }
 
+
+static void anchor_out_proc_helper(char c, t_list_args *group_args, t_str_dict *env_dicts)
+{
+	if (!char_list_is_empty(*group_args->path_group))
+	{
+		if (is_valid_env_char(c))
+			char_list_push(group_args->path_group, c);
+		else
+		{
+			push_expand_env(group_args, env_dicts);
+			push_str_group2(group_args, e_word);
+			char_list_push(group_args->str_group, c);
+		}
+	}
+	else
+		char_list_push(group_args->str_group, c);
+}
+
 /// クォーテーション外の処理
 /// ここで、アスタリスクをトークンとして解釈する
 t_anchor anchor_out_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
@@ -84,22 +102,7 @@ t_anchor anchor_out_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 		void_list_push(group_args->rlist, alloc_ex_token(e_asterisk, ft_strdup("*")));
 	}
 	else
-		if (!char_list_is_empty(*group_args->path_group))
-			if (is_valid_env_char(c))
-			{
-				char_list_push(group_args->path_group, c);
-			}
-			else
-			{
-				push_expand_env(group_args, env_dicts);
-				push_str_group2(group_args, e_word);
-				char_list_push(group_args->str_group, c);
-			}
-		else
-		{
-			//debug_dprintf(STDERR_FILENO, "[%c] \n" , c);
-			char_list_push(group_args->str_group, c);
-		}
+		anchor_out_proc_helper(c, group_args, env_dicts);
 	return (e_anchor_out);
 }
 
