@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 20:23:48 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/04/30 20:08:50 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:52:40 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "private.h"
 
 
-t_anchor	anchor_dq_proc(char c, t_list_args *group_args,
-		t_str_dict *env_dicts)
+t_anchor	anchor_dq_proc(char c, t_list_args *group_args, \
+t_str_dict *env_dicts)
 {
 	if (c == '"')
 	{

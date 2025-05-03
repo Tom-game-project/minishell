@@ -12,35 +12,31 @@
 
 #include "built_in.h"
 #include "dict.h"
+#include "exec.h"
+#include "heredoc/heredoc.h"
 #include "list.h"
 #include "parser.h"
-#include "exec.h"
-#include "utils/utils.h"
-#include "heredoc/heredoc.h"
-
-#include <stdio.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdlib.h>
-
 #include "sig.h"
 #include "strtools.h"
+#include "utils/utils.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 /// ビルトインコマンドへ振り分ける関数
 ///
 /// argsは環境変数展開後のものである必要がある
-int run_cmd_proc_switcher2(
-	t_exec_args *exec_args,
-       	t_str_list *args,
-       	t_built_in	tbi
-)
+int	run_cmd_proc_switcher2(t_exec_args *exec_args, t_str_list *args,
+		t_built_in tbi)
 {
 	if (tbi == e_not_built_in)
 	{
 		if (exec_args->ppid == 0)
 			return (execve_wrap2(args, *exec_args->envp_dict));
 		else
-			return (none_proc2(exec_args->input_fd, exec_args->output_fd, args, *exec_args->envp_dict));
+			return (none_proc2(exec_args->input_fd, exec_args->output_fd, args,
+					*exec_args->envp_dict));
 	}
 	else if (tbi == e_built_in_pwd)
 		return (built_in_pwd(exec_args->output_fd));
@@ -60,20 +56,19 @@ int run_cmd_proc_switcher2(
 		return (1);
 }
 
-static bool is_junk(t_anytype elem)
+static bool	is_junk(t_anytype elem)
 {
 	return (ft_streq(elem.str, ""));
 }
 
-
 /// コマンドが実際に実行される場所
-/// 
+///
 int	run_cmd_proc(t_exec_args *exec_args)
 {
 	t_built_in	tbi;
 	t_str_list	*args;
-	int exit_status;
-	t_str_list *junk;
+	int			exit_status;
+	t_str_list	*junk;
 
 	if (str_list_len(exec_args->ast->arg) == 0)
 		return (0);
@@ -126,7 +121,7 @@ int	exec2(t_exec_args *args)
 /// (cat) < infile -e
 /// ```
 /// これは文法のエラーになる
-/// 
+///
 int	exec(t_ast *ast, t_str_dict **envp_dict)
 {
 	int			exit_status;
@@ -141,15 +136,8 @@ int	exec(t_ast *ast, t_str_dict **envp_dict)
 		return (130);
 	}
 	set_sigint_ignore();
-	exit_status = exec2(\
-		&(t_exec_args){
-			ast, \
-			envp_dict, \
-			&heredoc_fd_list, \
-			STDIN_FILENO, \
-			STDOUT_FILENO, \
-			-1
-		});
+	exit_status = exec2(&(t_exec_args){ast, envp_dict, &heredoc_fd_list,
+			STDIN_FILENO, STDOUT_FILENO, -1});
 	close_all_heredoc_fd(&heredoc_fd_list);
 	return (exit_status);
 }

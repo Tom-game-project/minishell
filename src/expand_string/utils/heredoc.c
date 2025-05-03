@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 20:16:13 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/12 20:23:33 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:48:25 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,3 @@ t_anchor	anchor_heredoc_proc(\
 	}
 	return (e_anchor_out);
 }
-

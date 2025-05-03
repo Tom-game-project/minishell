@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   out_of_quotation.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 18:51:22 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/03 18:51:24 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // out of quotation
 #include "list.h"
 #include "dict.h"
@@ -88,9 +100,9 @@ static void anchor_out_proc_helper(char c, t_list_args *group_args, t_str_dict *
 /// ここで、アスタリスクをトークンとして解釈する
 t_anchor anchor_out_proc(char c, t_list_args *group_args, t_str_dict *env_dicts)
 {
-	if (c == '\'') // quotation open
+	if (c == '\'')
 		return (single_quotation_proc(c, group_args, env_dicts));
-	else if (c == '"')// double quotation open
+	else if (c == '"')
 		return (double_quotation_proc(c, group_args, env_dicts));
 	else if (c == '$')
 		return (dollar_proc(c, group_args, env_dicts));

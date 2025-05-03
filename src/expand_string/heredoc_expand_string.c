@@ -10,15 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "dict.h"
+#include "expand_string.h"
 #include "libft.h"
 #include "list.h"
-#include "dict.h"
 #include "path.h"
-#include "expand_string.h"
-
 #include <fcntl.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifndef BUF_SIZE
 # define BUF_SIZE 1024
@@ -84,7 +83,7 @@ static t_str_list	*char_list2str_list(t_char_list **lst, t_str_dict *env_dict)
 }
 
 /// リストの内容を隠しファイルに書き込み
-/// 読み込み専用のfdを返却する関数 
+/// 読み込み専用のfdを返却する関数
 int	str_list2shadowfile_fd(t_str_list *expanded)
 {
 	int	rw_fd[2];
@@ -117,4 +116,3 @@ int	heredoc_expand_string_via_fd(int fd, t_str_dict *env_dict)
 	str_list_clear(&expanded, free);
 	return (rfd);
 }
-

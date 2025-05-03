@@ -1,29 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_string2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 18:47:01 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/03 18:47:02 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /// # expand_string.c
 ///
 /// 環境変数の展開をする
 ///
 #include "dict.h"
 #include "list.h"
+#include "utils/private.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <unistd.h>
-#include "utils/private.h"
 
-static t_anchor expand_string2list2_loop_proc(
-	t_anchor anc, char *str, t_list_args lst_args, t_str_dict *env_dicts)
+static t_anchor	expand_string2list2_loop_proc(t_anchor anc, char *str,
+		t_list_args lst_args, t_str_dict *env_dicts)
 {
 	if (anc == e_anchor_out)
-		return anchor_out_proc(*str, &lst_args, env_dicts);
+		return (anchor_out_proc(*str, &lst_args, env_dicts));
 	else if (anc == e_anchor_q)
-		return anchor_q_proc(*str, &lst_args);
+		return (anchor_q_proc(*str, &lst_args));
 	else if (anc == e_anchor_dq)
-		return anchor_dq_proc(*str, &lst_args, env_dicts);
+		return (anchor_dq_proc(*str, &lst_args, env_dicts));
 	return (anc);
 }
 
 /// 文字列の展開
-/// 
+///
 /// example
 /// ```
 /// "\"  $PATH  \"\"   hello  \""
@@ -67,4 +79,3 @@ t_void_list	*expand_string2list2(char *str, t_str_dict *env_dicts)
 	push_str_group2(&lst_args, e_word);
 	return (rlist);
 }
-

@@ -16,14 +16,14 @@
 ///
 #include "dict.h"
 #include "list.h"
+#include "utils/private.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <unistd.h>
-#include "utils/private.h"
 
 /// 文字列の展開
-/// 
+///
 /// example
 /// ```
 /// "\"  $PATH  \"\"   hello  \""
@@ -43,7 +43,7 @@
 /// ```
 /// return new_string
 
-static void free_token_list(t_anytype elem)
+static void	free_token_list(t_anytype elem)
 {
 	free(elem.ex_token->str);
 	free(elem.ex_token);
@@ -60,19 +60,12 @@ t_void_list	*heredoc_expand_string2list(char *str, t_str_dict *env_dicts)
 	rlist = NULL;
 	while (*str != '\0')
 	{
-		anchor_heredoc_proc(\
-			*str, \
-			&(t_list_args){\
-				&rlist, \
-				&path_group, \
-				&str_group}, \
-			env_dicts);
+		anchor_heredoc_proc(*str, &(t_list_args){&rlist, &path_group,
+			&str_group}, env_dicts);
 		str++;
 	}
-	push_expand_env(&(t_list_args){
-		&rlist, &path_group, &str_group}, env_dicts);
-	push_str_group2(&(t_list_args){
-		&rlist, &path_group, &str_group}, e_word);
+	push_expand_env(&(t_list_args){&rlist, &path_group, &str_group}, env_dicts);
+	push_str_group2(&(t_list_args){&rlist, &path_group, &str_group}, e_word);
 	return (rlist);
 }
 
@@ -86,4 +79,3 @@ char	*heredoc_expand_string(char *str, t_str_dict *env_dicts)
 	void_list_clear(&lst, free_token_list);
 	return (rstr);
 }
-
