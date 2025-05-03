@@ -15,6 +15,8 @@
 #include <limits.h>
 #include <unistd.h>
 
+static int	case_dquotes(char *input, char find);
+static int	case_quote(char *input, char find);
 static int	find_chr(char *input, char find);
 
 int	find_syntax(char *input)//syntaxエラーの時はマイナス値を返すように設計
@@ -41,8 +43,8 @@ static int	find_chr(char *input, char find)
 	int	count;
 
 	i = 0;
-	count = case_dquotes(imput);
-	count += case_quote(imput);
+	count = case_dquotes(input, find);
+	count += case_quote(input, find);
 	while (input[i] != '\0')
 	{
 		if (find != '"' && find != '\'')
@@ -63,7 +65,7 @@ static int	find_chr(char *input, char find)
 	return (INT_MIN);
 }
 
-static int	case_dquotes(char *imput)
+static int	case_dquotes(char *input, char find)
 {
 	int	i;
 	int	count;
@@ -84,7 +86,7 @@ static int	case_dquotes(char *imput)
 	return (count);
 }
 
-static int	case_quote(char *imput)
+static int	case_quote(char *input, char find)
 {
 	int	i;
 	int	count;

@@ -6,9 +6,12 @@
 /*   By: kaara <kaara@student.42.jp>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:31:35 by kaara             #+#    #+#             */
-/*   Updated: 2025/05/03 15:32:07 by kaara            ###   ########.fr       */
+/*   Updated: 2025/05/03 20:27:50 by kaara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ast_checker.h"
+#include "libft.h"
 
 bool	is_control_operators(char *element)
 {

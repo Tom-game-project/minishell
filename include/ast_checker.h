@@ -31,6 +31,8 @@ enum e_syntax_result
 	e_rdt_no_element_left_and_left,
 };
 
+typedef t_syntax_result (*t_check_func)(t_ast *);
+
 bool ast_checker_wrap2(t_ast **ast);
 
 //ast_checker.c

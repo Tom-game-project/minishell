@@ -6,7 +6,7 @@
 /*   By: kaara <kaara@student.42.jp>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:56:12 by kaara             #+#    #+#             */
-/*   Updated: 2025/05/03 15:02:07 by kaara            ###   ########.fr       */
+/*   Updated: 2025/05/03 20:06:45 by kaara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_syntax_result	ast_checker(t_ast	*ast)
 	check_result = ast_checker(ast->right_ast);
 	return (check_result);
 }
-// typedef t_syntax_result (*t_check_func)(t_ast *);
 
 static t_syntax_result	syntax_check(t_ast	*ast)
 {

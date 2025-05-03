@@ -147,6 +147,7 @@ PARSER_SRC = \
       src/parser/clear_ast.c\
       src/parser/find_chr.c\
       src/parser/checker_is.c\
+      src/parser/checker_is2.c \
 
 
 TOM_PARSER_SRC = \
