@@ -1,19 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 18:27:10 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/03 18:27:11 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "list.h"
-
-#include <stdlib.h>
 #include <limits.h>
-
+#include <stdlib.h>
 
 /// exit_statusに色をつける関数
-static void error_color(t_char_list **lst, int exit_status)
+static void	error_color(t_char_list **lst, int exit_status)
 {
-	char *exit_str;
+	char	*exit_str;
 
 	exit_str = ft_itoa(exit_status);
 	if (exit_status == 0)
 		char_list_push_str(lst, "\e[32m [");
-	else 
+	else
 		char_list_push_str(lst, "\e[31m [");
 	char_list_push_str(lst, exit_str);
 	char_list_push_str(lst, "]\e[m");

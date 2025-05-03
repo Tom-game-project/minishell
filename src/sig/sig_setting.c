@@ -28,7 +28,7 @@ int	sig_settig(void)
 	return (0);
 }
 
-int set_sigint_default(void)
+int	set_sigint_default(void)
 {
 	struct sigaction	sa_sigact;
 
@@ -39,7 +39,7 @@ int set_sigint_default(void)
 	return (0);
 }
 
-int set_sigint_ignore(void)
+int	set_sigint_ignore(void)
 {
 	struct sigaction	sa_sigact;
 
@@ -50,7 +50,7 @@ int set_sigint_ignore(void)
 	return (0);
 }
 
-int set_sigint_handle_sig(void)
+int	set_sigint_handle_sig(void)
 {
 	struct sigaction	sa_sigact;
 

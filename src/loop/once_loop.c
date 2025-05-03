@@ -1,9 +1,21 @@
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "loop_private.h"
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   once_loop.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 18:27:04 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/03 18:32:43 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static char	*none_device_readline()
+#include "libft.h"
+#include "loop_private.h"
+#include <readline/history.h>
+#include <readline/readline.h>
+
+static char	*none_device_readline(void)
 {
 	char		c;
 	t_char_list	*lst;
@@ -24,10 +36,11 @@ static char	*none_device_readline()
 	return (str);
 }
 
-t_loop_cntl	device_once_loop(int *exit_status, bool *newline_flag, t_str_dict **env_dict)
+t_loop_cntl	device_once_loop(int *exit_status, bool *newline_flag,
+		t_str_dict **env_dict)
 {
-	char *input;
-	char *prompt_str;
+	char		*input;
+	char		*prompt_str;
 	t_loop_cntl	lctl;
 
 	prompt_str = prompt(*exit_status);
@@ -38,10 +51,10 @@ t_loop_cntl	device_once_loop(int *exit_status, bool *newline_flag, t_str_dict **
 	return (lctl);
 }
 
-t_loop_cntl
-none_device_once_loop(int *exit_status, bool *newline_flag, t_str_dict **env_dict)
+t_loop_cntl	none_device_once_loop(int *exit_status, bool *newline_flag,
+		t_str_dict **env_dict)
 {
-	char *input;
+	char		*input;
 	t_loop_cntl	lctl;
 
 	input = none_device_readline();

@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 20:11:44 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/03/12 20:11:59 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:40:40 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,3 @@ char	*get_key_from_envp_ptr(char *str)
 	}
 	return (ft_substr(str_tmp, 0, l));
 }
-

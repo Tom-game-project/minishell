@@ -1,14 +1,25 @@
-#include "loop_private.h"
-#include <signal.h>
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   loop_unit.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 18:27:19 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/03 18:27:19 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "envtools.h"
-
-
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
+#include "loop_private.h"
 #include "sig.h"
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <signal.h>
 
-static t_loop_cntl device_loop_unit_head_setting(char *input, int *exit_status, bool *newline_flag)
+static t_loop_cntl	device_loop_unit_head_setting(char *input, int *exit_status,
+		bool *newline_flag)
 {
 	if (g_signal_number == SIGINT)
 	{
@@ -23,7 +34,7 @@ static t_loop_cntl device_loop_unit_head_setting(char *input, int *exit_status, 
 	}
 	else if (input == NULL)
 	{
-		ft_putstr_fd("exit\n" ,STDERR_FILENO);
+		ft_putstr_fd("exit\n", STDERR_FILENO);
 		return (e_break);
 	}
 	else
@@ -31,12 +42,12 @@ static t_loop_cntl device_loop_unit_head_setting(char *input, int *exit_status, 
 }
 
 /// 一回のloop
-t_loop_cntl	loop_unit(\
-	char *input, int *exit_status, t_str_dict **env_dict, bool *newline_flag)
+t_loop_cntl	loop_unit(char *input, int *exit_status, t_str_dict **env_dict,
+		bool *newline_flag)
 {
-	int flag;
-	t_loop_cntl cntl;
-	
+	int			flag;
+	t_loop_cntl	cntl;
+
 	cntl = device_loop_unit_head_setting(input, exit_status, newline_flag);
 	if (cntl != e_through)
 		return (cntl);
