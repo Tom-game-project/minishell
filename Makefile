@@ -261,6 +261,8 @@ LOOP_SRC = \
      src/loop/prompt.c\
      src/loop/exec_ast.c\
      src/loop/exec_shell_cmd.c\
+     src/loop/loop_unit.c\
+     src/loop/once_loop.c\
 
 
 SIG_SRC = \

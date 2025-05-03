@@ -46,16 +46,11 @@ int	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 	if (syntax_error_flag == 1) // syntax error
 	{
 		*exit_status = 1;
-		clear_ast(&ast);
-		return (0);
+		return (clear_ast(&ast), 0);
 	}
 	result = ast_checker(ast);
 	if (result == e_no_input)
-	{
-		clear_ast(&ast);
-		return (0);
-	}
+		return (clear_ast(&ast),0);
 	*exit_status = exec_ast(ast, env_dict, result);
-	clear_ast(&ast);
-	return (1);
+	return (clear_ast(&ast), 1);
 }

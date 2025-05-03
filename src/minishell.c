@@ -51,6 +51,21 @@ int	header(void)
 	return (0);
 }
 
+static int set_none_device_stdin(char *filename)
+{
+	int fd;
+
+	fd = open(filename, O_RDONLY, 0644);
+	if (fd == -1)
+	{
+		perror("minishell");
+		return (1);
+	}
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	return(0);
+}
+
 /// # ノンデバイスモード
 ///
 /// ```bash
@@ -72,19 +87,12 @@ int	header(void)
 /// ```
 int	main(int argc, char *argv[], char *envp[])
 {
-	int	fd;
 	int	exit_status;
 
-	fd = -1;
 	if (1 < argc)
 	{
-		fd = open(argv[1], O_RDONLY, 0644);
-		if (fd == -1)
-		{
-			perror("minishell");
+		if (set_none_device_stdin(argv[1]) == 1)
 			return (1);
-		}
-		dup2(fd, STDIN_FILENO);
 	}
 	if (isatty(STDIN_FILENO))
 	{
@@ -93,7 +101,5 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	else
 		exit_status = none_device_main_loop(envp);
-	if (fd != -1)
-		close(fd);
 	return (exit_status);
 }
