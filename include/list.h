@@ -198,6 +198,8 @@ t_void_list						*token_list_clone(t_void_list *lst,
 
 char							*token_list_join(t_void_list *lst);
 
+void	free_ex_token(t_anytype elem);
+
 /// ================ void_list functions ================
 
 int								list_list_print(t_void_list *list,

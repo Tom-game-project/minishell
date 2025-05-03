@@ -114,6 +114,7 @@ TOKEN_LIST = \
 	     src/list/alloc_ex_token.c\
 	     src/list/token_list_join.c\
 	     src/list/token_list_clone.c\
+	     src/list/free_ex_token.c\
 
 
 LIST_LIST = \
@@ -222,6 +223,7 @@ ERR_MSG_SRC =\
 EXEC_SRC=\
       src/exec/exec.c\
       src/exec/expand.c\
+      src/exec/expand_env_var.c\
       src/exec/utils/exec_none_proc.c\
       src/exec/utils/exec_and_proc.c\
       src/exec/utils/exec_or_proc.c\
@@ -261,6 +263,7 @@ STRTOOLS_SRC = \
      src/strtools/ft_streq.c\
      src/strtools/includes_newline.c\
      src/strtools/remove_quotation.c\
+     src/strtools/cmp_str.c\
 
 
 LOOP_SRC = \

@@ -13,11 +13,14 @@
 #ifndef STRTOOLS_H
 # define STRTOOLS_H
 # include <stdbool.h>
+# include "list.h"
 
 bool	ft_streq(char *a, char *b);
 
 bool	includes_newline(char *str);
 
 char	*remove_quotations(char *str);
+
+bool	cmp_str(t_anytype a, t_anytype b);
 
 #endif

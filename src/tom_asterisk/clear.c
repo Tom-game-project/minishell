@@ -11,14 +11,6 @@
 /* ************************************************************************** */
 
 #include "list.h"
-#include <stdlib.h>
-
-static void	free_ex_token(t_anytype elem)
-{
-	free(elem.ex_token->str);
-	free(elem.ex_token);
-	return ;
-}
 
 // リストの中のリストをクリアにする
 static void	clear_token_list(t_anytype elem)

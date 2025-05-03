@@ -34,13 +34,6 @@ static char	*remove_slash(char *str)
 		return (ft_strdup(str));
 }
 
-static void	free_ex_token(t_anytype elem)
-{
-	free(elem.ex_token->str);
-	free(elem.ex_token);
-	return ;
-}
-
 /// スラッシュを取り除いた新しいリストを返却する関数
 static t_void_list	*remove_slash_from_rule_list(t_void_list *lst)
 {
