@@ -23,4 +23,11 @@ int		report_no_such_file_or_directory(char *cmd);
 
 int		report_permission_denied(char *cmd);
 
+// cd
+
+
+int report_cd_too_many_arguments(void);
+int report_cd_oldpwd_not_set(void);
+int report_cd_home_not_set(void);
+
 #endif

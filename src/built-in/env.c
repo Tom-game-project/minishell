@@ -45,4 +45,3 @@ int	built_in_env(t_str_dict *envp_dict, int fd)
 	free(envp);
 	return (exit_status);
 }
-

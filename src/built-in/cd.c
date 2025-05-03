@@ -10,14 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <linux/limits.h>
 #include "dict.h"
 #include "list.h"
 #include "libft.h"
-#include <unistd.h>
-#include <stdio.h>
 #include "strtools.h"
 #include "test_tools.h"
+#include "err_msg.h"
+
+#include <linux/limits.h>
+#include <unistd.h>
+#include <stdio.h>
 
 #define OLDPWD "OLDPWD"
 #define HOME "HOME"
@@ -46,7 +48,6 @@ static int	update_oldpwd(t_str_dict **envp_list)
 	return (1);
 }
 
-
 static char	*get_cd_path(t_str_list *args, t_str_dict **envp_list)
 {
 	char		*path;
@@ -56,10 +57,7 @@ static char	*get_cd_path(t_str_list *args, t_str_dict **envp_list)
 	{
 		d = get_str_dict_by_key(*envp_list, HOME);
 		if (d == NULL || ft_streq(d->value, ""))
-		{
-			ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
-			return (NULL);
-		}
+			return (report_cd_home_not_set(), NULL);
 		return (ft_strdup(d->value));
 	}
 	path = str_list_get_elem(args, 1);
@@ -67,10 +65,7 @@ static char	*get_cd_path(t_str_list *args, t_str_dict **envp_list)
 	{
 		d = get_str_dict_by_key(*envp_list, OLDPWD);
 		if (d == NULL || ft_streq(d->value, ""))
-		{
-			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
-			return (NULL);
-		}
+			return (report_cd_oldpwd_not_set(), NULL);
 		return (ft_strdup(d->value));
 	}
 	else
@@ -94,7 +89,7 @@ int	built_in_cd(t_str_list *args, t_str_dict **envp_list)
 
 	if (2 < str_list_len(args))
 	{
-		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
+		report_cd_too_many_arguments();
 		return (1);
 	}
 	path = get_cd_path(args, envp_list);

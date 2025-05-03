@@ -209,7 +209,12 @@ ERR_MSG_SRC =\
       src/err_msg/report_command_not_found.c\
       src/err_msg/report_is_a_directory.c\
       src/err_msg/report_no_such_file_or_directory.c\
-      src/err_msg/report_permission_denied.c
+      src/err_msg/report_permission_denied.c\
+      src/err_msg/report_cd_home_not_set.c\
+      src/err_msg/report_cd_oldpwd_not_set.c\
+      src/err_msg/report_cd_too_many_arguments.c\
+
+
 
 
 EXEC_SRC=\

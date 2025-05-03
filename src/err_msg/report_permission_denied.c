@@ -13,8 +13,6 @@
 #include "err_msg.h"
 #include <stdlib.h>
 
-/// TODO あとで関数の名前を変更する
-///
 /// exit_status が、126だったときに
 int	report_permission_denied(char *cmd)
 {

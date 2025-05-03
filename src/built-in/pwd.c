@@ -19,7 +19,6 @@
 
 #include "libft.h"
 
-
 /// 
 /// 返り値exit_status
 ///
