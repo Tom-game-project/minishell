@@ -15,8 +15,8 @@
 
 # include "parser.h"
 
-typedef t_syntax_result			(*t_check_func)(t_ast *);
 typedef enum e_syntax_result	t_syntax_result;
+typedef t_syntax_result			(*t_check_func)(t_ast *);
 
 enum e_syntax_result
 {
