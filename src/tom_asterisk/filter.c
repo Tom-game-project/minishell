@@ -21,14 +21,9 @@ static t_anytype	copy_token_list_node(t_anytype elem)
 			ft_strdup(elem.ex_token->str)));
 }
 
-static bool	endwith_slash(char *str)
-{
-	return (str[ft_strlen(str) - 1] == '/');
-}
-
 static char	*remove_slash(char *str)
 {
-	if (endwith_slash(str))
+	if (str[ft_strlen(str) - 1] == '/')
 		return (ft_substr(str, 0, ft_strlen(str) - 1));
 	else
 		return (ft_strdup(str));
@@ -40,10 +35,12 @@ static t_void_list	*remove_slash_from_rule_list(t_void_list *lst)
 	t_void_list	*rlist;
 	t_void_list	*last_elem;
 	t_anytype	elem;
+	char *str;
 
 	rlist = token_list_clone(lst, copy_token_list_node);
 	last_elem = void_list_get_elem(rlist, void_list_len(lst) - 1);
-	if (endwith_slash(last_elem->ptr.ex_token->str))
+	str = last_elem->ptr.ex_token->str;
+	if (str[ft_strlen(str) - 1] == '/')
 	{
 		void_list_pop(&rlist, void_list_len(lst) - 1, &elem);
 		void_list_push(&rlist, alloc_ex_token(e_word,
@@ -67,25 +64,17 @@ static bool	func_wrap(t_anytype a, t_anytype b)
 	return (r);
 }
 
-/// 引数に与えられたリストから、ルールに従っているパターンのディレクトリ及びファイル名を取り出す関数
-t_str_list	*filter_paths_by_rule(t_str_list **node, t_void_list *rule_list)
-{
-	t_anytype	rule_str_anytype;
-
-	rule_str_anytype.list = rule_list;
-	return (void_list_filter2(node, func_wrap, rule_str_anytype));
-}
-
-/// TODO 修正の必要あり
 /// リムーブした場合、ディレクトリを探している場合はディレクトリかどうかをチェックする
 t_str_list	*filter_paths_by_rule_wrap(t_str_list **curr_lst,
 		t_void_list *rule_list)
 {
 	t_str_list	*filtered;
 	t_void_list	*slash_removed_str;
+	t_anytype	rule_str_anytype;
 
-	slash_removed_str = remove_slash_from_rule_list(rule_list); // TODO
-	filtered = filter_paths_by_rule(curr_lst, slash_removed_str);
+	slash_removed_str = remove_slash_from_rule_list(rule_list);
+	rule_str_anytype.list = slash_removed_str;
+	filtered = void_list_filter2(curr_lst, func_wrap, rule_str_anytype);
 	void_list_clear(&slash_removed_str, free_ex_token);
 	return (filtered);
 }
