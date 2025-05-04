@@ -139,9 +139,12 @@ EXPAND_STRING_SRC = \
       src/expand_string/utils/out_of_quotation.c\
       src/expand_string/utils/push_expand_env.c\
       src/expand_string/utils/push_str_group.c\
+      src/expand_string/utils/dollar_proc.c\
+      src/expand_string/utils/question_proc.c\
       src/expand_string/expand_string.c\
       src/expand_string/expand_string2.c\
       src/expand_string/heredoc_expand_string.c\
+      src/expand_string/char_list2str_list.c\
 
 
 PARSER_SRC = \
