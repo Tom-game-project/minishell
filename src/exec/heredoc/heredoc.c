@@ -10,35 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "heredoc.h"
 #include "libft.h"
-
-#include <unistd.h>
+#include "list.h"
+#include "sig.h"
 #include <fcntl.h>
-#include <string.h>
 #include <signal.h>
-
 #include <stdio.h>
-#include <stdio.h>
+#include <string.h>
 #include <termios.h>
 #include <unistd.h>
-#include "sig.h"
-#include "heredoc.h"
 
-static int putchar_switcher(char c, int fd)
+static int	putchar_switcher(char c, int fd)
 {
 	if (isatty(STDIN_FILENO))
 		ft_putchar_fd(c, fd);
 	return (0);
 }
 
-t_private read_heredocline_helper2(
-	char *eof,
-       	int fd,
-	t_char_list **lst
-)
+t_private	read_heredocline_helper2(char *eof, int fd, t_char_list **lst)
 {
-	unsigned char c;
+	unsigned char	c;
 
 	if (read(STDIN_FILENO, &c, BUF_SIZE) <= 0)
 		return (e_break);
@@ -54,32 +46,32 @@ t_private read_heredocline_helper2(
 		putchar_switcher(c, STDOUT_FILENO);
 		return (e_continue);
 	}
-	else 
+	else
 		char_list_push(lst, c);
 	return (e_continue);
 }
 
-void enable_raw_mode(struct termios *orig_termios) {
-    struct termios raw;
-    tcgetattr(STDIN_FILENO, orig_termios);
-    raw = *orig_termios;
-    raw.c_lflag &= ~(ECHO | ICANON);
-    tcsetattr(STDIN_FILENO, TCSANOW, &raw);
-}
-
-void disable_raw_mode(struct termios *orig_termios) {
-    tcsetattr(STDIN_FILENO, TCSANOW, orig_termios);
-}
-
-int read_heredocline2(
-	char *eof,
-       	int fd
-)
+void	enable_raw_mode(struct termios *orig_termios)
 {
-	struct termios orig_termios;
-	t_char_list *lst;
-	t_private p;
-	int exit_status;
+	struct termios	raw;
+
+	tcgetattr(STDIN_FILENO, orig_termios);
+	raw = *orig_termios;
+	raw.c_lflag &= ~(ECHO | ICANON);
+	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
+}
+
+void	disable_raw_mode(struct termios *orig_termios)
+{
+	tcsetattr(STDIN_FILENO, TCSANOW, orig_termios);
+}
+
+int	read_heredocline2(char *eof, int fd)
+{
+	struct termios	orig_termios;
+	t_char_list		*lst;
+	t_private		p;
+	int				exit_status;
 
 	enable_raw_mode(&orig_termios);
 	lst = NULL;

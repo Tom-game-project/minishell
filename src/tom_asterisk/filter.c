@@ -35,7 +35,7 @@ static t_void_list	*remove_slash_from_rule_list(t_void_list *lst)
 	t_void_list	*rlist;
 	t_void_list	*last_elem;
 	t_anytype	elem;
-	char *str;
+	char		*str;
 
 	rlist = token_list_clone(lst, copy_token_list_node);
 	last_elem = void_list_get_elem(rlist, void_list_len(lst) - 1);

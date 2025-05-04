@@ -10,27 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
+#include "heredoc.h"
 #include "libft.h"
+#include "list.h"
 #include "strtools.h"
-
-#include <unistd.h>
 #include <fcntl.h>
-
 #include <termios.h>
 #include <unistd.h>
-#include "heredoc.h"
 
-int put_switcher(char *str, int fd)
+int	put_switcher(char *str, int fd)
 {
 	if (isatty(STDIN_FILENO))
 		ft_putstr_fd(str, fd);
 	return (0);
 }
 
-t_private read_heredocline_helper2_eot(
-	t_char_list **lst
-)
+t_private	read_heredocline_helper2_eot(t_char_list **lst)
 {
 	if (char_list_len(*lst) == 0)
 	{
@@ -41,9 +36,7 @@ t_private read_heredocline_helper2_eot(
 		return (e_continue);
 }
 
-t_private read_heredocline_helper2_baskspace(
-	t_char_list **lst
-)
+t_private	read_heredocline_helper2_baskspace(t_char_list **lst)
 {
 	if (0 < char_list_len(*lst))
 	{
@@ -53,12 +46,10 @@ t_private read_heredocline_helper2_baskspace(
 	return (e_continue);
 }
 
-t_private read_heredocline_helper2_newline(
-	char *eof,
-       	int fd,
-	t_char_list **lst
-){
-	char *str;
+t_private	read_heredocline_helper2_newline(char *eof, int fd,
+		t_char_list **lst)
+{
+	char	*str;
 
 	char_list_push(lst, '\n');
 	str = char_list_to_str(*lst);
@@ -79,4 +70,3 @@ t_private read_heredocline_helper2_newline(
 	char_list_clear(lst);
 	return (e_continue);
 }
-

@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include "dict.h"
+#include "exec.h"
 #include "list.h"
 #include <stdlib.h>
 #include <unistd.h>
-#include "exec.h"
 
 static void	free_vec_vec_str(t_anytype elem)
 {
@@ -26,7 +26,7 @@ t_str_list	*expand_env_vars(t_str_list *args, t_str_dict *env)
 {
 	t_void_list	*vec_vec_str;
 	t_str_list	*rlist;
-		t_anytype elem;
+	t_anytype	elem;
 
 	vec_vec_str = NULL;
 	while (args != NULL)

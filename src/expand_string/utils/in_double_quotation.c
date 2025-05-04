@@ -15,8 +15,8 @@
 #include "list.h"
 #include "private.h"
 
-static void anchor_dq_proc_helper(char c, t_list_args *group_args, \
-t_str_dict *env_dicts)
+static void	anchor_dq_proc_helper(char c, t_list_args *group_args,
+		t_str_dict *env_dicts)
 {
 	if (is_valid_env_char(c))
 		char_list_push(group_args->path_group, c);
@@ -28,8 +28,8 @@ t_str_dict *env_dicts)
 	}
 }
 
-t_anchor	anchor_dq_proc(char c, t_list_args *group_args, \
-t_str_dict *env_dicts)
+t_anchor	anchor_dq_proc(char c, t_list_args *group_args,
+		t_str_dict *env_dicts)
 {
 	if (c == '"')
 	{

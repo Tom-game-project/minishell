@@ -17,9 +17,9 @@
 /// ユーザの入力を受け取る関数
 
 /// astが含んでいるheredocの数をカウントする関数
-int count_heredoc(t_ast *ast)
+int	count_heredoc(t_ast *ast)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (ast == NULL)

@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.h"
 #include "expand_string.h"
-#include "tom_asterisk.h"
 #include "libft.h"
+#include "list.h"
 #include "path.h"
 #include "strtools.h"
+#include "tom_asterisk.h"
 
 static bool	rule_end_with_slash(t_void_list *lst)
 {
@@ -23,7 +23,7 @@ static bool	rule_end_with_slash(t_void_list *lst)
 	int			str_lst_len;
 	t_str_list	*str_lst;
 	t_void_list	*node;
-	char *str;
+	char		*str;
 
 	len = void_list_len(lst);
 	if (len == 0)
