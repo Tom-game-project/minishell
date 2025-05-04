@@ -1,9 +1,3 @@
-# minishell
-#
-# - tests用 build rule
-# - example用 build rule
-# - src用 build rule
-
 CC = cc
 RM = rm
 
@@ -16,7 +10,6 @@ VALGRINDFLAGS := --leak-check=full --trace-children=yes --track-fds=yes --show-l
 RMFLAGS = -rf
 
 CFLAGS = -Wextra -Werror -Wall
-# 既存のmallocのreplace
 ALLOC_SRC = src/alloc/my_malloc.c
 CFLAGS_MAIN =  -Wl,--wrap=malloc
 DEBUGFLAGS = -g -DDEBUG
@@ -282,8 +275,6 @@ TEST_TOOLS = \
      src/list/str_list_dprint.c\
 
 
-# 成果物には含めない
-# TODO: testのときのみ含まれるようなruleを追加する
 FOR_TEST_SRC=\
       tests/tom_parser_tools/print_ast.c\
 
@@ -346,7 +337,6 @@ debug: CFLAGS+=$(DEBUGFLAGS)
 debug: $(NAME)
 
 
-# headerに含めるデバッグ情報
 COMMIT_HASH = $(shell git show --format='%h' --no-patch)
 BUILD_TIMESTAMP = $(shell date "+%Y\/%m\/%d-%H:%M:%S")
 CC_VERSION = $(shell $(CC) --version | head -n1)
@@ -369,7 +359,6 @@ $(LIBFT_NAME):
 	make -C $(LIBFT_DIR)
 
 
-# ここにはあえてフラグをつけていない
 test: cleantest debug $(OBJ) $(TEST_OBJ) $(LIBFT_NAME)
 	$(CC) $(TEST_FLAGS) -Iinclude -o $(TEST_NAME) $(OBJ) $(TEST_OBJ) $(LIBFT_NAME) -lreadline
 	./test_
