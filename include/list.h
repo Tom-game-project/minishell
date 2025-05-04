@@ -6,7 +6,7 @@
 /*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:37:30 by tmuranak          #+#    #+#             */
-/*   Updated: 2025/04/30 19:37:55 by tmuranak         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:57:17 by tmuranak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ t_void_list						*token_list_clone(t_void_list *lst,
 
 char							*token_list_join(t_void_list *lst);
 
-void	free_ex_token(t_anytype elem);
+void							free_ex_token(t_anytype elem);
 
 /// ================ void_list functions ================
 

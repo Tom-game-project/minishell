@@ -25,14 +25,14 @@ int		report_permission_denied(char *cmd);
 
 // cd
 
-int report_cd_too_many_arguments(void);
-int report_cd_oldpwd_not_set(void);
-int report_cd_home_not_set(void);
+int		report_cd_too_many_arguments(void);
+int		report_cd_oldpwd_not_set(void);
+int		report_cd_home_not_set(void);
 
-//parser
+// parser
 
-int report_parser_syntax_error(void);
+int		report_parser_syntax_error(void);
 
 // input
-int report_too_long_input(void);
+int		report_too_long_input(void);
 #endif
