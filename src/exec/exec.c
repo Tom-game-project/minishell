@@ -1,113 +1,132 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 19:07:07 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/21 20:55:14 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "built_in.h"
 #include "dict.h"
+#include "exec.h"
+#include "heredoc/heredoc.h"
 #include "list.h"
 #include "parser.h"
+#include "sig.h"
+#include "strtools.h"
 #include "utils/utils.h"
-#include "exec.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <stdlib.h>
 
-/// exec2 関数に引数を渡すためだけに使います
-/// 試作品２つ目
 ///
-/// 引数に、呼び出し元のpidを取ることで、自分が子プロセス内で実行されるかどうかをチェックする
+int	run_cmd_proc_switcher2(t_exec_args *exec_args, t_str_list *args,
+		t_built_in tbi)
+{
+	if (tbi == e_not_built_in)
+	{
+		if (exec_args->ppid == 0)
+			return (execve_wrap2(args, *exec_args->envp_dict));
+		else
+			return (none_proc2(exec_args->input_fd, exec_args->output_fd, args,
+					*exec_args->envp_dict));
+	}
+	else if (tbi == e_built_in_pwd)
+		return (built_in_pwd(exec_args->output_fd));
+	else if (tbi == e_built_in_env)
+		return (built_in_env(*(exec_args->envp_dict), exec_args->output_fd));
+	else if (tbi == e_built_in_cd)
+		return (built_in_cd(args, exec_args->envp_dict));
+	else if (tbi == e_built_in_export)
+		return (built_in_export(args, exec_args->envp_dict));
+	else if (tbi == e_built_in_unset)
+		return (built_in_unset(args, exec_args->envp_dict));
+	else if (tbi == e_built_in_exit)
+		return (built_in_exit(args, *exec_args->envp_dict));
+	else if (tbi == e_built_in_echo)
+		return (built_in_echo(args, exec_args->output_fd));
+	else
+		return (1);
+}
+
+static bool	is_junk(t_anytype elem)
+{
+	return (ft_streq(elem.str, ""));
+}
+
 ///
-/// 関数の呼び出し方に気をつけて使う
+int	run_cmd_proc(t_exec_args *exec_args)
+{
+	t_built_in	tbi;
+	t_str_list	*args;
+	int			exit_status;
+	t_str_list	*junk;
+
+	if (str_list_len(exec_args->ast->arg) == 0)
+		return (0);
+	args = expand_env_vars(exec_args->ast->arg, *exec_args->envp_dict);
+	junk = void_list_filter(&args, is_junk);
+	str_list_clear(&junk, free);
+	tbi = get_built_in_enum(str_list_get_elem(exec_args->ast->arg, 0));
+	exit_status = run_cmd_proc_switcher2(exec_args, args, tbi);
+	str_list_clear(&args, free);
+	return (exit_status);
+}
+
+///
+///
 /// ```c
 ///
 /// ```
-int exec2(t_exec_args *args)
+int	exec2(t_exec_args *args)
 {
-	int exit_status;
-
-	exit_status = 0;
-	str_list_dprint(STDERR_FILENO, args->ast->arg);
-	dprintf(STDERR_FILENO, "^ppid %d, pid %d\n", getppid(), getpid());
-	if (args->ast->ope == e_ope_pipe) // |
+	if (args->ast->ope == e_ope_pipe)
 		return (pipe_proc(args));
-	else if (args->ast->ope == e_ope_and) // &&
+	else if (args->ast->ope == e_ope_and)
 		return (and_proc(args));
-	else if (args->ast->ope == e_ope_or) // ||
+	else if (args->ast->ope == e_ope_or)
 		return (or_proc(args));
-	else if (args->ast->ope == e_ope_redirect_i) // <
+	else if (args->ast->ope == e_ope_redirect_i)
 		return (exec_redirect_i_proc(args));
-	else if (args->ast->ope == e_ope_redirect_o) // >
+	else if (args->ast->ope == e_ope_redirect_o)
 		return (exec_redirect_o_proc(args));
-	else if (args->ast->ope == e_ope_heredoc_o) // >>
+	else if (args->ast->ope == e_ope_heredoc_o)
 		return (exec_heredoc_o_proc(args));
+	else if (args->ast->ope == e_ope_heredoc_i)
+		return (exec_heredoc_i_proc(args));
 	else if (args->ast->ope == e_ope_paren)
-	{
-		// TODO: 子プロセスを生成する
-		paren_proc(args);
-		return (0);
-	}
-	else if (args->ast->ope == e_ope_none) // 普通のコマンド
-	{
-		// TODO: built-in関数を判別するためのプログラムをここに追加
-		//
-		t_built_in tbi;
-
-		if (str_list_len(args->ast->arg) == 0)
-			return (0); // TODO とりあえずsegvを防いでいる
-		tbi = get_built_in_enum(str_list_get_elem(args->ast->arg, 0));
-		if (tbi == e_not_built_in)
-		{
-			if (args->ppid == 0)
-				exit_status = execve_wrap(args);
-			else 
-				exit_status = none_proc(args);
-			return (exit_status); // TODO exit status を返却するように変更
-		}
-		else if (tbi == e_built_in_pwd)
-			return (built_in_pwd());
-		else if (tbi == e_built_in_env)
-			return (built_in_env(*(args->envp_dict)));
-		else if (tbi == e_built_in_cd)
-			return (built_in_cd(args->ast->arg));
-		else if (tbi == e_built_in_export)
-			return (built_in_export(args->ast->arg,  args->envp_dict));
-		else if (tbi == e_built_in_unset)
-			return (built_in_unset(args->ast->arg,  args->envp_dict));
-		else if (tbi == e_built_in_exit)
-			return (built_in_exit(args->ast->arg));
-		else
-			// unreachable
-			return (1);
-	}
-	else
-	{
-		dprintf(STDERR_FILENO, "unexpected ope!\n");
-		return (1); // exit status を返すように変更
-	}
+		return (paren_proc(args));
+	else if (args->ast->ope == e_ope_none)
+		return (run_cmd_proc(args));
+	return (1);
 }
 
-/// この処理に入る時点で、junkなケースが弾かれていることを期待する
-/// 不正な文法を許容したastに対する処理はうまく行かない
 ///
-/// 例えば、
 /// ```bash
 /// (cat) < infile -e
 /// ```
-/// これは文法のエラーになる
-/// 
-int exec(t_ast *ast, t_str_dict **envp_dict)
+///
+int	exec(t_ast *ast, t_str_dict **envp_dict)
 {
-	int exit_status;
-	t_str_list *args;
+	int			exit_status;
+	t_int_list	*heredoc_fd_list;
 
-	args = NULL;
-	exit_status = exec2(
-		&(t_exec_args){
-			ast, 
-			envp_dict,
-			args,
-			STDIN_FILENO,
-			STDOUT_FILENO,
-			-1
-		}
-	);
-	str_list_clear(&args, free);
+	set_sigint_handle_sig();
+	heredoc_fd_list = NULL;
+	if (heredoc_proc(ast, &heredoc_fd_list) == 130)
+	{
+		close_all_heredoc_fd(&heredoc_fd_list);
+		write(STDOUT_FILENO, &"\n", 1);
+		return (130);
+	}
+	set_sigint_ignore();
+	exit_status = exec2(&(t_exec_args){ast, envp_dict, &heredoc_fd_list,
+			STDIN_FILENO, STDOUT_FILENO, -1});
+	close_all_heredoc_fd(&heredoc_fd_list);
 	return (exit_status);
 }

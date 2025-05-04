@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   void_list_print.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 17:47:42 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/02/26 17:47:51 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include <stdlib.h>
 
-/// nodeの要素をprintするための関数
-int void_list_print(t_void_list *node, int (*print)(int, t_anytype))
+int	void_list_print(t_void_list *node, int (*print)(int, t_anytype))
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (node != NULL)

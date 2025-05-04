@@ -1,73 +1,96 @@
-#include "list.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/04 15:37:12 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/04 15:37:19 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "heredoc.h"
 #include "libft.h"
-#include "strtools.h"
-
-#include <unistd.h>
+#include "list.h"
+#include "sig.h"
 #include <fcntl.h>
+#include <signal.h>
+#include <stdio.h>
 #include <string.h>
+#include <termios.h>
+#include <unistd.h>
 
-#ifndef BUF_SIZE
-# define BUF_SIZE 1
-#endif
-
-/// 改行を含むかどうかをチェックする関数
-static bool includes_newline(char *str)
+static int	putchar_switcher(char c, int fd)
 {
-	while (*str != '\0')
-	{
-		if (*str == '\n')
-			return (true);
-		str++;
-	}
-	return (false);
-}
-
-/// 改行がある部分までで切り取る関数
-static char *
-candy_cutter(t_str_list **lst, int index)
-{
-	t_str_list *t;
-	char *str;
-
-	t = str_list_cut(lst, index);
-	str = str_list_join(t, "");
-	str_list_clear(&t, free);
-	return (str);
-}
-
-/// here docとして
-/// ユーザの入力を受け取る関数
-int read_heredocline(char *eof, int fd)
-{
-	t_str_list *lst;
-	char buf[BUF_SIZE];
-	int index;
-	char *str;
-
-	lst = NULL;
-	while (1)
-	{
-		ft_memset(buf, '\0', BUF_SIZE);
-		if (read(STDIN_FILENO, buf, BUF_SIZE) == 0)
-			break;
-		str_list_push(&lst, ft_strdup(buf));
-		index = str_list_search_index(lst, includes_newline);
-		if (index != -1)
-		{
-			str = candy_cutter(&lst, index);
-			if (ft_streq(str, eof))
-				break;
-			if (write(fd, str, ft_strlen(str)) == -1)
-			{
-				str_list_clear(&lst, free);
-				free(str);
-				return (-1);
-			}
-			free(str);
-		}
-	}
-	str_list_clear(&lst, free);
-	free(str);
+	if (isatty(STDIN_FILENO))
+		ft_putchar_fd(c, fd);
 	return (0);
 }
 
+t_private	read_heredocline_helper2(char *eof, int fd, t_char_list **lst)
+{
+	unsigned char	c;
+
+	if (read(STDIN_FILENO, &c, BUF_SIZE) <= 0)
+		return (e_break);
+	if (c == 4)
+		return (read_heredocline_helper2_eot(lst));
+	else if (c == 127 || c == '\b')
+		return (read_heredocline_helper2_baskspace(lst));
+	else if (c == '\n')
+		return (read_heredocline_helper2_newline(eof, fd, lst));
+	else if (ft_isprint(c))
+	{
+		char_list_push(lst, c);
+		putchar_switcher(c, STDOUT_FILENO);
+		return (e_continue);
+	}
+	else
+		char_list_push(lst, c);
+	return (e_continue);
+}
+
+void	enable_raw_mode(struct termios *orig_termios)
+{
+	struct termios	raw;
+
+	tcgetattr(STDIN_FILENO, orig_termios);
+	raw = *orig_termios;
+	raw.c_lflag &= ~(ECHO | ICANON);
+	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
+}
+
+void	disable_raw_mode(struct termios *orig_termios)
+{
+	tcsetattr(STDIN_FILENO, TCSANOW, orig_termios);
+}
+
+int	read_heredocline2(char *eof, int fd)
+{
+	struct termios	orig_termios;
+	t_char_list		*lst;
+	t_private		p;
+	int				exit_status;
+
+	enable_raw_mode(&orig_termios);
+	lst = NULL;
+	exit_status = 0;
+	put_switcher(HEREDOC_PROMPT, STDOUT_FILENO);
+	while (1)
+	{
+		p = read_heredocline_helper2(eof, fd, &lst);
+		if (g_signal_number == SIGINT)
+		{
+			ft_putstr_fd("^C", STDOUT_FILENO);
+			exit_status = 130;
+			reconnect_stdin(&exit_status);
+			break ;
+		}
+		if (p == e_break || p == e_return_error)
+			break ;
+	}
+	char_list_clear(&lst);
+	disable_raw_mode(&orig_termios);
+	return (exit_status);
+}

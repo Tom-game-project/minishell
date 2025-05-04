@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_streq.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 20:09:20 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 20:09:33 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdbool.h>
 #include "libft.h"
-
 
 //bool ft_streq(char *a, char *b)
 //{
@@ -10,10 +21,9 @@
 //	);
 //}
 
-/// 文字列が同じかどうかを確かめる
 /// `"hello" == "world"` -> false
 /// `"hello" == "hello"` -> true
-bool ft_streq(char *a, char *b)
+bool	ft_streq(char *a, char *b)
 {
 	if (ft_strlen(a) == ft_strlen(b))
 	{
@@ -29,4 +39,3 @@ bool ft_streq(char *a, char *b)
 	else
 		return (false);
 }
-

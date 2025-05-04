@@ -1,88 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_execve_wrap.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:47:11 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:48:17 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dict.h"
 #include "exec.h"
 #include "list.h"
 #include "parser.h"
 #include "path.h"
 #include "libft.h"
+#include "sig.h"
+#include "test_tools.h"
+#include "err_msg.h"
 
 #include <stdio.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
 
-/// 実行に必要なコマンド列を、生成する
-/// 全く新しい領域が確保されるので、返り値は解放が必要
-t_str_list *assemble_cmd_list(t_exec_args *args)
+/// 
+void	check_executable_file(char *path)
 {
-	t_str_list *rl;
+	struct stat	f_stat;
 
-	rl = NULL;
-	str_list_concat(
-		&rl,
-		str_list_clone(args->args, ft_strdup) // 溜まったコマンド
-	 );
-	if (args->ast != NULL)
-		str_list_concat(
-			&rl,
-			str_list_clone(args->ast->arg, ft_strdup) // 一番最新のコマンド
-	);
-	return (rl);
-}
-
-/// 扱いやすい引数を渡すことで実行できるexecve
-/// この関数では以下の処理を行う
-/// - 環境変数の展開
-/// - $()展開 (この関数が更に子プロセスを生じさせる可能性がある)
-/// - もし、args -> argsが空でなければ今のコマンドとくっつけて実行する
-int execve_wrap(t_exec_args *args)
-{
-	char *fullpath;
-	char *cmd;
-	char **argv;
-	char **envp;
-	t_str_dict *env_path_node;
-	t_str_list *cmd_list;
-
-	cmd_list = assemble_cmd_list(args);
-	cmd = ft_strdup(str_list_get_elem(cmd_list, 0)); // 0番目の要素を取り出す
-
-	argv = str_list_to_array(cmd_list);
-	/// test 用のprint
-	str_list_dprint(STDERR_FILENO, cmd_list);
-	str_list_clear(&cmd_list, free); // cmd_listの解放
-	env_path_node = get_str_dict_by_key(*args->envp_dict, "PATH");
-	if (env_path_node == NULL) // 環境変数に`PATH`が見つからない
+	set_stat(&f_stat, path);
+	if (S_ISREG(f_stat.st_mode))
 	{
-		free(cmd);
-		free(argv);
-		// TODO
-		// あとで実装する必要がある
-		exit(127);
+		return ;
 	}
-	// PATH環境変数を解析して実行可能なフルパスを検索
-	fullpath = get_full_path(cmd, env_path_node->value);
-	if (fullpath == NULL)
+	else if (S_ISDIR(f_stat.st_mode))
 	{
-		// TODO errorメッセージを出力できるようにする
-		exit(127); // 実行できるコマンドが見つからない
-			   // または実行権限がない
-			   // だが、
-			   // ここは後で細分化する
-			   // ここの処理が終われば、
-			   // プロセスが終了し、リソースがすべて開放されるため
-			   // ここでは、あえてfreeをしない
-	}
-	if (access(fullpath, X_OK) == -1) // ファイルの存在が確かめられたら、実行のチェックをする
-	{
+		report_is_a_directory(path);
 		exit(126);
 	}
-	// TODO: 実行すべきpathはこれだけではないはずなので、
-	// get_full_pathはあとから更に機能追加が必要
-	// TODO WARN
-	// fullpathはNULLになって返る可能性がある
-	envp = str_dict_to_envp(*args->envp_dict); // 環境変数をexecveに渡せる形に固定する
-	dprintf(STDERR_FILENO, "cmd %s running on pid(%d, -> ppid(%d))\n", fullpath, getpid(), getppid());
-	execve(fullpath, argv, envp);
-	return (1);// ここに到達した場合は不正
+	else
+	{
+		report_no_such_file_or_directory(path);
+		exit(126);
+	}
 }
 
+int	execve_wrap(t_exec_args *args)
+{
+	char		*fullpath;
+	char		*cmd;
+	char		**argv;
+	char		**envp;
+	t_str_dict	*env_path_node;
+
+	set_sigint_default();
+	cmd = ft_strdup(str_list_get_elem(args->ast->arg, 0));
+	argv = str_list_to_array(args->ast->arg);
+	env_path_node = get_str_dict_by_key(*args->envp_dict, "PATH");
+	if (env_path_node == NULL)
+		report_command_not_found(cmd);
+	fullpath = get_full_path(cmd, env_path_node->value);
+	if (fullpath == NULL)
+		report_command_not_found(cmd);
+	if (access(fullpath, X_OK) == -1)
+		report_permission_denied(cmd);
+	check_executable_file(fullpath);
+	envp = str_dict_to_envp(*args->envp_dict);
+	debug_dprintf(STDERR_FILENO, "cmd %s running on pid(%d).ppid(%d)\n", \
+			fullpath, debug_getpid(), debug_getppid());
+	execve(fullpath, argv, envp);
+	return (1);
+}
+
+int	execve_wrap2(t_str_list *args, t_str_dict *envp_dict)
+{
+	char		*fullpath;
+	char		*cmd;
+	char		**argv;
+	char		**envp;
+	t_str_dict	*env_path_node;
+
+	set_sigint_default();
+	if (str_list_len(args) < 1)
+		exit(0);
+	cmd = ft_strdup(str_list_get_elem(args, 0));
+	argv = str_list_to_array(args);
+	env_path_node = get_str_dict_by_key(envp_dict, "PATH");
+	if (env_path_node == NULL)
+		report_command_not_found(cmd);
+	fullpath = get_full_path(cmd, env_path_node->value);
+	if (fullpath == NULL)
+		report_command_not_found(cmd);
+	if (access(fullpath, X_OK) == -1)
+		report_permission_denied(cmd);
+	check_executable_file(fullpath);
+	envp = str_dict_to_envp(envp_dict);
+	debug_dprintf(STDERR_FILENO, "cmd %s running on pid(%d).ppid(%d)\n", \
+			fullpath, debug_getpid(), debug_getppid());
+	execve(fullpath, argv, envp);
+	return (1);
+}

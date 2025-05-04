@@ -1,11 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_in.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 19:21:09 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/12 19:21:18 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "built_in.h"
 #include "strtools.h"
 
-/// 与えられたコマンドがbuilt in関数であるかどうかを判別して、
-/// built_inごとに指定された列挙型を返却する
-t_built_in get_built_in_enum(char *cmd)
+t_built_in	get_built_in_enum(char *cmd)
 {
-	//
 	if (ft_streq(cmd, "pwd"))
 		return (e_built_in_pwd);
 	else if (ft_streq(cmd, "cd"))
@@ -18,18 +27,8 @@ t_built_in get_built_in_enum(char *cmd)
 		return (e_built_in_env);
 	else if (ft_streq(cmd, "exit"))
 		return (e_built_in_exit);
+	else if (ft_streq(cmd, "echo"))
+		return (e_built_in_echo);
 	else
 		return (e_not_built_in);
 }
-
-/// ビルドイン関数を優先的に実行する
-/// 実行すべきbuild in 関数が見つかった場合
-
-//int run_build_in()
-//{
-//	return ()
-//}
-//
-
-
-

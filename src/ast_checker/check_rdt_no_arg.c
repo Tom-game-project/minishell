@@ -1,22 +1,24 @@
-# include "ast_checker.h"
-# include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_rdt_no_arg.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kaara <kaara@student.42.jp>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 14:59:02 by kaara             #+#    #+#             */
+/*   Updated: 2025/05/03 14:59:12 by kaara            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_syntax_result check_rdt_no_arg(t_ast *ast)
+#include "ast_checker.h"
+#include "list.h"
+#include "parser.h"
+#include <unistd.h>
+
+t_syntax_result	check_rdt_no_arg(t_ast *ast)
 {
-    t_syntax_result result;
-
-    result = e_syntax_ok;
-    if (ast->ope != e_ope_pipe && is_enum_rdtope(ast->ope)
-        && ast->right_ast != NULL && ast->right_ast->ope == e_ope_pipe
-        && ast->right_ast->left_ast == NULL)
-            result = e_syntax_ok;
-    else if (ast->ope == e_ope_pipe
-        && (ast->right_ast == NULL))
-        result = e_rdt_near_unexpected_token_pipe;
-    else if (ast->ope != e_ope_pipe && is_enum_rdtope(ast->ope))
-    {
-        if (ast->arg->ptr.str == NULL)
-            result = e_rdt_near_unexpected_token_newline;
-    }
-    return (result);
+	if (is_enum_rdtope(ast->ope) && str_list_len(ast->arg) == 0)
+		return (e_rdt_near_unexpected_token_newline);
+	else
+		return (e_syntax_ok);
 }

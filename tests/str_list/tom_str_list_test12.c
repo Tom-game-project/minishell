@@ -18,7 +18,7 @@ static bool includes_newline(char *str)
 
 static bool over_100_chars(char *str)
 {
-	return (ft_strlen(str) > 100);
+	return (ft_strlen(str) > 12);
 }
 
 /// str_list_cut関数のテスト

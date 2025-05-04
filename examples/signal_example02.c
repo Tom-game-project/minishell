@@ -22,6 +22,7 @@ int main() {
     struct sigaction sa_sigint, sa_sigquit, sa_sighup;
 
     // Ctrl-C (SIGINT) のための sigaction を設定
+    // exit status を130に設定して、次のプロンプトを表示する
     sa_sigint.sa_handler = handle_sigint;
     sigemptyset(&sa_sigint.sa_mask); // 他のシグナルをブロックしない
     sa_sigint.sa_flags = 0;

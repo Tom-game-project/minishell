@@ -1,17 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_checker_u.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kaara <kaara@student.42.jp>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 14:56:00 by kaara             #+#    #+#             */
+/*   Updated: 2025/05/03 14:56:03 by kaara            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ast_checker.h"
 
-bool is_enum_rdtope(t_operator ope)
+bool	is_enum_rdtope(t_operator ope)
 {
-    if (ope == e_ope_pipe)
-        return (true);
-    else if (ope == e_ope_redirect_i)
-        return (true);
-    else if (ope == e_ope_redirect_o)
-        return (true);
-    else if (ope == e_ope_heredoc_i)
-        return (true);
-    else if (ope == e_ope_heredoc_o)
-        return (true);
-    return (false);
+	return (
+		ope == e_ope_redirect_i
+		|| ope == e_ope_redirect_o
+		|| ope == e_ope_heredoc_i
+		|| ope == e_ope_heredoc_o
+	);
 }

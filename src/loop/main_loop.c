@@ -1,93 +1,78 @@
-#include "ast_checker.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_loop.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 18:23:17 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/03/21 18:27:39 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dict.h"
-#include "parser.h"
-#include "exec.h"
-
-#include <stdlib.h>
-#include <stdbool.h>
-#include <readline/readline.h>
+#include "libft.h"
+#include "sig.h"
+#include <limits.h>
+#include <linux/limits.h>
 #include <readline/history.h>
-
-// for test 
-#include <stdio.h>
+#include <readline/readline.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <termios.h>
 #include <unistd.h>
-#include "../tests/tom_parser_tools/tools.h"
+#include <fcntl.h>
 
-static t_ast *
-parser_wrap(char *input)
+// private functions
+#include "loop_private.h"
+
+int	g_signal_number = 0;
+
+int	main_loop(char *envp[])
 {
-    t_ast *ast;
-    ast = NULL;
-    if (e_result_paren_not_closed_err == parser(&ast, input))
-    {
-        dprintf(STDERR_FILENO, "minishell : not close syntax\n");
-    }
-    else
-    {
-        dprintf(STDERR_FILENO, "\ninput : %s\n\n", input);
-        // print_ast(ast, 0); // ast を表示する
-    }
-    return (ast);
-}
+	t_str_dict	*env_dict;
+	int			exit_status;
+	t_loop_cntl	lctl;
+	bool		newline_flag;
 
-/// 与えられたastに文法上のエラーが存在しないことを確かめる関数
-/// - true
-/// 実行可能
-/// - false
-/// 実行しない（引数が不正）
-bool	ast_checker_wrap(t_ast	*ast)
-{
-	t_syntax_result	result;
-
-	result = ast_checker(ast);
-	if (print_checker_result(result))
+	sig_settig();
+	env_dict = NULL;
+	envp_to_str_dict(&env_dict, envp);
+	exit_status = 0;
+	str_dict_add(&env_dict, ft_strdup("?"), ft_itoa(exit_status), free);
+	newline_flag = false;
+	while (1)
 	{
-		print_ast(ast, 0);
-		return (true);
+		lctl = device_once_loop(&exit_status, &newline_flag, &env_dict);
+		if (lctl == e_break)
+			break ;
+		else if (lctl == e_continue)
+			continue ;
 	}
-	else
-	{
-		// 実行が続行できないとき
-		return (false);
-	}
-}
-
-// 返り値はexit status
-int
-exec_shell_cmd(char *str, t_str_dict **env_dict)
-{
-	t_ast *ast;
-	int exit_status;
-
-	ast = parser_wrap(str);
-	if (!ast_checker_wrap(ast))
-	{
-		    clear_ast(&ast);
-		return (1); // syntax error occured
-	}
-	exit_status = exec(ast, env_dict);
-	dprintf(STDERR_FILENO, "exit_status %d\n", exit_status);
-	clear_ast(&ast);
+	str_dict_clear(&env_dict, free, free);
 	return (exit_status);
 }
 
-int
-main_loop(char *envp[])
+int	none_device_main_loop(char *envp[])
 {
-	t_str_dict *env_dict;
-	char *input;
+	t_str_dict	*env_dict;
+	int			exit_status;
+	bool		newline_flag;
 
+	sig_settig();
 	env_dict = NULL;
 	envp_to_str_dict(&env_dict, envp);
-	while (1) {
-		input = readline("minishell> "); // 味気ないプロンプトをあとで変更する
-		if (input == NULL)
-			continue;
-		if (*input) {  // 入力が空でない場合
-			add_history(input);  // 入力を履歴に追加
-		}
-		exec_shell_cmd(input, &env_dict);
-		free(input);
+	exit_status = 0;
+	str_dict_add(&env_dict, ft_strdup("?"), ft_itoa(exit_status), free);
+	newline_flag = false;
+	while (1)
+	{
+		if (none_device_once_loop(&exit_status, &newline_flag,
+				&env_dict) == e_break)
+			break ;
+		else
+			continue ;
 	}
-	return (0);
+	str_dict_clear(&env_dict, free, free);
+	return (exit_status);
 }

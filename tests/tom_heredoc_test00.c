@@ -17,7 +17,7 @@ int main()
 		return (1);
 	}
 	read_heredocline("EOF\n", rw_fd[1]);
-	fd_write(rw_fd[0]);
+	fd_write(rw_fd[0], STDOUT_FILENO);
 	close(rw_fd[0]);
 	close(rw_fd[1]);
 	return (0);

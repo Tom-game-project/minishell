@@ -1,7 +1,16 @@
-#include "list.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_redirect_o_proc.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 19:01:22 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/04/21 20:53:46 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
-#include "exec.h"
-#include "libft.h"
 #include "utils.h"
 
 #include <fcntl.h>
@@ -10,55 +19,50 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int exec_redirect_o_proc(t_exec_args *args)
+static void	close_fd(t_exec_args *args)
 {
-	char *str;
-	t_str_list *args_list;
-	int output_fd;
-
-	args_list = NULL;
 	if (args->output_fd != STDOUT_FILENO)
-	{
 		close(args->output_fd);
-	}
-	str = str_list_get_elem(args->ast->arg, 0);
-	output_fd = open(str,  O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (output_fd == -1)
-	{
-		perror("minishell"); // TODO
-	}
-	if (args->ast->left_ast != NULL && args->ast->left_ast->ope == e_ope_none){
-		// -- .2
-		str_list_concat(
-				&args_list,
-			       	str_list_clone(
-					args->ast->left_ast->arg,
-				       	ft_strdup));
-	}
+}
+
+static int	open_func(char *path)
+{
+	return (open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644));
+}
+
+static int	inner_exec(t_exec_args *args, int output_fd)
+{
 	if (args->ast->right_ast != NULL)
 	{
-		exec2(&(t_exec_args)
-		{
-		    args->ast->right_ast,
-		    args->envp_dict,
-		    args_list,
-		    args->input_fd,
-		    output_fd,
-		    -1 // 子プロセスを生み出すため
-		});
+		return (exec2(&(t_exec_args){\
+			args->ast->right_ast, \
+			args->envp_dict, \
+			args->heredoc_fd_list, \
+			args->input_fd, \
+			output_fd, \
+			-1}));
 	}
 	else if (args->ast->left_ast != NULL)
 	{
-		exec2(&(t_exec_args)
-		{
-		    args->ast->left_ast,
-		    args->envp_dict,
-		    NULL,
-		    args->input_fd,
-		    output_fd,
-		    -1 // 子プロセスを生み出すため
-		});
-	} // TODO:考える
-	close(output_fd);
+		return (exec2(&(t_exec_args){\
+			args->ast->left_ast, \
+			args->envp_dict, \
+			args->heredoc_fd_list, \
+			args->input_fd, \
+			output_fd, \
+			-1}));
+	}
 	return (0);
+}
+
+int	exec_redirect_o_proc(t_exec_args *args)
+{
+	return (
+		exec_rdt_proc(
+			args,
+			close_fd,
+			open_func,
+			inner_exec
+		)
+	);
 }
