@@ -19,7 +19,6 @@
 
 // merge sort
 
-/// 先頭の要素を取り出し、次の要素を新しい先頭にする
 static t_void_list	*pop_head_element(t_void_list **node)
 {
 	t_void_list	*next;
@@ -36,9 +35,6 @@ static t_void_list	*pop_head_element(t_void_list **node)
 	return (tmp);
 }
 
-/// 与えられたcmp関数によって、２つリストの先頭の要素で、
-/// 当てはまったものを、取り除き返す
-/// 比較して、popする関数
 static t_void_list	*cmppop(t_void_list **a, t_void_list **b,
 		bool (*cmp)(t_anytype, t_anytype))
 {
@@ -83,9 +79,7 @@ static int	merge_lists(t_void_list **node, t_void_list *node1,
 	return (0);
 }
 
-/// 与えられたリストをcmpに基づいてsortする関数
 /// WARN
-/// あまりに要素が多いと、スタックオーバーフローを起こすかもしれない
 ///
 int	merge_sort(t_void_list **node, bool (*cmp)(t_anytype, t_anytype))
 {

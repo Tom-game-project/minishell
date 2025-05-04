@@ -20,7 +20,6 @@
 #include "libft.h"
 
 /// 
-/// 返り値exit_status
 ///
 int	built_in_pwd(int fd)
 {

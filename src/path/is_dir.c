@@ -14,7 +14,6 @@
 #include <stdbool.h>
 #include <sys/stat.h>
 
-// 渡されたpathがディレクトリのときにtrueを返す関数
 bool	is_dir(char *path)
 {
 	struct stat	path_stat;

@@ -21,7 +21,6 @@
 #include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
-// シグナル
 #include <fcntl.h>
 
 // private functions
@@ -54,7 +53,6 @@ int	main_loop(char *envp[])
 	return (exit_status);
 }
 
-/// stdin がデバイスでないとき
 int	none_device_main_loop(char *envp[])
 {
 	t_str_dict	*env_dict;

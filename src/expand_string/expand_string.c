@@ -12,7 +12,6 @@
 
 /// # expand_string.c
 ///
-/// 環境変数の展開をする
 ///
 #include "dict.h"
 #include "list.h"
@@ -22,12 +21,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-/// 文字列の展開
 ///
 /// example
 /// ```
 /// "\"  $PATH  \"\"   hello  \""
-/// return ("  $展開済みPATH     hello  ")
 /// ```
 ///
 /// example
@@ -39,7 +36,6 @@
 /// example
 /// ```
 /// "$PATH"
-/// return ("$展開済みPATH")
 /// ```
 /// return new_string
 

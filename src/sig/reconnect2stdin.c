@@ -14,7 +14,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-/// シグナル発生で切断された標準入力を復元させる
 ///
 void	reconnect_stdin(int *exit_status)
 {

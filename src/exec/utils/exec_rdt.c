@@ -29,7 +29,6 @@ static bool	is_junk(t_anytype elem)
 	return (ft_streq(elem.str, ""));
 }
 
-/// もし引数に過不足があればエラー出力をする
 static char	*get_open_file_name_from_list(t_exec_args *exec_args)
 {
 	t_str_list	*args;
@@ -80,8 +79,6 @@ int	exec_rdt_proc(t_exec_args *exec_args, void (*close_fd)(t_exec_args *),
 	return (exit_status);
 }
 
-/// 文字列がシングルクォーテーション及び、
-/// ダブルクォーテーションを含むかどうかを判定する関数
 /// ```
 ///
 /// ```
@@ -96,9 +93,6 @@ static bool	includes_quotation(char *str)
 	return (false);
 }
 
-/// 環境変数展開が必要なheredocについては、
-/// 環境変数展開後の文字列を格納した隠しファイルのfdをリストに差し替えて
-/// 他の関数は,展開関係なく普通にfdを読んでいるようになる
 ///
 int	exec_rdt_proc_heredoc(t_exec_args *args, void (*close_fd)(t_exec_args *),
 		int (*inner_exec)(t_exec_args *, int))

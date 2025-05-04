@@ -19,7 +19,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-/// 子プロセスで使用されたであろう子プロセスを親側で閉じる関数
 int	consume_fd(int heredoc_c, t_int_list **heredoc_fd_list)
 {
 	int	i;
@@ -35,7 +34,6 @@ int	consume_fd(int heredoc_c, t_int_list **heredoc_fd_list)
 	return (0);
 }
 
-/// 子プロセス
 static int	child_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 {
 	if (args->input_fd != STDIN_FILENO)
@@ -57,7 +55,6 @@ static int	child_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 	return (0);
 }
 
-/// 親プロセス
 static int	parent_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 {
 	int	exit_status;
@@ -78,7 +75,6 @@ static int	parent_proc_pipe(int pipe_fd[2], t_exec_args *args, int pid)
 	return (exit_status);
 }
 
-/// exit_statusを返却する
 int	pipe_proc(t_exec_args *args)
 {
 	int	pid;

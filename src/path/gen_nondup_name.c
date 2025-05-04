@@ -19,7 +19,6 @@
 // 2 ^ 8 = 32
 #define HIDE_NAME_LENGTH 8
 
-/// 与えられた32bit整数を16進数に変換して、それを渡された文字列配列にセットする
 static int	u32tostr(char *dst, unsigned int n)
 {
 	int	i;
@@ -34,7 +33,6 @@ static int	u32tostr(char *dst, unsigned int n)
 	return (0);
 }
 
-/// 重複しない名前を生成する関数
 char	*gen_nondup_name(char *basename, t_str_list *dir_lisr)
 {
 	char			a[HIDE_NAME_LENGTH];

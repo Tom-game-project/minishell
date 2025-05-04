@@ -41,7 +41,6 @@ static t_loop_cntl	device_loop_unit_head_setting(char *input, int *exit_status,
 		return (e_through);
 }
 
-/// 一回のloop
 t_loop_cntl	loop_unit(char *input, int *exit_status, t_str_dict **env_dict,
 		bool *newline_flag)
 {

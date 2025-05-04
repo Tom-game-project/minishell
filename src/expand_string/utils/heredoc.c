@@ -16,7 +16,6 @@
 #include "private.h"
 #include "envtools.h"
 
-/// クォーテーション外の処理
 t_anchor	anchor_heredoc_proc(\
 	char c, \
 	t_list_args *group_args, \

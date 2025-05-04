@@ -13,9 +13,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-/// STDINを閉じて、EOFを送る関数
 ///
-/// Ctrl-Dと同様の効果が得られる
 void	disconnect2stdin(void)
 {
 	int	devnull;

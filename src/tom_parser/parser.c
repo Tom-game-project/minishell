@@ -96,7 +96,6 @@ static t_parse_result	parse_paren_string(\
 	return (e_result_ok);
 }
 
-/// 字句解析処理後のリストを引数に取る
 t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 {
 	int		index;
@@ -124,7 +123,6 @@ t_parse_result	tom_parser_lexed(t_ast **ast, t_str_list *input)
 	return (e_result_ok);
 }
 
-/// 字句解析前のコマンドライン文字列を引数に取る
 t_parse_result	tom_parser(char *input, t_ast **ast)
 {
 	t_str_list	*lexed;

@@ -14,8 +14,6 @@
 #include <stdlib.h>
 
 ///
-/// 与えられた引数のポインタは、条件に当てはまらなかったものが入る
-/// 返り値は、条件に当てはまったもののリスト
 ///
 t_void_list	*void_list_filter(t_void_list **node, bool (*f)(t_anytype))
 {

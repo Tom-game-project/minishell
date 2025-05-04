@@ -105,8 +105,6 @@ static t_str_list	*get_all_path_helper_set_root_dir(t_str_list **path,
 	return (splited_path);
 }
 
-/// 再帰的にディレクトリを探索して、パターンに一致したファイルまたはディレクトリを返却する
-/// splited_path: ルールを格納する二次元リスト
 t_str_list	*dir_walker(t_str_list **path,
 						t_str_list *splited_path
 )

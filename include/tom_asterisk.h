@@ -16,10 +16,8 @@
 # include "list.h"
 
 // for test
-// アスタリスク
 
-t_str_list	*split_path_by_slash(char *path); // TODO:いずれ使わなくなる方
-
+t_str_list	*split_path_by_slash(char *path);
 t_void_list	*split_token_list_by_slash(t_void_list *lst);
 
 int			clear_split_token_list(t_void_list **token_list);

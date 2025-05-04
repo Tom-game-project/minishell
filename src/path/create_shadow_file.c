@@ -25,7 +25,6 @@
 
 #define TMP_PATH "./"
 
-/// 隠しファイルを作りそのfdを返却する
 int	create_shadow_file(int rw_fd[2])
 {
 	char		*pathname;

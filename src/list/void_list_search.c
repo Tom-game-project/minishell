@@ -14,12 +14,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-/// 条件に当てはまったリストの中の要素を探し返す。条件に当てはまる.
 ///
-/// 返り値
 /// - err(-1)
 /// - ok(0)
-/// 検索の結果はrvalueに格納される
 int	void_list_search(t_void_list *node, bool (*func)(t_anytype,
 			bool (*g)(void *)), bool (*f)(void *), t_anytype *rvalue)
 {
@@ -35,11 +32,7 @@ int	void_list_search(t_void_list *node, bool (*func)(t_anytype,
 	return (-1);
 }
 
-/// 条件に当てはまった、リストの中の文字列、を探し返す。条件に当てはまる.
-/// 探すべき条件に当てはまるものが見当たらない場合は-1を返却する
 ///
-/// 最初に見つかったもの
-/// 返り値
 /// - not found (-1)
 /// - index(n >= 0)
 int	void_list_search_index(t_void_list *node, bool (*func)(t_anytype,
@@ -58,11 +51,7 @@ int	void_list_search_index(t_void_list *node, bool (*func)(t_anytype,
 	return (-1);
 }
 
-/// 条件に当てはまった、リストの中の文字列、を探し返す。条件に当てはまる.
-/// 探すべき条件に当てはまるものが見当たらない場合は-1を返却する
 ///
-/// 最後に見つかったもの
-/// 返り値
 /// - not found (-1)
 /// - index(n >= 0)
 int	void_list_search_index_r(t_void_list *node, bool (*func)(t_anytype,
@@ -83,11 +72,8 @@ int	void_list_search_index_r(t_void_list *node, bool (*func)(t_anytype,
 	return (rindex);
 }
 
-/// 第３引数に渡された引数が、第二引数で渡された関数の第２引数に渡される
 ///
-/// 特定の文字列を探す用途などに使える
 ///
-/// 返り値
 /// - not found (-1)
 /// - index(n >= 0)
 int	void_list_search2_index(t_void_list *node, bool (*func)(t_anytype,

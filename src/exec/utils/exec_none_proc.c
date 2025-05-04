@@ -15,7 +15,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-// TODO: ここでパイプは必要ない
 int	child_proc_none2(
 	int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict)
 {
@@ -33,7 +32,6 @@ int	child_proc_none2(
 	return (1);
 }
 
-/// 返り値はexit_status
 int	parent_proc_none(t_exec_args *args, int pid)
 {
 	int	status;
@@ -72,8 +70,6 @@ int	parent_proc_none2(int input_fd, int pid)
 	return (exit_status);
 }
 
-/// 実行可能な状態であり、かつ、
-/// 自分自身が子プロセス中に入っていない場合(親プロセスから)実行される関数
 int	none_proc2(
 	int input_fd, int output_fd, t_str_list *args, t_str_dict *envp_dict)
 {

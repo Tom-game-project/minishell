@@ -27,9 +27,6 @@ int	void_list_clear(t_void_list **node, void (*f)(t_anytype))
 	return (0);
 }
 
-/// - node: list本体
-/// - func : unionを脱がす関数
-/// - f : freeする関数
 int	void_list_clear_func(\
 	t_void_list **node, \
 	void (*func)(t_anytype, void (*g)(void *)), \

@@ -18,7 +18,6 @@
 #include "private.h"
 #include <unistd.h>
 
-/// シングルクォーテーション中の処理
 static t_anchor	single_quotation_proc(char c, t_list_args *group_args,
 		t_str_dict *env_dicts)
 {
@@ -28,7 +27,6 @@ static t_anchor	single_quotation_proc(char c, t_list_args *group_args,
 	return (e_anchor_q);
 }
 
-/// ダブルクォーテーション中の処理
 static t_anchor	double_quotation_proc(char c, t_list_args *group_args,
 		t_str_dict *env_dicts)
 {
@@ -56,8 +54,6 @@ static void	anchor_out_proc_helper(char c, t_list_args *group_args,
 		char_list_push(group_args->str_group, c);
 }
 
-/// クォーテーション外の処理
-/// ここで、アスタリスクをトークンとして解釈する
 t_anchor	anchor_out_proc(char c, t_list_args *group_args,
 		t_str_dict *env_dicts)
 {

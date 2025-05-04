@@ -21,7 +21,6 @@
 //	);
 //}
 
-/// 文字列が同じかどうかを確かめる
 /// `"hello" == "world"` -> false
 /// `"hello" == "hello"` -> true
 bool	ft_streq(char *a, char *b)

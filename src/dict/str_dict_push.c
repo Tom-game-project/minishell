@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/// すでにkeyがあるかどうかを確認せずに追加する
 int	str_dict_push(t_str_dict **node, char *key, char *value)
 {
 	t_str_dict	*back_node_p;

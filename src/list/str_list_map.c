@@ -22,7 +22,6 @@ t_anytype	strip_str_list_func(t_anytype elem, void *(*f)(void *))
 	return (e);
 }
 
-/// t_str_listの各要素に対して、関数fを適用する
 int	str_list_map(t_str_list **node, char *(*f)(char *))
 {
 	return (
@@ -46,8 +45,6 @@ static t_anytype	strip_str_list_func2(
 	return (e);
 }
 
-/// t_str_listの各要素に対して、関数fを適用する
-/// 適用する関数の第二引数に常に`str_list_map_arg1`が与えられる
 int	str_list_map_arg1(
 	t_str_list **node, \
 	char *(*f)(char *, void *), \

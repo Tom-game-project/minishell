@@ -20,9 +20,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-/// infileでの基本的な動作
-
-/// もし読み込み側にすでにfdが設定されていたら、閉じる
 ///
 static void	close_fd(t_exec_args *args)
 {
@@ -30,13 +27,11 @@ static void	close_fd(t_exec_args *args)
 		close(args->input_fd);
 }
 
-/// 読み込み専用でファイルを開く
 static int	open_func(char *path)
 {
 	return (open(path, O_RDONLY, 0644));
 }
 
-/// 再帰的な関数呼び出し
 static int	inner_exec(t_exec_args *args, int input_fd)
 {
 	if (args->ast->right_ast != NULL)

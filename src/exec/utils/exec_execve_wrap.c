@@ -26,10 +26,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-/// 実行可能な場合ヲレがファイルタイプが通常のファイル、
-/// またはシンボリックリンクのファイルであるかどうかを確かめる
 /// 
-/// pathが通常のファイルでなければエラーメッセージを出力してexitする
 void	check_executable_file(char *path)
 {
 	struct stat	f_stat;
@@ -51,14 +48,6 @@ void	check_executable_file(char *path)
 	}
 }
 
-/// 実行に必要なコマンド列を、生成する
-/// 全く新しい領域が確保されるので、返り値は解放が必要
-
-/// 扱いやすい引数を渡すことで実行できるexecve
-/// この関数では以下の処理を行う
-/// - 環境変数の展開
-/// - $()展開 (この関数が更に子プロセスを生じさせる可能性がある)
-/// - もし、args -> argsが空でなければ今のコマンドとくっつけて実行する
 int	execve_wrap(t_exec_args *args)
 {
 	char		*fullpath;

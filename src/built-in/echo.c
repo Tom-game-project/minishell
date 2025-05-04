@@ -44,16 +44,12 @@ static char	*build_a_string(t_str_list *args, bool new_line_flag)
 	return (rstr);
 }
 
-/// この`echo`関数はbashのそれとは違う
-/// -nに重複した引数を許しません
 ///
-/// 良い例
 ///
 /// ```bash
 /// echo -n hello world
 /// ```
 ///
-/// 良くない例
 /// ```bash
 /// echo -nnn hello world
 /// ```

@@ -15,7 +15,6 @@
 
 /// # disable_ctrl_backslash
 ///
-/// `ctrl-\`を無効化する関数
 void	disable_ctrl_backslash(void)
 {
 	struct termios	orig_termios;

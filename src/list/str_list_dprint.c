@@ -14,7 +14,6 @@
 #include "test_tools.h"
 #include <stdlib.h>
 
-/// 出力先を指定できる
 int	str_list_dprint(int fd, t_str_list *node)
 {
 	int	i;

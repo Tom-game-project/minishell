@@ -21,7 +21,6 @@ static void	free_vec_vec_str(t_anytype elem)
 	(void)elem;
 }
 
-/// 未展開の引数リストを受け取って、展開済みの新しい引数を返却する
 t_str_list	*expand_env_vars(t_str_list *args, t_str_dict *env)
 {
 	t_void_list	*vec_vec_str;

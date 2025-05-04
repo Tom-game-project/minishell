@@ -15,8 +15,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/// 渡された t_str_dictのnodeを
-/// "key=value\n"で表現したときの文字列の長さをかえす
 // size_t str_dict_key_value_len(t_str_dict *node)
 //{
 //	size_t rlen;
@@ -29,8 +27,6 @@
 //	return (rlen);
 //}
 //
-///// 渡された t_str_dictのnodeを
-///// "key=value"で表現した文字列にして返す
 // char *str_dict_node_to_str(t_str_dict *node)
 //{
 //	char *str;
@@ -61,7 +57,6 @@ char	*str_dict_node_to_str(t_str_dict *node)
 	return (str2);
 }
 
-/// 改行区切りで`key=value`形式のデータを格納した際の長さを返す
 ///
 /// ```
 /// dict[
@@ -96,7 +91,6 @@ char	*str_dict_node_to_str(t_str_dict *node)
 //	return (rlen);
 //}
 
-/// 渡されたt_str_dictをstring(char *)にする。
 // char *str_dict_to_env(t_str_dict *node)
 //{
 //	char *str;
@@ -111,9 +105,7 @@ char	*str_dict_node_to_str(t_str_dict *node)
 //	}
 //	return ();
 //}
-// <<< 使うかわからない微妙なラインなのでコメントアウト中
 
-/// 渡されたt_str_dictを文字列配列(char **)にする。
 ///
 /// ```
 /// dict[

@@ -20,9 +20,7 @@ static bool	strip_string2(t_anytype elem, bool (*f)(void *, void *), void *str)
 	return (f(elem.str, str));
 }
 
-/// 第３引数に渡された引数が、第二引数で渡された関数の第２引数に渡される
 ///
-/// 特定の文字列を探す用途などに使える
 t_str_list	*str_list_search_node(
 	t_str_list *node, \
 	bool (*f)(char *, char *), \

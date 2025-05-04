@@ -13,7 +13,6 @@
 #include "list.h"
 #include <stdlib.h>
 
-/// 指定されたindexのnodeを返却する
 t_void_list	*void_list_get_elem(t_void_list *node, int index)
 {
 	int	i;

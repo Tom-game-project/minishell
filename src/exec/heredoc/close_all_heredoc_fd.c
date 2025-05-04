@@ -13,8 +13,6 @@
 #include "list.h"
 #include <unistd.h>
 
-/// 数字のリストの中に含まれるfdをすべてcloseして、
-/// リストの要素は削除します
 int	close_all_heredoc_fd(t_int_list **node)
 {
 	t_anytype	rvalue;

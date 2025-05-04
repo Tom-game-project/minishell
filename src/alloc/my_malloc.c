@@ -14,11 +14,8 @@
 #include <unistd.h>
 #include "libft.h"
 
-/// __real_malloc は、元の malloc へリンク時にマッピングされる
 void	*__real_malloc(size_t size);
 
-/// リンク時にmallocが置き換えられる
-/// このmalloc関数は、allocationに失敗すると、直ちにexitをする。
 void	*__wrap_malloc(size_t size)
 {
 	void	*ptr;

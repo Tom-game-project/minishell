@@ -24,7 +24,6 @@
 #define OLDPWD "OLDPWD"
 #define HOME "HOME"
 
-/// カレントディレクトリを取得する関数
 static char	*get_cd(void)
 {
 	char	buf[PATH_MAX];
@@ -37,7 +36,6 @@ static char	*get_cd(void)
 	return (ft_strdup(buf));
 }
 
-/// $OLDPWDを変更する
 static int	update_oldpwd(t_str_dict **envp_list)
 {
 	char	*key_str;
@@ -72,17 +70,12 @@ static char	*get_cd_path(t_str_list *args, t_str_dict **envp_list)
 		return (ft_strdup(path));
 }
 
-/// カレントディレクトリを変更する関数
 /// ```bash
 /// cd 
 /// ```
 /// ## case
-/// - pathが存在しない
-/// - pathがファイル
 /// - return exit_status
 ///
-/// `-` が来た際には環境変数のOLDPWDを参照する
-/// これは、ユーザーが意図的に設定することが可能だがそれは問題ない
 int	built_in_cd(t_str_list *args, t_str_dict **envp_list)
 {
 	char	*path;

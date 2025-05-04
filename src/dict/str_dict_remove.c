@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include "strtools.h"
 
-/// 与えられた`key`の要素を削除する
 ///
 int	str_dict_remove(
 	t_str_dict **node, \

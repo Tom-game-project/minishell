@@ -14,10 +14,6 @@
 #include <stdarg.h>
 #include <stdarg.h>
 
-// __attribute__((format(printf, 1, 2))) の意味:
-// - 第一引数 (1) はフォーマット文字列 (`const char *format`)
-// - 第二引数 (2) は可変長引数 (`...`)
-
 #ifdef DEBUG
 
 int	debug_dprintf(int fd, const char *format, ...)

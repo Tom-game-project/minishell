@@ -13,7 +13,6 @@
 #include "list.h"
 #include <stdlib.h>
 
-/// nodeの要素をprintするための関数
 int	void_list_print(t_void_list *node, int (*print)(int, t_anytype))
 {
 	int	i;

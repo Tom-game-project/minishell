@@ -31,8 +31,6 @@ static char	*replace_expaded_env(char *str, t_str_dict *env_dict)
 	return (rstr);
 }
 
-/// `t_char_list`を文字列としてみて環境変数を展開し
-/// その結果を`t_str_list`として返す関数
 t_str_list	*char_list2str_list(t_char_list **lst, t_str_dict *env_dict)
 {
 	char		*str;

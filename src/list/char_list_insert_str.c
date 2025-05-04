@@ -14,7 +14,6 @@
 #include "list.h"
 #include "char_list.h"
 
-/// indexは、0から`char_list_len(a)`の範囲に収まる必要がある
 int	char_list_insert_str(
 	t_char_list **node, int index, char *str)
 {

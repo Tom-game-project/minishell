@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include "libft.h"
 
-/// 途中で失敗した場合にfreeをする関数
 ///
 static void	clear_string_array(char **arr)
 {
@@ -25,15 +24,12 @@ static void	clear_string_array(char **arr)
 	}
 }
 
-/// 固定長の配列を返却します
 ///
 /// list["word0", "word1", "word2", ...]
 /// 
-/// とあったときに
 ///
 /// array["word0", "word1", "word2", ..., NULL]
 ///
-/// に変換します
 /// ```c
 /// return ["allocated string", "allocated string", NULL];
 /// ```

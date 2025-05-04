@@ -14,7 +14,6 @@
 #include "signal.h"
 #include <stdlib.h>
 
-/// イベントハンドラの設定
 int	sig_settig(void)
 {
 	struct sigaction	sa_sigact;

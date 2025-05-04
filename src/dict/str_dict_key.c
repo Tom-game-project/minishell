@@ -19,8 +19,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-/// keyが見つからない場合はNULLを返却する
-/// keyが見つかった場合は`t_str_dict *`を返す
 t_str_dict	*get_str_dict_by_key(\
 		t_str_dict *node, char *key)
 {

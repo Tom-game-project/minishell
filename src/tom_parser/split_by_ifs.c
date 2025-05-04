@@ -46,7 +46,6 @@ static bool	update_new_list_split_by_ifs(t_str_list **lst, t_str_list **new_lst,
 	}
 }
 
-/// コマンド文字列をifsで区切り、それ以外はくっつける
 ///
 /// ```
 /// [] [" "] []

@@ -12,7 +12,6 @@
 
 #include "list.h"
 
-// リストの中のリストをクリアにする
 static void	clear_token_list(t_anytype elem)
 {
 	void_list_clear(&elem.list, free_ex_token);

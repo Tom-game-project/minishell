@@ -16,7 +16,6 @@
 #include <stdlib.h>
 
 /// remove_char_from_split_string
-/// 文字列をトリミングし、区切り文字を取り除く
 ///
 static char	*remove_split_string(
 	char *str_tmp, \
@@ -39,7 +38,6 @@ static char	*remove_split_string(
 	return (rstr);
 }
 
-/// 文字ごとに区切って新しいstringのリストを作成する関数`
 ///
 /// ```
 /// aaaaa:bbbbb:ccccc:ddddd

@@ -17,9 +17,7 @@
 # include "list.h"
 # include <stdbool.h>
 
-/// このファイルで定義される関数は、
 ///
-/// `include`で外部に公開されることを想定しない関数群
 ///
 
 typedef enum e_anchor		t_anchor;
@@ -30,8 +28,6 @@ enum						e_anchor
 	e_anchor_q,
 };
 
-/// プライベートな構造体
-/// normの引数制限突破のために使用
 typedef struct s_list_args	t_list_args;
 struct						s_list_args
 {

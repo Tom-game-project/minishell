@@ -20,7 +20,6 @@ static bool	strip_string(t_anytype elem, bool (*f)(void *))
 	return (f(elem.str));
 }
 
-/// 条件に当てはまった、リストの中の文字列、を探し返す。条件に当てはまる.
 char	*str_list_search(t_str_list *node, bool (*f)(char *))
 {
 	t_anytype	elem;
@@ -35,7 +34,6 @@ char	*str_list_search(t_str_list *node, bool (*f)(char *))
 	return (elem.str);
 }
 
-/// 条件に当てはまった、リストの中の文字列、を探し返す。条件に当てはまる.
 int	str_list_search_index(t_str_list *node, bool (*f)(char *))
 {
 	return (

@@ -13,10 +13,6 @@
 #include "parser.h"
 #include <stdlib.h>
 
-/// here docのインターフェイス
-/// ユーザの入力を受け取る関数
-
-/// astが含んでいるheredocの数をカウントする関数
 int	count_heredoc(t_ast *ast)
 {
 	int	count;

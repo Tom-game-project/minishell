@@ -13,7 +13,6 @@
 #include "list.h"
 #include <stdlib.h>
 
-/// t_void_list 関数の初期化
 t_void_list	*void_list_init(t_anytype ptr)
 {
 	t_void_list	*node;

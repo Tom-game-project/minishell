@@ -15,7 +15,6 @@
 #include <limits.h>
 #include <stdlib.h>
 
-/// exit_statusに色をつける関数
 static void	error_color(t_char_list **lst, int exit_status)
 {
 	char	*exit_str;

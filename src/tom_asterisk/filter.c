@@ -29,7 +29,6 @@ static char	*remove_slash(char *str)
 		return (ft_strdup(str));
 }
 
-/// スラッシュを取り除いた新しいリストを返却する関数
 static t_void_list	*remove_slash_from_rule_list(t_void_list *lst)
 {
 	t_void_list	*rlist;
@@ -64,7 +63,6 @@ static bool	func_wrap(t_anytype a, t_anytype b)
 	return (r);
 }
 
-/// リムーブした場合、ディレクトリを探している場合はディレクトリかどうかをチェックする
 t_str_list	*filter_paths_by_rule_wrap(t_str_list **curr_lst,
 		t_void_list *rule_list)
 {

@@ -19,8 +19,6 @@
 
 #include "str_list.h"
 
-/// 文字列をコピーしていく関数
-/// 危険な関数なので外部から呼び出して使用しない
 static char	*unsafe_copy_string(char **target, char *str)
 {
 	while (*str != '\0')
@@ -32,7 +30,6 @@ static char	*unsafe_copy_string(char **target, char *str)
 	return (*target);
 }
 
-/// 要素をsepで区切ったstrを返却する
 /// 
 /// ```
 /// t_str_list *node: List["word1", "word2", "word3"]

@@ -100,7 +100,6 @@ static bool	pattern_junk_middle_junk(t_char_list *target, t_void_list *rule_lst)
 /// "*.c" === "hello.c.c" -> true
 ///            -------.c
 ///
-/// 気をつけるケース
 /// *helloworld*.c
 /// hellohelloworld123.c.c
 /// (hello)helloworld(123.c).c
@@ -121,7 +120,6 @@ static bool	pattern_junk_middle_junk(t_char_list *target, t_void_list *rule_lst)
 /// *hello*lll*world* ... 4
 /// ```
 ///
-/// 再帰的に探索する
 bool	is_same_string(t_char_list *target, t_void_list *rule_lst)
 {
 	t_void_list	*head_node;

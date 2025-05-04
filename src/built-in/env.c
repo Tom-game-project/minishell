@@ -18,9 +18,7 @@
 
 /// env with no options or arguments
 ///
-/// envに渡されたオプション、引数については、すべて無視する
 ///
-/// minishellにおけるenvコマンドは、プロセスが保持する環境変数を返す
 int	built_in_env(t_str_dict *envp_dict, int fd)
 {
 	int		exit_status;

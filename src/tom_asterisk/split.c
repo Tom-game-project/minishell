@@ -19,7 +19,6 @@ static bool	is_slash(char *c)
 	return (*c == '/');
 }
 
-/// pathを分解する関数
 t_str_list	*split_path_by_slash(char *path)
 {
 	t_char_list	*char_lst;
@@ -85,9 +84,7 @@ static void	split_token_list_by_slash_helper(t_void_list *lst,
 }
 
 ///
-/// token_listを受け取って、スラッシュ区切りにする
 ///
-/// 返り値は二次元リストList<List<ex_token>>
 /// ```
 ///   [(aaaaaa/)]
 /// - [(bbbb)-(*)-(bb/)]

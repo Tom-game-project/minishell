@@ -16,7 +16,6 @@
 #include <unistd.h>
 #include "libft.h"
 
-/// コマンドとパスをくっつけて、フルパスを作る
 static char	*join_path_and_free_func(char *a, void *b)
 {
 	char	*rstr;
@@ -29,19 +28,13 @@ static char	*join_path_and_free_func(char *a, void *b)
 	return (rstr);
 }
 
-/// 実行可能かどうかを判定する
 static bool	check_exist_cmd(char *str)
 {
 	return (access(str, F_OK) == 0);
 }
 
-/// 環境変数に基づいて、実行可能なフルパスを渡す
 /// 
-/// 子プロセスで、最後に使うため
-/// 確保をするが、解放はしなくて良い
-/// コマンド(実行しようと思っているコマンド)
 /// `char *cmd`
-/// 環境変数(コロン区切りのパスを格納したデータ)
 /// `char *env_path`
 char	*get_full_path(char *cmd, char *env_path)
 {

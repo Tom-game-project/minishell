@@ -18,7 +18,6 @@
 /// @param value 
 /// @return 
 /// 
-/// indexは、0から`char_list_len(a) - 1`の範囲に収まる必要がある
 ///
 int	char_list_insert(t_char_list **node, int index, char c)
 {

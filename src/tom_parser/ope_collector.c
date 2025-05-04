@@ -20,8 +20,6 @@ static void	nop(void *a)
 	(void)a;
 }
 
-/// lst1が残っていない場合にはtrue
-/// lst2が残っている場合にはfalse
 ///
 /// lst1 = [0, 1, 2];
 /// lst2 = [0, 1];
@@ -70,7 +68,6 @@ static void	search_string_pattern_replace_helper(t_str_list **lst,
 /// [ab] -> [c]
 /// ```
 ///
-/// patternを探す関数
 /// search_string_pattern_replace
 int	search_string_pattern_replace(t_str_list **lst, t_str_list *pattern)
 {
@@ -92,7 +89,6 @@ int	search_string_pattern_replace(t_str_list **lst, t_str_list *pattern)
 	return (0);
 }
 
-/// 演算子をまとめる
 int	ope_collector(t_str_list **lexed)
 {
 	t_str_list	*ptn[4];

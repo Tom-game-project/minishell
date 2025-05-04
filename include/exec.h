@@ -19,9 +19,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 
-// (パイプを)読む
 # define PIPE_READ 0
-// (パイプに)書き込む
 # define PIPE_WRITE 1
 
 // src/exec/exec.c
@@ -30,7 +28,6 @@ typedef char				*(*t_sd2sfunc)(char *, void *);
 
 int			exec(t_ast *ast, t_str_dict **envp_dict);
 
-/// exec2 関数に引数を渡すためだけに使います
 typedef struct s_exec_args	t_exec_args;
 struct s_exec_args
 {

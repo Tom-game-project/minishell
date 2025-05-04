@@ -59,8 +59,6 @@ static void	filter_normal_file_and_set(t_str_list **result_list)
 	str_list_map(result_list, append_slash);
 }
 
-/// アスタリスク展開
-/// split_listはVec<Vec<ex_token>>
 t_str_list	*expand_env_var(char *str, t_str_dict *env)
 {
 	t_void_list	*token_list;

@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-/// この関数は`.``..`も返す
 t_str_list	*get_dir_list(char *name)
 {
 	DIR				*dir;

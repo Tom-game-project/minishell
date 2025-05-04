@@ -25,7 +25,6 @@ enum						e_anchor
 };
 
 typedef struct s_cur_anchor	t_cur_anchor;
-/// TODO: rename 必須
 struct						s_cur_anchor
 {
 	char					c;

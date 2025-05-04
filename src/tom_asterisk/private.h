@@ -16,7 +16,6 @@
 # include "list.h"
 # include <stdbool.h>
 
-/// コンビネーション(n,2)の順列を試す関数
 bool	comb2_any(\
 	t_char_list *lst, \
 	t_str_list *rule_lst, \

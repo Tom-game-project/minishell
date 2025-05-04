@@ -17,7 +17,6 @@
 # include "dict.h"
 # include "parser.h"
 
-/// exit statusと、今いるディレクトリを表示するプロンプト
 typedef enum e_loop_cntl	t_loop_cntl;
 enum						e_loop_cntl
 {
@@ -28,7 +27,6 @@ enum						e_loop_cntl
 
 char						*prompt(int exit_status);
 
-/// 入力されたコマンドが文法的に正しいかどうかをチェックする関数
 int							exec_ast(t_ast *ast, t_str_dict **env_dict,
 								t_syntax_result result);
 

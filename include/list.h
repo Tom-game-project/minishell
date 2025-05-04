@@ -17,7 +17,6 @@
 
 typedef union u_anytype			t_anytype;
 
-// expand string 専用
 typedef enum e_expand_token		t_expand_token_type;
 
 enum							e_expand_token
@@ -34,7 +33,6 @@ struct							s_expand_token
 	char						*str;
 };
 
-// listで扱いたい型
 typedef struct s_void_list		t_void_list;
 
 union							u_anytype
@@ -46,30 +44,18 @@ union							u_anytype
 	t_void_list					*list;
 };
 
-/// void ptrを格納するリスト
-/// 拡張性,抽象度を上げるために定義した構造体
 ///
-/// この構造体はすべてのリストのベース
 struct							s_void_list
 {
 	t_anytype					ptr;
 	t_void_list					*next;
 };
 
-/// ================ 拡張 ================
-/// すべてのlistのベースは`s_void_list`
-
-/// charを格納するリスト
 typedef struct s_void_list		t_char_list;
 
-/// strを格納するリスト
 typedef struct s_void_list		t_str_list;
 
-/// intを格納するリスト
 typedef struct s_void_list		t_int_list;
-
-/// ================ 実装 ================
-/// 格納するデータtypeによらない操作の実装は、void_listをwrapしている
 
 /// ================ char_list functions ================
 
@@ -208,7 +194,6 @@ int								list_list_print(t_void_list *list,
 t_void_list						*list_list_all_concat(t_void_list *list);
 /// ================ void_list functions ================
 ///
-/// 格納するデータのtypeによらないlistそのものの実装は以下の関数に定義されている.
 ///
 
 t_void_list						*void_list_init(t_anytype ptr);
@@ -289,7 +274,6 @@ t_void_list						*void_list_filter2(t_void_list **node,
 									t_anytype arg);
 
 // TODO for test
-// 以下の関数は、成果物に含めない
 //
 
 int								str_list_dprint(int fd, t_str_list *node);

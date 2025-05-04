@@ -16,7 +16,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-// ビルド情報の取得
 #define COMMIT_HASH
 #define BUILD_TIMESTAMP
 #define CC_VERSION
@@ -66,7 +65,6 @@ static int	set_none_device_stdin(char *filename)
 	return (0);
 }
 
-/// # ノンデバイスモード
 ///
 /// ```bash
 /// < bash.sh cat | ./minishell
@@ -80,7 +78,6 @@ static int	set_none_device_stdin(char *filename)
 /// < bash.sh cat | ./minishell bash2.sh
 /// ```
 ///
-/// # デバイスモード(プロンプトを表示して、ユーザの入力を待機する)
 ///
 /// ```bash
 /// ./minishell

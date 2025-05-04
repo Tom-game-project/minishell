@@ -23,7 +23,6 @@
 // for test
 #include "test_tools.h"
 
-/// syntax error 発生時にはsyntax_err_flagにtrueがセットされる
 static t_ast	*parser_wrap(char *input, bool *syntax_err_flag)
 {
 	t_ast	*ast;
@@ -37,12 +36,8 @@ static t_ast	*parser_wrap(char *input, bool *syntax_err_flag)
 	return (ast);
 }
 
-/// コマンドの実行を試みexit statusを更新する関数
 ///
-/// 入力文字列が`INT_MAX`を超えたときは、内部のリストが扱い切れないので
-/// errorを吐く
 ///
-/// 関数内部でexec関数が実行されたら`1`を返却します
 int	exec_shell_cmd(char *str, t_str_dict **env_dict, int *exit_status)
 {
 	t_ast			*ast;

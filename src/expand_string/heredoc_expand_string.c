@@ -40,7 +40,6 @@ t_char_list	*load_fd_as_char_list(int fd)
 	return (lst);
 }
 
-/// 読み込み専用のfdを返却する関数
 int	str_list2shadowfile_fd(t_str_list *expanded)
 {
 	int	rw_fd[2];
@@ -55,11 +54,8 @@ int	str_list2shadowfile_fd(t_str_list *expanded)
 	return (rw_fd[0]);
 }
 
-/// heredocの環境変数を展開する
 ///
-/// この関数に渡されたfdはcloseされる。
 ///
-/// 返り値は環境変数を展開したあとの、隠しファイルを指すfd
 int	heredoc_expand_string_via_fd(int fd, t_str_dict *env_dict)
 {
 	t_char_list	*lst;

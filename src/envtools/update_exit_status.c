@@ -14,9 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-/// `$?` exit status を更新する
 ///
-/// 更新されただけの場合str_tmpはfreeして良い
 int	update_exit_status(int exit_status, t_str_dict **env_dict)
 {
 	char	*str_tmp;

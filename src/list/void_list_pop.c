@@ -53,11 +53,7 @@ static t_void_list	*pop_index_elem(t_void_list **node_p_p, int index)
 	return (r_node);
 }
 
-/// もし、このリストに領域を確保した文字列を使ってる場合は
-/// ここで返されたポインタでfreeをしたほうが良い
 ///
-/// `0`  : 正常に終了し、rvalueに適切な値がセットされている
-/// `-1` : 範囲外アクセスなど、エラーを起こした
 int	void_list_pop(t_void_list **node, int index, t_anytype *rvalue)
 {
 	t_void_list	*head_p;

@@ -24,9 +24,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-/// ビルトインコマンドへ振り分ける関数
 ///
-/// argsは環境変数展開後のものである必要がある
 int	run_cmd_proc_switcher2(t_exec_args *exec_args, t_str_list *args,
 		t_built_in tbi)
 {
@@ -61,7 +59,6 @@ static bool	is_junk(t_anytype elem)
 	return (ft_streq(elem.str, ""));
 }
 
-/// コマンドが実際に実行される場所
 ///
 int	run_cmd_proc(t_exec_args *exec_args)
 {
@@ -81,12 +78,8 @@ int	run_cmd_proc(t_exec_args *exec_args)
 	return (exit_status);
 }
 
-/// exec2 関数に引数を渡すためだけに使います
-/// 試作品２つ目
 ///
-/// 引数に、呼び出し元のpidを取ることで、自分が子プロセス内で実行されるかどうかをチェックする
 ///
-/// 関数の呼び出し方に気をつけて使う
 /// ```c
 ///
 /// ```
@@ -113,14 +106,10 @@ int	exec2(t_exec_args *args)
 	return (1);
 }
 
-/// この処理に入る時点で、junkなケースが弾かれていることを期待する
-/// 不正な文法を許容したastに対する処理はうまく行かない
 ///
-/// 例えば、
 /// ```bash
 /// (cat) < infile -e
 /// ```
-/// これは文法のエラーになる
 ///
 int	exec(t_ast *ast, t_str_dict **envp_dict)
 {

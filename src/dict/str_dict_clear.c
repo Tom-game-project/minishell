@@ -15,9 +15,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-/// すべてをclearします
-/// 第二第三引数に渡された関数によって、それぞれ、stringを解放しつつ
-/// 自分自身を解放します
 int	str_dict_clear(t_str_dict **node, \
 	void (*key_free)(void *), \
 	void (*value_free)(void *)

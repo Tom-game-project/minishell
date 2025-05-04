@@ -12,8 +12,6 @@
 
 #include "libft.h"
 
-/// 領域をピッタリは確保しない
-/// " 'を取り除いた新しい領域を確保する
 char	*remove_quotations(char *str)
 {
 	char	*new_str;

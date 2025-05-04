@@ -13,7 +13,6 @@
 #include "list.h"
 #include <stdbool.h>
 
-/// 文字列の辞書順比較用の関数
 bool	cmp_str(t_anytype a, t_anytype b)
 {
 	char	*a_str;

@@ -14,8 +14,6 @@
 #include "private.h"
 #include <stdbool.h>
 
-/// str_groupをrlistに追加する
-/// TODO: いずれ消す
 int	push_str_group(t_list_args *group_args)
 {
 	if (!char_list_is_empty(*group_args->str_group))
@@ -27,7 +25,6 @@ int	push_str_group(t_list_args *group_args)
 	return (0);
 }
 
-/// トークンリストに格納する
 int	push_str_group2(t_list_args *group_args, t_expand_token_type token_type)
 {
 	if (!char_list_is_empty(*group_args->str_group))

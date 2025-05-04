@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/// valueを取得する関数を作る
 char	*get_value_from_envp_ptr(char *str)
 {
 	unsigned int	s;

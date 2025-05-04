@@ -36,8 +36,6 @@ static int	paren_proc_children(t_exec_args *args)
 	exit(0);
 }
 
-/// parenは特別なデータ形式
-/// right_astを持たない
 int	paren_proc(t_exec_args *args)
 {
 	int	pid;

@@ -17,11 +17,8 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-/// 妥協案
 ///
 /// bool
-/// - true -> returnする
-/// - false -> returnしない
 static bool	cur_out_of_quotation(t_cur_anchor *s)
 {
 	if (s->c == '\'')
@@ -67,7 +64,6 @@ static bool	cur_loop(t_cur_anchor *s)
 	return (false);
 }
 
-/// 文字リストの先頭から一つ要素を取得
 static bool	char_iter(t_char_list **clst, int idx, char *c)
 {
 	*c = char_list_get_elem(*clst, idx);
@@ -82,7 +78,6 @@ static bool	char_iter(t_char_list **clst, int idx, char *c)
 /// 'ls' '-la' '&&' '(cat )' '|' '"hello world"'
 /// ```
 ///
-/// 演算子(operator)文字列が含まれる場合groupに追加する
 /// ```
 /// `<`, `>`, `|`, `||`, `&&`, `<<`, `>>`
 /// ```
@@ -107,7 +102,6 @@ static t_char_list	*pre_lexer(t_char_list **clst)
 	return (char_list_cut(clst, idx));
 }
 
-/// 意味ごとの分類
 t_str_list	*lexer(char *str)
 {
 	t_char_list	*lst;
