@@ -1,15 +1,22 @@
-/// # ast_checker.h
-/// astが実行可能かを検査する
-///
-/// ここでのエラーは
-/// syntax error として出力される
-///
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_checker.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kaara <kaara@student.42.jp>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/04 15:59:04 by kaara             #+#    #+#             */
+/*   Updated: 2025/05/04 16:03:24 by kaara            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef AST_CHECKER_H
-#define AST_CHECKER_H
+# define AST_CHECKER_H
 
-#include "parser.h"
+# include "parser.h"
 
-typedef enum e_syntax_result t_syntax_result;
+typedef t_syntax_result			(*t_check_func)(t_ast *);
+typedef enum e_syntax_result	t_syntax_result;
 
 enum e_syntax_result
 {
@@ -31,26 +38,24 @@ enum e_syntax_result
 	e_rdt_no_element_left_and_left,
 };
 
-typedef t_syntax_result (*t_check_func)(t_ast *);
-
-bool ast_checker_wrap2(t_ast **ast);
+bool			ast_checker_wrap2(t_ast **ast);
 
 //ast_checker.c
-t_syntax_result ast_checker(t_ast	*ast);
+t_syntax_result	ast_checker(t_ast	*ast);
 
 //ast_checker_u.c
-bool is_enum_rdtope(t_operator ope);
+bool			is_enum_rdtope(t_operator ope);
 
 //check_case
-t_syntax_result check_no_input(t_ast *ast);
-t_syntax_result check_ctl_no_element(t_ast *ast);
-t_syntax_result check_pipe_no_arg(t_ast *ast);
-t_syntax_result check_rdt_no_arg(t_ast *ast);
-t_syntax_result check_rdt_no_element(t_ast *ast);
-t_syntax_result check_element(t_ast *ast);
+t_syntax_result	check_no_input(t_ast *ast);
+t_syntax_result	check_ctl_no_element(t_ast *ast);
+t_syntax_result	check_pipe_no_arg(t_ast *ast);
+t_syntax_result	check_rdt_no_arg(t_ast *ast);
+t_syntax_result	check_rdt_no_element(t_ast *ast);
+t_syntax_result	check_element(t_ast *ast);
 t_syntax_result	check_adjacent_strings(t_ast *ast);
 
 //print
-bool    print_checker_result(t_syntax_result result);
+bool			print_checker_result(t_syntax_result result);
 
 #endif
