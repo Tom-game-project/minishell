@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuranak <tmuranak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/04 15:37:12 by tmuranak          #+#    #+#             */
+/*   Updated: 2025/05/04 15:37:19 by tmuranak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "list.h"
 #include "libft.h"
 
@@ -7,7 +19,6 @@
 #include <signal.h>
 
 #include <stdio.h>
-
 #include <stdio.h>
 #include <termios.h>
 #include <unistd.h>
