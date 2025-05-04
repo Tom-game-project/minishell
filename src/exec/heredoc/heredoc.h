@@ -16,6 +16,14 @@
 # include "list.h"
 # include "parser.h"
 
+typedef enum e_private t_private;
+enum e_private
+{
+	e_continue,
+	e_break,
+	e_return_error
+};
+
 int	read_heredocline2(\
 	char *eof, \
 	int fd);

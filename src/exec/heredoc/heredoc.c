@@ -1,7 +1,6 @@
 #include "list.h"
 #include "libft.h"
 #include "strtools.h"
-#include "parser.h"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -14,21 +13,13 @@
 #include <termios.h>
 #include <unistd.h>
 #include "sig.h"
-#include "test_tools.h"
+#include "heredoc.h"
 
 #ifndef BUF_SIZE
 # define BUF_SIZE 1
 #endif
 
 #define HEREDOC_PROMPT "> "
-
-typedef enum e_private t_private;
-enum e_private
-{
-	e_continue,
-	e_break,
-	e_return_error
-};
 
 int 
 put_switcher(char *str, int fd)
@@ -174,22 +165,3 @@ int read_heredocline2(
 	disable_raw_mode(&orig_termios);
 	return (exit_status);
 }
-
-/// here docのインターフェイス
-/// ユーザの入力を受け取る関数
-
-/// astが含んでいるheredocの数をカウントする関数
-int count_heredoc(t_ast *ast)
-{
-	int count;
-
-	count = 0;
-	if (ast == NULL)
-		return (count);
-	if (ast->ope == e_ope_heredoc_i)
-		count += 1;
-	count += count_heredoc(ast->left_ast);
-	count += count_heredoc(ast->right_ast);
-	return (count);
-}
-
