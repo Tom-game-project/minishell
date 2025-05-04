@@ -238,6 +238,7 @@ EXEC_SRC=\
       src/exec/utils/exec_rdt.c\
       src/exec/heredoc/heredoc.c\
       src/exec/heredoc/heredoc_proc.c\
+      src/exec/heredoc/heredoc_interface.c\
       src/exec/heredoc/close_all_heredoc_fd.c\
       src/exec/heredoc/count_heredoc.c\
 

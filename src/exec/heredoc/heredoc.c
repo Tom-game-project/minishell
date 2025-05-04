@@ -1,6 +1,5 @@
 #include "list.h"
 #include "libft.h"
-#include "strtools.h"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -15,79 +14,11 @@
 #include "sig.h"
 #include "heredoc.h"
 
-#ifndef BUF_SIZE
-# define BUF_SIZE 1
-#endif
-
-#define HEREDOC_PROMPT "> "
-
-int 
-put_switcher(char *str, int fd)
-{
-	if (isatty(STDIN_FILENO))
-		ft_putstr_fd(str, fd);
-	return (0);
-}
-
-int 
-putchar_switcher(char c, int fd)
+static int putchar_switcher(char c, int fd)
 {
 	if (isatty(STDIN_FILENO))
 		ft_putchar_fd(c, fd);
 	return (0);
-}
-
-t_private read_heredocline_helper2_eot(
-	t_char_list **lst
-)
-{
-	if (char_list_len(*lst) == 0)
-	{
-		put_switcher("\n", STDOUT_FILENO);
-		return (e_break);
-	}
-	else
-		return (e_continue);
-}
-
-t_private read_heredocline_helper2_baskspace(
-	t_char_list **lst
-)
-{
-	if (0 < char_list_len(*lst))
-	{
-		char_list_pop(lst, char_list_len(*lst) - 1);
-		put_switcher("\b \b", STDOUT_FILENO);
-	}
-	return (e_continue);
-}
-
-
-t_private read_heredocline_helper2_newline(
-	char *eof,
-       	int fd,
-	t_char_list **lst
-){
-	char *str;
-
-	char_list_push(lst, '\n');
-	str = char_list_to_str(*lst);
-	if (ft_streq(eof, str))
-	{
-		free(str);
-		put_switcher("\n", STDOUT_FILENO);
-		return (e_break);
-	}
-	if (write(fd, str, ft_strlen(str)) == -1)
-	{
-		free(str);
-		return (e_break);
-	}
-	free(str);
-	put_switcher("\n", STDOUT_FILENO);
-	put_switcher(HEREDOC_PROMPT, STDERR_FILENO);
-	char_list_clear(lst);
-	return (e_continue);
 }
 
 t_private read_heredocline_helper2(
@@ -100,11 +31,9 @@ t_private read_heredocline_helper2(
 
 	if (read(STDIN_FILENO, &c, BUF_SIZE) <= 0)
 		return (e_break);
-
-	//debug_dprintf(STDERR_FILENO, "binary %x\n", c);
-	if (c == 4) // EOT
+	if (c == 4)
 		return (read_heredocline_helper2_eot(lst));
-	else if (c == 127 || c == '\b') // Back Space 及びDelの処理
+	else if (c == 127 || c == '\b')
 		return (read_heredocline_helper2_baskspace(lst));
 	else if (c == '\n')
 		return (read_heredocline_helper2_newline(eof, fd, lst));
@@ -115,18 +44,15 @@ t_private read_heredocline_helper2(
 		return (e_continue);
 	}
 	else 
-	{
 		char_list_push(lst, c);
-	}
 	return (e_continue);
 }
 
-//// 修正バージョン
 void enable_raw_mode(struct termios *orig_termios) {
     struct termios raw;
     tcgetattr(STDIN_FILENO, orig_termios);
     raw = *orig_termios;
-    raw.c_lflag &= ~(ECHO | ICANON); // カノニカルモードを無効化
+    raw.c_lflag &= ~(ECHO | ICANON);
     tcsetattr(STDIN_FILENO, TCSANOW, &raw);
 }
 
@@ -147,7 +73,7 @@ int read_heredocline2(
 	enable_raw_mode(&orig_termios);
 	lst = NULL;
 	exit_status = 0;
-	put_switcher(HEREDOC_PROMPT, STDOUT_FILENO); // TODO stdinがデバイス出ない場合は、入らないようにする
+	put_switcher(HEREDOC_PROMPT, STDOUT_FILENO);
 	while (1)
 	{
 		p = read_heredocline_helper2(eof, fd, &lst);
