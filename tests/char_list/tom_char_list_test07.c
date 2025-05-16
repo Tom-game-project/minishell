@@ -2,6 +2,9 @@
 #include "list.h"
 #include <stdio.h>
 
+/// ```
+/// make vtest TEST_FILE=tests/char_list/tom_char_list_test07.c
+/// ```
 int main()
 {
 	t_char_list *a;

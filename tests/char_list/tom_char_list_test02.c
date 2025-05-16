@@ -9,7 +9,7 @@
 /// - 正しくデータが格納されている
 ///
 /// ```bash
-/// make vtest TEST_FILE=tests/tom_char_list_test02.c
+/// make vtest TEST_FILE=tests/char_list/tom_char_list_test02.c
 /// ```
 int main()
 {

@@ -3,6 +3,9 @@
 
 
 /// `char_list_clear`関数のテスト
+/// ```
+/// make vtest TEST_FILE=tests/char_list/tom_char_list_test09.c
+/// ```
 int main()
 {
 	t_char_list *a;

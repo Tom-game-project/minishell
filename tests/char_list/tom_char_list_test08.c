@@ -4,6 +4,9 @@
 
 /// `char_list_to_str`関数が正しく動作するかの確認
 /// 
+/// ```
+/// make vtest TEST_FILE=tests/char_list/tom_char_list_test08.c
+/// ```
 int main()
 {
 	t_char_list *a;
