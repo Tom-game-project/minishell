@@ -23,7 +23,6 @@ bool tester(char *str, char *rule_str)
 	);
 }
 
-
 /// ```
 /// make test TEST_FILE=tests/tom_asterisk_tests/test08.c
 /// ```

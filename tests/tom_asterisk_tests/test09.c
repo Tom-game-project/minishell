@@ -8,12 +8,12 @@
 #include <stdlib.h>
 
 
-static void free_ex_token(t_anytype elem)
-{
-	free(elem.ex_token->str);
-	free(elem.ex_token);
-	return ;
-}
+//static void free_ex_token(t_anytype elem)
+//{
+//	free(elem.ex_token->str);
+//	free(elem.ex_token);
+//	return ;
+//}
 
 /// 文字列の辞書順比較用の関数
 static bool cmp_str(t_anytype a, t_anytype b)
